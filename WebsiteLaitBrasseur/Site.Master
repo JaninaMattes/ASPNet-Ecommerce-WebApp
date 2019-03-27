@@ -1,0 +1,43 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="WebsiteLaitBrasseur.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title><%: Page.Title %> - LaitBrasseur</title>
+
+    <meta name="viewport"  content="width=device-width; initial-scale=1"/>
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/Content/site.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <header class="jumbotron">
+        <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg" class="img-rounded img-responsive" />
+    </header>
+
+
+    <form id="form1" runat="server">
+
+        <div class="container header-content">
+                <asp:ContentPlaceHolder ID="HeaderContent" runat="server"></asp:ContentPlaceHolder><hr />
+        </div>
+    
+        <div class="container body-content">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder><hr />
+        </div>  
+
+    </form>
+
+    <footer>
+        <p> &copy; <%: DateTime.Now.Year %> - <a runat="server" href="~/Contact">Contact</a>  - <a runat="server" href="~/">About us</a> - <a runat="server" href="~/">Facebook</a> </p>
+    </footer>
+</body>
+
+
+</html>

@@ -16,7 +16,7 @@ namespace WebsiteLaitBrasseur.Account
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            Label1.Text = TextLogin.Text + " " + TextPassword.Text + " vous etes connectés.";
+            Label1.Text = TextLogin.Text + " " + TextPassword.Text + " you are login.";
         }
  
     }
