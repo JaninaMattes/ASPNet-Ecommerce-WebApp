@@ -13,66 +13,75 @@ namespace WebsiteLaitBrasseur.Account {
     public partial class WebForm1 {
         
         /// <summary>
-        /// TextLogin control.
+        /// FirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextLogin;
+        protected global::System.Web.UI.WebControls.TextBox FirstName;
         
         /// <summary>
-        /// LoginReqField control.
+        /// FirstNameRequired control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator LoginReqField;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator FirstNameRequired;
         
         /// <summary>
-        /// TextPassword control.
+        /// LastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextPassword;
+        protected global::System.Web.UI.WebControls.TextBox LastName;
         
         /// <summary>
-        /// PasswordReqField control.
+        /// Username control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordReqField;
+        protected global::System.Web.UI.WebControls.TextBox Username;
         
         /// <summary>
-        /// RememberMeBox control.
+        /// Email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox RememberMeBox;
+        protected global::System.Web.UI.WebControls.TextBox Email;
         
         /// <summary>
-        /// LoginButton control.
+        /// EmailRegexValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button LoginButton;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailRegexValidator;
         
         /// <summary>
-        /// Label1 control.
+        /// Password control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.TextBox Password;
+        
+        /// <summary>
+        /// PasswordRegexValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordRegexValidator;
     }
 }
