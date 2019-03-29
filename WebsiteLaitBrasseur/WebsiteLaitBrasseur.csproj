@@ -74,7 +74,11 @@
     <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Register.aspx" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <Content Include="Cart.aspx" />
+=======
+    <Content Include="Account\Profile.aspx" />
+>>>>>>> Stashed changes
 =======
     <Content Include="Account\Profile.aspx" />
 >>>>>>> Stashed changes
@@ -163,6 +167,7 @@
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <Compile Include="Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -170,12 +175,17 @@
     <Compile Include="Cart.aspx.designer.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
 =======
+=======
+>>>>>>> Stashed changes
     <Compile Include="Account\Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Account\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     </Compile>
     <Compile Include="Contact.aspx.cs">

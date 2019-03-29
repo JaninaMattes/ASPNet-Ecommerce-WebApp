@@ -1,7 +1,6 @@
-<%@ Page Language="C#" Title="User Profile" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomerProfile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.CustomerProfile" %>
+﻿<%@ Page Language="C#" Title="User Profile" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.WebForm1" %>
 
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
+<asp:Content runat="server" ID="Content1" ContentPlaceHolderID="MainContent">
     <section>
         
         <div class="align-top">
@@ -82,7 +81,7 @@
             </asp:TableRow>
             <asp:TableRow>
             <asp:TableCell>
-                <asp:Button ID="SaveButton" runat="server" Text="Save" OnClick="SaveButton_Click" CssClass="btn btn-primary"/>
+                <asp:Button ID="SaveButton" runat="server" Text="Edit" OnClick="SaveButtonGo" CssClass="btn btn-default"/>
             </asp:TableCell>
         </asp:TableRow>
         </asp:Table>
@@ -102,8 +101,8 @@
                 </asp:TableRow>
             </asp:Table>  
         </div>
-        
-            </div>
+        </div>
         </div>
     </section>
 </asp:Content>
+
