@@ -18,5 +18,10 @@ namespace WebsiteLaitBrasseur.Account
         {
             /*Label_Message.Text = "Changes are saved successfully.";*/
         }
+
+        protected void EditButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

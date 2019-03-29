@@ -94,13 +94,58 @@ namespace WebsiteLaitBrasseur.Account {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailValidator;
         
         /// <summary>
-        /// Table_ButtonContainer control.
+        /// PhoneNo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table_ButtonContainer;
+        protected global::System.Web.UI.WebControls.TextBox PhoneNo;
+        
+        /// <summary>
+        /// PhoneNumberValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator PhoneNumberValidator;
+        
+        /// <summary>
+        /// Country control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList Country;
+        
+        /// <summary>
+        /// TextBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        
+        /// <summary>
+        /// RegularExpressionValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator RegularExpressionValidator1;
+        
+        /// <summary>
+        /// EditButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button EditButton;
         
         /// <summary>
         /// SaveButton control.
@@ -112,12 +157,12 @@ namespace WebsiteLaitBrasseur.Account {
         protected global::System.Web.UI.WebControls.Button SaveButton;
         
         /// <summary>
-        /// myTable control.
+        /// shoppingOverview control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table myTable;
+        protected global::System.Web.UI.WebControls.GridView shoppingOverview;
     }
 }

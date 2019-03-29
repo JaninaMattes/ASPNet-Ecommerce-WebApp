@@ -11,6 +11,7 @@ namespace WebsiteLaitBrasseur
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            btnUserProfile_Click(sender, e);
             /*
             if (!String.IsNullOrEmpty(Request.QueryString["srch"])
             {
@@ -37,8 +38,7 @@ namespace WebsiteLaitBrasseur
 
         protected void btnUserProfile_Click(object sender, EventArgs e)
         {
-
-
+            /*Response.Redirect("~/Account/CustomerProfile.aspx");*/
         }
 
     }
