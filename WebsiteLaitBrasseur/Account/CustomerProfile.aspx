@@ -1,15 +1,13 @@
 <%@ Page Language="C#" Title="User Profile" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomerProfile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.CustomerProfile" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
-    <section>
-        
-        <div class="align-top">
+      <h3>Profile</h3>
+        <div class="form-group">
             <div class="split left">
-            <h1>Profile</h1>
+          
             <div id="header" class="card-img">
             <img id="customerImg" alt="Customer Image" src="/Images/customerImg.jpg" style="width:150px;height:150px" class="img-rounded img-responsive" />
-        </div>
+            </div>
 
         <div id="table" class="table-borderless">
         <asp:Table id="Table_UserProfile" runat="server"
@@ -70,7 +68,7 @@
         </asp:TableRow>
 
         </asp:Table>
-        <div class="align-bottom">
+        <div class="col-md-offset-3 col-md-9">
             <asp:Table id="Table_ButtonContainer" runat="server"
                  CellPadding="10" 
                  GridLines="Both"
@@ -105,5 +103,4 @@
         
             </div>
         </div>
-    </section>
 </asp:Content>

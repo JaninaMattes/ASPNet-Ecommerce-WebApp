@@ -11,11 +11,7 @@ namespace WebsiteLaitBrasseur.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-<<<<<<< Updated upstream
             SaveButton_Click(sender, e);
-=======
-            Button5
->>>>>>> Stashed changes
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
