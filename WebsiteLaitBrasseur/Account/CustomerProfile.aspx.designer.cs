@@ -10,34 +10,52 @@
 namespace WebsiteLaitBrasseur.Account {
     
     
-    public partial class WebForm1 {
+    public partial class CustomerProfile {
         
         /// <summary>
-        /// FirstName control.
+        /// Table_UserProfile control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FirstName;
+        protected global::System.Web.UI.WebControls.Table Table_UserProfile;
         
         /// <summary>
-        /// FirstNameRequired control.
+        /// Firstname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator FirstNameRequired;
+        protected global::System.Web.UI.WebControls.TextBox Firstname;
         
         /// <summary>
-        /// LastName control.
+        /// RequiredFieldValidator1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LastName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
+        /// Lastname control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Lastname;
+        
+        /// <summary>
+        /// RequiredFieldValidator2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
         
         /// <summary>
         /// Username control.
@@ -49,6 +67,15 @@ namespace WebsiteLaitBrasseur.Account {
         protected global::System.Web.UI.WebControls.TextBox Username;
         
         /// <summary>
+        /// RequiredFieldValidator3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
+        
+        /// <summary>
         /// Email control.
         /// </summary>
         /// <remarks>
@@ -58,30 +85,39 @@ namespace WebsiteLaitBrasseur.Account {
         protected global::System.Web.UI.WebControls.TextBox Email;
         
         /// <summary>
-        /// EmailRegexValidator control.
+        /// EmailValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailRegexValidator;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailValidator;
         
         /// <summary>
-        /// Password control.
+        /// Table_ButtonContainer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Password;
+        protected global::System.Web.UI.WebControls.Table Table_ButtonContainer;
         
         /// <summary>
-        /// PasswordRegexValidator control.
+        /// SaveButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordRegexValidator;
+        protected global::System.Web.UI.WebControls.Button SaveButton;
+        
+        /// <summary>
+        /// myTable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table myTable;
     }
 }

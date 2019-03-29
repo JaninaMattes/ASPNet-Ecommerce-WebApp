@@ -1,100 +1,107 @@
-﻿<%@ Page Language="C#" Title="Profile" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomerProfile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.WebForm1" %>
+﻿<%@ Page Language="C#" Title="User Profile" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomerProfile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.CustomerProfile" %>
 
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-        <h1>Profile</h1>
-          
-    <div class="form-group">
-        <div style="width:48%; float: left;">
-             <img id="customerImg" alt="Customer Image" src="/Images/customerImg.jpg" class="img-rounded img-responsive" />
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <section>
         
-        <% Textfield: Firstname %> 
-        <div class="form-group">
-            <label for="Firstname" class="control-label col-md-3">Firstname</label>
-            <div class="col-md-3">
-                <asp:TextBox ID="FirstName" Text="0" runat="server" AutoPostBack="True">
-                </asp:TextBox>
-                <% Field validator to check empty user input %>
-                <asp:RequiredFieldValidator ID="FirstNameRequired" runat="server" 
+        <div class="align-top">
+            <div class="split left">
+            <h1>Profile</h1>
+            <div id="header" class="card-img">
+            <img id="customerImg" alt="User Image" src="/Images/customerImg.jpg" style="width:150px;height:150px" class="img-rounded img-responsive" />
+        </div>
+
+        <div id="table" class="table-borderless">
+        <asp:Table id="Table_UserProfile" runat="server"
+                 CellPadding="10" 
+                 GridLines="Both"
+                 HorizontalAlign="Left">
+          <asp:TableRow>
+            <asp:TableCell>
+                <label for="Firstname" class="control-label col-md-3">Firstname</label>
+            </asp:TableCell>
+            <asp:TableCell>
+               <asp:TextBox ID="Firstname" Text="" runat="server" AutoPostBack="True" Cssclass="form-control"> </asp:TextBox>
+               <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" 
                     ControlToValidate="FirstName" 
                     Display="Dynamic" 
                     ErrorMessage="Should not be blank."
-                    CssClass="text-danger">
-                </asp:RequiredFieldValidator>
-                <br/>
-            </div>
-        </div>
-        
-
-        <% Textfield: Lastname %> 
-        <div class="form-group">
-            <label for="Lastname" class="control-label col-md-3">Lastname</label>
-            <div class="col-md-3">
-                <asp:TextBox ID="LastName" Text="0" runat="server" AutoPostBack="True">
-                </asp:TextBox>
-                <% Field validator to check empty user input %>
-                <asp:RequiredFieldValidator ID="LastNameRequired"runat="server" 
-                    ControlToValidate="Lastname" 
-                    Display="Dynamic"              
+                    CssClass="text-danger"> </asp:RequiredFieldValidator>
+            </asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow>
+            <asp:TableCell>
+                <label for="Lastname" class="control-label col-md-3">Lastname</label>
+            </asp:TableCell>
+            <asp:TableCell>
+               <asp:TextBox ID="Lastname" Text="" runat="server" AutoPostBack="True" Cssclass="form-control"> </asp:TextBox>
+               <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" 
+                    ControlToValidate="LastName" 
+                    Display="Dynamic" 
                     ErrorMessage="Should not be blank."
-                    CssClass="text-danger">
-                </asp:RequiredFieldValidator>
-                <br/>
-            </div>
-        </div>
-
-        <% Textfield: Username %>
-        <div class="form-group">
-            <label for="Username" class="control-label col-md-3">Username</label>
-            <div class="col-md-3">
-                <asp:TextBox ID="Username" Text="0" runat="server" AutoPostBack="True">
-                </asp:TextBox>
-                <% Field validator to check empty user input %>
-                <asp:RequiredFieldValidator ID="UserNameRequired"runat="server" 
-                    ControlToValidate="Username" 
-                    Display="Dynamic"
+                    CssClass="text-danger"> </asp:RequiredFieldValidator>
+            </asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow>
+            <asp:TableCell>
+                <label for="Username" class="control-label col-md-3">Username</label>
+            </asp:TableCell>
+            <asp:TableCell>
+               <asp:TextBox ID="Username" Text="" runat="server" AutoPostBack="True" Cssclass="form-control"></asp:TextBox>
+               <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" 
+                    ControlToValidate="FirstName" 
+                    Display="Dynamic" 
                     ErrorMessage="Should not be blank."
-                    CssClass="text-danger">
-                </asp:RequiredFieldValidator>
-                <br/>
-            </div>
-        </div>
-
-        <% Textfield: Email %>
-        <div class="form-group">
-            <label for="Email" class="control-label col-md-3">Email</label>
-            <div class="col-md-3">
-                <asp:TextBox ID="Email" Text="0" runat="server" AutoPostBack="True">
-                </asp:TextBox>
-                <% Field validator to check user input with regex%>
-                <asp:RegularExpressionValidator ID="EmailRegexValidator" runat="server" 
+                    CssClass="text-danger"> </asp:RequiredFieldValidator>
+            </asp:TableCell>
+        </asp:TableRow>
+        <asp:TableRow>
+            <asp:TableCell>
+                <label for="Email" class="control-label col-md-3">Email</label>
+            </asp:TableCell>
+            <asp:TableCell>
+               <asp:TextBox ID="Email" Text="" runat="server" AutoPostBack="True" Cssclass="form-control"> </asp:TextBox>
+               <asp:RegularExpressionValidator ID="EmailValidator" runat="server" 
                     ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" 
                     ControlToValidate="Email" 
                     ErrorMessage="Invalid Email Format"
-                    CssClass="text-danger">
-                </asp:RegularExpressionValidator>
-                <br/>
-            </div>
+                    CssClass="text-danger"> </asp:RegularExpressionValidator>
+            </asp:TableCell>
+        </asp:TableRow>
+
+        </asp:Table>
+        <div class="align-bottom">
+            <asp:Table id="Table_ButtonContainer" runat="server"
+                 CellPadding="10" 
+                 GridLines="Both"
+                 BottomAlign="Left" Height="35px" Width="96px">
+            <asp:TableRow>
+                <asp:TableCell>
+                <label for="Label_Message" class="control-label col-md-3"></label>
+                </asp:TableCell>
+            </asp:TableRow>
+            <asp:TableRow>
+            <asp:TableCell>
+                <asp:Button ID="SaveButton" runat="server" Text="Save" OnClick="SaveButton_Click" CssClass="btn btn-primary"/>
+            </asp:TableCell>
+        </asp:TableRow>
+        </asp:Table>
+        </div>    
+        </div>
         </div>
 
-        <% Textfield: Password %>
-        <label for="Password" class="control-label col-md-3">Password</label>
-        <div class="col-md-3">
-            <asp:TextBox ID="Password" Text="0" runat="server" AutoPostBack="True">
-            </asp:TextBox>
-            <% Field validator to check empty user input %>
-            <asp:RequiredFieldValidator ID="PasswordRegexValidator" runat="server" 
-                ControlToValidate="TextBox1" 
-                Display="Dynamic" 
-                Forecolor="Red"
-                ErrorMessage="Should not be blank.">
-            </asp:RequiredFieldValidator>
-             <br/>
-            </div>
+        <div class="split right">
+            <h2>Shopping History</h2>
+        <div class="form-group">
+            <asp:Table ID="myTable" runat="server" Width="100%"> 
+                <asp:TableRow>
+                    <asp:TableCell>Invoice Number</asp:TableCell>
+                    <asp:TableCell>Total Amount</asp:TableCell>
+                    <asp:TableCell>Date Ordered</asp:TableCell>
+                    <asp:TableCell>Date Arrived</asp:TableCell>
+                </asp:TableRow>
+            </asp:Table>  
         </div>
-    </div>
-
-    <div style="width:48%; margin-left: 1%; float: right;">
-        <h2>Shopping History</h2>
-        <p>Select an item.</p>
-    </div>
+        </div>
+        </div>
+    </section>
 </asp:Content>

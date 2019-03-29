@@ -11,7 +11,12 @@ namespace WebsiteLaitBrasseur.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            SaveButton_Click(sender, e);
+        }
 
+        protected void SaveButton_Click(object sender, EventArgs e)
+        {
+            /*Label_Message.Text = "Changes are saved successfully.";*/
         }
     }
 }

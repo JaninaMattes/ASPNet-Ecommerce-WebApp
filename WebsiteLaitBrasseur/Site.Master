@@ -2,11 +2,11 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title><%: Page.Title %> - LaitBrasseur</title>
-
+    
     <meta name="viewport"  content="width=device-width; initial-scale=1"/>
     <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <link href="/Content/site.css" rel="stylesheet" />
@@ -23,9 +23,7 @@
             </a>
             <h1 class="d-flex justify-content-center">Lait Brasseur</h1>
             <a href="/Account/Login.aspx" class="d-flex justify-content-end">LogIn</a>
-
     </header>
-
 
     <form id="MasterBodyForm" runat="server">
 
@@ -39,7 +37,7 @@
                     </div>
 
                     <div id="UserProfileButton" class="d-flex justify-content-end ">         
-                        <asp:Button ID="ButtonUserProfile" runat="server" Text="UserProfile" OnClick="btnUserProfile_Click" class="btn btn-secondary"/>                
+                        <asp:Button ID="ButtonUserProfile" runat="server" Text="Profile" OnClick="btnUserProfile_Click" OnClientClick="window.open('CustomerProfile.aspx', 'ProfilePage');" class="btn btn-secondary"/>                
                     </div>
 
             </div>
@@ -55,12 +53,10 @@
                 <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder><hr />
         </div>  
 
-    </form>
-
     <footer>
         <p> &copy; <%: DateTime.Now.Year %> - <a runat="server" href="/Contact.aspx">Contact</a>  - <a runat="server" href="~/">About us</a> - <a runat="server" href="~/">Facebook</a> </p>
     </footer>
+  
+    </form>
 </body>
-
-
 </html>

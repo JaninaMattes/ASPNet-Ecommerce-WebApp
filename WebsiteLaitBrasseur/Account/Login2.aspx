@@ -7,6 +7,7 @@
             <div class="form-group">
                 <label for="TextLogin" class="control-label col-md-3">Login</label>
                 <div class="col-md-3">
+                    <a href="Login2.aspx">Login2.aspx</a>
                     <asp:TextBox ID="TextLogin" runat="server" Cssclass="form-control"> </asp:TextBox>
                     <asp:RequiredFieldValidator ID="LoginReqField" runat="server" ErrorMessage="Login is required" ControlToValidate="TextLogin" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                 </div>
