@@ -13,21 +13,21 @@ namespace WebsiteLaitBrasseur {
     public partial class Default {
         
         /// <summary>
-        /// Contrôle BeerButton.
+        /// Contrôle beer_button.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BeerButton;
+        protected global::System.Web.UI.WebControls.Button beer_button;
         
         /// <summary>
-        /// Contrôle ChesseButton.
+        /// Contrôle Chesse_button.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ChesseButton;
+        protected global::System.Web.UI.WebControls.Button Chesse_button;
     }
 }
