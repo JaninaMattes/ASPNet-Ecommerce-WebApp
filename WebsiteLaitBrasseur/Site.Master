@@ -4,44 +4,77 @@
 
 <html lang="en">
 <head runat="server">
+<<<<<<< HEAD
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title><%: Page.Title %> - LaitBrasseur</title>
     
+=======
+
+>>>>>>> 6826cf59fe47714ec1f9fcf678a280cb8240b55c
     <meta name="viewport"  content="width=device-width; initial-scale=1"/>
+    <title><%: Page.Title %> - LaitBrasseur</title>
+
     <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/Content/site.css" rel="stylesheet" />
+    <link href="/Content/bootstrap.css" rel="stylesheet" type="text/css"/>
+
     <script src="/Scripts/jquery-3.3.1.min.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
+    <link href="/Content/site.css" rel="stylesheet" type="text/css" />
+
 
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 
 </head>
 <body>
     <header class="jumbotron">
+<<<<<<< HEAD
             <a href="/Account/Logout.aspx">
                 <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg"   style="float:left;width:auto;height:auto" />
             </a>
             <h1 class="d-flex justify-content-center">Lait Brasseur</h1>
             <a href="/Account/Login.aspx" class="d-flex justify-content-end">LogIn</a>
+=======
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/Default.aspx">
+                    <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg"   style="text-align:left;width:auto;height:auto"  />
+                 </a>
+
+             </div>
+            <div class="col-md-4">
+                 <h1  class="offset-6">Lait Brasseur</h1>
+            </div>
+            <div class="col-md-4">
+                <a href="/Account/Login2.aspx"  class="offset-11">LogIn</a>
+            </div>
+        </div>
+>>>>>>> 6826cf59fe47714ec1f9fcf678a280cb8240b55c
     </header>
 
     <form id="MasterBodyForm" runat="server">
-
+    <div class="container-fluid ">
         <div class="container">
-            <div id="searchBar"  class="d-flex justify-content-center">         
-                    <asp:TextBox ID="TextSearch" runat="server" class="navbar-text"></asp:TextBox>
-                    <asp:Button ID="ButtonSearch" runat="server" Text="Search" OnClick="btnSearch_Click" class="btn btn-primary"/>
-
-                    <div id="CartButton" class="d-flex justify-content-end ">         
-                        <asp:Button ID="ButtonCart" runat="server" Text="Cart" OnClick="btnCart_Click" class="btn btn-secondary"/>                
+             <div id="NavBar" class="row">
+                   <div class="col-md-4  "></div>
+                    <div class="col-md-4  ">
+                        <asp:TextBox ID="TextSearch" runat="server" class="navbar-text "></asp:TextBox>
+                        <asp:Button ID="ButtonSearch" runat="server" Text="Search" OnClick="btnSearch_Click" class="btn btn-primary " />
                     </div>
 
+<<<<<<< HEAD
                     <div id="UserProfileButton" class="d-flex justify-content-end ">         
                         <asp:Button ID="ButtonUserProfile" runat="server" Text="Profile" OnClick="btnUserProfile_Click" OnClientClick="window.open('CustomerProfile.aspx', 'ProfilePage');" class="btn btn-secondary"/>                
+=======
+                    <div class="col-md-4   ">
+                        <asp:Button ID="ButtonCart" runat="server" Text="Cart" OnClick="btnCart_Click" class="btn btn-primary  "/> 
+                        <asp:Button ID="ButtonUserProfile" runat="server" Text="UserProfile" OnClick="btnUserProfile_Click" class="btn btn-primary "/>              
+>>>>>>> 6826cf59fe47714ec1f9fcf678a280cb8240b55c
                     </div>
-
-            </div>
+                
+           </div>
         </div>
+    </div>
+    
 
 
 

@@ -1,27 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="WebsiteLaitBrasseur.Contact" %>
+﻿<%@ Page Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="WebsiteLaitBrasseur.Contact" %>
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Contact</title>
+<asp:Content ID="Body" ContentPlaceHolderID="MainContent" runat="server">
 
-    <meta name="viewport"  content="width=device-width; initial-scale=1"/>
-    <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/Content/site.css" rel="stylesheet" />
-    <script src="/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="/Scripts/bootstrap.min.js"></script>
-
-</head>
-<body>
-    <header class="jumbotron">
         <h1>You try to reach us ?</h1>
-        <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg" class="img-rounded img-responsive" />
-    </header>
 
-        <div>
-            <h4>You can see us in the shop : </h4>
+    <div class="container">
+         <h4>You can see us in the shop : </h4>
             <address > 
                 <strong>Lait Brasseur<br /></strong>
                 Le Champ Paveau <br />
@@ -30,9 +15,8 @@
                 Mail: contact@laitbrasseur.com<br />
                 <abbr title="Phone">Mobile:</abbr> 06-60-02-62-58
             </address>
-        </div>
-        <form id="ContactForm" runat="server" class="form-horizontal">
-            <h4>Or you can let us a message :</h4>
+
+        <h4>Or you can let us a message :</h4>
 
             <div class="form-group">
                 <label for="TextName" class="control-label col-md-3">Name (or Social Reason)*</label>
@@ -55,11 +39,8 @@
                 <div class="col-md-3">
                     <asp:TextBox ID="TextMessage" runat="server" Cssclass="form-control"> </asp:TextBox>
                 </div>
-
             </div>
-        </form>
-<!--To the shop / adress
-Let us a message : nom () / mail / message
-    -->
-</body>
-</html>
+    </div>
+
+
+</asp:Content>

@@ -2,33 +2,28 @@
 
 
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-
-</asp:Content>
 
 
-<asp:Content ID="Content2" ContentPlaceHolderID="HeaderContent" runat="server">
 
-</asp:Content>
+<asp:Content ID="Body" ContentPlaceHolderID="MainContent" runat="server">
 
+    <div class="container-fluid">
+            <img id="Img_prez" alt="LaitBrasseur_Prez" src="/Images/beers_prez.jpg" Class="offset-2" style="width:auto;height:auto" />
 
-<asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-
-
-    <div class="text-center">
-        <img id="Img_prez" alt="LaitBrasseur_Prez" src="/Images/beers_prez.jpg"  style="width:auto;height:auto" />
     </div>
 
-    <div class="container">
-        <img id="Beer_prez" alt="LaitBrasseur_Beers" src="/Images/beer_button.jpg"  style="float:left;width:25%;height:25%"  />
-        <asp:Button ID="BeerButton" runat="server" Text="Beers" OnClick="BeerButton_Click" CssClass="btn btn-primary"/>
-
-        <img id="Cheese_prez" alt="LaitBrasseur_Cheese" src="/Images/cheese_carre.jpg"  style="float:right;width:25%;height:25%"/>
-        <asp:Button ID="ChesseButton" runat="server" Text="Chesse" OnClick="CheeseButton_Click" CssClass="btn btn-primary"/>
+<div class="container-fluid">
+    <div class="row">
+            <div class="col-md-6 img-responsive">
+                <asp:button ID="beer_button" runat="server" Text="Beer" class="btn btn-primary" />
+                <img id="Beer_prez" alt="LaitBrasseur_Beers" src="/Images/beer_button.jpg"  />
+            </div>
+           <div class="col-md-6 img-responsive">
+                <img id="Cheese_prez" alt="LaitBrasseur_Cheese" src="/Images/cheese_carre.jpg"  class="offset-6"/>
+                <asp:button ID="Chesse_button" runat="server" Text="Cheese" class="btn btn-primary"/>
+           </div>
     </div>
-    
-
-
+</div>
 
 
 
