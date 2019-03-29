@@ -1,13 +1,14 @@
 ﻿<%@ Page Language="C#" Title="User Profile" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CustomerProfile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.CustomerProfile" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+
     <section>
         
         <div class="align-top">
             <div class="split left">
             <h1>Profile</h1>
             <div id="header" class="card-img">
-            <img id="customerImg" alt="User Image" src="/Images/customerImg.jpg" style="width:150px;height:150px" class="img-rounded img-responsive" />
+            <img id="customerImg" alt="Customer Image" src="/Images/customerImg.jpg" style="width:150px;height:150px" class="img-rounded img-responsive" />
         </div>
 
         <div id="table" class="table-borderless">

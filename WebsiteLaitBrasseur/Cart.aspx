@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="Cart" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="WebsiteLaitBrasseur.Cart" %>
 
-
-
 <asp:Content ID="Body" ContentPlaceHolderID="MainContent" runat="server">
     <div class="container-fluid ">
 
@@ -128,7 +126,6 @@
                    <div class="col-md-1">
                         <asp:checkbox ID="checkBoxCheese" runat="server" />
                    </div>
-
                 </div>
 
 
@@ -137,15 +134,12 @@
             <!--Summary-->
             <div class="col-md-2 offset-1" >
                  <div id="CartTitle2" runat="server" class="ContentHead"><h1>Summary</h1></div>
-
                  <div >
                      <asp:Label ID="Amount" runat="server" cssclass="text-info  " Text="Amount :"></asp:Label><br /> <br />
                      <asp:Label ID="Tax" runat="server" cssclass="text-info " Text="Tax :"></asp:Label><br /><br />
                      <asp:Label ID="ShippingCost" runat="server" cssclass="text-info " Text="Shipping Cost :"></asp:Label><br /><br />
                      <asp:Label ID="TotalCost" runat="server" cssclass="text-info " Text="Total Cost :"></asp:Label><br /><br />
-
                  </div>
-
             </div>
 
 

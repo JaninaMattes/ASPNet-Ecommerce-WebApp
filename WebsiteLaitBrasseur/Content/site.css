@@ -25,6 +25,7 @@ footer {
     text-align: center;
 }
 
+<<<<<<< Updated upstream
 .searchBar{
     background-color:lightgrey;
 }
@@ -35,6 +36,8 @@ footer {
     margin: 0 auto;
 }
 
+=======
+>>>>>>> Stashed changes
 /* Split the screen in half */
 .split {
     height: 100%;
