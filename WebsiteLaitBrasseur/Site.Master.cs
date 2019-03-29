@@ -11,7 +11,35 @@ namespace WebsiteLaitBrasseur
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            /*
+            if (!String.IsNullOrEmpty(Request.QueryString["srch"])
+            {
+                //perform search and display results
+            }*/
+        }
+
+
+        
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+
+            /*
+            var searchText = Server.UrlEncode(txtSearchMaster.Text);    // URL encode in case of special characters
+            Response.Redirect("~/.aspx?srch=" + searchText);
+            */
+        }
+
+        protected void btnCart_Click(object sender, EventArgs e)
+        {
+
 
         }
+
+        protected void btnUserProfile_Click(object sender, EventArgs e)
+        {
+
+
+        }
+
     }
 }

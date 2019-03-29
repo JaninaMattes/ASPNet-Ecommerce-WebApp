@@ -13,16 +13,39 @@
     <script src="/Scripts/jquery-3.3.1.min.js"></script>
     <script src="/Scripts/bootstrap.min.js"></script>
 
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
 </head>
 <body>
     <header class="jumbotron">
-        <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg" class="img-rounded img-responsive" />
+            <a href="/Account/Logout.aspx">
+                <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg"   style="float:left;width:auto;height:auto" />
+            </a>
+            <h1 class="d-flex justify-content-center">Lait Brasseur</h1>
+            <a href="/Account/Login.aspx" class="d-flex justify-content-end">LogIn</a>
+
     </header>
 
 
-    <form id="form1" runat="server">
+    <form id="MasterBodyForm" runat="server">
+
+        <div class="container">
+            <div id="searchBar"  class="d-flex justify-content-center">         
+                    <asp:TextBox ID="TextSearch" runat="server" class="navbar-text"></asp:TextBox>
+                    <asp:Button ID="ButtonSearch" runat="server" Text="Search" OnClick="btnSearch_Click" class="btn btn-primary"/>
+
+                    <div id="CartButton" class="d-flex justify-content-end ">         
+                        <asp:Button ID="ButtonCart" runat="server" Text="Cart" OnClick="btnCart_Click" class="btn btn-secondary"/>                
+                    </div>
+
+                    <div id="UserProfileButton" class="d-flex justify-content-end ">         
+                        <asp:Button ID="ButtonUserProfile" runat="server" Text="UserProfile" OnClick="btnUserProfile_Click" class="btn btn-secondary"/>                
+                    </div>
+
+            </div>
+        </div>
+
+
 
         <div class="container header-content">
                 <asp:ContentPlaceHolder ID="HeaderContent" runat="server"></asp:ContentPlaceHolder><hr />
@@ -35,7 +58,7 @@
     </form>
 
     <footer>
-        <p> &copy; <%: DateTime.Now.Year %> - <a runat="server" href="~/Contact">Contact</a>  - <a runat="server" href="~/">About us</a> - <a runat="server" href="~/">Facebook</a> </p>
+        <p> &copy; <%: DateTime.Now.Year %> - <a runat="server" href="/Contact.aspx">Contact</a>  - <a runat="server" href="~/">About us</a> - <a runat="server" href="~/">Facebook</a> </p>
     </footer>
 </body>
 
