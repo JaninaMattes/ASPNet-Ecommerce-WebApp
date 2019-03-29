@@ -73,6 +73,7 @@
     <Content Include="Account\CustomerProfile.aspx" />
     <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="Account\OverviewPage.aspx" />
     <Content Include="Cart.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Images\beers_prez.jpg" />
@@ -157,6 +158,13 @@
     </Compile>
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\OverviewPage.aspx.cs">
+      <DependentUpon>OverviewPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\OverviewPage.aspx.designer.cs">
+      <DependentUpon>OverviewPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>

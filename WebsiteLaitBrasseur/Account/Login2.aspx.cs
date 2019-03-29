@@ -16,10 +16,20 @@ namespace WebsiteLaitBrasseur.Account
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            Label1.Text = TextLogin.Text + " " + TextPassword.Text + " you are logged in.";
+            /*Label1.Text = TextLogin.Text + " " + TextPassword.Text + " you are logged in.";*/
         }
 
         protected void TextBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void grdProducts_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
