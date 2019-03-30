@@ -7,19 +7,19 @@ using System.Web.UI.WebControls;
 
 namespace WebsiteLaitBrasseur
 {
-    public partial class Cart : System.Web.UI.Page
+    public partial class CardPayment : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
 
-        protected void updateButton_Click(object sender, EventArgs e)
+        protected void SubmitButton_Click(object sender, EventArgs e)
         {
-            //TotalBrune.Text = Convert.ToUInt32(QuantityBrune.Text) * Convert.ToString(PriceBrune.Text);
+            
         }
 
-        protected void BuyButton_Click(object sender, EventArgs e)
+        protected void CancelButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Billing.aspx");
         }

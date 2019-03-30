@@ -3,9 +3,10 @@
 
 <asp:Content ID="Body" ContentPlaceHolderID="MainContent" runat="server">
 
-        <h1>You try to reach us ?</h1>
 
-    <div class="container">
+
+    <div class="container-fluid">
+         <h1>You try to reach us ?</h1>
          <h4>You can see us in the shop : </h4>
             <address > 
                 <strong>Lait Brasseur<br /></strong>

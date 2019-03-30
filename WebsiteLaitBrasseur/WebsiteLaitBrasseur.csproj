@@ -74,6 +74,8 @@
     <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\OverviewPage.aspx" />
+    <Content Include="Billing.aspx" />
+    <Content Include="CardPayment.aspx" />
     <Content Include="Cart.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Images\beers_prez.jpg" />
@@ -97,6 +99,8 @@
     <Content Include="Images\laitBrasseur.jpg" />
     <Content Include="Images\laitBrasseurmin.jpg" />
     <Content Include="Images\beer_button.jpg" />
+    <Content Include="Images\mastercard-logo-.png" />
+    <Content Include="Images\visa_logo.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -165,6 +169,27 @@
     </Compile>
     <Compile Include="Account\OverviewPage.aspx.designer.cs">
       <DependentUpon>OverviewPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Billing.aspx.cs">
+      <DependentUpon>Billing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Billing.aspx.designer.cs">
+      <DependentUpon>Billing.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CardPayment.aspx.cs">
+      <DependentUpon>CardPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CardPayment.aspx.designer.cs">
+      <DependentUpon>CardPayment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cart.aspx.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cart.aspx.designer.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>

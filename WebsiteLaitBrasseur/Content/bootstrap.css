@@ -550,7 +550,7 @@ pre code {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
-  margin-right: auto;
+  margin-right: 0px;
   margin-left: auto;
 }
 
