@@ -41,15 +41,39 @@
 
                    <div class="col-md-2  ">
                        <asp:Label ID="NameBrune" runat="server" cssclass="text-info " Text="Blackaty"></asp:Label><br />
-                       <asp:Label ID="PriceBrune" runat="server" cssclass="text-info" Text="3€"></asp:Label>
+                       <asp:Label ID="PriceBrune" runat="server" cssclass="text-info" Text="3"></asp:Label>
+                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
                    <div class="col-md-2   ">
-                      <asp:textbox id="QuantityBrune" runat="server" Cssclass="form-control" TextMode="Number"></asp:textbox>
+                   <asp:DropDownList ID="QuantityBrune" runat="server">
+                       <asp:ListItem Selected="True" Value="1"></asp:ListItem>
+                       <asp:ListItem  Value="2"></asp:ListItem>
+                       <asp:ListItem  Value="4"></asp:ListItem>
+                       <asp:ListItem  Value="5"></asp:ListItem>
+                       <asp:ListItem  Value="6"></asp:ListItem>
+                       <asp:ListItem  Value="7"></asp:ListItem>
+                       <asp:ListItem  Value="8"></asp:ListItem>
+                       <asp:ListItem  Value="9"></asp:ListItem>
+                       <asp:ListItem  Value="10"></asp:ListItem>
+                       <asp:ListItem  Value="11"></asp:ListItem>
+                       <asp:ListItem  Value="12"></asp:ListItem>
+                       <asp:ListItem  Value="13"></asp:ListItem>
+                       <asp:ListItem  Value="14"></asp:ListItem>
+                       <asp:ListItem  Value="15"></asp:ListItem>
+                       <asp:ListItem  Value="16"></asp:ListItem>
+                       <asp:ListItem  Value="17"></asp:ListItem>
+                       <asp:ListItem  Value="18"></asp:ListItem>
+                       <asp:ListItem  Value="19"></asp:ListItem>
+                       <asp:ListItem  Value="20"></asp:ListItem>
+                   </asp:DropDownList>
+
+
                    </div>
 
                    <div class="col-md-2   ">
                       <asp:Label ID="TotalBrune" runat="server" cssclass="text-info " Text=""></asp:Label>
+                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
                    <div class="col-md-1">
@@ -65,15 +89,37 @@
 
                    <div class="col-md-2">
                        <asp:Label ID="NameBlonde" runat="server" cssclass="text-info " Text="LaBlonde"></asp:Label><br />
-                       <asp:Label ID="PriceBlonde" runat="server" cssclass="text-info" Text="2€"></asp:Label>
+                       <asp:Label ID="PriceBlonde" runat="server" cssclass="text-info" Text="2"></asp:Label>
+                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
                    <div class="col-md-2 ">
-                      <asp:textbox id="QuantityBlonde" runat="server" Cssclass="form-control" TextMode="Number"></asp:textbox>
+                   <asp:DropDownList ID="QuantityBlonde" runat="server">
+                       <asp:ListItem Selected="True" Value="1"></asp:ListItem>
+                       <asp:ListItem  Value="2"></asp:ListItem>
+                       <asp:ListItem  Value="4"></asp:ListItem>
+                       <asp:ListItem  Value="5"></asp:ListItem>
+                       <asp:ListItem  Value="6"></asp:ListItem>
+                       <asp:ListItem  Value="7"></asp:ListItem>
+                       <asp:ListItem  Value="8"></asp:ListItem>
+                       <asp:ListItem  Value="9"></asp:ListItem>
+                       <asp:ListItem  Value="10"></asp:ListItem>
+                       <asp:ListItem  Value="11"></asp:ListItem>
+                       <asp:ListItem  Value="12"></asp:ListItem>
+                       <asp:ListItem  Value="13"></asp:ListItem>
+                       <asp:ListItem  Value="14"></asp:ListItem>
+                       <asp:ListItem  Value="15"></asp:ListItem>
+                       <asp:ListItem  Value="16"></asp:ListItem>
+                       <asp:ListItem  Value="17"></asp:ListItem>
+                       <asp:ListItem  Value="18"></asp:ListItem>
+                       <asp:ListItem  Value="19"></asp:ListItem>
+                       <asp:ListItem  Value="20"></asp:ListItem>
+                   </asp:DropDownList>
                    </div>
 
                    <div class="col-md-2 ">
                       <asp:Label ID="TotalBlonde" runat="server" cssclass="text-info " Text=""></asp:Label>
+                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
                    <div class="col-md-1">
@@ -90,15 +136,37 @@
 
                    <div class="col-md-2">
                        <asp:Label ID="NameBlanche" runat="server" cssclass="text-info " Text="Blanchette"></asp:Label><br />
-                       <asp:Label ID="PriceBlanche" runat="server" cssclass="text-info" Text="1.5€"></asp:Label>
+                       <asp:Label ID="PriceBlanche" runat="server" cssclass="text-info" Text="1,5"></asp:Label>
+                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
                    <div class="col-md-2  ">
-                      <asp:textbox id="QuantityBlanche" runat="server" Cssclass="form-control" TextMode="Number"></asp:textbox>
+                   <asp:DropDownList ID="QuantityBlanche" runat="server">
+                       <asp:ListItem Selected="True" Value="1"></asp:ListItem>
+                       <asp:ListItem  Value="2"></asp:ListItem>
+                       <asp:ListItem  Value="4"></asp:ListItem>
+                       <asp:ListItem  Value="5"></asp:ListItem>
+                       <asp:ListItem  Value="6"></asp:ListItem>
+                       <asp:ListItem  Value="7"></asp:ListItem>
+                       <asp:ListItem  Value="8"></asp:ListItem>
+                       <asp:ListItem  Value="9"></asp:ListItem>
+                       <asp:ListItem  Value="10"></asp:ListItem>
+                       <asp:ListItem  Value="11"></asp:ListItem>
+                       <asp:ListItem  Value="12"></asp:ListItem>
+                       <asp:ListItem  Value="13"></asp:ListItem>
+                       <asp:ListItem  Value="14"></asp:ListItem>
+                       <asp:ListItem  Value="15"></asp:ListItem>
+                       <asp:ListItem  Value="16"></asp:ListItem>
+                       <asp:ListItem  Value="17"></asp:ListItem>
+                       <asp:ListItem  Value="18"></asp:ListItem>
+                       <asp:ListItem  Value="19"></asp:ListItem>
+                       <asp:ListItem  Value="20"></asp:ListItem>
+                   </asp:DropDownList>
                    </div>
 
                    <div class="col-md-2 ">
                       <asp:Label ID="TotalBlanche" runat="server" cssclass="text-info " Text=""></asp:Label>
+                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
                    <div class="col-md-1">
@@ -114,14 +182,36 @@
 
                    <div class="col-md-3 ">
                        <asp:Label ID="NameCheese" runat="server" cssclass="text-info " Text="Le carré de l'Est"></asp:Label><br />
-                       <asp:Label ID="PriceCheese" runat="server" cssclass="text-info" Text="8€"></asp:Label>
+                       <asp:Label ID="PriceCheese" runat="server" cssclass="text-info" Text="8"></asp:Label>
+                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
                    <div class="col-md-2 ">
-                      <asp:textbox id="QuantityCheese" runat="server" Cssclass="form-control" TextMode="Number"></asp:textbox>
+                   <asp:DropDownList ID="QuantityCheese" runat="server">
+                       <asp:ListItem Selected="True" Value="1"></asp:ListItem>
+                       <asp:ListItem  Value="2"></asp:ListItem>
+                       <asp:ListItem  Value="4"></asp:ListItem>
+                       <asp:ListItem  Value="5"></asp:ListItem>
+                       <asp:ListItem  Value="6"></asp:ListItem>
+                       <asp:ListItem  Value="7"></asp:ListItem>
+                       <asp:ListItem  Value="8"></asp:ListItem>
+                       <asp:ListItem  Value="9"></asp:ListItem>
+                       <asp:ListItem  Value="10"></asp:ListItem>
+                       <asp:ListItem  Value="11"></asp:ListItem>
+                       <asp:ListItem  Value="12"></asp:ListItem>
+                       <asp:ListItem  Value="13"></asp:ListItem>
+                       <asp:ListItem  Value="14"></asp:ListItem>
+                       <asp:ListItem  Value="15"></asp:ListItem>
+                       <asp:ListItem  Value="16"></asp:ListItem>
+                       <asp:ListItem  Value="17"></asp:ListItem>
+                       <asp:ListItem  Value="18"></asp:ListItem>
+                       <asp:ListItem  Value="19"></asp:ListItem>
+                       <asp:ListItem  Value="20"></asp:ListItem>
+                   </asp:DropDownList>
                    </div>
                    <div class="col-md-2 ">
                       <asp:Label ID="TotalCheese" runat="server" cssclass="text-info " Text=""></asp:Label>
+                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
                    <div class="col-md-1">
@@ -137,29 +227,27 @@
                  <div id="CartTitle2" runat="server" class="ContentHead"><h1>Summary</h1><br /></div>
                  <div style="font-size:20px">
                      <asp:Label ID="Amount" runat="server" cssclass="text-info  " Text="Amount : "></asp:Label>
-                     <asp:Label ID="AmountValue" runat="server" cssclass="text-info" Text=""></asp:Label><br /> <br /><br />
+                     <asp:Label ID="AmountValue" runat="server" cssclass="text-info" Text=""></asp:Label>
+                     <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label><br /> <br /><br />
+
+                     <asp:Label ID="ShippingCost" runat="server" cssclass="text-info " Text="Shipping Cost : "></asp:Label>
+                     <asp:Label ID="ShippingCostValue" runat="server" cssclass="text-info " Text="4"></asp:Label>
+                     <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label><br /><br /><br />
 
                      <asp:Label ID="Tax" runat="server" cssclass="text-info " Text="Tax (%) : "></asp:Label>
                      <asp:Label ID="TaxValue" runat="server" cssclass="text-info" Text=" 20"></asp:Label><br /><br /><br />
 
-                     <asp:Label ID="ShippingCost" runat="server" cssclass="text-info " Text="Shipping Cost : "></asp:Label>
-                     <asp:Label ID="ShippingCostValue" runat="server" cssclass="text-info " Text=""></asp:Label><br /><br /><br />
-
                      <asp:Label ID="TotalCost" runat="server" cssclass="text-info " Text="Total Cost : "></asp:Label>
-                     <asp:Label ID="TotalCostValue" runat="server" cssclass="text-info " Text=""></asp:Label><br /><br /><br />
+                     <asp:Label ID="TotalCostValue" runat="server" cssclass="text-info " Text=""></asp:Label>
+                     <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label><br /><br /><br />
+
+                     <asp:Button ID="updateButton" runat="server" Text="Update" OnClick="updateButton_Click" ValidationGroup="Quantity" CssClass="btn btn-primary"/><br /><br /><br />
 
                      <asp:button ID="BuyButton" runat="server" CssClass="btn btn-success" Text="Buy" OnClick="BuyButton_Click" />
 
                  </div>
             </div>
-
-
         </div>
-        <br />
-        <div class="container">
-                <asp:Button ID="updateButton" runat="server" Text="Update" CssClass="btn btn-primary" OnClick="updateButton_Click" />
-        </div>
-
     </div>
 
 

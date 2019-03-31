@@ -64,7 +64,7 @@
                     <asp:Label ID="PriceCarreEst" runat="server" CssClass="text-right" Text="8€"></asp:Label>
                 </div>
                 <div>
-                    <asp:Label ID="StockCarreEst" runat="server" CssClass="text-success" Text="In-stock"></asp:Label>
+                    <asp:Label ID="StockCarreEst" runat="server" CssClass="text-warning" Text="Low-stock"></asp:Label>
                 </div>
             </div>
 
@@ -95,7 +95,7 @@
                     <asp:Label ID="PriceSpice" runat="server" CssClass="text-right" Text="2€"></asp:Label>
                 </div>
                 <div>
-                    <asp:Label ID="StockSpice" runat="server" CssClass=" text-warning" Text="Low Stock"></asp:Label>
+                    <asp:Label ID="StockSpice" runat="server" CssClass=" text-danger" Text="No stock"></asp:Label>
                 </div>
             </div>
 

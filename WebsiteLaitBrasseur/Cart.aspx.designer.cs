@@ -91,7 +91,7 @@ namespace WebsiteLaitBrasseur {
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox QuantityBrune;
+        protected global::System.Web.UI.WebControls.DropDownList QuantityBrune;
         
         /// <summary>
         /// Contrôle TotalBrune.
@@ -136,7 +136,7 @@ namespace WebsiteLaitBrasseur {
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox QuantityBlonde;
+        protected global::System.Web.UI.WebControls.DropDownList QuantityBlonde;
         
         /// <summary>
         /// Contrôle TotalBlonde.
@@ -181,7 +181,7 @@ namespace WebsiteLaitBrasseur {
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox QuantityBlanche;
+        protected global::System.Web.UI.WebControls.DropDownList QuantityBlanche;
         
         /// <summary>
         /// Contrôle TotalBlanche.
@@ -226,7 +226,7 @@ namespace WebsiteLaitBrasseur {
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox QuantityCheese;
+        protected global::System.Web.UI.WebControls.DropDownList QuantityCheese;
         
         /// <summary>
         /// Contrôle TotalCheese.
@@ -274,24 +274,6 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.Label AmountValue;
         
         /// <summary>
-        /// Contrôle Tax.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Tax;
-        
-        /// <summary>
-        /// Contrôle TaxValue.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label TaxValue;
-        
-        /// <summary>
         /// Contrôle ShippingCost.
         /// </summary>
         /// <remarks>
@@ -308,6 +290,24 @@ namespace WebsiteLaitBrasseur {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label ShippingCostValue;
+        
+        /// <summary>
+        /// Contrôle Tax.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Tax;
+        
+        /// <summary>
+        /// Contrôle TaxValue.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TaxValue;
         
         /// <summary>
         /// Contrôle TotalCost.
@@ -328,15 +328,6 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.Label TotalCostValue;
         
         /// <summary>
-        /// Contrôle BuyButton.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BuyButton;
-        
-        /// <summary>
         /// Contrôle updateButton.
         /// </summary>
         /// <remarks>
@@ -344,5 +335,14 @@ namespace WebsiteLaitBrasseur {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button updateButton;
+        
+        /// <summary>
+        /// Contrôle BuyButton.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BuyButton;
     }
 }
