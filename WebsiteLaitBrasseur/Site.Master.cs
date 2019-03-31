@@ -23,7 +23,7 @@ namespace WebsiteLaitBrasseur
         
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("/ProductOverview.aspx");
             /*
             var searchText = Server.UrlEncode(txtSearchMaster.Text);    // URL encode in case of special characters
             Response.Redirect("~/.aspx?srch=" + searchText);

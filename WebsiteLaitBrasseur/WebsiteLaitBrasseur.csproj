@@ -101,6 +101,12 @@
     <Content Include="Images\beer_button.jpg" />
     <Content Include="Images\mastercard-logo-.png" />
     <Content Include="Images\visa_logo.jpg" />
+    <Content Include="ProductDetails\ProductDetailBlanche.aspx" />
+    <Content Include="ProductDetails\ProductDetailBlonde.aspx" />
+    <Content Include="ProductDetails\ProductDetailCarreEst.aspx" />
+    <Content Include="ProductDetails\ProductDetailRaclette.aspx" />
+    <Content Include="ProductDetails\ProductDetailSpice.aspx" />
+    <Content Include="ProductDetails\ProductDetailBrune.aspx" />
     <Content Include="ProductDetails.aspx" />
     <Content Include="ProductOverview.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -216,6 +222,48 @@
     </Compile>
     <Compile Include="Account\Login2.aspx.designer.cs">
       <DependentUpon>Login2.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailBlanche.aspx.cs">
+      <DependentUpon>ProductDetailBlanche.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailBlanche.aspx.designer.cs">
+      <DependentUpon>ProductDetailBlanche.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailBlonde.aspx.cs">
+      <DependentUpon>ProductDetailBlonde.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailBlonde.aspx.designer.cs">
+      <DependentUpon>ProductDetailBlonde.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailCarreEst.aspx.cs">
+      <DependentUpon>ProductDetailCarreEst.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailCarreEst.aspx.designer.cs">
+      <DependentUpon>ProductDetailCarreEst.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailRaclette.aspx.cs">
+      <DependentUpon>ProductDetailRaclette.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailRaclette.aspx.designer.cs">
+      <DependentUpon>ProductDetailRaclette.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailSpice.aspx.cs">
+      <DependentUpon>ProductDetailSpice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailSpice.aspx.designer.cs">
+      <DependentUpon>ProductDetailSpice.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailBrune.aspx.cs">
+      <DependentUpon>ProductDetailBrune.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductDetails\ProductDetailBrune.aspx.designer.cs">
+      <DependentUpon>ProductDetailBrune.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProductDetails.aspx.cs">
       <DependentUpon>ProductDetails.aspx</DependentUpon>

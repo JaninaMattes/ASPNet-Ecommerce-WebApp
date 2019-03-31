@@ -16,10 +16,12 @@ namespace WebsiteLaitBrasseur
 
         protected void BeerButton_Click(object sender, EventArgs e)
         {
+            Response.Redirect("/ProductOverview.aspx");
         }
 
         protected void CheeseButton_Click(object sender, EventArgs e)
         {
+            Response.Redirect("/ProductOverview.aspx");
         }
     }
 }

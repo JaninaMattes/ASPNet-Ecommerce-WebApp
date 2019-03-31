@@ -23,11 +23,9 @@
         <div class="row" >
 
             <div class="col-md-4" >
-
                 <a href="/Default.aspx">
-                    <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg"   style="text-align:left;width:auto;height:auto"  />
+                    <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg" class="img rounded" style="text-align:left;width:auto;height:auto"  />
                 </a>
-
              </div>
 
             <div class="col-md-4 " >
@@ -47,15 +45,15 @@
                         <div id="NavBar" class="navbar" >
                             <div class="navbar " >
                                 <input type="text"  placeholder="Search" />
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary" onclick="window.location.href='/ProductOverview.aspx'" >Search</button>
                             </div>                    
                             <div class="nav navbar-right">
                                 <a href="/Cart.aspx">
-                                    <input type="button" class="btn btn-primary" value="Cart" />
+                                    <input type="button" class="btn btn-primary" onclick="window.location.href='/Cart.aspx'" value="Cart" />
                                 </a>
                                 &nbsp;
                                 <a href="/Account/CustomerProfile.aspx">
-                                    <input type="button" class="btn btn-primary" value="Profile" />
+                                    <input type="button" class="btn btn-primary" onclick="window.location.href='/Account/CustomerProfile.aspx'" value="Profile" />
                                 </a>
                             </div>                   
                         </div>

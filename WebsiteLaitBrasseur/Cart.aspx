@@ -40,8 +40,8 @@
                    </div>
 
                    <div class="col-md-2  ">
-                       <asp:Label ID="NameBrune" runat="server" cssclass="text-info " Text="Roubingole"></asp:Label><br />
-                       <asp:Label ID="PriceBrune" runat="server" cssclass="text-info" Text="7.5€"></asp:Label>
+                       <asp:Label ID="NameBrune" runat="server" cssclass="text-info " Text="Blackaty"></asp:Label><br />
+                       <asp:Label ID="PriceBrune" runat="server" cssclass="text-info" Text="3€"></asp:Label>
                    </div>
 
                    <div class="col-md-2   ">
@@ -65,7 +65,7 @@
 
                    <div class="col-md-2">
                        <asp:Label ID="NameBlonde" runat="server" cssclass="text-info " Text="LaBlonde"></asp:Label><br />
-                       <asp:Label ID="PriceBlonde" runat="server" cssclass="text-info" Text="5.5€"></asp:Label>
+                       <asp:Label ID="PriceBlonde" runat="server" cssclass="text-info" Text="2€"></asp:Label>
                    </div>
 
                    <div class="col-md-2 ">
@@ -90,7 +90,7 @@
 
                    <div class="col-md-2">
                        <asp:Label ID="NameBlanche" runat="server" cssclass="text-info " Text="Blanchette"></asp:Label><br />
-                       <asp:Label ID="PriceBlanche" runat="server" cssclass="text-info" Text="6€"></asp:Label>
+                       <asp:Label ID="PriceBlanche" runat="server" cssclass="text-info" Text="1.5€"></asp:Label>
                    </div>
 
                    <div class="col-md-2  ">
@@ -113,7 +113,7 @@
                    </div>
 
                    <div class="col-md-3 ">
-                       <asp:Label ID="NameCheese" runat="server" cssclass="text-info " Text="Le carré Rémois"></asp:Label><br />
+                       <asp:Label ID="NameCheese" runat="server" cssclass="text-info " Text="Le carré de l'Est"></asp:Label><br />
                        <asp:Label ID="PriceCheese" runat="server" cssclass="text-info" Text="8€"></asp:Label>
                    </div>
 
