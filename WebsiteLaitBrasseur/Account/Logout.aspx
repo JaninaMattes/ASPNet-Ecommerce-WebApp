@@ -3,7 +3,7 @@
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
-        <div style="text-align : center">
+        <div class="text-center text-info">
             <h3>Good Bye, thanks for your visit !</h3>
         </div>
 

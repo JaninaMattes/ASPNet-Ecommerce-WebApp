@@ -31,22 +31,22 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator NameReqField;
         
         /// <summary>
-        /// Contrôle VisaButton.
+        /// Contrôle CreditCardButton.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton VisaButton;
+        protected global::System.Web.UI.WebControls.RadioButtonList CreditCardButton;
         
         /// <summary>
-        /// Contrôle MastercardButton.
+        /// Contrôle TypeCardReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton MastercardButton;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator TypeCardReqField;
         
         /// <summary>
         /// Contrôle TextCardNumber.
@@ -65,6 +65,15 @@ namespace WebsiteLaitBrasseur {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator CardNumberReqFiled;
+        
+        /// <summary>
+        /// Contrôle CardNumberRegValid.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator CardNumberRegValid;
         
         /// <summary>
         /// Contrôle MonthExpiration.
@@ -103,6 +112,15 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator CSCReqField;
         
         /// <summary>
+        /// Contrôle CSCRegValid.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator CSCRegValid;
+        
+        /// <summary>
         /// Contrôle TextCountry.
         /// </summary>
         /// <remarks>
@@ -112,13 +130,13 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.TextBox TextCountry;
         
         /// <summary>
-        /// Contrôle CoutrnyResField.
+        /// Contrôle CountryReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator CoutrnyResField;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CountryReqField;
         
         /// <summary>
         /// Contrôle TextAdress1.
@@ -193,13 +211,22 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.TextBox TextZip;
         
         /// <summary>
-        /// Contrôle ZipreqField.
+        /// Contrôle ZipReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator ZipreqField;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ZipReqField;
+        
+        /// <summary>
+        /// Contrôle ZipRegExpValid.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator ZipRegExpValid;
         
         /// <summary>
         /// Contrôle CancelButton.

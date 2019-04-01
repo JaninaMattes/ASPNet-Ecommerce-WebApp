@@ -16,7 +16,7 @@
                      <asp:Label ID="PriceValue" runat="server" cssclass="text-dark" Text="2 €"></asp:Label><br /><br />
 
                      <asp:Label ID="Size" runat="server" cssclass="text-info " Text="Product Size : "></asp:Label>
-                     <asp:Label ID="SizeValue" runat="server" cssclass="text-dark" Text=""></asp:Label><br /><br />
+                     <asp:Label ID="SizeValue" runat="server" cssclass="text-dark" Text="250g"></asp:Label><br /><br />
 
                      <asp:Label ID="Producer" runat="server" cssclass="text-info " Text="Producer :"></asp:Label>
                      <asp:Label ID="ProducerName" runat="server" cssclass="text-dark" Text="LaitBrasseur"></asp:Label><br /><br />
@@ -55,6 +55,8 @@
 
         <div class="col-md-5 text-info text-justify" style="font-size:15px">
             <b>Spicy cheese</b><br />
+            Fresh cheese with spices (paprika, grapes, garlic and herbs, hazelnuts).
+
         </div>
 
     </div>

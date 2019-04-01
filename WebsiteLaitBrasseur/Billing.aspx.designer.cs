@@ -121,13 +121,22 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.TextBox TextZip;
         
         /// <summary>
-        /// Contrôle ZipreqField.
+        /// Contrôle ZipReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator ZipreqField;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ZipReqField;
+        
+        /// <summary>
+        /// Contrôle ZipRegExpValid.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator ZipRegExpValid;
         
         /// <summary>
         /// Contrôle TextPhone.
@@ -146,6 +155,15 @@ namespace WebsiteLaitBrasseur {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator PhoneReqField;
+        
+        /// <summary>
+        /// Contrôle PhoneRegValid.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator PhoneRegValid;
         
         /// <summary>
         /// Contrôle SaveAdress.

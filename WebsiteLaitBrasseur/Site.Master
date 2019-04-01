@@ -20,24 +20,26 @@
 </head>
 <body>
     <header class="jumbotron">
-        <div class="row" >
+        <div class="container-fluid" >
+            <div class="row">
 
-            <div class="col-md-4" >
-                <a href="/Default.aspx">
-                    <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg" class="img rounded" style="text-align:left;width:auto;height:auto"  />
-                </a>
-             </div>
+                <div class="col-md-4 ">
+                    <a href="/Default.aspx">
+                        <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg" class="img rounded img-fluid" style="text-align:left;width:auto;height:auto"  />
+                    </a>
+                 </div>
 
-            <div class="col-md-4 " >
-                 <h1  class="offset-4">Lait Brasseur</h1>
+                <div class="col-md-4 text-center">
+                     <h1   style="font-family:cursive;color:royalblue" >Lait Brasseur</h1>
+                </div>
+
+                <div class="col-md-4 text-right">
+                    <a href="/Account/Login2.aspx"  >
+                        <input type="button" class="btn btn-primary" value="LogIn" />
+                    </a>
+                </div>
+
             </div>
-
-            <div class="col-md-4" >
-                <a href="/Account/Login2.aspx"  class="offset-10 text-center">
-                    <input type="button" class="btn btn-primary" value="LogIn" />
-                </a>
-            </div>
-
         </div>
         <br />
         <div class="container-fluid rounded" style="background-color:lightgray">

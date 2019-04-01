@@ -2,7 +2,12 @@
 
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+
+<!--Page managing the registration of a new user -->
+
     <h3>  Create a new account</h3>
+
+        <!--Label /TextBox / Validator for the Username -->
         <div class="form-group">
             <label for="TextUsername" class="control-label col-md-3">Username</label>
             <div class="col-md-5">
@@ -12,6 +17,7 @@
             </div>
         </div>
 
+        <!--Label /TextBox / Validator for E-mail -->
         <div class="form-group">
                 <label for="TextEmail" class="control-label col-md-3">E-mail</label>
                 <div class="col-md-5">
@@ -20,6 +26,7 @@
                 </div>
         </div>
 
+       <!--Label /TextBox / Validator for First Name -->
        <div class="form-group">
             <label for="TextFirstName" class="control-label col-md-3">First name</label>
             <div class="col-md-5">
@@ -28,6 +35,7 @@
             </div>
         </div>
 
+       <!--Label /TextBox / Validator for Last Name -->
         <div class="form-group">
             <label for="TextLastName" class="control-label col-md-3">Last name</label>
             <div class="col-md-5">
@@ -36,6 +44,7 @@
             </div>
         </div>
 
+        <!--Label /TextBox / Validator for Password -->
         <div class="form-group">
                 <label for="TextPassword" class="control-label col-md-3">Password</label>
                 <div class="col-md-5">
@@ -44,6 +53,7 @@
                 </div>
          </div>
 
+         <!--Label /TextBox / Validator(compare with first password entry) for Confirm Password -->
          <div class="form-group">
                 <label for="TextPasswordConf" class="control-label col-md-3">Confirm Password</label>
                 <div class="col-md-5">
@@ -53,6 +63,7 @@
                 </div>
          </div>
 
+        <!--"Create Account" button &  "Cancel" Button => Back to Default.aspx -->
          <div class="col-md-offset-3 col-md-9">
                 <asp:button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-primary" CausesValidation="False" OnClick="CancelButton_Click"/>
                 <asp:Button ID="CreateAccountButton" runat="server" Text="Create Account" CssClass="btn btn-primary" OnClick="CreateAccountButton_Click"/>
