@@ -3,24 +3,34 @@
 
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+ 
+<!--Page managing details of Cheese Raclette-->    
+
     <div class="container-fluid">
         <div class="row">
 
+            <!--Product Image -->
             <div class="col-md-4 text-center">
                 <img id="Raclette" alt="Cheese_Raclette" src="/Images/cheese_raclette.jpg"  class="img-fluid" style="height:200px;width:200px"/> 
             </div>
 
+            <!--Product informations -->
             <div class=" offset-md-1 col-md-5 text-center" >
                  <div style="font-size:15px">
+
+                     <!--Labels for Price -->
                      <asp:Label ID="Price" runat="server" cssclass="text-info  " Text="Product Price :"></asp:Label>
                      <asp:Label ID="PriceValue" runat="server" cssclass="text-dark" Text="12 €"></asp:Label><br /><br />
 
+                     <!--Labels for Size -->
                      <asp:Label ID="Size" runat="server" cssclass="text-info " Text="Product Size : "></asp:Label>
                      <asp:Label ID="SizeValue" runat="server" cssclass="text-dark" Text="250g"></asp:Label><br /><br />
 
+                     <!--Labels for Producer -->
                      <asp:Label ID="Producer" runat="server" cssclass="text-info " Text="Producer :"></asp:Label>
                      <asp:Label ID="ProducerName" runat="server" cssclass="text-dark" Text="LaitBrasseur"></asp:Label><br /><br />
 
+                     <!--Dropdown List for Quantity -->
                      <asp:Label ID="Quantity" runat="server" cssclass="text-info " Text="Quantity :"></asp:Label> 
                       <asp:DropDownList ID="QuantityChosen" runat="server" >
                          <asp:ListItem Selected="True" Value="1"></asp:ListItem>
@@ -45,6 +55,7 @@
                          <asp:ListItem Value="20"></asp:ListItem>
                     </asp:DropDownList><br /><br /><br />
 
+                     <!--"Add to Cart" button -->
                      <asp:button ID="AddToCartButton" runat="server" CssClass="btn btn-success" Text="Add To Cart"  />
 
                  </div>
@@ -52,7 +63,7 @@
            </div>
         </div>
 
-
+        <!--Product Descritption -->
         <div class="col-md-5 text-info text-justify" style="font-size:15px">
             <b>Raclette</b><br />
             Raclette with pasteurized whole milk for your winter evening.

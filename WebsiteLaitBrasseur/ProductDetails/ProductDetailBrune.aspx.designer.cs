@@ -49,24 +49,6 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.DropDownList SizeValue;
         
         /// <summary>
-        /// Contrôle Producer.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Producer;
-        
-        /// <summary>
-        /// Contrôle ProducerName.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ProducerName;
-        
-        /// <summary>
         /// Contrôle Quantity.
         /// </summary>
         /// <remarks>
@@ -83,6 +65,24 @@ namespace WebsiteLaitBrasseur {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList QuantityChosen;
+        
+        /// <summary>
+        /// Contrôle Producer.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Producer;
+        
+        /// <summary>
+        /// Contrôle ProducerName.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ProducerName;
         
         /// <summary>
         /// Contrôle AddToCartButton.

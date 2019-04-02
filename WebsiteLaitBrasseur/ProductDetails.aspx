@@ -1,8 +1,9 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProductDetails.aspx.cs" Inherits="WebsiteLaitBrasseur.ProductDetails" %>
 
-
-
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+
+
+
     <div class="container-fluid" style="border:solid;border-color:blue">
         <div class="row" style="border:solid;border-color:yellow">
 

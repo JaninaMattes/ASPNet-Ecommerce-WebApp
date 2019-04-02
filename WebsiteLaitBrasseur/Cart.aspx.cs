@@ -16,6 +16,7 @@ namespace WebsiteLaitBrasseur
 
         protected void updateButton_Click(object sender, EventArgs e)
         {
+            //Variables initialization
             var pBrune = Convert.ToDecimal(PriceBrune.Text) ;
             var pBlonde = Convert.ToDecimal(PriceBlonde.Text);
             var pBlanche = Convert.ToDecimal(PriceBlanche.Text);
@@ -29,13 +30,14 @@ namespace WebsiteLaitBrasseur
             var sCost = Convert.ToDecimal(ShippingCostValue.Text);
             var tax = (Convert.ToDecimal(TaxValue.Text) /100 );
 
+            //Calcul of total values
             var totBrune = pBrune * qBrune;
             var totBlonde = pBlonde * qBlonde;
             var totBlanche = pBlanche * qBlanche;
             var totCarreEst = pCarreEst * qCarreEst;
             var amount = totBrune + totBlonde + totBlanche + totCarreEst;
 
-
+            //Conversion (Int => String) + attribution to labels
             TotalBrune.Text = Convert.ToString(totBrune);
             TotalBlonde.Text = Convert.ToString(totBlonde);
             TotalBlanche.Text = Convert.ToString(totBlanche);

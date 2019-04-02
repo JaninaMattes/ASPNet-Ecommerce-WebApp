@@ -2,9 +2,12 @@
 
 
 <asp:Content ID="Body" ContentPlaceHolderID="MainContent" runat="server">
+
+<!--Page managing  a "fake" cart-->
+
     <div class="container-fluid ">
 
-
+        <!--Global container with the differents Items and the Summary -->
         <div class="col-md-12 row text-center" "  >
 
             <div class="col-md-7"  >
@@ -33,7 +36,7 @@
                 </div>
 
 
-                <!--First Item-->
+                <!--First Item : Image / Name + Price / Dropdown List for quantity / CheckBox to remove the Item-->
                 <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:150px;">
                    <div class="col-md-3" >
                        <img id="Brune" alt="Beer_Brown" src="/Images/Brune.jpg"  class="img-fluid"/>                 
@@ -222,27 +225,34 @@
 
             </div> 
 
-            <!--Summary-->
+            <!--Summary : updated via the "update" button-->
             <div class="col-md-2 offset-1" >
                  <div id="CartTitle2" runat="server" class="ContentHead"><h1>Summary</h1><br /></div>
                  <div style="font-size:20px">
+
+                     <!--Sum prices of items -->
                      <asp:Label ID="Amount" runat="server" cssclass="text-info  " Text="Amount : "></asp:Label>
                      <asp:Label ID="AmountValue" runat="server" cssclass="text-info" Text=""></asp:Label>
                      <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label><br /> <br /><br />
 
+                     <!-- Shipping cost will apply -->
                      <asp:Label ID="ShippingCost" runat="server" cssclass="text-info " Text="Shipping Cost : "></asp:Label>
                      <asp:Label ID="ShippingCostValue" runat="server" cssclass="text-info " Text="4"></asp:Label>
                      <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label><br /><br /><br />
 
+                     <!-- Tax will apply -->
                      <asp:Label ID="Tax" runat="server" cssclass="text-info " Text="Tax (%) : "></asp:Label>
                      <asp:Label ID="TaxValue" runat="server" cssclass="text-info" Text=" 20"></asp:Label><br /><br /><br />
 
+                     <!--Final cost including shipping cost and tax -->
                      <asp:Label ID="TotalCost" runat="server" cssclass="text-info " Text="Total Cost : "></asp:Label>
                      <asp:Label ID="TotalCostValue" runat="server" cssclass="text-info " Text=""></asp:Label>
                      <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label><br /><br /><br />
 
+                     <!--"Button Update to actualize informations in Summary part" -->
                      <asp:Button ID="updateButton" runat="server" Text="Update" OnClick="updateButton_Click" ValidationGroup="Quantity" CssClass="btn btn-primary"/><br /><br /><br />
 
+                     <!--"Button Buy to get to the billing page" -->
                      <asp:button ID="BuyButton" runat="server" CssClass="btn btn-success" Text="Buy" OnClick="BuyButton_Click" />
 
                  </div>

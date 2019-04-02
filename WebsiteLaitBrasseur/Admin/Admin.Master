@@ -1,0 +1,53 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="WebsiteLaitBrasseur.Admin.Admin" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+
+    <meta name="viewport"  content="width=device-width; initial-scale=1"/>
+    <title><%: Page.Title %> - Admin</title>
+
+    <link href="/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/Content/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+    <script src="/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <link href="/Content/site.css" rel="stylesheet" type="text/css" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+
+
+<body>
+   <header class="jumbotron">
+        <div class="container-fluid" >
+            <div class="row">
+
+                <div class="col-md-4 ">
+                    <a href="/"><!--New Default page -->
+                        <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg" class="img rounded img-fluid" style="text-align:left;width:auto;height:auto"  />
+                    </a>
+                 </div>
+
+                <div class="col-md-4 text-center">
+                     <h1 >Lait Brasseur Admin</h1>
+                </div>
+
+                <div class="col-md-4 text-right">
+                    <a href="/Account/Login2.aspx"  > <!--New Login page -->
+                        <input type="button" class="btn btn-primary" value="LogIn" />
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+    <form id="AdminMasterBodyForm" class="form-group" runat="server">
+
+        <div class="container-fluid body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>

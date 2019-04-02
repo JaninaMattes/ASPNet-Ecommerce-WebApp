@@ -82,7 +82,7 @@
                     <label for="TextCSC" class="control-label ">Security Code (CSC :)</label>
                     <asp:TextBox ID="TextCSC" runat="server" Cssclass="form-control" style="width:70px"></asp:TextBox>
                     <asp:RequiredFieldValidator ID="CSCReqField" runat="server" ErrorMessage="CSC is required" ControlToValidate="TextCSC" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
-                    <asp:regularExpressionValidator ID="CSCRegValid" runat="server" ErrorMessage="Should be 3 Digits" ControlToValidate="TextCSC" Display="Dynamic"  ValidationExpression="\d{3}$" CssClass="text-danger"></asp:RegularExpressionValidator><br /><br />
+                    <asp:regularExpressionValidator ID="CSCRegValid" runat="server" ErrorMessage="Should be 3 Digits" ControlToValidate="TextCSC" Display="Dynamic"  ValidationExpression="\d{3}$" CssClass="text-danger"></asp:RegularExpressionValidator><br />
                 </div>
             </div>
 

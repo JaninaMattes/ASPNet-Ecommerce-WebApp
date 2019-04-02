@@ -22,6 +22,15 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.TextBox TextName;
         
         /// <summary>
+        /// Contrôle NameReqField.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator NameReqField;
+        
+        /// <summary>
         /// Contrôle TextEmail.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,15 @@ namespace WebsiteLaitBrasseur {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextEmail;
+        
+        /// <summary>
+        /// Contrôle EmailReqField.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailReqField;
         
         /// <summary>
         /// Contrôle TextObject.
@@ -47,5 +65,32 @@ namespace WebsiteLaitBrasseur {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextMessage;
+        
+        /// <summary>
+        /// Contrôle MessageReqField.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator MessageReqField;
+        
+        /// <summary>
+        /// Contrôle SubmitButton.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SubmitButton;
+        
+        /// <summary>
+        /// Contrôle ResultLabel.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ResultLabel;
     }
 }
