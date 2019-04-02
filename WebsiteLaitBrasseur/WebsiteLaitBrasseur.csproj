@@ -74,7 +74,10 @@
     <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\OverviewPage.aspx" />
+    <Content Include="Admin\AccountManagment.aspx" />
     <Content Include="Admin\Default.aspx" />
+    <Content Include="Admin\LoginAdmin.aspx" />
+    <Content Include="Admin\RegisterAdmin.aspx" />
     <Content Include="Billing.aspx" />
     <Content Include="CardPayment.aspx" />
     <Content Include="Cart.aspx" />
@@ -180,6 +183,13 @@
     <Compile Include="Account\OverviewPage.aspx.designer.cs">
       <DependentUpon>OverviewPage.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\AccountManagment.aspx.cs">
+      <DependentUpon>AccountManagment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AccountManagment.aspx.designer.cs">
+      <DependentUpon>AccountManagment.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Admin.Master.cs">
       <DependentUpon>Admin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -193,6 +203,20 @@
     </Compile>
     <Compile Include="Admin\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\LoginAdmin.aspx.cs">
+      <DependentUpon>LoginAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\LoginAdmin.aspx.designer.cs">
+      <DependentUpon>LoginAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\RegisterAdmin.aspx.cs">
+      <DependentUpon>RegisterAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\RegisterAdmin.aspx.designer.cs">
+      <DependentUpon>RegisterAdmin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Billing.aspx.cs">
       <DependentUpon>Billing.aspx</DependentUpon>

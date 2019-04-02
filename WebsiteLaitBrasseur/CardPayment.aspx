@@ -48,7 +48,7 @@
             <!--DropDown List for the month and the year expiration of the card-->
             <div class="form-group">
                 <div>
-                    <label for="Text" class="control-label ">Expiration Date :</label>
+                    <asp:label id="ExpirationLabel" runat="server" >Expiration Date :</asp:label>
                     &nbsp;&nbsp;
                     <asp:DropDownList ID="MonthExpiration" runat="server" >
                          <asp:ListItem Selected="True" Value="1"></asp:ListItem>

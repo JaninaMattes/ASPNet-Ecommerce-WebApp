@@ -25,7 +25,7 @@
             <div class="row">
 
                 <div class="col-md-4 ">
-                    <a href="/"><!--New Default page -->
+                    <a href="/Admin/Default.aspx">
                         <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg" class="img rounded img-fluid" style="text-align:left;width:auto;height:auto"  />
                     </a>
                  </div>
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="col-md-4 text-right">
-                    <a href="/Account/Login2.aspx"  > <!--New Login page -->
+                    <a href="/Admin/LoginAdmin.aspx">
                         <input type="button" class="btn btn-primary" value="LogIn" />
                     </a>
                 </div>
@@ -43,6 +43,9 @@
             </div>
         </div>
     </header>
+    <br /><br />
+
+
     <form id="AdminMasterBodyForm" class="form-group" runat="server">
 
         <div class="container-fluid body-content">

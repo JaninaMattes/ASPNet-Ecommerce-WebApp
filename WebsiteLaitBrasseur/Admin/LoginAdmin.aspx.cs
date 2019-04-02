@@ -5,13 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebsiteLaitBrasseur.Account
+namespace WebsiteLaitBrasseur.Admin
 {
-    public partial class WebForm1 : System.Web.UI.Page
+    public partial class LoginAdmin : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         protected void LoginButton_Click(object sender, EventArgs e)
@@ -19,11 +19,9 @@ namespace WebsiteLaitBrasseur.Account
             /*Label1.Text = TextLogin.Text + " " + TextPassword.Text + " you are logged in.";*/
         }
 
-
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Account/Register.aspx");
+            Response.Redirect("/Admin/RegisterAdmin.aspx");
         }
     }
 }
-

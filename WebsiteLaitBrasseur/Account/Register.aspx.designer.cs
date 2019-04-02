@@ -121,13 +121,13 @@ namespace WebsiteLaitBrasseur.Account {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator ConfirmPasswordField;
         
         /// <summary>
-        /// Contrôle ConfirmReqField.
+        /// Contrôle PasswordCompValid.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CompareValidator ConfirmReqField;
+        protected global::System.Web.UI.WebControls.CompareValidator PasswordCompValid;
         
         /// <summary>
         /// Contrôle CancelButton.
