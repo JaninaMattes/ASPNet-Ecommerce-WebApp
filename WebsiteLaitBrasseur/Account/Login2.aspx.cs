@@ -17,12 +17,25 @@ namespace WebsiteLaitBrasseur.Account
         protected void LoginButton_Click(object sender, EventArgs e)
         {
             /*Label1.Text = TextLogin.Text + " " + TextPassword.Text + " you are logged in.";*/
+            if (IsValid)
+            {
+                DateTime expiry = DateTime.Now.AddMinutes(5);
+                SetCookie("username", TextLogin.Text, expiry);
+            }
+            Response.Redirect("/Default.aspx");
         }
 
 
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Account/Register.aspx");
+        }
+
+        private void SetCookie(string name, string value , DateTime expiry)
+        {
+            HttpCookie cookieUser = new HttpCookie(name, value);
+            cookieUser.Expires = expiry;
+            Response.Cookies.Add(cookieUser);
         }
     }
 }
