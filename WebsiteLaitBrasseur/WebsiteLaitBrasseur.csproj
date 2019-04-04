@@ -70,6 +70,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Account\CustomerProfile.aspx" />
     <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Profile.aspx" />
     <Content Include="Account\Register.aspx" />
@@ -155,6 +156,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\CustomerProfile.aspx.designer.cs">
+      <DependentUpon>CustomerProfile.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
