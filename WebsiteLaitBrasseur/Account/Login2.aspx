@@ -4,11 +4,11 @@
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
 
 <!--Page managing the login of an user to his account -->
-
+    <a href="CustomerProfile.aspx">CustomerProfile.aspx</a>
             <div class="container-fluid " >
                     <!--Title of the form -->
                     <h1>Welcome on Lait Brasseur's website</h1>
-
+                <a href="CustomerProfile.aspx">CustomerProfile.aspx</a>
                     <!--Label /TextBox / Validator for the login -->
                     <div class="form-group">
                         <label for="TextLogin" class="control-label col-md-3">Login</label>
