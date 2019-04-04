@@ -1,9 +1,7 @@
-﻿<%@ Page Language="C#" Title="Profile" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.Profile" %>
+﻿<%@ Page Language="C#" Title="Customer Profile" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.Profile" %>
 
 <asp:Content id="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-     
-    <!--Page in split-view layout to allow user manage his profile information 
-        and review his past shopping history-->
+<!--Page in split-view layout to allow user manage his profile information and review his past shopping history-->
     <!--START Container-->
     <div class="container-fluid"> <!--container-fluid allows responsive behaviour-->
         <!--START Container Content-->
@@ -36,7 +34,7 @@
             <h3 id="header">Profile Details</h3>
             <div>
                 <!--Part2.1: START user information-->
-                <div style="float:left; width: 50%; margin=1%">
+                <div class="clearfix" style="float:left; width: 40%; margin=1%">
                 <!--Firstname Label /TextBox / Validator-->
                 <div class="form-group">
                     <asp:Label id="Firstname" AssociatedControlId="FirstnameTextbox" Text="Firstname:" runat="server" />
@@ -72,7 +70,7 @@
                 </div>
          </div>
             <!--Part2.2: START user information-->
-            <div style="float:right; width: 50%; margin=1%">
+            <div class="clearfix" style="float:right; width: 40%; margin=1%">
                 <!--Lastname Label /TextBox / Validator-->
                 <div class="form-group">
                     <asp:Label id="Lastname" AssociatedControlId="LastnameTextbox" Text="Lastname:" runat="server" />
@@ -153,6 +151,12 @@
                          Text="*" ErrorMessage="ErrorMessage" CssClass="text-danger">
                     </asp:RequiredFieldValidator>
                 </div>
+                <!--START user buttons to save the profile -->
+            <div class="profile-userbuttons" style="bottom">
+                <asp:Button id="cancelBtn" runat="server" Text="Cancel" OnClick="CancelButton_Click" CssClass="btn btn-primary" />
+                <asp:Button id="saveBtn" runat="server" Text="Save" OnClick="SaveButton_Click" CssClass="btn btn-primary" />
+	        <!--END user buttons to save the profile -->
+     </div>
          </div>
             <!--Part2.4: END address information-->
             <!--Part2.5: START address information-->
@@ -187,10 +191,10 @@
       </div>
         <!--START Part3: Split Screen Layout-->
         <!--START Header / Label / GridView--> 
-        <div id="tableShoppingHistory" style="float:right; margin-left:1%; width: 45%">
+        <div id="tableShoppingHistory clearfix" style="float:right; margin-left:1%; width: 45%">
             <h3 id="sheader">Shopping History</h3>
             <asp:Label id="tableShoppingHistoryLabel" Text="Your shopping history is empty." runat="server" />
-            <div class="table-dark">
+            <div class="table-dark right-element">
                 <asp:GridView id="ShoppingTable" runat="server">
                         <Columns>
                             <asp:BoundField DataField="InvoiceNumber" HeaderText="Invoice Number" />
@@ -203,12 +207,6 @@
         </div>
         <!--END Part3: Split Screen Layout-->
     <!--END Container Content-->
-    <!--START user buttons to save the profile -->
-     <div class="profile-userbuttons" style="border-bottom">
-        <asp:Button id="cancelBtn" runat="server" Text="Cancel" OnClick="CancelButton_Click" CssClass="btn btn-primary" />
-        <asp:Button id="saveBtn" runat="server" Text="Save" OnClick="SaveButton_Click" CssClass="btn btn-primary" />
-	 <!--END user buttons to save the profile -->
-     </div>
 <!--END Container-->
  </div>
 </asp:Content>

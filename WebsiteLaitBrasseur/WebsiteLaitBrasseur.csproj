@@ -71,12 +71,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Logout.aspx" />
-    <Content Include="Account\Profile.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\OverviewPage.aspx" />
+    <Content Include="Account\Profile.aspx" />
     <Content Include="Admin\AccountManagment.aspx" />
+    <Content Include="Admin\AdminProfile.aspx" />
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\LoginAdmin.aspx" />
+    <Content Include="Admin\LogoutAdmin.aspx" />
     <Content Include="Admin\RegisterAdmin.aspx" />
     <Content Include="Billing.aspx" />
     <Content Include="CardPayment.aspx" />
@@ -91,7 +93,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Account\Login2.aspx" />
+    <Content Include="Account\Login.aspx" />
     <Content Include="Images\blanche.jpg" />
     <Content Include="Images\blond.jpg" />
     <Content Include="Images\brune.jpg" />
@@ -162,13 +164,6 @@
     <Compile Include="Account\Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Account\Profile.aspx.cs">
-      <DependentUpon>Profile.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Account\Profile.aspx.designer.cs">
-      <DependentUpon>Profile.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Account\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -182,6 +177,13 @@
     </Compile>
     <Compile Include="Account\OverviewPage.aspx.designer.cs">
       <DependentUpon>OverviewPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Account\Profile.aspx.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Account\Profile.aspx.designer.cs">
+      <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\AccountManagment.aspx.cs">
       <DependentUpon>AccountManagment.aspx</DependentUpon>
@@ -197,6 +199,13 @@
     <Compile Include="Admin\Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
     </Compile>
+    <Compile Include="Admin\AdminProfile.aspx.cs">
+      <DependentUpon>AdminProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AdminProfile.aspx.designer.cs">
+      <DependentUpon>AdminProfile.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -210,6 +219,13 @@
     </Compile>
     <Compile Include="Admin\LoginAdmin.aspx.designer.cs">
       <DependentUpon>LoginAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\LogoutAdmin.aspx.cs">
+      <DependentUpon>LogoutAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\LogoutAdmin.aspx.designer.cs">
+      <DependentUpon>LogoutAdmin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\RegisterAdmin.aspx.cs">
       <DependentUpon>RegisterAdmin.aspx</DependentUpon>
@@ -256,12 +272,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Account\Login2.aspx.cs">
-      <DependentUpon>Login2.aspx</DependentUpon>
+    <Compile Include="Account\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Account\Login2.aspx.designer.cs">
-      <DependentUpon>Login2.aspx</DependentUpon>
+    <Compile Include="Account\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="ProductDetails\ProductDetailBlanche.aspx.cs">
       <DependentUpon>ProductDetailBlanche.aspx</DependentUpon>

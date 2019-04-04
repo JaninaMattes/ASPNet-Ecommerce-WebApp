@@ -35,12 +35,15 @@ namespace WebsiteLaitBrasseur.Account
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            /*...*/
+            /*...Do nothing and set the values back to the previous state*/
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
-            /*...*/
+            /*save all input information from values and send it to server*/
+            //string myname = Request.Form["first_name_txt"];
+
+            //...firstName = Request.Form["FirstnameTextbox"];
         }
 
         /*Fill the shopping history table with data from the backend 
@@ -71,10 +74,16 @@ namespace WebsiteLaitBrasseur.Account
             LastnameTextBox.Text = getUserData().lastName;
             UsernameTextBox.Text = getUserData().userName;
             PhoneNoTextBox.Text = getUserData().phoneNo;
+            BirthdayTextBox.Text = getUserData().birthdate;
             EmailTextBox.Text = getLoginData().email;
 
+            /*Textboxes with editable section information*/
+            StreetTextbox.Text = getAddressData().streetName;
+            CityTextBox.Text = getAddressData().cityName;
+            CountryDropDownList.Text = getAddressData().country;
+            StreetNoTextBox.Text = getAddressData().streetNo;
+            PostCodeTextBox.Text = getAddressData().postCode;
         }
-
 
         /*Dummy data for demonstration purpose*/
         protected Customer getUserData()
@@ -86,14 +95,14 @@ namespace WebsiteLaitBrasseur.Account
         /*Dummy data for demonstration purpose*/
         protected Login getLoginData()
         {
-            Login login = new Login(11111, "m.Miller92@gmail.com", "Xw1234%12");
+            Login login = new Login(11111, "marcus.miller@gmail.com", "Xw1234%12");
             return login;
         }
 
         /*Dummy data for demonstration purpose*/
         protected Address getAddressData()
         {
-            Address address = new Address(000012, "University Dr.", 130, "Newcastle", "2300", "Australia");
+            Address address = new Address(000012, "University Dr.", "130", "Newcastle", "2300", "Australia");
             return address;
         }
 
@@ -151,12 +160,12 @@ namespace WebsiteLaitBrasseur.Account
         {
             public int addressId { get; set; }
             public string streetName { get; set; }
-            public int streetNo { get; set; }
+            public string streetNo { get; set; }
             public string cityName { get; set; }
             public string postCode { get; set; }
             public string country { get; set; }
 
-            public Address(int addressId, string streetName, int streetNo, string cityName, string postCode, string country)
+            public Address(int addressId, string streetName, string streetNo, string cityName, string postCode, string country)
             {
                 this.addressId = addressId;
                 this.streetName = streetName;

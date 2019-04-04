@@ -7,130 +7,29 @@
 
     <div class="container-fluid ">
         
-        <div id="BodyTitle" runat="server" class="ContentHead"><h1>Manage User Accounts</h1></div>
-        <!--Global container with the List of Users -->
-        <div class="col-md-10 row rounded text-center"  style="border:solid;border-color:grey;"   >
-
-                <!--Legend-->
-                   <div class="col-md-2" >
-                       <asp:Label ID="LegendFirstName" runat="server" cssclass="text-info" Text="First Name"></asp:Label>                 
-                   </div>
-
-                   <div class="col-md-2" >
-                       <asp:Label ID="LegendLastName" runat="server" cssclass="text-info" Text="Last Name"></asp:Label>                 
-                   </div>
-
-                   <div class="col-md-2" >
-                       <asp:Label ID="LegendUsername" runat="server" cssclass="text-info" Text="Username"></asp:Label>                 
-                   </div>
-
-                   <div class="col-md-2" >
-                       <asp:Label ID="LegendDue" runat="server" cssclass="text-info" Text="Due"></asp:Label>                 
-                   </div>
-
-                   <div class="col-md-1" >
-                       <asp:Label ID="LegendSuspend" runat="server" cssclass="text-info" Text="Suspend"></asp:Label>                 
-                   </div>
-
-                    <div class="col-md-1">
-                        <asp:Label ID="LegendSelected" runat="server" cssclass="text-info" Text="Selected User"></asp:Label> 
-                    </div>
+    <!--START Header / Label / GridView--> 
+        <div id="tableCustomer clearfix" style="float:left; margin:1%; width: 60%">
+            <h3 id="sheader">Manage Customer Accounts</h3>
+            <asp:Label id="tableUserList" Text="The customer list is empty." runat="server" />
+            <div class="table-dark">
+                <asp:GridView id="UserListTable" runat="server" style="table-grid;">
+                        <Columns>
+                            <asp:BoundField DataField="UserId" HeaderText="Id Number" />
+                            <asp:BoundField DataField="Firstname" HeaderText="Firstname" /> 
+                            <asp:BoundField DataField="Lastname" HeaderText="Lastname" />
+                            <asp:BoundField DataField="PaymentDue" HeaderText="Payment Due" />
+                            <asp:BoundField DataField="SuspendedUser" HeaderText="Suspended User" />
+                            <asp:BoundField DataField="Select" HeaderText="Select" />
+                        </Columns>
+                    </asp:GridView>
+            </div>
+        <!-- START user buttons to select transaction for profile -->
+        <div class="profile-userbuttons" style="bottom; float: right">
+			<asp:Button id="transactionBtn" runat="server" Text="Show Transactions" OnClick="TransactionButton_Click" CssClass="btn-primary btn" />
+            <asp:Button id="saveBtn" runat="server" Text="Save" OnClick="SaveButton_Click" CssClass="btn-primary btn" />
+		<!-- END user buttons to delete the profile -->
         </div>
-
-        <div class="col-md-10 row rounded text-center"  style="border:solid;border-color:grey;height:40px"    >
-            <!--First User-->
-            <div class="col-md-2" >
-                <asp:Label ID="FirstUserFirstName" runat="server" Text="James"></asp:Label>                 
-            </div>
-
-            <div class="col-md-2" >
-                <asp:Label ID="FirstUserLastName" runat="server"  Text="Miller"></asp:Label>                 
-            </div>
-
-            <div class="col-md-2" >
-                <asp:Label ID="FirstUserUsername" runat="server"  Text="JMiller51"></asp:Label>                 
-            </div>
-
-            <div class="col-md-2" >
-                <asp:Label ID="FirstUserDue" runat="server"  Text="Yes"></asp:Label>                 
-            </div>
-
-            <div class="col-md-1" >
-                <asp:checkBox ID="FirstUserSuspend" runat="server"  ></asp:checkBox>                 
-            </div>
-
-            <div class="col-md-1" >
-                <asp:radioButton ID="FirstUserSelected" groupname="UserSelection"  runat="server" ></asp:radioButton>                 
-            </div>
         </div>
-
-        <!--Second User-->
-        <div class="col-md-10 row rounded text-center"  style="border:solid;border-color:grey;height:40px"   >
-
-            <div class="col-md-2" >
-                <asp:Label ID="SecondUserFirstName" runat="server" Text="Maria"></asp:Label>                 
-            </div>
-
-            <div class="col-md-2" >
-                <asp:Label ID="SecondUserLastName" runat="server"  Text="Doberthy"></asp:Label>                 
-            </div>
-
-            <div class="col-md-2" >
-                <asp:Label ID="SecondUserUsername" runat="server"  Text="MariaDB"></asp:Label>                 
-            </div>
-
-            <div class="col-md-2" >
-                <asp:Label ID="SecondUserDue" runat="server"  Text="No"></asp:Label>                 
-            </div>
-
-            <div class="col-md-1" >
-                <asp:checkBox ID="SecondUserSuspend" runat="server"  ></asp:checkBox>                 
-            </div>
-
-            <div class="col-md-1" >
-                <asp:radioButton ID="SecondUserSelected" groupname="UserSelection" runat="server" ></asp:radioButton>                 
-            </div>
-        </div>
-
-
-        <!--Third User-->
-        <div class="col-md-10 row rounded text-center"  style="border:solid;border-color:grey;height:40px"   >
-
-            <div class="col-md-2" >
-                <asp:Label ID="ThirdUserFirstName" runat="server" Text="Saul"></asp:Label>                 
-            </div>
-
-            <div class="col-md-2" >
-                <asp:Label ID="ThirdUserLastName" runat="server"  Text="Goodman"></asp:Label>                 
-            </div>
-
-            <div class="col-md-2" >
-                <asp:Label ID="ThirdUserUsername" runat="server"  Text="BCS66"></asp:Label>                 
-            </div>
-
-            <div class="col-md-2" >
-                <asp:Label ID="ThirdUserDue" runat="server"  Text="No"></asp:Label>                 
-            </div>
-
-            <div class="col-md-1" >
-                <asp:checkBox ID="ThirdUserSuspend" runat="server"  ></asp:checkBox>                 
-            </div>
-
-            <div class="col-md-1" >
-                <asp:radioButton ID="ThirdUserSelected" groupname="UserSelection"  runat="server" ></asp:radioButton>                 
-            </div>
-        </div>
-
-        <br />
-        <div class="col-md-10 text-right">
-            <asp:Button ID="TransactionsButton" runat="server" CssClass="btn btn-primary"  Text="Show Transactions" />
-            <asp:Button ID="SaveButton" runat="server" CssClass="btn btn-success" OnClick="SaveButton_Click" Text="Save" />
-        </div>
-
-
-        <div class="col-md-10 text-right text-success">
-            <asp:label id="ResultSave" runat="server"  Text=""></asp:label>
-        </div>
-   </div>
-
+    <!--END Container Content-->
+  </div>
 </asp:Content>

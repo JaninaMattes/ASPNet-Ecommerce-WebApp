@@ -139,22 +139,18 @@ footer {
      margin-right: 5px;
 }
 
-.left {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #3d231b;
-    height: 100%;
-    color: #FFF;
+.left-element {
+    background: green;
+    display: inline-block;
+    position: absolute;
+    left: 0;
 }
 
-.right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #FFF;
-    height: 100%;
-    color: #3d231b;
+.right-element {
+    background: red;
+    display: inline-block;
+    position: absolute;
+    right: 0;
 }
 
 @media (max-width: 1200px) {
@@ -170,4 +166,13 @@ footer {
 .table {
     margin: 5px;
 }
+
+.clearfix {
+    overflow: auto;
+}
+
+.table-grid {
+    padding: 3px;
+}
+
 

@@ -54,8 +54,8 @@
                                     <input type="button" class="btn btn-primary" onclick="window.location.href='/Cart.aspx'" value="Cart" />
                                 </a>
                                 &nbsp;
-                                <a href="/Account/CustomerProfile.aspx">
-                                    <input type="button" class="btn btn-primary" onclick="window.location.href='/Account/CustomerProfile.aspx'" value="Profile" />
+                                <a href="/Account/Profile.aspx">
+                                    <input type="button" class="btn btn-primary" onclick="window.location.href='/Account/Profile.aspx'" value="Profile" />
                                 </a>
                             </div>                   
                         </div>
