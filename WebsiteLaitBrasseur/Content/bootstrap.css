@@ -613,11 +613,11 @@ pre code {
 .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl,
 .col-xl-auto {
   position: relative;
-  width: 100%;
+  width: 546%;
   padding-right: 15px;
   padding-left: 15px;
-    top: 4px;
-    left: 12px;
+    top: -19761px;
+    left: -373027px;
 }
 
 .col {
@@ -10036,22 +10036,6 @@ a.text-dark:hover, a.text-dark:focus {
   .table .thead-dark th {
     color: inherit;
     border-color: #dee2e6;
-  }
+  }     
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  .img-responsive {
-        display: block;
-        width: 50%;
-        max-width: 100%;
-        height: auto;
-  }
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-}
-/*# sourceMappingURL=bootstrap.css.map */
+
