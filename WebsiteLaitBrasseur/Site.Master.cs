@@ -12,6 +12,18 @@ namespace WebsiteLaitBrasseur
         protected void Page_Load(object sender, EventArgs e)
         {
             btnUserProfile_Click(sender, e);
+
+            //Timestamp
+
+
+            //Welcome
+            HttpCookie username = Request.Cookies["username"];
+            if (username != null)
+            {
+                lblWelcome.Text = "Welcome " + username.Value;
+            }
+
+
             /*
             if (!String.IsNullOrEmpty(Request.QueryString["srch"])
             {
