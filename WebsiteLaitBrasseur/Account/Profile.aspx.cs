@@ -23,7 +23,6 @@ namespace WebsiteLaitBrasseur.Account
             }
 
             DeleteButton_Click(sender, e);
-            CancelButton_Click(sender, e);
             SaveButton_Click(sender, e);
 
         }
@@ -65,24 +64,21 @@ namespace WebsiteLaitBrasseur.Account
         /*Fill the label with accurat item number*/
         protected void BindProfileTextBox()
         {
-            /*Profile section informaiton*/
-            ProfileCustomerName.Text = getUserData().firstName + " " + getUserData().lastName;
-            ProfileUserName.Text = getUserData().userName;
 
             /*Textboxes with editable section information*/
-            FirstnameTextbox.Text = getUserData().firstName;
-            LastnameTextBox.Text = getUserData().lastName;
-            UsernameTextBox.Text = getUserData().userName;
-            PhoneNoTextBox.Text = getUserData().phoneNo;
-            BirthdayTextBox.Text = getUserData().birthdate;
-            EmailTextBox.Text = getLoginData().email;
+            TextFirstname.Text = getUserData().firstName;
+            TextLastname.Text = getUserData().lastName;
+            //UsernameTextBox.Text = getUserData().userName;
+            TextPhone.Text = getUserData().phoneNo;
+            TextBirthday.Text = getUserData().birthdate;
+            TextEmail.Text = getLoginData().email;
 
             /*Textboxes with editable section information*/
-            StreetTextbox.Text = getAddressData().streetName;
-            CityTextBox.Text = getAddressData().cityName;
+            TextAddress1.Text = getAddressData().streetName;
+            TextCity.Text = getAddressData().cityName;
             CountryDropDownList.Text = getAddressData().country;
-            StreetNoTextBox.Text = getAddressData().streetNo;
-            PostCodeTextBox.Text = getAddressData().postCode;
+            TextAddressnumber.Text = getAddressData().streetNo;
+            TextZip.Text = getAddressData().postCode;
         }
 
         /*Dummy data for demonstration purpose*/

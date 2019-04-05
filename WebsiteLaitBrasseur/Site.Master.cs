@@ -16,12 +16,7 @@ namespace WebsiteLaitBrasseur
             //Timestamp
 
 
-            //Welcome
-            HttpCookie email = Request.Cookies["email"];
-            if (email != null)
-            {
-                lblWelcome.Text = "Welcome " + email.Value;
-            }
+
 
 
             /*

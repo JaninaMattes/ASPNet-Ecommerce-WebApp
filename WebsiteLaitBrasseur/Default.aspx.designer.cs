@@ -13,6 +13,15 @@ namespace WebsiteLaitBrasseur {
     public partial class Default {
         
         /// <summary>
+        /// Contrôle lblWelcome.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblWelcome;
+        
+        /// <summary>
         /// Contrôle beer_button.
         /// </summary>
         /// <remarks>
