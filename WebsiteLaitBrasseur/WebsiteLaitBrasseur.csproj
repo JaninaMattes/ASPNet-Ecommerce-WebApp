@@ -70,7 +70,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Account\CustomerProfile.aspx" />
     <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\OverviewPage.aspx" />
@@ -159,9 +158,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account\CustomerProfile.aspx.designer.cs">
-      <DependentUpon>CustomerProfile.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Account\Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -291,6 +287,7 @@
     <Compile Include="Account\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DetailPage.cs" />
     <Compile Include="ProductDetails\ProductDetailBlanche.aspx.cs">
       <DependentUpon>ProductDetailBlanche.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -379,7 +376,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

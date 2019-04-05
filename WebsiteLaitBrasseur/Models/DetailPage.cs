@@ -15,9 +15,12 @@ namespace WebsiteLaitBrasseur.Models
         public string ImagePath { get; set; }
         public string ProductName { get; set; }
         public string ProducerName { get; set; }
-        public string ProductDescription { get; set; }
+        public string ShortDescription { get; set; }
         public string LongDescription { get; set; }
-        public decimal Price { get; set; }
         public decimal Unit { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+        public decimal TotalAmount { get; set; }
+               
     }
 }
