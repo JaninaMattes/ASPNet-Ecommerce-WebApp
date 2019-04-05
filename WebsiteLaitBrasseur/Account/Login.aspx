@@ -8,6 +8,9 @@
                     <!--Title of the form -->
                     <h1>Welcome on Lait Brasseur's website</h1>
                     <!--Label /TextBox / Validator for the Email -->
+                    <h1>Please log in.</h1>
+                <a href="Profile.aspx">Profile.aspx</a>
+                    <!--Label /TextBox / Validator for the login -->
                     <div class="form-group">
                         <label for="TextEmail" class="control-label col-md-3">E-mail</label>
                         <div class="col-md-3">
