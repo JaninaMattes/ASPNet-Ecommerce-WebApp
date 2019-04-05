@@ -194,7 +194,7 @@
         <div id="tableShoppingHistory clearfix" style="float:right; margin-left:1%; width: 45%">
             <h3 id="sheader">Shopping History</h3>
             <asp:Label id="tableShoppingHistoryLabel" Text="Your shopping history is empty." runat="server" />
-            <div class="table-dark right-element">
+            <div class="table-dark">
                 <asp:GridView id="ShoppingTable" runat="server">
                         <Columns>
                             <asp:BoundField DataField="InvoiceNumber" HeaderText="Invoice Number" />
