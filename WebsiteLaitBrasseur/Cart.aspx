@@ -249,11 +249,18 @@
                      <asp:Label ID="TotalCostValue" runat="server" cssclass="text-info " Text=""></asp:Label>
                      <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label><br /><br /><br />
 
-                     <!--"Button Update to actualize informations in Summary part" -->
+                     <!--"Update" button to actualize informations in Summary part" -->
                      <asp:Button ID="updateButton" runat="server" Text="Update" OnClick="updateButton_Click" ValidationGroup="Quantity" CssClass="btn btn-primary"/><br /><br /><br />
 
-                     <!--"Button Buy to get to the billing page" -->
-                     <asp:button ID="BuyButton" runat="server" CssClass="btn btn-success" Text="Buy" OnClick="BuyButton_Click" />
+                     <!--"CreditCard" button to get to the credit card page" -->
+                     <asp:button ID="CreditCardButton" runat="server" CssClass="btn btn-success" Text="Credit Card" OnClick="CreditCardButton_Click"/>
+
+                     <!--"PayPal" button Buy to get to the paypal page -->
+                     <asp:button ID="PaypalButton" runat="server" CssClass="btn btn-success" Text="Paypal" OnClick="PaypalButton_Click"/>
+
+                     <!--"Change Address" Button to get to the shipping address page -->
+                     <br /><br />
+                     <asp:button ID="ChangeAddressButton" runat="server" CssClass="btn btn-info" Text="Change Address" OnClick="ChangeAddressButton_Click" />
 
                  </div>
             </div>

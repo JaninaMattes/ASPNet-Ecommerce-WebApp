@@ -337,12 +337,30 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.Button updateButton;
         
         /// <summary>
-        /// Contrôle BuyButton.
+        /// Contrôle CreditCardButton.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button BuyButton;
+        protected global::System.Web.UI.WebControls.Button CreditCardButton;
+        
+        /// <summary>
+        /// Contrôle PaypalButton.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button PaypalButton;
+        
+        /// <summary>
+        /// Contrôle ChangeAddressButton.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ChangeAddressButton;
     }
 }

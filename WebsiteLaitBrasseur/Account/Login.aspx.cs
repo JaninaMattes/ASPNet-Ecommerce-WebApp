@@ -20,7 +20,7 @@ namespace WebsiteLaitBrasseur.Account
             if (IsValid)
             {
                 DateTime expiry = DateTime.Now.AddMinutes(5);
-                SetCookie("username", TextLogin.Text, expiry);
+                SetCookie("email", TextEmail.Text, expiry);
             }
             Response.Redirect("/Default.aspx");
         }
