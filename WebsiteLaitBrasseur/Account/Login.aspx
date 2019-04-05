@@ -7,7 +7,7 @@
     <a href="Profile.aspx">Profile.aspx</a>
             <div class="container-fluid " >
                     <!--Title of the form -->
-                    <h1>Welcome on Lait Brasseur's website</h1>
+                    <h1>Please log in.</h1>
                 <a href="Profile.aspx">Profile.aspx</a>
                     <!--Label /TextBox / Validator for the login -->
                     <div class="form-group">
