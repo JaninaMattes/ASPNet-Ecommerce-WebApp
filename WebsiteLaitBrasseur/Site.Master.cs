@@ -17,10 +17,10 @@ namespace WebsiteLaitBrasseur
 
 
             //Welcome
-            HttpCookie username = Request.Cookies["username"];
-            if (username != null)
+            HttpCookie email = Request.Cookies["email"];
+            if (email != null)
             {
-                lblWelcome.Text = "Welcome " + username.Value;
+                lblWelcome.Text = "Welcome " + email.Value;
             }
 
 

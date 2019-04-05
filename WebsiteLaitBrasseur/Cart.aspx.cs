@@ -47,7 +47,18 @@ namespace WebsiteLaitBrasseur
 
         }
 
-        protected void BuyButton_Click(object sender, EventArgs e)
+
+        protected void CreditCardButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/CardPayment.aspx");
+        }
+
+        protected void PaypalButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ChangeAddressButton_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Billing.aspx");
         }

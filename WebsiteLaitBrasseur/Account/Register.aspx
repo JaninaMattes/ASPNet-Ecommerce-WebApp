@@ -7,16 +7,6 @@
 
     <h3>  Create a new account</h3>
 
-        <!--Label /TextBox / Validator for the Username -->
-        <div class="form-group">
-            <label for="TextUsername" class="control-label col-md-3">Username</label>
-            <div class="col-md-5">
-                <asp:TextBox ID="TextUsername" runat="server" Cssclass="form-control"> </asp:TextBox>
-                <asp:RequiredFieldValidator ID="UsernameReqField" runat="server"  ControlToValidate="TextUsername" Display="Dynamic" CssClass="text-danger" ErrorMessage="Username is required"></asp:RequiredFieldValidator><br />
-
-            </div>
-        </div>
-
         <!--Label /TextBox / Validator for E-mail -->
         <div class="form-group">
                 <label for="TextEmail" class="control-label col-md-3">E-mail</label>
@@ -44,6 +34,17 @@
             </div>
         </div>
 
+       <!--Label /TextBox / Validator for BirthDay -->
+        <div class="form-group">
+            <label for="TextBirthday" class="control-label col-md-3">Birthdate</label>
+            <div class="col-md-5">
+                <asp:TextBox ID="TextBirthday" runat="server" Cssclass="form-control" TextMode="Date" > </asp:TextBox>
+                <asp:RequiredFieldValidator ID="BirthdayReqField" runat="server"  ControlToValidate="TextBirthday" Display="Dynamic" CssClass="text-danger" ErrorMessage="Birthdate is required"></asp:RequiredFieldValidator><br />
+            </div>
+        </div>
+
+
+
         <!--Label /TextBox / Validator for Password -->
         <div class="form-group">
                 <label for="TextPassword" class="control-label col-md-3">Password</label>
@@ -62,6 +63,16 @@
                     <asp:CompareValidator ID="PasswordCompValid" runat="server"  ControlToCompare="TextPassword" ControlToValidate="TextPasswordConf" Display="Dynamic" CssClass="text-danger" ErrorMessage="The password and confirmation password do not match."></asp:CompareValidator>       
                 </div>
          </div>
+
+         <!--Label /TextBox /  Validator(+format phone number validator) for the Phone number-->
+         <div class="form-group">
+            <label for="TextPhone" class="control-label col-md-3">Phone Number</label>
+            <div class="col-md-5">
+                <asp:TextBox ID="TextPhone" runat="server" Cssclass="form-control" TextMode="Phone"> </asp:TextBox>
+                <asp:RequiredFieldValidator ID="PhoneReqField" runat="server" ErrorMessage="Phone is required" ControlToValidate="TextPhone" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
+                <asp:regularExpressionValidator ID="PhoneRegValid" runat="server" ErrorMessage="Should be 10 Digits or '+' and 11 Digits" ControlToValidate="TextPhone" Display="Dynamic"  ValidationExpression="(\+\d{1})?\d{10}$" CssClass="text-danger"></asp:RegularExpressionValidator><br />
+            </div>
+        </div>
 
         <!--"Create Account" button &  "Cancel" Button => Back to Default.aspx -->
          <div class="col-md-offset-3 col-md-9">

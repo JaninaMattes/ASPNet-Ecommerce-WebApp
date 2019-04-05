@@ -16,7 +16,7 @@ namespace WebsiteLaitBrasseur.Account
 
         protected void CreateAccountButton_Click(object sender, EventArgs e)
         {
-            Label1.Text = TextUsername.Text + ", welcome in LaitBrasseur family !";
+            Label1.Text = TextFirstName.Text + ", welcome in LaitBrasseur family !";
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)

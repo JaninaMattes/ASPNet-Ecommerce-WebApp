@@ -86,52 +86,7 @@
                 </div>
             </div>
 
-            <!--Label /TextBox / Validator for the Country-->
-            <div class="form-group">
-                    <div>
-                            <label for="TextCountry" class="control-label">Country</label>
-                            <asp:TextBox ID="TextCountry" runat="server" Cssclass="form-control"> </asp:TextBox>
-                            <asp:RequiredFieldValidator ID="CountryReqField" runat="server" ErrorMessage="Country is required" ControlToValidate="TextCountry" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
-                    </div>
-                </div> 
 
-            <!--Label /TextBoxs / Validator for the Adress-->
-            <div class="form-group">
-                    <div>
-                            <label for="TextAdress" class="control-label">Billing Adress</label>
-                            <asp:TextBox ID="TextAdress1" runat="server" Cssclass="form-control"> </asp:TextBox>
-                            <asp:RequiredFieldValidator ID="AdressReqField" runat="server" ErrorMessage="Adress is required" ControlToValidate="TextAdress1" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
-                            <asp:TextBox ID="TextAdress2" runat="server" Cssclass="form-control"> </asp:TextBox>
-                    </div>
-                </div>
-
-            <!--Label /TextBox / Validator for the Citys-->
-            <div class="form-group">
-                    <div>
-                            <label for="TextCity" class="control-label">City</label>
-                            <asp:TextBox ID="TextCity" runat="server" Cssclass="form-control"> </asp:TextBox>
-                            <asp:RequiredFieldValidator ID="CityReqField" runat="server" ErrorMessage="City is required" ControlToValidate="TextCity" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
-                    </div>
-                </div>
-
-            <!--Label /TextBox / Validator for the State-->
-            <div class="form-group">
-                    <div>
-                            <label for="TextState" class="control-label">State / Province / Region</label>
-                            <asp:TextBox ID="TextState" runat="server" Cssclass="form-control"> </asp:TextBox>
-                            <asp:RequiredFieldValidator ID="StatereqField" runat="server" ErrorMessage="This field is required" ControlToValidate="TextState" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
-                    </div>
-                </div>
-
-            <!--Label /TextBox / Validator(+format zipcode validator) for the ZipCode-->
-            <div class="form-group">
-                    <div>
-                            <label for="TextZip" class="control-label">Zip Code</label>
-                            <asp:TextBox ID="TextZip" runat="server" Cssclass="form-control" TextMode="Number"> </asp:TextBox>
-                            <asp:RequiredFieldValidator ID="ZipReqField" runat="server" ErrorMessage="Zip is required" ControlToValidate="TextZip" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
-                            <asp:regularExpressionValidator ID="ZipRegExpValid" runat="server" ErrorMessage="Should be 5 or 9 Digits" ControlToValidate="TextZip" Display="Dynamic"  ValidationExpression="\d{5}-?(\d{4})?$" CssClass="text-danger"></asp:RegularExpressionValidator><br />
-                    </div>
-           </div>
   
            <!--Button for Cancel or submit the payment-->        
            <div class="col-md-offset-3 col-md-9">
