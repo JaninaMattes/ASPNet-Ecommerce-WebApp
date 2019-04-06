@@ -13,17 +13,17 @@ namespace WebsiteLaitBrasseur.Account
         {
             if (!IsPostBack)
             {
-                var db = new DAL.DummyDb();
-                var destinations = db.GetDestinations();
+                var db = new DAL.DemoDatabase();
+                var products = db.GetProducts();
 
-                ImageRepeater.DataSource = destinations;
+                ImageRepeater.DataSource = products;
                 ImageRepeater.DataBind();
             }
         }
 
-        protected void img1_Command(object sender, CommandEventArgs e)
+        protected void imgCommand(object sender, CommandEventArgs e)
         {
-            Response.Redirect("Destination.aspx?id=" + e.CommandArgument);
+            Response.Redirect("DetailPage.aspx?id=" + e.CommandArgument);
         }
     }
 }

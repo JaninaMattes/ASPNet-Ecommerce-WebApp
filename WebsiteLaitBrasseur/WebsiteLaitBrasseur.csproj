@@ -74,7 +74,7 @@
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\OverviewPage.aspx" />
     <Content Include="Account\Profile.aspx" />
-    <Content Include="Account\WebForm3.aspx" />
+    <Content Include="Account\DetailPage.aspx" />
     <Content Include="Admin\AccountManagment.aspx" />
     <Content Include="Admin\AdminProfile.aspx" />
     <Content Include="Admin\Default.aspx" />
@@ -186,12 +186,12 @@
     <Compile Include="Account\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Account\WebForm3.aspx.cs">
-      <DependentUpon>WebForm3.aspx</DependentUpon>
+    <Compile Include="Account\DetailPage.aspx.cs">
+      <DependentUpon>DetailPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Account\WebForm3.aspx.designer.cs">
-      <DependentUpon>WebForm3.aspx</DependentUpon>
+    <Compile Include="Account\DetailPage.aspx.designer.cs">
+      <DependentUpon>DetailPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\AccountManagment.aspx.cs">
       <DependentUpon>AccountManagment.aspx</DependentUpon>
@@ -270,6 +270,7 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DAL\DemoDatabase.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

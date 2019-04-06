@@ -10,7 +10,7 @@
 namespace WebsiteLaitBrasseur.Account {
     
     
-    public partial class WebForm1 {
+    public partial class OverviewPage {
         
         /// <summary>
         /// ImageRepeater control.

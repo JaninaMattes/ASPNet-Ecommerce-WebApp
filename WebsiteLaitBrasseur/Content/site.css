@@ -186,6 +186,16 @@ footer {
     margin: -75px 0 0 -100px;
 }
 
+.crop-xl {
+    width: 600px;
+    height: 550px;
+    overflow: hidden;
+}
+
+    .crop-xl img {
+        margin: -75px 0 0 -100px;
+    }
+
 /*Footer of cardview*/
 .card-footer {
     align-content: center;
