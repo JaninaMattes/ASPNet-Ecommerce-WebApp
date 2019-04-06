@@ -13,49 +13,31 @@ namespace WebsiteLaitBrasseur.Account {
     public partial class Profile {
         
         /// <summary>
-        /// Contrôle ProfileCustomerName.
+        /// Contrôle DeleteButton.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ProfileCustomerName;
+        protected global::System.Web.UI.WebControls.Button DeleteButton;
         
         /// <summary>
-        /// Contrôle ProfileUserName.
+        /// Contrôle SaveButton.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ProfileUserName;
+        protected global::System.Web.UI.WebControls.Button SaveButton;
         
         /// <summary>
-        /// Contrôle deleteBtn.
+        /// Contrôle TextFirstname.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button deleteBtn;
-        
-        /// <summary>
-        /// Contrôle Firstname.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Firstname;
-        
-        /// <summary>
-        /// Contrôle FirstnameTextbox.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FirstnameTextbox;
+        protected global::System.Web.UI.WebControls.TextBox TextFirstname;
         
         /// <summary>
         /// Contrôle FirstnameReqField.
@@ -67,76 +49,13 @@ namespace WebsiteLaitBrasseur.Account {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator FirstnameReqField;
         
         /// <summary>
-        /// Contrôle Username.
+        /// Contrôle TextLastname.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Username;
-        
-        /// <summary>
-        /// Contrôle UsernameTextBox.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox UsernameTextBox;
-        
-        /// <summary>
-        /// Contrôle UsernameReqField.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator UsernameReqField;
-        
-        /// <summary>
-        /// Contrôle Phonenumber.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Phonenumber;
-        
-        /// <summary>
-        /// Contrôle PhoneNoTextBox.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PhoneNoTextBox;
-        
-        /// <summary>
-        /// Contrôle PhoneNoReqField.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator PhoneNoReqField;
-        
-        /// <summary>
-        /// Contrôle Lastname.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lastname;
-        
-        /// <summary>
-        /// Contrôle LastnameTextBox.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LastnameTextBox;
+        protected global::System.Web.UI.WebControls.TextBox TextLastname;
         
         /// <summary>
         /// Contrôle LastNameReqField.
@@ -148,22 +67,13 @@ namespace WebsiteLaitBrasseur.Account {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator LastNameReqField;
         
         /// <summary>
-        /// Contrôle Email.
+        /// Contrôle TextEmail.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Email;
-        
-        /// <summary>
-        /// Contrôle EmailTextBox.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox EmailTextBox;
+        protected global::System.Web.UI.WebControls.TextBox TextEmail;
         
         /// <summary>
         /// Contrôle EmailReqField.
@@ -175,22 +85,40 @@ namespace WebsiteLaitBrasseur.Account {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailReqField;
         
         /// <summary>
-        /// Contrôle Birthday.
+        /// Contrôle TextPhone.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Birthday;
+        protected global::System.Web.UI.WebControls.TextBox TextPhone;
         
         /// <summary>
-        /// Contrôle BirthdayTextBox.
+        /// Contrôle PhoneNumberReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox BirthdayTextBox;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator PhoneNumberReqField;
+        
+        /// <summary>
+        /// Contrôle PhoneRegValid.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator PhoneRegValid;
+        
+        /// <summary>
+        /// Contrôle TextBirthday.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBirthday;
         
         /// <summary>
         /// Contrôle BirthdayReqField.
@@ -202,67 +130,112 @@ namespace WebsiteLaitBrasseur.Account {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator BirthdayReqField;
         
         /// <summary>
-        /// Contrôle Streetname.
+        /// Contrôle ChangePasswordButton.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Streetname;
+        protected global::System.Web.UI.WebControls.Button ChangePasswordButton;
         
         /// <summary>
-        /// Contrôle StreetTextbox.
+        /// Contrôle TextAddressnumber.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StreetTextbox;
+        protected global::System.Web.UI.WebControls.TextBox TextAddressnumber;
         
         /// <summary>
-        /// Contrôle StreetReqVal.
+        /// Contrôle AdressnumberReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator StreetReqVal;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator AdressnumberReqField;
         
         /// <summary>
-        /// Contrôle City.
+        /// Contrôle TextAddress1.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label City;
+        protected global::System.Web.UI.WebControls.TextBox TextAddress1;
         
         /// <summary>
-        /// Contrôle CityTextBox.
+        /// Contrôle AddressReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CityTextBox;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator AddressReqField;
         
         /// <summary>
-        /// Contrôle CityReqVal.
+        /// Contrôle TextZip.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator CityReqVal;
+        protected global::System.Web.UI.WebControls.TextBox TextZip;
         
         /// <summary>
-        /// Contrôle Country.
+        /// Contrôle ZipReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Country;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ZipReqField;
+        
+        /// <summary>
+        /// Contrôle ZipRegExpValid.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator ZipRegExpValid;
+        
+        /// <summary>
+        /// Contrôle TextCity.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextCity;
+        
+        /// <summary>
+        /// Contrôle CityReqField.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CityReqField;
+        
+        /// <summary>
+        /// Contrôle TextName.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextName;
+        
+        /// <summary>
+        /// Contrôle NameReqField.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator NameReqField;
         
         /// <summary>
         /// Contrôle CountryDropDownList.
@@ -272,87 +245,6 @@ namespace WebsiteLaitBrasseur.Account {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList CountryDropDownList;
-        
-        /// <summary>
-        /// Contrôle Req_ID.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator Req_ID;
-        
-        /// <summary>
-        /// Contrôle cancelBtn.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button cancelBtn;
-        
-        /// <summary>
-        /// Contrôle saveBtn.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button saveBtn;
-        
-        /// <summary>
-        /// Contrôle StreetNo.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label StreetNo;
-        
-        /// <summary>
-        /// Contrôle StreetNoTextBox.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox StreetNoTextBox;
-        
-        /// <summary>
-        /// Contrôle RequiredFieldValidator1.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-        
-        /// <summary>
-        /// Contrôle PostCode.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PostCode;
-        
-        /// <summary>
-        /// Contrôle PostCodeTextBox.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PostCodeTextBox;
-        
-        /// <summary>
-        /// Contrôle PostCodeReqValator5.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator PostCodeReqValator5;
         
         /// <summary>
         /// Contrôle tableShoppingHistoryLabel.

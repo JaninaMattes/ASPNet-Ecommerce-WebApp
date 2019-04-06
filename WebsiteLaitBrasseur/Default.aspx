@@ -7,7 +7,8 @@
 
     <div class="container-fluid text-center" >
         <br />
-        <h1 style="font-family:cursive;color:yellowgreen;">Welcome</h1>
+       <h1> <asp:Label ID="lblWelcome" runat="server" style="font-family:cursive;color:yellowgreen;" Text="Welcome"></asp:Label>  </h1>
+
 
         <!--Welcoming picture -->
         <div class="col-md-12 text-center">

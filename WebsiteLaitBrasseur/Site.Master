@@ -34,8 +34,9 @@
                 </div>
 
                 <div class="col-md-4 text-right">
-                    <a href="/Account/Login2.aspx"  >
-                        <input type="button" class="btn btn-outline-light" value="LogIn" />
+
+                    <a href="/Account/Login.aspx"  >
+                        <input type="button" class="btn btn-primary" value="LogIn" />
                     </a>
                 </div>
                     
@@ -75,7 +76,6 @@
 
     <footer>
         <p> &copy; <%: DateTime.Now.Year %> - <a runat="server" href="/Contact.aspx">Contact</a>  - <a runat="server" href="~/">About us</a> - <a runat="server" href="~/">Facebook</a> </p>
-        <p> <asp:Label ID="lblWelcome" runat="server"></asp:Label>   </p>
     </footer>
 </body>
 

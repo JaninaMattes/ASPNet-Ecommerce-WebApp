@@ -11,7 +11,12 @@ namespace WebsiteLaitBrasseur
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //Welcome
+            HttpCookie email = Request.Cookies["email"];
+            if (email != null)
+            {
+                lblWelcome.Text = "Welcome back " + email.Value;
+            }
         }
 
         protected void BeerButton_Click(object sender, EventArgs e)

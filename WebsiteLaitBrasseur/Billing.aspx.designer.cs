@@ -13,22 +13,13 @@ namespace WebsiteLaitBrasseur {
     public partial class Billing {
         
         /// <summary>
-        /// Contrôle TextCountry.
+        /// Contrôle CountryDropDownList.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextCountry;
-        
-        /// <summary>
-        /// Contrôle CountryReqField.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator CountryReqField;
+        protected global::System.Web.UI.WebControls.DropDownList CountryDropDownList;
         
         /// <summary>
         /// Contrôle TextName.
@@ -49,31 +40,40 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator NameReqField;
         
         /// <summary>
-        /// Contrôle TextAdress1.
+        /// Contrôle TextAdressnumber.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextAdress1;
+        protected global::System.Web.UI.WebControls.TextBox TextAdressnumber;
         
         /// <summary>
-        /// Contrôle AdressReqField.
+        /// Contrôle AdressnumberReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator AdressReqField;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator AdressnumberReqField;
         
         /// <summary>
-        /// Contrôle TextAdress2.
+        /// Contrôle TextAddress.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextAdress2;
+        protected global::System.Web.UI.WebControls.TextBox TextAddress;
+        
+        /// <summary>
+        /// Contrôle AddressReqField.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator AddressReqField;
         
         /// <summary>
         /// Contrôle TextCity.
@@ -92,24 +92,6 @@ namespace WebsiteLaitBrasseur {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator CityReqField;
-        
-        /// <summary>
-        /// Contrôle TextState.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextState;
-        
-        /// <summary>
-        /// Contrôle StatereqField.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator StatereqField;
         
         /// <summary>
         /// Contrôle TextZip.
