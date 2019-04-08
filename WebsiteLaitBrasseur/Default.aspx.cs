@@ -11,11 +11,18 @@ namespace WebsiteLaitBrasseur
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Welcome
-            HttpCookie email = Request.Cookies["email"];
-            if (email != null)
+            try { 
+                //Welcome
+                string email= this.Session["email"].ToString();
+
+                if (email != null)
+                {
+                    lblWelcome.Text = "Welcome back " + email;
+                }
+            }
+            catch
             {
-                lblWelcome.Text = "Welcome back " + email.Value;
+                lblWelcome.Text = "Welcome";
             }
         }
 

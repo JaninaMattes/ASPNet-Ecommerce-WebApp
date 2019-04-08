@@ -11,7 +11,11 @@ namespace WebsiteLaitBrasseur.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            HttpCookie email = Request.Cookies["email"];
+            if (email != null)
+            {
+                lblGoodBye.Text = "Good bye " + email.Value;
+            }
         }
     }
 }

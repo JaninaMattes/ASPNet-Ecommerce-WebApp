@@ -22,7 +22,7 @@ namespace WebsiteLaitBrasseur.Account
                 if (!IsPostBack)
                 {
                     // retrieve a prodcut from our db
-                    var product  = db.GetProductById(id);
+                    var product = db.GetProductById(id);
                     if (product != null)
                     {
                         // set up detail page elements
@@ -36,7 +36,7 @@ namespace WebsiteLaitBrasseur.Account
                         labelPrice.Text = product.Price.ToString();
                         unitDropDownList.Text = product.Unit.ToString();
                         quantityDropDownList.Text = product.Quantity.ToString();
-                        totalAmount.Text = product.TotalAmount.ToString();                     
+                        totalAmount.Text = product.TotalAmount.ToString();
                     }
                 }
             }
@@ -47,4 +47,5 @@ namespace WebsiteLaitBrasseur.Account
         protected void AddButton_Click(object sender, EventArgs e)
         {
         }
+    }
 }

@@ -13,28 +13,21 @@ namespace WebsiteLaitBrasseur
         {
             btnUserProfile_Click(sender, e);
 
-            //Timestamp
+            try {
+                if (this.Session["email"] != null)
+                {
+                    lblLogout.Visible = true;
+                }
+            }
+            catch { }
 
-
-
-
-
-            /*
-            if (!String.IsNullOrEmpty(Request.QueryString["srch"])
-            {
-                //perform search and display results
-            }*/
         }
 
 
-        
+
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             Response.Redirect("/ProductOverview.aspx");
-            /*
-            var searchText = Server.UrlEncode(txtSearchMaster.Text);    // URL encode in case of special characters
-            Response.Redirect("~/.aspx?srch=" + searchText);
-            */
         }
 
         protected void btnCart_Click(object sender, EventArgs e)

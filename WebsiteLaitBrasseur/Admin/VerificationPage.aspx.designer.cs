@@ -7,18 +7,18 @@
 // </généré automatiquement>
 //------------------------------------------------------------------------------
 
-namespace WebsiteLaitBrasseur.Account {
+namespace WebsiteLaitBrasseur.Admin {
     
     
-    public partial class OverviewPage {
+    public partial class VerificationPage {
         
         /// <summary>
-        /// Contrôle ImageRepeater.
+        /// Contrôle lblRegistrationResult.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater ImageRepeater;
+        protected global::System.Web.UI.WebControls.Label lblRegistrationResult;
     }
 }

@@ -8,19 +8,9 @@
 
     <h3>  Create a new Admin account</h3>
 
-        <!--Label /TextBox / Validator for the Username -->
+      <!--Label /TextBox / Validator for E-mail -->
         <div class="form-group">
-            <label for="TextUsername" class="control-label col-md-3">Username</label>
-            <div class="col-md-5">
-                <asp:TextBox ID="TextUsername" runat="server" Cssclass="form-control"> </asp:TextBox>
-                <asp:RequiredFieldValidator ID="UsernameReqField" runat="server"  ControlToValidate="TextUsername" Display="Dynamic" CssClass="text-danger" ErrorMessage="Username is required"></asp:RequiredFieldValidator><br />
-
-            </div>
-        </div>
-
-        <!--Label /TextBox / Validator for E-mail -->
-        <div class="form-group">
-                <label for="TextEmail" class="control-label col-md-3">E-mail</label>
+                <label for="TextEmail" class="control-label col-md-3 text-info">E-mail</label>
                 <div class="col-md-5">
                     <asp:TextBox ID="TextEmail" runat="server" Cssclass="form-control" TextMode="Email"> </asp:TextBox>
                     <asp:RequiredFieldValidator ID="EmailReqField" runat="server"  ControlToValidate="TextEmail" Display="Dynamic" CssClass="text-danger" ErrorMessage="Email is required"></asp:RequiredFieldValidator><br />
@@ -37,9 +27,10 @@
                 </div>
          </div>
 
+
        <!--Label /TextBox / Validator for First Name -->
        <div class="form-group">
-            <label for="TextFirstName" class="control-label col-md-3">First name</label>
+            <label for="TextFirstName" class="control-label col-md-3 text-info">First name</label>
             <div class="col-md-5">
                 <asp:TextBox ID="TextFirstName" runat="server" Cssclass="form-control"> </asp:TextBox>
                 <asp:RequiredFieldValidator ID="FirstNameReqField" runat="server"  ControlToValidate="TextFirstName" Display="Dynamic" CssClass="text-danger" ErrorMessage="First name is required"></asp:RequiredFieldValidator><br />
@@ -48,108 +39,26 @@
 
        <!--Label /TextBox / Validator for Last Name -->
         <div class="form-group">
-            <label for="TextLastName" class="control-label col-md-3">Last name</label>
+            <label for="TextLastName" class="control-label col-md-3 text-info">Last name</label>
             <div class="col-md-5">
                 <asp:TextBox ID="TextLastName" runat="server" Cssclass="form-control"> </asp:TextBox>
                 <asp:RequiredFieldValidator ID="LastNameReqField" runat="server"  ControlToValidate="TextLastName" Display="Dynamic" CssClass="text-danger" ErrorMessage="Last name is required"></asp:RequiredFieldValidator><br />
             </div>
         </div>
 
-        <!--Label /DropDownList for Birth Date-->
+       <!--Label /TextBox / Validator for BirthDay -->
         <div class="form-group">
-               <div Class="col-md-3">
-                <asp:label ID="BirthDateLabel" runat="server"  Text="Birth Date : "></asp:label>
-                    &nbsp&nbsp
-                    <asp:DropDownList ID="BirthDay" runat="server" >
-                         <asp:ListItem Selected="True" Value="1"></asp:ListItem>
-                         <asp:ListItem Value="2"></asp:ListItem>
-                         <asp:ListItem Value="3"></asp:ListItem>
-                         <asp:ListItem Value="4"></asp:ListItem>
-                         <asp:ListItem Value="5"></asp:ListItem>
-                         <asp:ListItem Value="6"></asp:ListItem>
-                         <asp:ListItem Value="7"></asp:ListItem>
-                         <asp:ListItem Value="8"></asp:ListItem>
-                         <asp:ListItem Value="9"></asp:ListItem>
-                         <asp:ListItem Value="10"></asp:ListItem>
-                         <asp:ListItem Value="11"></asp:ListItem>
-                         <asp:ListItem Value="12"></asp:ListItem>
-                         <asp:ListItem Value="13"></asp:ListItem>
-                         <asp:ListItem Value="14"></asp:ListItem>
-                         <asp:ListItem Value="15"></asp:ListItem>
-                         <asp:ListItem Value="16"></asp:ListItem>
-                         <asp:ListItem Value="17"></asp:ListItem>
-                         <asp:ListItem Value="18"></asp:ListItem>
-                         <asp:ListItem Value="19"></asp:ListItem>
-                         <asp:ListItem Value="20"></asp:ListItem>
-                         <asp:ListItem Value="21"></asp:ListItem>
-                         <asp:ListItem Value="22"></asp:ListItem>
-                         <asp:ListItem Value="23"></asp:ListItem>
-                         <asp:ListItem Value="24"></asp:ListItem>
-                         <asp:ListItem Value="25"></asp:ListItem>
-                         <asp:ListItem Value="26"></asp:ListItem>
-                         <asp:ListItem Value="27"></asp:ListItem>
-                         <asp:ListItem Value="28"></asp:ListItem>
-                         <asp:ListItem Value="29"></asp:ListItem>
-                         <asp:ListItem Value="30"></asp:ListItem>
-                         <asp:ListItem Value="31"></asp:ListItem>
-                    </asp:DropDownList>
-                    &nbsp/&nbsp
-                    <asp:DropDownList ID="BirthMonth" runat="server" >
-                         <asp:ListItem Selected="True" Value="1"></asp:ListItem>
-                         <asp:ListItem Value="2"></asp:ListItem>
-                         <asp:ListItem Value="3"></asp:ListItem>
-                         <asp:ListItem Value="4"></asp:ListItem>
-                         <asp:ListItem Value="5"></asp:ListItem>
-                         <asp:ListItem Value="6"></asp:ListItem>
-                         <asp:ListItem Value="7"></asp:ListItem>
-                         <asp:ListItem Value="8"></asp:ListItem>
-                         <asp:ListItem Value="9"></asp:ListItem>
-                         <asp:ListItem Value="10"></asp:ListItem>
-                         <asp:ListItem Value="11"></asp:ListItem>
-                         <asp:ListItem Value="12"></asp:ListItem>
-                    </asp:DropDownList>
-                    &nbsp/&nbsp
-                    <asp:DropDownList ID="BirthYear" runat="server" >
-                         <asp:ListItem  Value="1970"></asp:ListItem>
-                         <asp:ListItem  Value="1971"></asp:ListItem>
-                         <asp:ListItem  Value="1972"></asp:ListItem>
-                         <asp:ListItem  Value="1973"></asp:ListItem>
-                         <asp:ListItem  Value="1974"></asp:ListItem>
-                         <asp:ListItem  Value="1975"></asp:ListItem>
-                         <asp:ListItem  Value="1976"></asp:ListItem>
-                         <asp:ListItem  Value="1977"></asp:ListItem>
-                         <asp:ListItem  Value="1978"></asp:ListItem>
-                         <asp:ListItem  Value="1979"></asp:ListItem>
-                         <asp:ListItem  Value="1980"></asp:ListItem>
-                         <asp:ListItem  Value="1981"></asp:ListItem>
-                         <asp:ListItem  Value="1982"></asp:ListItem>
-                         <asp:ListItem  Value="1983"></asp:ListItem>
-                         <asp:ListItem  Value="1984"></asp:ListItem>
-                         <asp:ListItem  Value="1985"></asp:ListItem>
-                         <asp:ListItem  Value="1986"></asp:ListItem>
-                         <asp:ListItem  Value="1987"></asp:ListItem>
-                         <asp:ListItem  Value="1988"></asp:ListItem>
-                         <asp:ListItem  Value="1989"></asp:ListItem>
-                         <asp:ListItem  Value="1990"></asp:ListItem>
-                         <asp:ListItem  Value="1991"></asp:ListItem>
-                         <asp:ListItem  Value="1992"></asp:ListItem>
-                         <asp:ListItem  Value="1993"></asp:ListItem>
-                         <asp:ListItem  Value="1994"></asp:ListItem>
-                         <asp:ListItem  Value="1995"></asp:ListItem>
-                         <asp:ListItem  Value="1996"></asp:ListItem>
-                         <asp:ListItem  Selected="True" Value="1997"></asp:ListItem>
-                         <asp:ListItem  Value="1998"></asp:ListItem>
-                         <asp:ListItem  Value="1999"></asp:ListItem>
-                         <asp:ListItem  Value="2000"></asp:ListItem>
-                         <asp:ListItem  Value="2001"></asp:ListItem>
-         
-                    </asp:DropDownList>
-                </div>
-         </div>
+            <label for="TextBirthday" class="control-label col-md-3 text-info">Birthdate</label>
+            <div class="col-md-5">
+                <asp:TextBox ID="TextBirthday" runat="server" Cssclass="form-control" TextMode="Date" > </asp:TextBox>
+                <asp:RequiredFieldValidator ID="BirthdayReqField" runat="server"  ControlToValidate="TextBirthday" Display="Dynamic" CssClass="text-danger" ErrorMessage="Birthdate is required"></asp:RequiredFieldValidator><br />
+            </div>
+        </div>
+
 
         <!--Label /TextBox / Validator for Password -->
         <div class="form-group">
-                <label for="TextPassword" class="control-label col-md-3">Password</label>
+                <label for="TextPassword" class="control-label col-md-3 text-info">Password</label>
                 <div class="col-md-5">
                     <asp:TextBox ID="TextPassword" runat="server" Cssclass="form-control" TextMode="Password"> </asp:TextBox>
                     <asp:RequiredFieldValidator ID="PasswordField" runat="server"  ControlToValidate="TextPassword" Display="Dynamic" CssClass="text-danger" ErrorMessage="Password is required"></asp:RequiredFieldValidator><br />
@@ -158,13 +67,23 @@
 
          <!--Label /TextBox / Validator(compare with first password entry) for Confirm Password -->
          <div class="form-group">
-                <label for="TextPasswordConf" class="control-label col-md-3">Confirm Password</label>
+                <label for="TextPasswordConf" class="control-label col-md-3 text-info">Confirm Password</label>
                 <div class="col-md-5">
                     <asp:TextBox ID="TextPasswordConf" runat="server" Cssclass="form-control" TextMode="Password" > </asp:TextBox>
                     <asp:RequiredFieldValidator ID="ConfirmPasswordField" runat="server"  ControlToValidate="TextPasswordConf" Display="Dynamic" CssClass="text-danger" ErrorMessage="Confirm password is required"></asp:RequiredFieldValidator>
                     <asp:CompareValidator ID="PasswordCompValid" runat="server"  ControlToCompare="TextPassword" ControlToValidate="TextPasswordConf" Display="Dynamic" CssClass="text-danger" ErrorMessage="The password and confirmation password do not match."></asp:CompareValidator>       
                 </div>
          </div>
+
+         <!--Label /TextBox /  Validator(+format phone number validator) for the Phone number-->
+         <div class="form-group">
+            <label for="TextPhone" class="control-label col-md-3 text-info">Phone Number</label>
+            <div class="col-md-5">
+                <asp:TextBox ID="TextPhone" runat="server" Cssclass="form-control" TextMode="Phone"> </asp:TextBox>
+                <asp:RequiredFieldValidator ID="PhoneReqField" runat="server" ErrorMessage="Phone is required" ControlToValidate="TextPhone" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
+                <asp:regularExpressionValidator ID="PhoneRegValid" runat="server" ErrorMessage="Should be 10 Digits or '+' and 11 Digits" ControlToValidate="TextPhone" Display="Dynamic"  ValidationExpression="(\+\d{1})?\d{10}$" CssClass="text-danger"></asp:RegularExpressionValidator><br />
+            </div>
+        </div>
 
         <!--"Create Account" button &  "Cancel" Button => Back to DefaultAdmin.aspx -->
          <div class="col-md-offset-3 col-md-9">
@@ -173,7 +92,8 @@
          </div>
         
             <div class="col-md-9">
-                <asp:Label ID="Label1" runat="server" CssClass="text-info"></asp:Label>
+                <asp:Label ID="lblRegResult" runat="server" CssClass="text-info"></asp:Label>
             </div>
 
+                
 </asp:Content>

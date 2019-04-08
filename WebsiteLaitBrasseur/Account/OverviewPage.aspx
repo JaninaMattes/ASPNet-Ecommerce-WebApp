@@ -4,7 +4,6 @@
 
 <div class="container-fluid">
     
-    <h1>.</h1>
     <!-- set a dynamically exchangeable title--> <h2><%: Page.Title %></h2>
 
   <div class="row">

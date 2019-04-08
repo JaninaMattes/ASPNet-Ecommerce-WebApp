@@ -1,15 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="LogoutAdmin.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.LogoutAdmin" %>
+﻿<%@ Page Title="Logout" Language="C#" MasterPageFile="~/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="LogoutAdmin.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.LogoutAdmin" %>
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-        </div>
-    </form>
-</body>
-</html>
+
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="text-center text-info">
+         <h3><asp:Label ID="lblGoodBye" runat="server" csslcass="text-info text-center" ></asp:Label></h3>
+    </div>
+
+</asp:Content>

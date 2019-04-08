@@ -13,24 +13,6 @@ namespace WebsiteLaitBrasseur.Admin {
     public partial class RegisterAdmin {
         
         /// <summary>
-        /// Contrôle TextUsername.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextUsername;
-        
-        /// <summary>
-        /// Contrôle UsernameReqField.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator UsernameReqField;
-        
-        /// <summary>
         /// Contrôle TextEmail.
         /// </summary>
         /// <remarks>
@@ -112,40 +94,22 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator LastNameReqField;
         
         /// <summary>
-        /// Contrôle BirthDateLabel.
+        /// Contrôle TextBirthday.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label BirthDateLabel;
+        protected global::System.Web.UI.WebControls.TextBox TextBirthday;
         
         /// <summary>
-        /// Contrôle BirthDay.
+        /// Contrôle BirthdayReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList BirthDay;
-        
-        /// <summary>
-        /// Contrôle BirthMonth.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList BirthMonth;
-        
-        /// <summary>
-        /// Contrôle BirthYear.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList BirthYear;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator BirthdayReqField;
         
         /// <summary>
         /// Contrôle TextPassword.
@@ -193,6 +157,33 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.CompareValidator PasswordCompValid;
         
         /// <summary>
+        /// Contrôle TextPhone.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextPhone;
+        
+        /// <summary>
+        /// Contrôle PhoneReqField.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator PhoneReqField;
+        
+        /// <summary>
+        /// Contrôle PhoneRegValid.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator PhoneRegValid;
+        
+        /// <summary>
         /// Contrôle CancelButton.
         /// </summary>
         /// <remarks>
@@ -211,12 +202,12 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.Button CreateAccountButton;
         
         /// <summary>
-        /// Contrôle Label1.
+        /// Contrôle lblRegResult.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lblRegResult;
     }
 }

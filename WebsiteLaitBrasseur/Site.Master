@@ -36,7 +36,12 @@
                 <div class="col-md-4 text-right">
 
                     <a href="/Account/Login.aspx"  >
-                        <input type="button" class="btn btn-primary" value="LogIn" />
+                        <input id="LogInButton" runat="server" type="button" class="btn btn-primary" value="LogIn"/>
+                    </a>
+
+                    <br />
+                    <a href="/Account/Logout.aspx"  >
+                        <asp:label id="lblLogout" runat="server" text="Logout" Visible="false"></asp:label>
                     </a>
                 </div>
                     
