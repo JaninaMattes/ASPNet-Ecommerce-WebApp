@@ -36,16 +36,12 @@
                 <div class="col-md-4 text-right">
 
                     <a href="/Account/Login.aspx"  >
-<<<<<<< HEAD
-                        <input type="button" class="btn btn-outline-light"   value="LogIn" />
-=======
-                        <input id="LogInButton" runat="server" type="button" class="btn btn-primary" value="LogIn"/>
+                        <input id="LogInButton" runat="server" type="button" class="btn btn-outline-light" value="LogIn"/>
                     </a>
 
                     <br />
                     <a href="/Account/Logout.aspx"  >
                         <asp:label id="lblLogout" runat="server" text="Logout" Visible="false"></asp:label>
->>>>>>> f3f42df0f11a9a8769d53d9df77f123322f9c69e
                     </a>
                 </div>
                     

@@ -2,26 +2,16 @@
 
 
 <asp:Content ID="Body" ContentPlaceHolderID="MainContent" runat="server">
-<<<<<<< HEAD
 
 <!--Home Page Content-->
     <div class="container-fluid text-center" >
         <br />
-=======
-  
-<!--Home Page -->
 
-    <div class="container-fluid text-center" >
-        <br />
-       <h1> <asp:Label ID="lblWelcome" runat="server" style="font-family:cursive;color:yellowgreen;" ></asp:Label>  </h1>
-
-
->>>>>>> f3f42df0f11a9a8769d53d9df77f123322f9c69e
         <!--Welcoming picture -->
         <div class="col-md-12 text-center crop">
             <img id="ImgHome" alt="LaitBrasseur_Prez" src="/Images/brewery.jpg" style="width: 95%; height: 250px;"/>
-            <div class="centered" style="width: 200px; height: 50px; background-color: white;">
-                <asp:Label ID="lblWelcome" Text="" runat="server" CssClass="align-content-center text-black-50 text-center">Welcome & Bienvenue</asp:Label>
+            <div class="centered" style="width: 250px; height: 150px; background-color: white;">
+                <asp:Label ID="lblWelcome" Text="" runat="server" CssClass="align-content-center text-black-50 text-center" Font-Size="35px">Welcome & Bienvenue</asp:Label>
             </div>
         </div>
 
