@@ -16,7 +16,7 @@
         <!--1 Col Product card nested in repeater control-->
         <!--START Product CardView-->
             <div id="cardView" class="card">
-            <div id="img-cardview" class="crop">
+            <div id="img-cardview" class="crop text-center" style="height:220px;width:340px">
                 <asp:ImageButton id="img1" runat="server" ImageUrl='<%# Eval("ImagePath") %>'  OnCommand="imgCommand" CommandArgument='<%# Eval("Id") %>'/>      
             </div>
             <div id="container1" class="container clearfix">

@@ -53,16 +53,12 @@
                         <div id="NavBar" class="navbar" >
                             <div class="navbar " >
                                 <input type="text"  placeholder="Search" />
-                                <button type="submit" class="btn btn-primary" onclick="window.location.href='/ProductOverview.aspx'" >Search</button>
+                                <input type="button" class="btn btn-primary" onclick="window.location.href='/OverviewPage.aspx'" Value="Search" />
                             </div>                    
                             <div class="nav navbar-right">
-                                <a href="/Cart.aspx">
                                     <input type="button" class="btn btn-primary" onclick="window.location.href='/Cart.aspx'" value="Cart" />
-                                </a>
                                 &nbsp;
-                                <a href="/Account/Profile.aspx">
                                     <input type="button" class="btn btn-primary" onclick="window.location.href='/Account/Profile.aspx'" value="Profile" />
-                                </a>
                             </div>                   
                         </div>
 
