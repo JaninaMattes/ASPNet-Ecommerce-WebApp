@@ -70,6 +70,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AboutUs.aspx" />
     <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Account\OverviewPage.aspx" />
@@ -80,12 +81,14 @@
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\LoginAdmin.aspx" />
     <Content Include="Admin\LogoutAdmin.aspx" />
+    <Content Include="Admin\PostagesOptions.aspx" />
     <Content Include="Admin\RegisterAdmin.aspx" />
     <Content Include="Admin\VerificationPage.aspx" />
     <Content Include="Billing.aspx" />
     <Content Include="CardPayment.aspx" />
     <Content Include="Cart.aspx" />
     <Content Include="Contact.aspx" />
+    <Content Include="Images\AboutUPicture.jpg" />
     <Content Include="Images\beers_prez.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -159,6 +162,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutUs.aspx.cs">
+      <DependentUpon>AboutUs.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AboutUs.aspx.designer.cs">
+      <DependentUpon>AboutUs.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -235,6 +245,13 @@
     </Compile>
     <Compile Include="Admin\LogoutAdmin.aspx.designer.cs">
       <DependentUpon>LogoutAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\PostagesOptions.aspx.cs">
+      <DependentUpon>PostagesOptions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\PostagesOptions.aspx.designer.cs">
+      <DependentUpon>PostagesOptions.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\RegisterAdmin.aspx.cs">
       <DependentUpon>RegisterAdmin.aspx</DependentUpon>
