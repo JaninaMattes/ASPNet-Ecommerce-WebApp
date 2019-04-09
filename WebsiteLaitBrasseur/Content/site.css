@@ -175,24 +175,20 @@ footer {
 }
 
 .crop {
-    width: 440px;
-    height: 300px;
     overflow: hidden;
 }
 
-.crop img {
-    margin: -75px 0 0 -100px;
+.crop-cardV {
+    width: 340px;
+    height: 250px;
 }
+
 
 .crop-xl {
     width: 600px;
     height: 550px;
     overflow: hidden;
 }
-
-    .crop-xl img {
-        margin: -75px 0 0 -100px;
-    }
 
 /*Footer of cardview*/
 .card-footer {
@@ -203,4 +199,12 @@ footer {
 .card-table{
     margin: 0px;
     width: 95%;
+}
+
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

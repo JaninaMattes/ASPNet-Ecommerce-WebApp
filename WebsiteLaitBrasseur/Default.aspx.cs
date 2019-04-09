@@ -19,14 +19,10 @@ namespace WebsiteLaitBrasseur
             }
         }
 
-        protected void BeerButton_Click(object sender, EventArgs e)
+        // image has a click interaction to overview page containing the requested products
+        protected void imgCommand(object sender, CommandEventArgs e)
         {
-            Response.Redirect("/ProductOverview.aspx");
-        }
-
-        protected void CheeseButton_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("/ProductOverview.aspx");
+            Response.Redirect("OverviewPage.aspx?productType=" + e.CommandArgument);
         }
     }
 }

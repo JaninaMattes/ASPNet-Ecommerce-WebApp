@@ -12,11 +12,13 @@ namespace WebsiteLaitBrasseur.DAL
     // without the need for a DB connection
     public class DemoDatabase
     {
+        // this dummy content describes the products and will be exhanged later with real values
         const string Lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
         const string ShortLorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit";
 
         private Models.DetailPage[] product_Details;
 
+        // new instance for our demo database that contains all information for dummy products shown in the overview and detail page
         public DemoDatabase()
         {
             int id = 0;
@@ -36,34 +38,57 @@ namespace WebsiteLaitBrasseur.DAL
 
         }
 
-        private Models.DetailPage CreateDummyDetailData(int id, string productName,  string producer, string productType, double unit, int quantity, double price, double total, string imageUrl, string available)
+        // method to create dummy detail data 
+        private Models.DetailPage CreateDummyDetailData(int id, string productName, string producer, string productType, double unit, int quantity, double price, double total, string imageUrl, string available)
         {
-            Models.DetailPage destination = new Models.DetailPage() { Id= id, ProductName= productName, ProducerName= producer, ShortDescription= ShortLorem, LongDescription= Lorem, ProductType= productType, Unit= (decimal)unit, Quantity= quantity, Price= (decimal)price, TotalAmount= (decimal)total, ImagePath = imageUrl, Available= available};
+            Models.DetailPage destination = new Models.DetailPage() { Id = id, ProductName = productName, ProducerName = producer, ShortDescription = ShortLorem, LongDescription = Lorem, ProductType = productType, Unit = (decimal)unit, Quantity = quantity, Price = (decimal)price, TotalAmount = (decimal)total, ImagePath = imageUrl, Available = available };
             return destination;
         }
 
+        // method returns all products that are available in the database in an array
         [DataObjectMethod(DataObjectMethodType.Select)]
         public Models.DetailPage[] GetProducts()
         {
             return product_Details;
         }
 
+        // method returns all products filtered by id and is used to get the correct 
+        //product when navigating to detail page
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public Models.DetailPage GetProductById(int id)
+        public Models.DetailPage GetProduct(int id)
         {
             return Array.Find(product_Details, d => { return d.Id == id; });
         }
 
+        // method returns a specific product filtered for its product name
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public Models.DetailPage GetProductByType(string type)
-        {
-            return Array.Find(product_Details, d => { return d.ProductType == type; });
-        }
-
-        [DataObjectMethod(DataObjectMethodType.Select)]
-        public Models.DetailPage GetProductByName(string name)
+        public Models.DetailPage GetProduct(string name)
         {
             return Array.Find(product_Details, d => { return d.ProductName == name; });
+        }
+
+        // method returns all products filtered for their type
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public Models.DetailPage[] GetProducts(string type)
+        {
+            List<DetailPage> productTypes = new List<DetailPage>();
+            for(int i = 0; i<= GetProducts().Length; i++)
+            {
+                productTypes.Add(Array.Find(product_Details, d => { return d.ProductType == type; }));
+            }
+            return productTypes.ToArray();
+        }
+
+        // method to delete a product out of a list of products
+        [DataObjectMethod(DataObjectMethodType.Delete)]
+        public void DeleteProduct(int id)
+        {
+            product_Details = product_Details.Where(d => d.Id != id).ToArray();
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
+        public void UpdateProductBy(int id)
+        {
         }
     }
 }

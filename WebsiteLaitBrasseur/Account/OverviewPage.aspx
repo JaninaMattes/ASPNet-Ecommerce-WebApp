@@ -4,12 +4,12 @@
 
 <div class="container-fluid">
     
-    <h1>.</h1>
+    <h1>Product Overview</h1>
     <!-- set a dynamically exchangeable title--> <h2><%: Page.Title %></h2>
 
   <div class="row">
   
-    <asp:Repeater ID="ImageRepeater" runat="server">
+    <asp:Repeater ID="ImageRepeater" runat="server" OnItemCommand="ImageRepeater_ItemCommand">
      <ItemTemplate>
 
       <div class="col-md-3">
