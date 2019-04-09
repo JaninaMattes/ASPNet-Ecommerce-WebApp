@@ -6,9 +6,9 @@
 <!--Page managing  a "fake" cart-->
 
     <div class="container-fluid ">
-
+    
         <!--Global container with the differents Items and the Summary -->
-        <div class="col-md-12 row text-center" "  >
+        <div  class="col-md-12 row text-center"   >
 
             <div class="col-md-7"  >
                 <div id="CartTitle1" runat="server" class="ContentHead"><h1>Shopping Cart</h1></div>

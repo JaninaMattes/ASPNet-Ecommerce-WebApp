@@ -10,15 +10,15 @@
 namespace WebsiteLaitBrasseur.Admin {
     
     
-    public partial class LogoutAdmin {
+    public partial class VerificationPage {
         
         /// <summary>
-        /// Contrôle lblGoodBye.
+        /// Contrôle lblRegistrationResult.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblGoodBye;
+        protected global::System.Web.UI.WebControls.Label lblRegistrationResult;
     }
 }

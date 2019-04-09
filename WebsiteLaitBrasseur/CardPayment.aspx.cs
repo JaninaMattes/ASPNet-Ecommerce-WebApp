@@ -21,7 +21,7 @@ namespace WebsiteLaitBrasseur
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Billing.aspx");
+            Response.Redirect("/Cart.aspx");
         }
     }
 }

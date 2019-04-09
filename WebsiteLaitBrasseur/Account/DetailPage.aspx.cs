@@ -24,7 +24,11 @@ namespace WebsiteLaitBrasseur.Account
                 if (!IsPostBack)
                 {
                     // retrieve a prodcut from our db
+<<<<<<< HEAD
                     var product = db.GetProduct(id);
+=======
+                    var product = db.GetProductById(id);
+>>>>>>> f3f42df0f11a9a8769d53d9df77f123322f9c69e
                     if (product != null)
                     {
                         // set up detail page elements

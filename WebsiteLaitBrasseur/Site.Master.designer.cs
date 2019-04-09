@@ -24,6 +24,13 @@ namespace WebsiteLaitBrasseur {
         /// <summary>
         /// MasterBodyForm control.
         /// </summary>
+        protected global::System.Web.UI.HtmlControls.HtmlInputButton LogInButton;
+        
+        /// <summary>
+        /// Contrôle lblLogout.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblLogout;
+
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.

@@ -81,6 +81,7 @@
     <Content Include="Admin\LoginAdmin.aspx" />
     <Content Include="Admin\LogoutAdmin.aspx" />
     <Content Include="Admin\RegisterAdmin.aspx" />
+    <Content Include="Admin\VerificationPage.aspx" />
     <Content Include="Billing.aspx" />
     <Content Include="CardPayment.aspx" />
     <Content Include="Cart.aspx" />
@@ -241,6 +242,13 @@
     </Compile>
     <Compile Include="Admin\RegisterAdmin.aspx.designer.cs">
       <DependentUpon>RegisterAdmin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\VerificationPage.aspx.cs">
+      <DependentUpon>VerificationPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\VerificationPage.aspx.designer.cs">
+      <DependentUpon>VerificationPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Billing.aspx.cs">
       <DependentUpon>Billing.aspx</DependentUpon>
