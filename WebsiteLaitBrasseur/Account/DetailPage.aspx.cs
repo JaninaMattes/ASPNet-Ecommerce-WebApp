@@ -11,6 +11,8 @@ namespace WebsiteLaitBrasseur.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            AddButton_Click(sender, e);
+
             // get id from query string and try to parse
             var idString = Request.QueryString["id"];
             int id;
@@ -22,7 +24,7 @@ namespace WebsiteLaitBrasseur.Account
                 if (!IsPostBack)
                 {
                     // retrieve a prodcut from our db
-                    var product = db.GetProductById(id);
+                    var product = db.GetProduct(id);
                     if (product != null)
                     {
                         // set up detail page elements
@@ -40,8 +42,6 @@ namespace WebsiteLaitBrasseur.Account
                     }
                 }
             }
-
-            AddButton_Click(sender, e);
         }
 
         protected void AddButton_Click(object sender, EventArgs e)

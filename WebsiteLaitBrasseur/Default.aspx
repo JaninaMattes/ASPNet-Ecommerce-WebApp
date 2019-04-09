@@ -2,32 +2,62 @@
 
 
 <asp:Content ID="Body" ContentPlaceHolderID="MainContent" runat="server">
-  
-<!--Home Page -->
 
+<!--Home Page Content-->
     <div class="container-fluid text-center" >
         <br />
-       <h1> <asp:Label ID="lblWelcome" runat="server" style="font-family:cursive;color:yellowgreen;" ></asp:Label>  </h1>
-
 
         <!--Welcoming picture -->
-        <div class="col-md-12 text-center">
-            <img id="Img_prez" alt="LaitBrasseur_Prez" src="/Images/beers_prez.jpg" class="img rounded img-fluid" style="width:auto;height:auto" />
+        <div class="col-md-12 text-center crop">
+            <img id="ImgHome" alt="LaitBrasseur_Prez" src="/Images/brewery.jpg" style="width: 95%; height: 250px;"/>
+            <div class="centered" style="width: 250px; height: 150px; background-color: white;">
+                <asp:Label ID="lblWelcome" Text="" runat="server" CssClass="align-content-center text-black-50 text-center" Font-Size="35px">Welcome & Bienvenue</asp:Label>
+            </div>
         </div>
 
         <div class="row">
-               <!--Beer Picture with Button to product overview -->
-               <div class="col-md-6 img-responsive text-center">
-                    <asp:button ID="beer_button" runat="server" Text="Beer" class="btn btn-primary" OnClick="BeerButton_Click"/>
-                    <img id="Beer_prez" alt="LaitBrasseur_Beers" src="/Images/beer_button.jpg" class="rounded" style="width:150px;height:150px"/>
-               </div>
+               <!--Cheese products Picture with possiblity to navigate to product overview -->
+               <div class="col-md-6 img-responsive text-center" style="border:double; border-color: red">
+                    <div class="col-md-3">
+    
+                <!--START Product CardView-->
+                <div id="cardView0" class="card">
+                <div id="img-cardview0" class="crop">
+                    <asp:ImageButton id="img1" runat="server" ImageUrl="/Images/cheese11.jpg" OnCommand="imgCommand" CommandArgument="cheese"/>      
+                </div>
+                <div id="container0" class="container clearfix">
+                    <div class="profile-usertitle">
+				    <div id="information0" class="label label-default-large">
+				        <h4><b><asp:Label id="Title0" Text="" runat="server" />Lá Cheese</b></h4>
+                        <p><b><asp:Label id="Subtitle0" Text="" runat="server" />Collection of all products.</b></p>
+			        </div>
+                </div>
+            </div>
+        </div>
+    </div><br />
+ </div>
 
-               <!--Cheese Picture with Button to product overview -->
-               <div class="col-md-6 img-responsive text-center">
-                    <img id="Cheese_prez" alt="LaitBrasseur_Cheese" src="/Images/cheese_carre.jpg"  class="rounded" style="width:150px;height:150px"/>
-                    <asp:button ID="Chesse_button" runat="server" Text="Cheese" class="btn btn-primary" OnClick="CheeseButton_Click"/>
-               </div>
+               <!--Beer products Picture with possiblity to navigate to product overview -->
+               <div class="col-md-6 img-responsive text-center" style="border:double; border-color: red">
+                    <div class="col-md-3">
+    
+                <!--START Product CardView-->
+                <div id="cardView1" class="card">
+                <div id="img-cardview1" class="crop">
+                    <asp:ImageButton id="ImageButton1" runat="server" ImageUrl="/Images/beer1.jpg" OnCommand="imgCommand" CommandArgument="beer"/>      
+                </div>
+                <div id="container1" class="container clearfix">
+                    <div class="profile-usertitle">
+				    <div id="information1" class="label label-default-large">
+				        <h4><b><asp:Label id="Title1" Text="" runat="server" />Lé Beer</b></h4>
+                        <p><b><asp:Label id="Subtitle1" Text="" runat="server" />Selected seasonal products.</b></p>
+			        </div>
+                </div>
+            </div>
+        </div>
+    </div><br />
+ 
         </div>
     </div>
-
+ </div>
 </asp:Content>
