@@ -20,10 +20,10 @@ namespace WebsiteLaitBrasseur.Admin
         {
             if (IsValid)
             {
-                /*Set up a cookie with user informations*/
-                DateTime expiry = DateTime.Now.AddMinutes(5);
-                SetCookie("email", TextEmail.Text, expiry);         //Improvement: give user as argument
+                //variable session creation
+                Session.Add("email", TextEmail.Text);
                 MailSender();
+
             }
 
         }
@@ -33,16 +33,9 @@ namespace WebsiteLaitBrasseur.Admin
             Response.Redirect("/Admin/LoginAdmin.aspx");
         }
 
-        private void SetCookie(string name, string value, DateTime expiry)
-        {
-            HttpCookie cookieVerifRegistration = new HttpCookie(name, value);
-            cookieVerifRegistration.Expires = expiry;
-            Response.Cookies.Add(cookieVerifRegistration);
-        }
-
         private void MailSender()
         {
-            HttpCookie email = Request.Cookies["email"];    //Cookie recuperation
+            string email = this.Session["email"].ToString(); ;    //Cookie recuperation
 
             if (email != null)
             {
@@ -50,7 +43,7 @@ namespace WebsiteLaitBrasseur.Admin
                 MailMessage mm = new MailMessage();                                         
                 mm.To.Add(new MailAddress(TextEmail.Text, "Request for Verification"));
                 mm.From = new MailAddress("webProgProjUon@gmail.com");
-                mm.Body = "<a href='http://localhost:54429//Admin/VerificationPage.aspx?email=" + email.Value + " '> click here to verify </a>" ;
+                mm.Body = "<a href='http://localhost:54429//Admin/VerificationPage.aspx?email=" + email + " '> click here to verify </a>" ;
                 mm.IsBodyHtml = true;
                 mm.Subject = "Verification";
 

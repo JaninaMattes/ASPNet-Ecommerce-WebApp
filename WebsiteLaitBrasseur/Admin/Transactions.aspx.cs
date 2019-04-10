@@ -14,9 +14,10 @@ namespace WebsiteLaitBrasseur.Admin
             // get id from query string and try to parse
             var custID = Request.QueryString["custID"];
             int customerID;
+
             if (!string.IsNullOrEmpty(custID) && int.TryParse(custID, out customerID))
             {
-                if (customerID == 11110)
+                if (customerID == 11110) //Display Marcus' shopping history
                 {
                     BindTableLabel();
                     BindGridList();

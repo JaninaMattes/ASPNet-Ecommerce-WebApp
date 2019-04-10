@@ -75,8 +75,8 @@
 
         <!--"Create Account" button &  "Cancel" Button => Back to Default.aspx -->
          <div class="col-md-offset-3 col-md-9">
-                <asp:button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-danger" CausesValidation="False" OnClick="CancelButton_Click"/>
                 <asp:Button ID="CreateAccountButton" runat="server" Text="Create Account" CssClass="btn btn-primary" OnClick="CreateAccountButton_Click"/>
+                <asp:button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-danger" CausesValidation="False" OnClick="CancelButton_Click"/>
          </div>
         
             <div class="col-md-9">

@@ -157,15 +157,6 @@ namespace WebsiteLaitBrasseur.Account {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator PhoneRegValid;
         
         /// <summary>
-        /// Contrôle CancelButton.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CancelButton;
-        
-        /// <summary>
         /// Contrôle CreateAccountButton.
         /// </summary>
         /// <remarks>
@@ -173,6 +164,15 @@ namespace WebsiteLaitBrasseur.Account {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CreateAccountButton;
+        
+        /// <summary>
+        /// Contrôle CancelButton.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CancelButton;
         
         /// <summary>
         /// Contrôle Label1.

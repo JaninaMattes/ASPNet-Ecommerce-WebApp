@@ -17,6 +17,11 @@ namespace WebsiteLaitBrasseur
         protected void updateButton_Click(object sender, EventArgs e)
         {
             //Variables initialization
+            Decimal sCost = Convert.ToDecimal(2.5);
+            if (PostageDropDownList.SelectedItem.Value == "1") { sCost = Convert.ToDecimal(2.5);}
+            if (PostageDropDownList.SelectedItem.Value == "2") { sCost = Convert.ToDecimal(5); }
+            if (PostageDropDownList.SelectedItem.Value == "3") { sCost = Convert.ToDecimal(7.5); }
+
             var pBrune = Convert.ToDecimal(PriceBrune.Text) ;
             var pBlonde = Convert.ToDecimal(PriceBlonde.Text);
             var pBlanche = Convert.ToDecimal(PriceBlanche.Text);
@@ -27,7 +32,7 @@ namespace WebsiteLaitBrasseur
             var qBlanche = Convert.ToDecimal(QuantityBlanche.Text);
             var qCarreEst = Convert.ToDecimal(QuantityCheese.Text);
 
-            var sCost = Convert.ToDecimal(ShippingCostValue.Text);
+
             var tax = (Convert.ToDecimal(TaxValue.Text) /100 );
 
             //Calcul of total values

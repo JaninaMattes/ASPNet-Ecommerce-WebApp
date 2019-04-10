@@ -13,6 +13,7 @@ namespace WebsiteLaitBrasseur.Admin
         {
             try
             {
+                //Display Logout button if a session is active
                 if (this.Session["email"] != null)
                 {
                     lblLogout.Visible = true;

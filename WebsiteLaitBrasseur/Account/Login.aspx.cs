@@ -18,6 +18,7 @@ namespace WebsiteLaitBrasseur.Account
         {
             if (IsValid)
             {
+                //variable session creation
                 Session.Add("email", TextEmail.Text);
             }
             Response.Redirect("/Default.aspx");

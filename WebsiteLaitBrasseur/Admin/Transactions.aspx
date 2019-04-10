@@ -1,9 +1,8 @@
 ﻿<%@ Page Title="Shopping History" Language="C#" MasterPageFile="~/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="Transactions.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.Transactions" %>
 
-
-
-
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+
+<!--Page managing the display of the transactions history of an user-->
 
                 <div id="tableShoppingHistory clearfix" class="offset-md-2 col-md-7">
 
@@ -11,6 +10,7 @@
 
                     <asp:Label id="tableShoppingHistoryLabel" Text="Shopping history empty." runat="server" />
                         
+                        <!--Gridview displaying transactions history -->
                         <asp:GridView id="ShoppingTable" runat="server" class="table table-hover table-striped text-center" GridLines="None" AutoGenerateColumns="false">
                                 <Columns>
                                     <asp:BoundField DataField="InvoiceNumber" HeaderText="Invoice Number" />

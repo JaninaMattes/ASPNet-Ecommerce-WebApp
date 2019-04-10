@@ -29,19 +29,13 @@ namespace WebsiteLaitBrasseur.Account
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-            /*Label1.Text = TextLogin.Text + " " + TextPassword.Text + " you are logged in.";*/
-        }
 
-        protected void CancelButton_Click(object sender, EventArgs e)
-        {
-            /*...Do nothing and set the values back to the previous state*/
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
             /*save all input information from values and send it to server*/
             //string myname = Request.Form["first_name_txt"];
-
             //...firstName = Request.Form["FirstnameTextbox"];
         }
 
@@ -52,6 +46,8 @@ namespace WebsiteLaitBrasseur.Account
             ShoppingTable.DataSource = getShoppingList();
             ShoppingTable.DataBind();
         }
+
+
         /*Fill the label with accurat item number*/
         /*Fill the label with accurat item number*/
         protected void BindTableLabel()
@@ -62,6 +58,8 @@ namespace WebsiteLaitBrasseur.Account
                 tableShoppingHistoryLabel.Text = "Your shopping history has " + shoppingLs.LongCount<ShoppingListItem>();
             }
         }
+
+
         /*Fill the label with accurat item number*/
         protected void BindProfileTextBox()
         {

@@ -13,6 +13,15 @@ namespace WebsiteLaitBrasseur.Admin {
     public partial class RegisterAdmin {
         
         /// <summary>
+        /// Contrôle lblRegResult.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRegResult;
+        
+        /// <summary>
         /// Contrôle TextEmail.
         /// </summary>
         /// <remarks>
@@ -184,15 +193,6 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator PhoneRegValid;
         
         /// <summary>
-        /// Contrôle CancelButton.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CancelButton;
-        
-        /// <summary>
         /// Contrôle CreateAccountButton.
         /// </summary>
         /// <remarks>
@@ -202,12 +202,12 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.Button CreateAccountButton;
         
         /// <summary>
-        /// Contrôle lblRegResult.
+        /// Contrôle CancelButton.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRegResult;
+        protected global::System.Web.UI.WebControls.Button CancelButton;
     }
 }

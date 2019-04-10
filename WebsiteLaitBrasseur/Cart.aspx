@@ -236,9 +236,16 @@
                      <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label><br /> <br /><br />
 
                      <!-- Shipping cost will apply -->
-                     <asp:Label ID="ShippingCost" runat="server" cssclass="text-info " Text="Shipping Cost : "></asp:Label>
-                     <asp:Label ID="ShippingCostValue" runat="server" cssclass="text-info " Text="4"></asp:Label>
-                     <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label><br /><br /><br />
+                     <!--Label /DropDown List for the Postage Options-->
+                      <label for="PostageDropDownList"  class="text-info">Postage</label>
+                      <asp:DropDownList ID="PostageDropDownList" runat="server" Cssclass="form-control">
+                          <asp:ListItem Value="1" Selected="true">Provider 1 : 2,5€</asp:ListItem>
+                          <asp:ListItem Value="2">Provider 2 : 5,0€</asp:ListItem>
+                          <asp:ListItem Value="3">Provider 3 : 7,5€</asp:ListItem>
+                      </asp:DropDownList>
+                     <br />
+
+
 
                      <!-- Tax will apply -->
                      <asp:Label ID="Tax" runat="server" cssclass="text-info " Text="Tax (%) : "></asp:Label>

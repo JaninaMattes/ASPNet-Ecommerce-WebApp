@@ -13,10 +13,13 @@ namespace WebsiteLaitBrasseur.Admin
         {
             try
             {
-                string email = this.Session["email"].ToString();    //session information recuperation
+                //session information recuperation
+                string email = this.Session["email"].ToString();    
                 if (email != null)
                 {
                     lblGoodBye.Text = "Good bye " + email;
+
+                    //Session variable removing
                     this.Session.Clear();
                 }
             }

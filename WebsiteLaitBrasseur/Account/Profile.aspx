@@ -1,9 +1,13 @@
 ﻿<%@ Page Language="C#" Title="Customer Profile" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.Profile" %>
 
 <asp:Content id="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+
+<!--Page managing an user profile-->
+
     <div class="container-fluid">
         <div class="row" >
 
+            <!--First column : User picture and "Save"/"Delete" button-->
             <div class="col-md-2" >
                 <div class="profile-userpic">
                     <img class="img-responsive" alt="User Image" src="/Images/customerImg.jpg">
@@ -21,6 +25,7 @@
 
                     <!--FirstName + Last Name -->
                     <div class="row ">
+                        <!--Label / TextBox / Validator for First Name-->
                         <div class="col-md-6">
                                 <br />
                                 <label for="TextFirstname" class="control-label  text-info">First name</label>
@@ -28,6 +33,7 @@
                                 <asp:RequiredFieldValidator ID="FirstnameReqField" runat="server" ControlToValidate="TextFirstname" Display="Dynamic" ErrorMessage="Firstname is required" CssClass="text-danger"></asp:RequiredFieldValidator>
                         </div>
 
+                        <!--Label / TextBox / Validator for Last Name-->
                         <div class="col-md-6">
                                 <br /> 
                                 <label for="TextLastname" class="control-label  text-info">Last name</label>
@@ -38,6 +44,7 @@
 
                     <!--Email + Phone -->
                     <div class="row">
+                        <!--Label / TextBox / Validator for Email-->
                         <div class="col-md-6">
                                 <br />
                                 <label for="TextEmail" class="control-label  text-info">E-mail</label>
@@ -46,6 +53,7 @@
 
                         </div>
 
+                        <!--Label / TextBox / Validators(Required + regular expression) for Phone number-->
                         <div class="col-md-6">
                                 <br />
                                 <label for="TextPhone" class="control-label  text-info">Phone Number</label>
@@ -56,16 +64,17 @@
                         </div>   
                     </div>
 
-                    <!--Birthday + passwordchange -->
+                    <!--Birthday + passwordchange button  -->
                     <div class="row">
+                        <!--Label /TextBox / Validator for BirthDay -->
                         <div class="col-md-6">
                             <br />
-                            <!--Label /TextBox / Validator for BirthDay -->
                             <label for="TextBirthday" class="control-label  text-info">Birthdate</label>
                             <asp:TextBox ID="TextBirthday" runat="server" Cssclass="form-control" TextMode="Date" > </asp:TextBox>
                             <asp:RequiredFieldValidator ID="BirthdayReqField" runat="server"  ControlToValidate="TextBirthday" Display="Dynamic" CssClass="text-danger" ErrorMessage="Birthdate is required"></asp:RequiredFieldValidator>
                         </div>
 
+                        <!--Password change button -->
                         <div class="col-md-6 text-center">
                             <br /><br />
                             <asp:Button ID="ChangePasswordButton" runat="server" Text="Change Password" class="btn btn-primary" />
@@ -75,10 +84,12 @@
                     </div>
                 </div>
 
+                <!--User Address information -->
                 <div id="userAddress">
 
                     <!--Address 1/2 -->
                     <div class="row">
+                        <!--Label / TextBox / Validator for  Address number -->
                         <div class="col-md-2">
                             <br />
                             <label for="TextAdressnumber" class="control-label text-info">Address n°</label>
@@ -86,6 +97,7 @@
                             <asp:RequiredFieldValidator ID="AdressnumberReqField" runat="server" ErrorMessage="Adress number is required" ControlToValidate="TextAddressnumber" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>                           
                         </div>
 
+                        <!--Label / TextBox / Validator for Street Name -->
                         <div class="col-md-10">
                             <br />
                             <label for="TextAddress " class="control-label text-info">Street Name</label>
@@ -97,6 +109,7 @@
 
                     <!--Zip Code + City -->
                     <div class="row">
+                        <!--Label / TextBox / Validators(required + regular expression) for Zip code -->
                         <div class="col-md-6">
                             <br />
                             <label for="TextZip" class="control-label text-info">Zip Code</label>
@@ -105,6 +118,7 @@
                             <asp:regularExpressionValidator ID="ZipRegExpValid" runat="server" ErrorMessage="Should be 5 or 9 Digits" ControlToValidate="TextZip" Display="Dynamic"  ValidationExpression="\d{5}-?(\d{4})?$" CssClass="text-danger"></asp:RegularExpressionValidator>                      
                         </div>    
 
+                        <!--Label / TextBox / Validator for City-->
                         <div class="col-md-6">
                             <br />
                             <label for="TextCity" class="control-label text-info">City</label>
@@ -116,6 +130,7 @@
 
                     <!--Name + Country -->
                     <div class="row">
+                        <!--Label / TextBox / Validator for Name -->
                         <div class="col-md-6">
                             <br />
                             <label for="TextName" class="control-label text-info">Full Name</label>
@@ -123,6 +138,7 @@
                             <asp:RequiredFieldValidator ID="NameReqField" runat="server" ErrorMessage="Name is required" ControlToValidate="TextName" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
                         </div>
 
+                        <!--DropDownList for Country-->
                         <div class="col-md-6">
                             <br />
                             <label for="CountryDropDownList"  class="text-info">Country</label>
@@ -139,11 +155,20 @@
                 </div>
             </div>
 
+
+            <!--User shopping history -->
             <div class="col-md-5">
                 <div id="tableShoppingHistory clearfix">
+
                     <h3 id="sheader">Shopping History</h3>
+
                     <asp:Label id="tableShoppingHistoryLabel" Text="Your shopping history is empty." runat="server" />
-                        <asp:GridView id="ShoppingTable" runat="server" class="table table-hover table-striped text-center" GridLines="None" AutoGenerateColumns="false">
+
+                        <!--GridView with dummy data for shopping history -->
+                        <asp:GridView id="ShoppingTable" runat="server"
+                            class="table table-hover table-striped text-center"
+                            GridLines="None"
+                            AutoGenerateColumns="false">
                                 <Columns>
                                     <asp:BoundField DataField="InvoiceNumber" HeaderText="Invoice Number" />
                                     <asp:BoundField DataField="TotalAmount" HeaderText="Total Amount(€)" />

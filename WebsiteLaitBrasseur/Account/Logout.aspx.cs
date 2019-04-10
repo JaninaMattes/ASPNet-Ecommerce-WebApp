@@ -11,17 +11,20 @@ namespace WebsiteLaitBrasseur.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            try { 
-                string email = this.Session["email"].ToString();    //session information recuperation
+            try {
+                //session informations recuperation
+                string email = this.Session["email"].ToString();   
                 if (email != null)
                 {
                     lblGoodBye.Text = "Good bye " + email;
+
+                    //Session variable removing
                     this.Session.Clear();
                 }
             }
             catch
             {
-                lblGoodBye.Text = "Good bye /Debug : Pas de session";
+                lblGoodBye.Text = "Good bye ";
             }
         }
     }

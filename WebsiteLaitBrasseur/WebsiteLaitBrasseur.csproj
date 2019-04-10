@@ -76,9 +76,8 @@
     <Content Include="Admin\Transactions.aspx" />
     <Content Include="OverviewPage.aspx" />
     <Content Include="Account\Profile.aspx" />
-    <Content Include="Account\DetailPage.aspx" />
+    <Content Include="DetailPage.aspx" />
     <Content Include="Admin\AccountManagment.aspx" />
-    <Content Include="Admin\AdminProfile.aspx" />
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\LoginAdmin.aspx" />
     <Content Include="Admin\LogoutAdmin.aspx" />
@@ -98,7 +97,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Default.aspx" />
-    <Content Include="Global.asax" />
     <Content Include="Account\Login.aspx" />
     <Content Include="Images\blanche.jpg" />
     <Content Include="Images\blond.jpg" />
@@ -113,13 +111,6 @@
     <Content Include="Images\beer_button.jpg" />
     <Content Include="Images\mastercard-logo-.png" />
     <Content Include="Images\visa_logo.jpg" />
-    <Content Include="ProductDetails\ProductDetailBlanche.aspx" />
-    <Content Include="ProductDetails\ProductDetailBlonde.aspx" />
-    <Content Include="ProductDetails\ProductDetailCarreEst.aspx" />
-    <Content Include="ProductDetails\ProductDetailRaclette.aspx" />
-    <Content Include="ProductDetails\ProductDetailSpice.aspx" />
-    <Content Include="ProductDetails\ProductDetailBrune.aspx" />
-    <Content Include="ProductDetails.aspx" />
     <Content Include="ProductOverview.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -205,11 +196,11 @@
     <Compile Include="Account\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Account\DetailPage.aspx.cs">
+    <Compile Include="DetailPage.aspx.cs">
       <DependentUpon>DetailPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Account\DetailPage.aspx.designer.cs">
+    <Compile Include="DetailPage.aspx.designer.cs">
       <DependentUpon>DetailPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\AccountManagment.aspx.cs">
@@ -225,13 +216,6 @@
     </Compile>
     <Compile Include="Admin\Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\AdminProfile.aspx.cs">
-      <DependentUpon>AdminProfile.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\AdminProfile.aspx.designer.cs">
-      <DependentUpon>AdminProfile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
@@ -311,9 +295,6 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Account\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -322,55 +303,6 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\DetailPage.cs" />
-    <Compile Include="ProductDetails\ProductDetailBlanche.aspx.cs">
-      <DependentUpon>ProductDetailBlanche.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailBlanche.aspx.designer.cs">
-      <DependentUpon>ProductDetailBlanche.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailBlonde.aspx.cs">
-      <DependentUpon>ProductDetailBlonde.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailBlonde.aspx.designer.cs">
-      <DependentUpon>ProductDetailBlonde.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailCarreEst.aspx.cs">
-      <DependentUpon>ProductDetailCarreEst.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailCarreEst.aspx.designer.cs">
-      <DependentUpon>ProductDetailCarreEst.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailRaclette.aspx.cs">
-      <DependentUpon>ProductDetailRaclette.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailRaclette.aspx.designer.cs">
-      <DependentUpon>ProductDetailRaclette.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailSpice.aspx.cs">
-      <DependentUpon>ProductDetailSpice.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailSpice.aspx.designer.cs">
-      <DependentUpon>ProductDetailSpice.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailBrune.aspx.cs">
-      <DependentUpon>ProductDetailBrune.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProductDetails\ProductDetailBrune.aspx.designer.cs">
-      <DependentUpon>ProductDetailBrune.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ProductDetails.aspx.cs">
-      <DependentUpon>ProductDetails.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ProductDetails.aspx.designer.cs">
-      <DependentUpon>ProductDetails.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ProductOverview.aspx.cs">
       <DependentUpon>ProductOverview.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
