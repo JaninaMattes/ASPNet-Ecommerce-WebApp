@@ -10,33 +10,24 @@
 namespace WebsiteLaitBrasseur.Admin {
     
     
-    public partial class AccountManagment {
+    public partial class Transactions {
         
         /// <summary>
-        /// Contrôle lblUserList.
+        /// Contrôle tableShoppingHistoryLabel.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUserList;
+        protected global::System.Web.UI.WebControls.Label tableShoppingHistoryLabel;
         
         /// <summary>
-        /// Contrôle UserListTable.
+        /// Contrôle ShoppingTable.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView UserListTable;
-        
-        /// <summary>
-        /// Contrôle lblError.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblError;
+        protected global::System.Web.UI.WebControls.GridView ShoppingTable;
     }
 }

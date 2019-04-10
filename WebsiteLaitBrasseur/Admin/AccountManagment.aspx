@@ -8,27 +8,35 @@
     <div class="container-fluid ">
         
     <!--START Header / Label / GridView--> 
-        <div id="tableCustomer clearfix" style="float:left; margin:1%; width: 60%">
+        <div id="tableCustomer clearfix" >
             <h3 id="sheader">Manage Customer Accounts</h3>
-            <asp:Label id="tableUserList" Text="The customer list is empty." runat="server" />
-            <div class="table-dark">
-                <asp:GridView id="UserListTable" runat="server" style="table-grid;">
+            <asp:Label id="lblUserList" Text="The customer list is empty." runat="server" />
+            <div class=" offset-md-2 col-md-7">
+
+               <!-- GridView with  6 fields / a button for change Suspended Statut / a button for show transaction-->
+                <asp:GridView id="UserListTable" runat="server" 
+                    GridLines="none"
+                    AutoGenerateColumns="false"
+                    OnRowEditing="UserListTable_RowEditing"
+                    OnRowDeleting="UserListTable_RowDeleting"
+                    class="table table-hover table-striped text-center">
+
                         <Columns>
-                            <asp:BoundField DataField="UserId" HeaderText="Id Number" />
-                            <asp:BoundField DataField="Firstname" HeaderText="Firstname" /> 
-                            <asp:BoundField DataField="Lastname" HeaderText="Lastname" />
-                            <asp:BoundField DataField="PaymentDue" HeaderText="Payment Due" />
-                            <asp:BoundField DataField="SuspendedUser" HeaderText="Suspended User" />
-                            <asp:BoundField DataField="Select" HeaderText="Select" />
+                            <asp:BoundField DataField="userId" HeaderText="Id Number" />
+                            <asp:BoundField DataField="firstname" HeaderText="Firstname" /> 
+                            <asp:BoundField DataField="lastname" HeaderText="Lastname" />
+                            <asp:BoundField DataField="email" HeaderText="E-mail" />
+                            <asp:BoundField DataField="phoneNo" HeaderText="PhoneNo" />
+                            <asp:BoundField DataField="isSuspended" HeaderText="Suspended User" />
+
+                            <asp:CommandField ShowEditButton="true" ButtonType="Button"  EditText="Show Transactions" />
+                            <asp:CommandField ShowDeleteButton="true"  ButtonType="Button"   DeleteText="Suspend/Activate" />
                         </Columns>
                     </asp:GridView>
+
+                    <asp:Label ID="lblError" runat="server" Text="" CssClass="text-danger"></asp:Label>
             </div>
-        <!-- START user buttons to select transaction for profile -->
-        <div class="profile-userbuttons" style="bottom; float: right">
-			<asp:Button id="transactionBtn" runat="server" Text="Show Transactions" OnClick="TransactionButton_Click" CssClass="btn-primary btn" />
-            <asp:Button id="saveBtn" runat="server" Text="Save" OnClick="SaveButton_Click" CssClass="btn-primary btn" />
-		<!-- END user buttons to delete the profile -->
-        </div>
+
         </div>
     <!--END Container Content-->
   </div>

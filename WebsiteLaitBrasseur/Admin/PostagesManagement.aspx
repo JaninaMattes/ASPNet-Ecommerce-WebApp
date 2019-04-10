@@ -13,7 +13,7 @@
             <asp:Label id="lblPostageList" Text="The postage list is empty." runat="server" />
 
             <!-- GridView conatiner-->
-            <div class="offset-md-3 col-md-6" style="font-size:20px">
+            <div class="offset-md-2 col-md-8" style="font-size:20px">
 
                 <!-- GridView with 2 field (ProviderName + CostPerUnit) and button for edition/deletion
                     Field build with this scheme :
@@ -26,7 +26,9 @@
                     AutoGenerateColumns="false" 
                     class="table table-hover table-striped text-center" 
                     OnRowDeleting="PostageTable_RowDeleting"
-                    OnRowEditing="PostageTable_RowEditing">
+                    OnRowEditing="PostageTable_RowEditing"
+                    OnRowUpdating="PostageTable_RowUpdating"
+                    OnRowCancelingEdit="PostageTable_RowCancelingEdit">
                         <Columns >
                             <asp:BoundField DataField="ProviderID" HeaderText="Provider ID" ReadOnly="True" />                            
 
@@ -34,8 +36,8 @@
                             <asp:TemplateField HeaderText="ProviderName" >
 
                                 <EditItemTemplate>
-                                    <div class="col-sm-1">
-                                        <asp:TextBox ID="TextProviderName" runat="server" CssClass="form-control" ></asp:TextBox>
+                                    <div >
+                                        <asp:TextBox ID="TextProviderName" runat="server" CssClass="form-control"  Text='<%# Bind("ProviderName") %>' ></asp:TextBox>
                                     </div>
 
                                     <asp:RequiredFieldValidator id="ProviderNameReqField" runat="server" ControlToValidate="TextProviderName" ValidationGroup="Edit" ErrorMessage="Name is required" CssClass="text-danger"  ></asp:RequiredFieldValidator>
@@ -52,10 +54,11 @@
                             <asp:TemplateField HeaderText="Cost per unit(€)">
 
                                 <EditItemTemplate>
-                                    <div class="col-sm-1">
-                                        <asp:TextBox ID="TextCostPerUnit" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                                    <div >
+                                        <asp:TextBox ID="TextCostPerUnit" runat="server" CssClass="form-control" text='<%# Bind("CostPerUnit") %>'></asp:TextBox>
                                     </div>
                                     <asp:RequiredFieldValidator id="CostReqField" runat="server" ControlToValidate="TextCostPerUnit" ValidationGroup="Edit" ErrorMessage="Cost is required" CssClass="text-danger"  ></asp:RequiredFieldValidator>
+                                    <asp:regularExpressionValidator ID="CostRegValid" runat="server" ErrorMessage="Should be number (make decimal with coma)" ControlToValidate="TextCostPerUnit" Display="Dynamic"  ValidationExpression="([0-9]*\,)?[0-9]*$" CssClass="text-danger"></asp:RegularExpressionValidator>
                                 </EditItemTemplate>
 
                                 <ItemTemplate>
@@ -72,7 +75,10 @@
                     </asp:GridView>
 
                 <!--Label about error during events execution -->
-                <asp:Label ID="lblError" runat="server" Text="" CssClass="text-danger"></asp:Label>
+                <asp:Label ID="lblError" runat="server" Text="" CssClass="text-danger"></asp:Label><br />
+                <asp:Label ID="lblInfo" runat="server" Text="" CssClass="text-info"></asp:Label>
+
+                <asp:Button ID="AddButton" runat="server" Text="Add" OnClick="AddButton_Click" CssClass="btn btn-success" />
             </div>
 
     </div>

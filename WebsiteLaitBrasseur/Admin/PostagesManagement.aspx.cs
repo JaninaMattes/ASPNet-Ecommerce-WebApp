@@ -13,28 +13,64 @@ namespace WebsiteLaitBrasseur.Admin
         {
             if (!IsPostBack)
             {
-                BindTableLabel();
+                BindPostageLabel();
 
                 BindPostages();
             }
         }
 
+        protected void AddButton_Click(object sender, EventArgs e)
+        {
+            lblError.Text = "Error : database connection";
+        }
 
-
+        ////Grid methods
+        //Row Deleting
         protected void PostageTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            //Index of grid recuperation
+            int index = Convert.ToInt32(e.RowIndex);
 
-            lblError.Text = "Error : Database not connected";
-
+            //Make the row invisible (Fake suppression)
+            PostageTable.Rows[index].Visible = false;
         }
 
-
+            //Row Editing 
         protected void PostageTable_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            lblError.Text = "Error : Database not connected";
+            lblInfo.Text = "Click again to modify";
+        }
+
+            //Row Updating (Non-functional)
+        protected void PostageTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+            lblError.Text = "Error : database connection";
+
+            /*non functional
+            //Index of grid recuperation
+            int index = Convert.ToInt32(e.RowIndex);
+
+            //Row recuperation
+            GridViewRow row = PostageTable.Rows[index];
+
+            //Non foncitonnel
+            row.Cells[1].Text;
+            */
+
+        }
+
+            //Canceling of edition of a row
+        protected void PostageTable_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            PostageTable.EditIndex = -1;
+            BindPostages();
+            lblError.Text = "";
+            lblInfo.Text = "";
+
         }
 
 
+        ////Data creation methods  + postage class
 
         protected void BindPostages()
         {
@@ -42,7 +78,8 @@ namespace WebsiteLaitBrasseur.Admin
             PostageTable.DataBind();
         }
 
-        protected void BindTableLabel()
+            //Bind of beginning label informing about the number postage options
+        protected void BindPostageLabel()
         {
             List<Postage> postageLs = getPostage();
             if (postageLs.LongCount<Postage>() > 0)
@@ -51,7 +88,7 @@ namespace WebsiteLaitBrasseur.Admin
             }
         }
 
-
+            //Postage option list creation
         protected List<Postage> getPostage()
         {
             List<Postage> postageLs= new List<Postage>();
@@ -66,7 +103,8 @@ namespace WebsiteLaitBrasseur.Admin
 
 
         }
-
+            
+            // Postage class + builder
         public class Postage
         {
             public int ProviderID { get; set; }
