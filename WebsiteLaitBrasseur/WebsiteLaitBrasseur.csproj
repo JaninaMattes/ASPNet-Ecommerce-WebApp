@@ -81,7 +81,7 @@
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\LoginAdmin.aspx" />
     <Content Include="Admin\LogoutAdmin.aspx" />
-    <Content Include="Admin\PostagesOptions.aspx" />
+    <Content Include="Admin\PostagesManagement.aspx" />
     <Content Include="Admin\RegisterAdmin.aspx" />
     <Content Include="Admin\VerificationPage.aspx" />
     <Content Include="Billing.aspx" />
@@ -246,12 +246,12 @@
     <Compile Include="Admin\LogoutAdmin.aspx.designer.cs">
       <DependentUpon>LogoutAdmin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\PostagesOptions.aspx.cs">
-      <DependentUpon>PostagesOptions.aspx</DependentUpon>
+    <Compile Include="Admin\PostagesManagement.aspx.cs">
+      <DependentUpon>PostagesManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admin\PostagesOptions.aspx.designer.cs">
-      <DependentUpon>PostagesOptions.aspx</DependentUpon>
+    <Compile Include="Admin\PostagesManagement.aspx.designer.cs">
+      <DependentUpon>PostagesManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\RegisterAdmin.aspx.cs">
       <DependentUpon>RegisterAdmin.aspx</DependentUpon>

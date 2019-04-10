@@ -53,6 +53,7 @@ namespace WebsiteLaitBrasseur.Account
             ShoppingTable.DataBind();
         }
         /*Fill the label with accurat item number*/
+        /*Fill the label with accurat item number*/
         protected void BindTableLabel()
         {
             List<ShoppingListItem> shoppingLs = getShoppingList();

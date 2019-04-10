@@ -143,16 +143,14 @@
                 <div id="tableShoppingHistory clearfix">
                     <h3 id="sheader">Shopping History</h3>
                     <asp:Label id="tableShoppingHistoryLabel" Text="Your shopping history is empty." runat="server" />
-                    <div class="table-dark">
-                        <asp:GridView id="ShoppingTable" runat="server">
+                        <asp:GridView id="ShoppingTable" runat="server" class="table table-hover table-striped text-center" GridLines="None" AutoGenerateColumns="false">
                                 <Columns>
                                     <asp:BoundField DataField="InvoiceNumber" HeaderText="Invoice Number" />
-                                    <asp:BoundField DataField="TotalAmount" HeaderText="Total Amount" />
+                                    <asp:BoundField DataField="TotalAmount" HeaderText="Total Amount(€)" />
                                     <asp:BoundField DataField="OrderDate" HeaderText="Order Date" />
                                     <asp:BoundField DataField="ArrivalDate" HeaderText="Arrival Date" />
                                 </Columns>
                             </asp:GridView>
-                    </div>
                 </div>
             </div>
 

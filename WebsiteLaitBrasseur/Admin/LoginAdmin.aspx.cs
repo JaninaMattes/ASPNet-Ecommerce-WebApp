@@ -16,7 +16,11 @@ namespace WebsiteLaitBrasseur.Admin
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            /*Label1.Text = TextLogin.Text + " " + TextPassword.Text + " you are logged in.";*/
+            if (IsValid)
+            {
+                Session.Add("email", TextEmail.Text);
+            }
+            Response.Redirect("/Admin/Default.aspx");
         }
 
         protected void RegisterButton_Click(object sender, EventArgs e)

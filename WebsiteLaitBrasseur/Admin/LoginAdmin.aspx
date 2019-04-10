@@ -11,10 +11,10 @@
 
                     <!--Label /TextBox / Validator for the login -->
                     <div class="form-group">
-                        <label for="TextLogin" class="control-label col-md-3">Login</label>
+                        <label for="TextEmail" class="control-label col-md-3">E-mail</label>
                         <div class="col-md-3">
-                            <asp:TextBox ID="TextLogin" runat="server" Cssclass="form-control"> </asp:TextBox>
-                            <asp:RequiredFieldValidator ID="LoginReqField" runat="server" ErrorMessage="Login is required" ControlToValidate="TextLogin" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
+                            <asp:TextBox ID="TextEmail" runat="server" Cssclass="form-control" TextMode="Email"> </asp:TextBox>
+                            <asp:RequiredFieldValidator ID="EmailReqField" runat="server" ErrorMessage="Email is required" ControlToValidate="TextEmail" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                         </div>
                     </div>
 

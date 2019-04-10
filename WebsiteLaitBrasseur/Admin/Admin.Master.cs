@@ -11,7 +11,14 @@ namespace WebsiteLaitBrasseur.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            try
+            {
+                if (this.Session["email"] != null)
+                {
+                    lblLogout.Visible = true;
+                }
+            }
+            catch { }
         }
     }
 }

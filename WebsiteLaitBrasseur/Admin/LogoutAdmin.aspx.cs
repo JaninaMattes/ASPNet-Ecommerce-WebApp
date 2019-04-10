@@ -11,10 +11,18 @@ namespace WebsiteLaitBrasseur.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            HttpCookie email = Request.Cookies["email"];
-            if (email != null)
+            try
             {
-                lblGoodBye.Text = "Good bye " + email.Value;
+                string email = this.Session["email"].ToString();    //session information recuperation
+                if (email != null)
+                {
+                    lblGoodBye.Text = "Good bye " + email;
+                    this.Session.Clear();
+                }
+            }
+            catch
+            {
+                lblGoodBye.Text = "Good bye /Debug : Pas de session";
             }
         }
     }

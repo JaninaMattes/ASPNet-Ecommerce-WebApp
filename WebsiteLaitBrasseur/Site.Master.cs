@@ -11,7 +11,7 @@ namespace WebsiteLaitBrasseur
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            btnUserProfile_Click(sender, e);
+
 
             try {
                 if (this.Session["email"] != null)
@@ -28,17 +28,6 @@ namespace WebsiteLaitBrasseur
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             Response.Redirect("/ProductOverview.aspx");
-        }
-
-        protected void btnCart_Click(object sender, EventArgs e)
-        {
-
-
-        }
-
-        protected void btnUserProfile_Click(object sender, EventArgs e)
-        {
-            /*Response.Redirect("~/Account/CustomerProfile.aspx");*/
         }
 
     }

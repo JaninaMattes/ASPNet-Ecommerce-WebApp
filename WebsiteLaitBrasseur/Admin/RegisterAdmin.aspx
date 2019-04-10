@@ -19,7 +19,7 @@
    
          <!--Label /TextBox / Validator(compare with first email entry) for Confirm Email -->
          <div class="form-group">
-                <label for="TextEmailConf" class="control-label col-md-3">Confirm E-mail</label>
+                <label for="TextEmailConf" class="control-label col-md-3 text-info">Confirm E-mail</label>
                 <div class="col-md-5">
                     <asp:TextBox ID="TextEmailConf" runat="server" Cssclass="form-control" TextMode="Email" > </asp:TextBox>
                     <asp:RequiredFieldValidator ID="EmailConfReqField" runat="server"  ControlToValidate="TextEmailConf" Display="Dynamic" CssClass="text-danger" ErrorMessage="Confirm email is required"></asp:RequiredFieldValidator>

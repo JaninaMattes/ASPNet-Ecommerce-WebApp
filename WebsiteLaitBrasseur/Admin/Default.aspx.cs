@@ -13,5 +13,10 @@ namespace WebsiteLaitBrasseur.Admin
         {
 
         }
+
+        protected void Shippingbutton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Admin/PostagesManagement.aspx");
+        }
     }
 }

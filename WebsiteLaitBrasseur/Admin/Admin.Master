@@ -20,26 +20,29 @@
 
 
 <body>
-   <header class="jumbotron">
+   <header class="jumbotron" style="background-color: black">
         <div class="container-fluid" >
             <div class="row">
-
                 <div class="col-md-4 ">
                     <a href="/Admin/Default.aspx">
-                        <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/laitBrasseurmin.jpg" class="img rounded img-fluid" style="text-align:left;width:auto;height:auto"  />
+                        <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/Logo-LaitBrasseur.png" class="img rounded img-fluid" style="text-align:left;width:181px; height:147px"  />
                     </a>
                  </div>
 
                 <div class="col-md-4 text-center">
-                     <h1 >Lait Brasseur Admin</h1>
+                     <h1   style="font-family: 'Microsoft Sans Serif'; color:white" >Spécialiste Lait Brasseur</h1>
                 </div>
 
                 <div class="col-md-4 text-right">
-                    <a href="/Admin/LoginAdmin.aspx">
-                        <input type="button" class="btn btn-primary" value="LogIn" />
+                    <a href="/Admin/LoginAdmin.aspx"  >
+                        <input id="LogInButton" runat="server" type="button" class="btn btn-outline-light" value="LogIn"/>
+                    </a>
+
+                    <br />
+                    <a href="/Admin/LogoutAdmin.aspx"  >
+                        <asp:label id="lblLogout" runat="server" text="Logout" Visible="false"></asp:label>
                     </a>
                 </div>
-
             </div>
         </div>
     </header>

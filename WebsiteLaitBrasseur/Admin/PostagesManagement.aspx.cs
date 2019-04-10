@@ -13,9 +13,28 @@ namespace WebsiteLaitBrasseur.Admin
         {
             if (!IsPostBack)
             {
+                BindTableLabel();
+
                 BindPostages();
             }
         }
+
+
+
+        protected void PostageTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+            lblError.Text = "Error : Database not connected";
+
+        }
+
+
+        protected void PostageTable_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            lblError.Text = "Error : Database not connected";
+        }
+
+
 
         protected void BindPostages()
         {
@@ -23,13 +42,26 @@ namespace WebsiteLaitBrasseur.Admin
             PostageTable.DataBind();
         }
 
+        protected void BindTableLabel()
+        {
+            List<Postage> postageLs = getPostage();
+            if (postageLs.LongCount<Postage>() > 0)
+            {
+                lblPostageList.Text = "There is " + postageLs.LongCount<Postage>() + " postage options";
+            }
+        }
+
+
         protected List<Postage> getPostage()
         {
             List<Postage> postageLs= new List<Postage>();
             Postage ls = new Postage(0, "Provider1", 2.50);
             postageLs.Add(ls);
-            ls = new Postage(1, "Provider2", 5);
+            ls = new Postage(1, "Provider2", 5.0);
             postageLs.Add(ls);
+            ls = new Postage(2, "Provider3", 7.0);
+            postageLs.Add(ls);
+
             return postageLs;
 
 
@@ -39,15 +71,16 @@ namespace WebsiteLaitBrasseur.Admin
         {
             public int ProviderID { get; set; }
             public string ProviderName { get; set; }
-            public double Cost { get; set;}
+            public double CostPerUnit { get; set;}
 
             public Postage (int providerID, string providerName, double cost)
             {
                 this.ProviderID = providerID;
                 this.ProviderName = providerName;
-                this.Cost = cost;
+                this.CostPerUnit = cost;
             }
         }
+
 
     }
 }

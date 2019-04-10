@@ -28,7 +28,7 @@
             <!--LinkButton to Shipping managment -->
             <div class="col-md-4 text-center">
                 <a>
-                    <asp:Button ID="Shippingbutton" runat="server" CssClass="btn btn-primary" style="font-size:30px;height:100px;width:200px" Text="Shipping" />
+                    <asp:Button ID="Shippingbutton" runat="server" OnClick="Shippingbutton_Click" CssClass="btn btn-primary" style="font-size:30px;height:100px;width:200px" Text="Shipping" />
                 </a>
             </div>
 
