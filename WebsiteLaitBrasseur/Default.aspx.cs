@@ -22,7 +22,7 @@ namespace WebsiteLaitBrasseur
             }
             catch
             {
-                lblWelcome.Text = "Welcome";
+                lblWelcome.Text = "Welcome & Bienvenue";
             }
         }
 

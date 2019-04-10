@@ -18,7 +18,8 @@ namespace WebsiteLaitBrasseur.Account
                 // get id from query string and try to parse
                 var type = Request.QueryString["productType"];
                 if (!string.IsNullOrEmpty(type))
-                {
+                {   //debugging purpose, will later remove
+                    System.Diagnostics.Debug.WriteLine("debugging--"+ type);
                     if (!IsPostBack)
                     {
                         // retrieve a list of filtered prodcuts from the db

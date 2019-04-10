@@ -8,22 +8,18 @@
         <br />
 
         <!--Welcoming picture -->
-        <div class="col-md-12 text-center crop">
-            <img id="ImgHome" alt="LaitBrasseur_Prez" src="/Images/brewery.jpg" style="width: 95%; height: 250px;"/>
-            <div class="centered" style="width: 250px; height: 150px; background-color: white;">
-                <asp:Label ID="lblWelcome" Text="" runat="server" CssClass="align-content-center text-black-50 text-center" Font-Size="35px">Welcome & Bienvenue</asp:Label>
-            </div>
-        </div>
 
+            <asp:Label ID="lblWelcome" Text="" runat="server" CssClass="center text-black-50 text-center" Font-Size="35px">WelcomeBienvenue</asp:Label><br />
+ 
         <div class="row">
                <!--Cheese products Picture with possiblity to navigate to product overview -->
-               <div class="col-md-6 img-responsive text-center" style="border:double; border-color: red">
-                    <div class="col-md-3">
+               <div class="col-md-6 img-responsive text-center">
+                    <div class="col-md-3" style="margin-left: 30%">
     
                 <!--START Product CardView-->
                 <div id="cardView0" class="card">
-                <div id="img-cardview0" class="crop">
-                    <asp:ImageButton id="img1" runat="server" ImageUrl="/Images/cheese11.jpg" OnCommand="imgCommand" CommandArgument="cheese"/>      
+                <div id="img-cardview0">
+                    <asp:ImageButton id="img1" Width="340px" Heigth="100px" runat="server" ImageUrl="/Images/cheese13.jpg" OnCommand="imgCommand" CommandArgument="cheese"/>      
                 </div>
                 <div id="container0" class="container clearfix">
                     <div class="profile-usertitle">
@@ -38,13 +34,13 @@
  </div>
 
                <!--Beer products Picture with possiblity to navigate to product overview -->
-               <div class="col-md-6 img-responsive text-center" style="border:double; border-color: red">
-                    <div class="col-md-3">
+               <div class="col-md-6 img-responsive text-center">
+                    <div class="col-md-3 float-md-left">
     
                 <!--START Product CardView-->
                 <div id="cardView1" class="card">
-                <div id="img-cardview1" class="crop">
-                    <asp:ImageButton id="ImageButton1" runat="server" ImageUrl="/Images/beer1.jpg" OnCommand="imgCommand" CommandArgument="beer"/>      
+                <div id="img-cardview1">
+                    <asp:ImageButton id="img2" Width="340px" Heigth="100px" runat="server" ImageUrl="/Images/beer1.jpg" OnCommand="imgCommand" CommandArgument="beer"/>      
                 </div>
                 <div id="container1" class="container clearfix">
                     <div class="profile-usertitle">

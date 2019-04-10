@@ -19,7 +19,5 @@
                                     <asp:BoundField DataField="ArrivalDate" HeaderText="Arrival Date" />
                                 </Columns>
                             </asp:GridView>
-
                 </div>
-
 </asp:Content>

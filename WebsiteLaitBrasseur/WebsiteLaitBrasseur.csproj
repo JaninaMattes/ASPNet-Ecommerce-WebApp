@@ -74,6 +74,7 @@
     <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Register.aspx" />
     <Content Include="Admin\Transactions.aspx" />
+    <Content Include="Admin\ProductOverview.aspx" />
     <Content Include="OverviewPage.aspx" />
     <Content Include="Account\Profile.aspx" />
     <Content Include="DetailPage.aspx" />
@@ -181,6 +182,13 @@
     </Compile>
     <Compile Include="Admin\Transactions.aspx.designer.cs">
       <DependentUpon>Transactions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ProductOverview.aspx.cs">
+      <DependentUpon>ProductOverview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ProductOverview.aspx.designer.cs">
+      <DependentUpon>ProductOverview.aspx</DependentUpon>
     </Compile>
     <Compile Include="OverviewPage.aspx.cs">
       <DependentUpon>OverviewPage.aspx</DependentUpon>
