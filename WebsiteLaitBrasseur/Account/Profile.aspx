@@ -14,8 +14,9 @@
 		        </div>
                 <div class="text-center">
                     <br /><br /><br />
-                    <asp:button ID="DeleteButton" runat="server" Text="Delete" class="btn btn-danger"/><br /><br /><br />
-                    <asp:button ID="SaveButton" runat="server" Text="Save" class="btn btn-success" /><br /><br /><br />
+                    <asp:button ID="DeleteButton" runat="server" Text="Delete Profile" class="btn btn-danger"/><br /><br /><br />
+                    <asp:button ID="SaveButton" runat="server" Text="Save Changes" class="btn btn-success" /><br /><br /><br />
+                    
                 </div>
             </div>
 
@@ -83,7 +84,7 @@
 
                     </div>
                 </div>
-
+                <br /> <hr />
                 <!--User Address information -->
                 <div id="userAddress">
 
@@ -174,6 +175,7 @@
                                     <asp:BoundField DataField="TotalAmount" HeaderText="Total Amount(€)" />
                                     <asp:BoundField DataField="OrderDate" HeaderText="Order Date" />
                                     <asp:BoundField DataField="ArrivalDate" HeaderText="Arrival Date" />
+                                    <asp:BoundField DataField="PaymentDue" HeaderText="Payment Due" />
                                 </Columns>
                             </asp:GridView>
                 </div>
