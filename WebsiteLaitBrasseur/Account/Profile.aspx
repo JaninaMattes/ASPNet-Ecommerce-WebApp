@@ -10,7 +10,12 @@
             <!--First column : User picture and "Save"/"Delete" button-->
             <div class="col-md-2" >
                 <div class="profile-userpic">
-                    <img class="img-responsive" alt="User Image" src="/Images/customerImg.jpg">
+                    <img class="img-responsive container" alt="User Image" src="/Images/customerImg.jpg">
+                    <div class="overlay">
+                    <p>Change Profile Picture</p><br />
+                    <a href="#" class="icon" title="User Profile">
+                        <i class="fa fa-user"></i></a>
+                    </div>
 		        </div>
                 <div class="text-center">
                     <br /><br /><br />

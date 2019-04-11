@@ -5,6 +5,7 @@
 <html>
 <head runat="server">
 
+    <!--All necessary meta data and scripts CSS / Bootstrap / JavaScript-->
     <meta name="viewport"  content="width=device-width; initial-scale=1"/>
     <title><%: Page.Title %> - LaitBrasseur</title>
 
@@ -18,6 +19,7 @@
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 
 </head>
+<!--Content for master page in which all other pages will be dynamically nested-->
 <body>
     <header class="jumbotron" style="background-color: black">
         <div class="container-fluid" >
@@ -48,6 +50,7 @@
             </div>
         </div>
         <br />
+        <!--Navigation bar for master page-->
         <div class="container-fluid rounded" style="background-color:ghostwhite;">
 
                         <div id="NavBar" class="navbar" >
@@ -68,7 +71,8 @@
 
 
     <form id="MasterBodyForm" class="form-group" runat="server">
-
+        
+        <!--Placeholder for master page content-->
         <div class="container-fluid body-content">
                 <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder><hr />
         </div>  

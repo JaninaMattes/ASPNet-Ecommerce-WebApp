@@ -34,6 +34,7 @@
                         </Columns>
                     </asp:gridview>
 
+
                 <div class="row">
 
                         <asp:Button ID="AddButton" runat="server" Text="Add" OnClick="AddButton_Click" CssClass="btn btn-success" ValidationGroup="Add" CausesValidation="true" />
@@ -83,9 +84,7 @@
 
 
 
+
             </div>
-
 </div>
-
-
 </asp:Content>

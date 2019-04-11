@@ -27,6 +27,7 @@ footer {
     background-color: lightgrey;
 }
 
+/*General image size for presentation*/
 .img-presentation {
     width: 75%;
     height: 75%;
@@ -87,11 +88,48 @@ footer {
     height: 400px;
 }
 
+/*Make an image responsive*/
 .img-responsive {
     display: block;
     width: 50%;
     max-width: 100%;
     height: auto;
+}
+
+/* The overlay effect (full height and width) - lays on top of the container and over the image */
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: red;
+}
+
+/* When mouse over the container, fade in the overlay icon*/
+.container:hover .overlay {
+    opacity: 1;
+}
+
+/* The icon inside the overlay is positioned in the middle vertically and horizontally */
+.icon {
+    color: white;
+    font-size: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* When you move the mouse over the icon, change color */
+.fa-user:hover {
+    color: #eee;
 }
 
 /* Profile container */
@@ -105,6 +143,7 @@ footer {
     background: #fff;
 }
 
+/*User profile image*/
 .profile-userpic img {
     float: none;
     margin: 0 auto;
@@ -115,11 +154,13 @@ footer {
     border-radius: 50% !important;
 }
 
+/*User profile title*/
 .profile-usertitle {
     text-align: center;
     margin-top: 20px;
 }
 
+/* user profile subtitle*/
 .profile-usertitle-name {
     color: #5a7391;
     font-size: 16px;
@@ -127,14 +168,7 @@ footer {
     margin-bottom: 7px;
 }
 
-.profile-usertitle-job {
-    text-transform: uppercase;
-    color: #5b9bd1;
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
+/*User button*/
 .profile-userbuttons {
     text-align: center;
     margin-top: 10px;
@@ -148,6 +182,7 @@ footer {
         margin-right: 5px;
     }
 
+/*Left align all elements*/
 .left-element {
     background: green;
     display: inline-block;
@@ -155,6 +190,7 @@ footer {
     left: 0;
 }
 
+/*Right align all elements*/
 .right-element {
     background: red;
     display: inline-block;
@@ -162,6 +198,7 @@ footer {
     right: 0;
 }
 
+/*Responsiveness for different media sizes*/
 @media (max-width: 1200px) {
     .left {
         height: 50%
@@ -172,11 +209,13 @@ footer {
     }
 }
 
+/*Table information*/
 .table {
     margin: 5px;
     background-color: white;
 }
 
+/*Hinder overflow in images to make them fit to container*/
 .clearfix {
     overflow: auto;
 }
@@ -185,10 +224,12 @@ footer {
     padding: 3px;
 }
 
+/*Crop images to hinder overflow over container*/
 .crop {
     overflow: hidden;
 }
 
+/*Crop cardview to hinder overflow over container*/
 .crop-cardView {
     clip: rect(0px,340px,250px,0px);
 }
@@ -199,6 +240,7 @@ footer {
     clip: rect(0px,650px,350px,0px);
 }
 
+/*Crop images to hinder overflow over container*/
 .image-fit {
     object-fit: contain;
 }
@@ -219,4 +261,11 @@ footer {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+/* Container to position the overlay. Adjust the width as needed */
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
 }

@@ -32,6 +32,7 @@ namespace WebsiteLaitBrasseur.Admin
 
         protected void AddButton_Click(object sender, EventArgs e)
         {
+
             //DataTable and DataRow initialization
             int i= ItemListTable.Rows.Count;
             DataTable dtItem = getDataTable();
