@@ -55,7 +55,7 @@ namespace WebsiteLaitBrasseur.Account
             List<ShoppingListItem> shoppingLs = getShoppingList();
             if (shoppingLs.LongCount<ShoppingListItem>() > 0)
             {
-                tableShoppingHistoryLabel.Text = "Your shopping history has " + shoppingLs.LongCount<ShoppingListItem>();
+                tableShoppingHistoryLabel.Text = "Your shopping history has " + shoppingLs.LongCount<ShoppingListItem>() + " items.";
             }
         }
 
@@ -67,7 +67,6 @@ namespace WebsiteLaitBrasseur.Account
             /*Textboxes with editable section information*/
             TextFirstname.Text = getUserData().firstName;
             TextLastname.Text = getUserData().lastName;
-            //UsernameTextBox.Text = getUserData().userName;
             TextPhone.Text = getUserData().phoneNo;
             TextBirthday.Text = getUserData().birthdate;
             TextEmail.Text = getLoginData().email;
@@ -83,7 +82,7 @@ namespace WebsiteLaitBrasseur.Account
         /*Dummy data for demonstration purpose*/
         protected Customer getUserData()
         {
-            Customer customer = new Customer(11110, "Marcus", "Miller", "MillerMarcus92", "+6194563221", "1992-02-15");
+            Customer customer = new Customer(11110, "Marcus", "Miller", "+6194563221", "1992-02-15");
             return customer;
         }
 
@@ -105,11 +104,20 @@ namespace WebsiteLaitBrasseur.Account
         protected List<ShoppingListItem> getShoppingList()
         {
             List<ShoppingListItem> shoppingLs = new List<ShoppingListItem>();
-            ShoppingListItem ls = new ShoppingListItem(1234, 25.00f, "2019-02-01", "2019-02-25");
+            ShoppingListItem ls = new ShoppingListItem(1234, 25.00f, "2019-02-01", "2019-02-25", "2019-03-25");
             shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1235, 25.00f, "2019-01-01", "2019-01-30");
+            ls = new ShoppingListItem(1235, 25.95f, "2019-01-01", "2019-01-30", "paied");
             shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1236, 100.00f, "2018-12-01", "2018-12-30");
+            ls = new ShoppingListItem(1236, 100.95f, "2018-12-01", "2018-12-30", "paied");
+            shoppingLs.Add(ls);
+            ls = new ShoppingListItem(1237, 23.95f, "2018-12-01", "2018-12-30", "paied");
+            shoppingLs.Add(ls);
+            ls = new ShoppingListItem(1238, 10.95f, "2018-12-01", "2018-12-25", "paied");
+            ls = new ShoppingListItem(1239, 10.95f, "2018-11-15", "2018-12-22", "paied");
+            shoppingLs.Add(ls);
+            ls = new ShoppingListItem(1240, 210.95f, "2018-10-01", "2018-10-15", "paied");
+            shoppingLs.Add(ls);
+
             shoppingLs.Add(ls);
             return shoppingLs;
         }
@@ -117,17 +125,19 @@ namespace WebsiteLaitBrasseur.Account
         /*Dummy data for demo purpose, to fill the aspx fields until database is connected*/
         public class ShoppingListItem
         {
-            public int invoiceNumber { get; set; }
-            public float totalAmount { get; set; }
-            public string orderDate { get; set; }
-            public string arrivalDate { get; set; }
+            public int InvoiceNumber { get; set; }
+            public float TotalAmount { get; set; }
+            public string OrderDate { get; set; }
+            public string ArrivalDate { get; set; }
+            public string PaymentDue { get; set; }
 
-            public ShoppingListItem(int id, float totalAmount, string orderDate, string arrivalDate)
+            public ShoppingListItem(int id, float totalAmount, string orderDate, string arrivalDate, string payDue)
             {
-                this.invoiceNumber = id;
-                this.totalAmount = totalAmount;
-                this.orderDate = orderDate;
-                this.arrivalDate = arrivalDate;
+                this.InvoiceNumber = id;
+                this.TotalAmount = totalAmount;
+                this.OrderDate = orderDate;
+                this.ArrivalDate = arrivalDate;
+                this.PaymentDue = payDue;
             }
         }
 
@@ -136,16 +146,14 @@ namespace WebsiteLaitBrasseur.Account
             public int userId { get; set; }
             public string firstName { get; set; }
             public string lastName { get; set; }
-            public string userName { get; set; }
             public string phoneNo { get; set; }
             public string birthdate { get; set; }
 
-            public Customer(int userId, string firstName, string lastName, string userName, string phoneNo, string birthdate)
+            public Customer(int userId, string firstName, string lastName, string phoneNo, string birthdate)
             {
                 this.userId = userId;
                 this.firstName = firstName;
                 this.lastName = lastName;
-                this.userName = userName;
                 this.phoneNo = phoneNo;
                 this.birthdate = birthdate;
             }
