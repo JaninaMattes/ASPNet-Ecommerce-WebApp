@@ -54,6 +54,17 @@ namespace WebsiteLaitBrasseur.Admin
             BindItemsLabel();
         }
 
+        protected void ItemListTable_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            int index = Convert.ToInt32(e.CommandArgument);
+            string id = ItemListTable.Rows[index].Cells[0].Text;
+            if (e.CommandName == "Detail_click")
+            {
+                Response.Redirect("/Admin/DetailPageAdmin.aspx?id=" + id );
+            }
+        }
+
+
         ////Grid Method
             //-RowEditing
             //-RowCancelingEdit

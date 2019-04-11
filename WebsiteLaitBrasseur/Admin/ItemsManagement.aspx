@@ -19,7 +19,8 @@
                     OnRowCancelingEdit="ItemListTable_RowCancelingEdit"
                     OnRowDeleting="ItemListTable_RowDeleting"
                     OnRowEditing="ItemListTable_RowEditing"
-                    OnRowUpdating="ItemListTable_RowUpdating">
+                    OnRowUpdating="ItemListTable_RowUpdating"
+                    OnRowCommand="ItemListTable_RowCommand">
                         <Columns>
                             <asp:BoundField DataField="id" HeaderText="Id Number" ReadOnly="true" />
                             <asp:BoundField DataField="productName" HeaderText="Product Name" /> 
@@ -31,6 +32,7 @@
 
                             <asp:CommandField ShowEditButton="true" ButtonType="Button"  EditText="Edit" />
                             <asp:CommandField ShowDeleteButton="true"  ButtonType="Button"   DeleteText="Delete" />
+                            <asp:ButtonField   ButtonType="Button" CommandName="Detail_click" Text="Show details" />
                         </Columns>
                     </asp:gridview>
 

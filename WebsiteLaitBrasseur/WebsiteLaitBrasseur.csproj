@@ -73,6 +73,7 @@
     <Content Include="AboutUs.aspx" />
     <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="Admin\DetailPageAdmin.aspx" />
     <Content Include="Admin\ItemsManagement.aspx" />
     <Content Include="Admin\Transactions.aspx" />
     <Content Include="Admin\ProductOverview.aspx" />
@@ -164,6 +165,13 @@
     </Compile>
     <Compile Include="Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\DetailPageAdmin.aspx.cs">
+      <DependentUpon>DetailPageAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\DetailPageAdmin.aspx.designer.cs">
+      <DependentUpon>DetailPageAdmin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\ItemsManagement.aspx.cs">
       <DependentUpon>ItemsManagement.aspx</DependentUpon>
