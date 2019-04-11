@@ -14,7 +14,7 @@ namespace WebsiteLaitBrasseur
 
         }
 
-        protected void updateButton_Click(object sender, EventArgs e)
+        protected void saveButton_Click(object sender, EventArgs e)
         {
             //Variables initialization
             Decimal sCost = Convert.ToDecimal(2.5);

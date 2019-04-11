@@ -11,8 +11,11 @@
         <div  class="col-md-12 row text-center"   >
 
             <div class="col-md-7"  >
-                <div id="CartTitle1" runat="server" class="ContentHead"><h1>Shopping Cart</h1></div>
-                <!--Legend-->
+                <div id="CartTitle1" runat="server" class="ContentHead">
+                    <h1>Shopping Cart</h1>
+                </div>
+
+                <!--Shopping Card Legend-->
                 <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;">
                    <div class="col-md-3" >
                        <asp:Label ID="LegendImage" runat="server" cssclass="text-info" Text="Image"></asp:Label>                 
@@ -49,6 +52,7 @@
                    </div>
 
                    <div class="col-md-2   ">
+                   <!--Dropdown list to select the quantity of products-->
                    <asp:DropDownList ID="QuantityBrune" runat="server">
                        <asp:ListItem Selected="True" Value="1"></asp:ListItem>
                        <asp:ListItem  Value="2"></asp:ListItem>
@@ -59,18 +63,8 @@
                        <asp:ListItem  Value="8"></asp:ListItem>
                        <asp:ListItem  Value="9"></asp:ListItem>
                        <asp:ListItem  Value="10"></asp:ListItem>
-                       <asp:ListItem  Value="11"></asp:ListItem>
-                       <asp:ListItem  Value="12"></asp:ListItem>
-                       <asp:ListItem  Value="13"></asp:ListItem>
-                       <asp:ListItem  Value="14"></asp:ListItem>
-                       <asp:ListItem  Value="15"></asp:ListItem>
-                       <asp:ListItem  Value="16"></asp:ListItem>
-                       <asp:ListItem  Value="17"></asp:ListItem>
-                       <asp:ListItem  Value="18"></asp:ListItem>
-                       <asp:ListItem  Value="19"></asp:ListItem>
-                       <asp:ListItem  Value="20"></asp:ListItem>
+                
                    </asp:DropDownList>
-
 
                    </div>
 
@@ -107,16 +101,7 @@
                        <asp:ListItem  Value="8"></asp:ListItem>
                        <asp:ListItem  Value="9"></asp:ListItem>
                        <asp:ListItem  Value="10"></asp:ListItem>
-                       <asp:ListItem  Value="11"></asp:ListItem>
-                       <asp:ListItem  Value="12"></asp:ListItem>
-                       <asp:ListItem  Value="13"></asp:ListItem>
-                       <asp:ListItem  Value="14"></asp:ListItem>
-                       <asp:ListItem  Value="15"></asp:ListItem>
-                       <asp:ListItem  Value="16"></asp:ListItem>
-                       <asp:ListItem  Value="17"></asp:ListItem>
-                       <asp:ListItem  Value="18"></asp:ListItem>
-                       <asp:ListItem  Value="19"></asp:ListItem>
-                       <asp:ListItem  Value="20"></asp:ListItem>
+                    
                    </asp:DropDownList>
                    </div>
 
@@ -154,16 +139,7 @@
                        <asp:ListItem  Value="8"></asp:ListItem>
                        <asp:ListItem  Value="9"></asp:ListItem>
                        <asp:ListItem  Value="10"></asp:ListItem>
-                       <asp:ListItem  Value="11"></asp:ListItem>
-                       <asp:ListItem  Value="12"></asp:ListItem>
-                       <asp:ListItem  Value="13"></asp:ListItem>
-                       <asp:ListItem  Value="14"></asp:ListItem>
-                       <asp:ListItem  Value="15"></asp:ListItem>
-                       <asp:ListItem  Value="16"></asp:ListItem>
-                       <asp:ListItem  Value="17"></asp:ListItem>
-                       <asp:ListItem  Value="18"></asp:ListItem>
-                       <asp:ListItem  Value="19"></asp:ListItem>
-                       <asp:ListItem  Value="20"></asp:ListItem>
+                     
                    </asp:DropDownList>
                    </div>
 
@@ -200,16 +176,7 @@
                        <asp:ListItem  Value="8"></asp:ListItem>
                        <asp:ListItem  Value="9"></asp:ListItem>
                        <asp:ListItem  Value="10"></asp:ListItem>
-                       <asp:ListItem  Value="11"></asp:ListItem>
-                       <asp:ListItem  Value="12"></asp:ListItem>
-                       <asp:ListItem  Value="13"></asp:ListItem>
-                       <asp:ListItem  Value="14"></asp:ListItem>
-                       <asp:ListItem  Value="15"></asp:ListItem>
-                       <asp:ListItem  Value="16"></asp:ListItem>
-                       <asp:ListItem  Value="17"></asp:ListItem>
-                       <asp:ListItem  Value="18"></asp:ListItem>
-                       <asp:ListItem  Value="19"></asp:ListItem>
-                       <asp:ListItem  Value="20"></asp:ListItem>
+           
                    </asp:DropDownList>
                    </div>
                    <div class="col-md-2 ">
@@ -239,9 +206,9 @@
                      <!--Label /DropDown List for the Postage Options-->
                       <label for="PostageDropDownList"  class="text-info">Postage</label>
                       <asp:DropDownList ID="PostageDropDownList" runat="server" Cssclass="form-control">
-                          <asp:ListItem Value="1" Selected="true">Provider 1 : 2,5€</asp:ListItem>
-                          <asp:ListItem Value="2">Provider 2 : 5,0€</asp:ListItem>
-                          <asp:ListItem Value="3">Provider 3 : 7,5€</asp:ListItem>
+                          <asp:ListItem Value="1" Selected="true">Provider 1 : 2,95€</asp:ListItem>
+                          <asp:ListItem Value="2">Provider 2 : 5,95€</asp:ListItem>
+                          <asp:ListItem Value="3">Provider 3 : 7,95€</asp:ListItem>
                       </asp:DropDownList>
                      <br />
 
@@ -257,7 +224,7 @@
                      <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label><br /><br /><br />
 
                      <!--"Update" button to actualize informations in Summary part" -->
-                     <asp:Button ID="updateButton" runat="server" Text="Update" OnClick="updateButton_Click" ValidationGroup="Quantity" CssClass="btn btn-primary"/><br /><br /><br />
+                     <asp:Button ID="saveButton" runat="server" Text="Save Changes" OnClick="saveButton_Click" ValidationGroup="Quantity" CssClass="btn btn-primary"/><br /><br /><br />
 
                      <!--"CreditCard" button to get to the credit card page" -->
                      <asp:button ID="CreditCardButton" runat="server" CssClass="btn btn-success" Text="Credit Card" OnClick="CreditCardButton_Click"/>
