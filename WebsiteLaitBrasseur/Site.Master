@@ -55,13 +55,13 @@
 
                         <div id="NavBar" class="navbar" >
                             <div class="navbar " >
-                                <input type="text"  placeholder="Search" />
-                                <input type="button" class="btn btn-primary" onclick="window.location.href='/OverviewPage.aspx'" Value="Search" />
+                                <input id="TextSearch" type="text"  placeholder="Search" />
+                                <input id="SearchButton" type="button" class="btn btn-primary" onclick="window.location.href = '/OverviewPage.aspx'" Value="Search" />
                             </div>                    
                             <div class="nav navbar-right">
-                                    <input type="button" class="btn btn-primary" onclick="window.location.href='/Cart.aspx'" value="Cart" />
+                                    <input id="CartButton" type="button" class="btn btn-primary" onclick="window.location.href='/Cart.aspx'" value="Cart" />
                                 &nbsp;
-                                    <input type="button" class="btn btn-primary" onclick="window.location.href='/Account/Profile.aspx'" value="Profile" />
+                                    <input id="ProfileButton" type="button" class="btn btn-primary" onclick="window.location.href='/Account/Profile.aspx'" value="Profile" />
                             </div>                   
                         </div>
 

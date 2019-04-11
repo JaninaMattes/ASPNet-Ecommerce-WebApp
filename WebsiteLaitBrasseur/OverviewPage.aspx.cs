@@ -9,12 +9,14 @@ namespace WebsiteLaitBrasseur.Account
 {
     public partial class OverviewPage : System.Web.UI.Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
                 var db = new DAL.DemoDatabase();
-           
+
                 // get id from query string and try to parse
                 var type = Request.QueryString["productType"];
                 if (!string.IsNullOrEmpty(type))

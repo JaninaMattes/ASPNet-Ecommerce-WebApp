@@ -22,13 +22,5 @@ namespace WebsiteLaitBrasseur
             catch { }
 
         }
-
-
-
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("/ProductOverview.aspx");
-        }
-
     }
 }
