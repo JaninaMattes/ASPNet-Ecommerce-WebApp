@@ -23,6 +23,7 @@ namespace WebsiteLaitBrasseur.DAL
         {
             int id = 0;
             product_Details = new Models.DetailPage[] {
+                // dummy data for cheese products
                 CreateDummyDetailData(id++, "Blue Cheese de Avignón", "Cheese and Aimée", "Cheese", 239.00, 1, 14.95, 14.95, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB3m0Fjufuen-OfO3DocJJmsCvsWXFRI_Z8ivctwfyQgeT-RQL", "available"),
                 CreateDummyDetailData(id++, "Brie de Meaux", "Cheese and Aimée", "Cheese", 239.00, 1, 11.95, 11.95, "https://cdn.pixabay.com/photo/2016/01/19/16/57/cheese-1149471__340.jpg", "available"),
                 CreateDummyDetailData(id++, "Camember de Normandie", "Cheese and Aimée", "Cheese", 239.00, 1, 14.95, 14.95, "http://d2814mmsvlryp1.cloudfront.net/wp-content/uploads/2013/12/WGC-Cheese-Board-2-copy-2.jpg", "available"),
@@ -34,7 +35,17 @@ namespace WebsiteLaitBrasseur.DAL
                 CreateDummyDetailData(id++, "Reblochon Traditionalé", "Lait Brasseur", "Cheese", 239.00, 1, 14.95, 14.95, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2-LDAbkYXagj8sXyyKHkZY9SPhmZ-9eYRZXhg3CsKRBClohTo", "available"),
                 CreateDummyDetailData(id++, "Mont d'Or Cheese", "Lait Brasseur", "Cheese", 239.00, 1, 14.95, 14.95, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnRuWi1SM_I3aEr6BPOA1UPUU7cy4W3UUsawwkNzzp5PYw2x4B", "available"),
                 CreateDummyDetailData(id++, "Ossau Iray Soft", "Lait Brasseur", "Cheese", 239.00, 1, 14.95, 14.95, "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrcmoCow8eaZeF1CAuO8IkCM9BKTlEsu-WaF39H8hXGdSp71Vglg", "available"),
-                CreateDummyDetailData(id++, "Brie de Meaux", "Lait Brasseur", "Cheese", 239.00, 1, 14.95, 14.95, "https://i2.wp.com/chocolateandmarrow.com/wp-content/uploads/2016/05/How-To-Make-A-Meat-And-Cheese-Platter-5.jpg", "available") };
+                CreateDummyDetailData(id++, "Brie de Meaux", "Lait Brasseur", "Cheese", 239.00, 1, 14.95, 14.95, "https://i2.wp.com/chocolateandmarrow.com/wp-content/uploads/2016/05/How-To-Make-A-Meat-And-Cheese-Platter-5.jpg", "available"),
+                // dummy data for beer products 
+                CreateDummyDetailData(id++, "Pilsener dé Rockefort", "Lait Brasseur", "Beer", 239.00, 1, 9.95, 9.95, "https://images.pexels.com/photos/1089930/pexels-photo-1089930.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "available"),
+                CreateDummyDetailData(id++, "White Beer", "Lait Brasseur", "Beer", 239.00, 1, 8.95, 8.95, "https://images.pexels.com/photos/1089932/pexels-photo-1089932.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "available"),
+                CreateDummyDetailData(id++, "Duyck Jenlain Ambrée", "Lait Brasseur", "Beer", 239.00, 1, 14.95, 14.95, "https://images.pexels.com/photos/667986/pexels-photo-667986.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "available"),
+                CreateDummyDetailData(id++, "Pelfourde Blonde", "Lait Brasseur", "Beer", 239.00, 1, 14.95, 14.95, "https://images.pexels.com/photos/1862/summer-sunshine-alcohol-drink.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500", "available"),
+                CreateDummyDetailData(id++, "La Choulette Bière", "Lait Brasseur", "Beer", 239.00, 1, 10.95, 10.95, "https://images.pexels.com/photos/1400255/pexels-photo-1400255.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "available"),
+                CreateDummyDetailData(id++, "Pelforth Brune", "Lait Brasseur", "Beer", 239.00, 1, 14.95, 14.95, "https://images.pexels.com/photos/745410/pexels-photo-745410.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "available"),
+                CreateDummyDetailData(id++, "La Choulette Blonde", "Lait Brasseur", "Beer", 239.00, 1, 10.95, 10.95, "https://images.pexels.com/photos/1727829/pexels-photo-1727829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500", "available"),
+                CreateDummyDetailData(id++, "Fleurac La Triple IPA", "Lait Brasseur", "Beer", 239.00, 1, 14.95, 14.95, "https://images.pexels.com/photos/8812/food-wood-night-alcohol.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500", "available")
+            };
 
         }
 
@@ -72,9 +83,12 @@ namespace WebsiteLaitBrasseur.DAL
         public Models.DetailPage[] GetProducts(string type)
         {
             List<DetailPage> productTypes = new List<DetailPage>();
-            for(int i = 0; i<= GetProducts().Length; i++)
+            for(int i = 0; i< product_Details.Length; i++)
             {
-                productTypes.Add(Array.Find(product_Details, d => { return d.ProductType == type; }));
+                if (product_Details[i].ProductType == type)
+                {                    
+                    productTypes.Add(GetProducts()[i]);
+                }                
             }
             return productTypes.ToArray();
         }

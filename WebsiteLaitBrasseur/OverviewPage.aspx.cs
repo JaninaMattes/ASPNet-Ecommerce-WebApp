@@ -18,28 +18,39 @@ namespace WebsiteLaitBrasseur.Account
                 // get id from query string and try to parse
                 var type = Request.QueryString["productType"];
                 if (!string.IsNullOrEmpty(type))
-                {   //debugging purpose, will later remove
+                {   
+                    //debugging purpose, will later remove
                     System.Diagnostics.Debug.WriteLine("debugging--"+ type);
                     if (!IsPostBack)
                     {
                         // retrieve a list of filtered prodcuts from the db
-                        var products = db.GetProducts(type);
+                        var products = db.GetProducts(type);                                            
                         if (products != null)
                         {
+                            for (int i = 0; i < products.Length; i++)
+                            {
+                                //debugging purpose, will later remove
+                                System.Diagnostics.Debug.WriteLine("debugging--" + products[i].ImagePath);
+                            }
                             ImageRepeater.DataSource = products;
                             ImageRepeater.DataBind();
+                            Subtitle_Warn.Text = "A selection of our best " + type + " products.";
+                        }
+                        else
+                        {
+                            Subtitle_Warn.Text = "No products could be found.";
                         }
                     }
                 }
-
                 else
-                {   
-                    // retrieve a list of all products from the db
+                {
+                    // retrieve a list of all prodcuts from the db
                     var products = db.GetProducts();
                     if (products != null)
                     {
                         ImageRepeater.DataSource = products;
                         ImageRepeater.DataBind();
+                        Subtitle_Warn.Text = "A hand selected overview of all seasonal available products.";
                     }
                 }
             }

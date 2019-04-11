@@ -4,26 +4,26 @@
 <!-- Content of detail view page-->
 <div class="container-fluid">
 
-        <div class="row" style="border: solid; border-color: lightseagreen">
+        <div class="row">
             <div class="col-md-12" style="text-align: center;">
-                <h2><asp:Label ID="headerTitle" runat="server" Text="Label"></asp:Label></h2>
+                <h1><asp:Label ID="headerTitle" runat="server" Text="Label"></asp:Label></h1>
                 <p><asp:Label ID="headerSubtitle" runat="server"></asp:Label></p>
             </div> 
         </div>
         
         <div class="row">
                 <!--Split view distribution of gui with product Image / Label Title / Label Description -->
-                <div class="col-md-8" style="border: solid; border-color: dodgerblue">
-                    <div id="image" class ="col-md-6" style="crop">
+                <div class="col-md-7">
+                    <div id="image" class ="col-md-6" style="crop:insert-rect(0, 450, 350, 0)">
                         <asp:Image ID="destinationImg" runat="server" Width="450px" Height="300px"/>     
                     </div>  
-                    <div class ="col-md-6" style="border: solid; border-color: lightcoral">                                              
-                    <h2><asp:Label ID="nameLabel" runat="server" Text="Label"></asp:Label></h2>
-                <p><asp:Label ID="descriptionLabel" runat="server"></asp:Label></p>
+                    <div class ="col-md-7" style="margin-top:10px; margin-bottom: 25px;">                                              
+                    <h2><asp:Label ID="nameLabel" runat="server" style="text-align: left"></asp:Label></h2>
+                <p><asp:Label ID="descriptionLabel" runat="server" style="text-align: left"></asp:Label></p>
              </div>
            </div>
 
-                <div class="col-md-5" style="border: solid; border-color: fuchsia">
+                <div class="col-md-5">
                     <h2><asp:Label ID="LabelDetail" runat="server" Text="Product Detail Overview"></asp:Label></h2>
                     <!--Further product information about Price/ Total Amount / Product Quantity-->
                     Product: <p><asp:Label ID="labelProduct" runat="server" Text=""></asp:Label></p><br />
@@ -63,12 +63,13 @@
               
                     <hr />
                     Total Amount: <p><asp:Label ID="totalAmount" runat="server" Text=""></asp:Label></p><br />
-                </div>
-                <!--Button to add products to shopping list-->
-                <div id="addButton" style="bottom">
-        
-                </div>
-            
+                    <div class ="col-md-6">                                              
+                    <!--Button to add products to shopping list-->
+                    <p>Add Product to Shopping Cart.</p><br />                   
+                   <asp:button ID="AddProduct" runat="server" Text="Add Product" class="btn btn-info"/><br />
+             </div>
+           </div>
+                          
         </div>
     </div>
 

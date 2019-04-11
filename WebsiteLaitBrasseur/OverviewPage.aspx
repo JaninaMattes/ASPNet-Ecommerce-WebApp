@@ -4,8 +4,8 @@
 
 <div class="container-fluid">
 
-    <h1>Product Overview</h1>
-    <!-- set a dynamically exchangeable title--> <h2><%: Page.Title %></h2>
+  <h1>Product Overview</h1>
+  <p><b><asp:Label id="Subtitle_Warn" Text="" runat="server" /></b></p>
 
   <div class="row">
   
@@ -16,7 +16,7 @@
         <!--1 Col Product card nested in repeater control-->
         <!--START Product CardView-->
             <div id="cardView" class="card">
-            <div id="img-cardview" class="crop text-center" style="height:220px;width:340px">
+            <div id="img-cardview" class="crop text-center" style="crop:rect(0, 340px, 220px, 0);">
                 <asp:ImageButton id="img1" runat="server" ImageUrl='<%# Eval("ImagePath") %>'  OnCommand="imgCommand" CommandArgument='<%# Eval("Id") %>'/>      
             </div>
             <div id="container1" class="container clearfix">
