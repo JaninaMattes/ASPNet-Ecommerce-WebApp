@@ -91,7 +91,6 @@
     <Content Include="Cart.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Images\AboutUPicture.jpg" />
-    <Content Include="Images\beers_prez.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -100,17 +99,6 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Default.aspx" />
     <Content Include="Account\Login.aspx" />
-    <Content Include="Images\blanche.jpg" />
-    <Content Include="Images\blond.jpg" />
-    <Content Include="Images\brune.jpg" />
-    <Content Include="Images\cheese_carre.jpg" />
-    <Content Include="Images\cheese_carre2.jpg" />
-    <Content Include="Images\cheese_carre_est.jpg" />
-    <Content Include="Images\cheese_raclette.jpg" />
-    <Content Include="Images\cheese_spice.jpg" />
-    <Content Include="Images\laitBrasseur.jpg" />
-    <Content Include="Images\laitBrasseurmin.jpg" />
-    <Content Include="Images\beer_button.jpg" />
     <Content Include="Images\mastercard-logo-.png" />
     <Content Include="Images\visa_logo.jpg" />
     <Content Include="ProductOverview.aspx" />

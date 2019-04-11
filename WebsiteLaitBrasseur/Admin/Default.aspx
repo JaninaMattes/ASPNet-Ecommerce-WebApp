@@ -15,7 +15,7 @@
             <!--LinkButton to Product managment -->
             <div class="col-md-4 text-center">
                 <a>
-                    <asp:Button ID="Productbutton" runat="server" CssClass="btn btn-outline-dark" style="font-size:30px;height:100px;width:200px" Text="Product" />
+                    <asp:Button ID="Productbutton" runat="server" OnClick="Productbutton_Click" CssClass="btn btn-outline-dark" style="font-size:30px;height:100px;width:200px" Text="Product" />
                 </a>
             </div>
 

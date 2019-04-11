@@ -11,7 +11,7 @@ namespace WebsiteLaitBrasseur.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         protected void Shippingbutton_Click(object sender, EventArgs e)
@@ -22,6 +22,11 @@ namespace WebsiteLaitBrasseur.Admin
         protected void Customerbutton_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Admin/AccountManagment.aspx");
+        }
+
+        protected void Productbutton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Admin/ItemsManagement.aspx");
         }
     }
 }
