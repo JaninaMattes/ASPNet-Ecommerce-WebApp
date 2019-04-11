@@ -10,7 +10,7 @@
             <!--First column : User picture and "Save"/"Delete" button-->
             <div class="col-md-2" >
                 <div class="profile-userpic">
-                    <img class="img-responsive container" alt="User Image" src="/Images/customerImg.jpg">
+                    <img class="img-responsive" alt="User Image" src="/Images/customerImg.jpg">
                     <div class="overlay">
                     <p>Change Profile Picture</p><br />
                     <a href="#" class="icon" title="User Profile">
@@ -19,7 +19,7 @@
 		        </div>
                 <div class="text-center">
                     <br /><br /><br />
-                    <asp:button ID="DeleteButton" runat="server" Text="Delete Profile" class="btn btn-danger"/><br /><br /><br />
+                    <asp:button ID="DeleteButton" runat="server" ToolTip="Delete profile." Text="Delete Profile" class="btn btn-danger"/><br /><br /><br />
                     <asp:button ID="SaveButton" runat="server" Text="Save Changes" class="btn btn-success" /><br /><br /><br />
                     
                 </div>
@@ -35,7 +35,7 @@
                         <div class="col-md-6">
                                 <br />
                                 <label for="TextFirstname" class="control-label  text-info">First name</label>
-                                <asp:TextBox id="TextFirstname" Text="Please add firstname." runat="server" AutoPostBack="True" Cssclass="form-control"> </asp:TextBox>
+                                <asp:TextBox id="TextFirstname" Text="Please add firstname." ToolTip="Edit firstname." runat="server" AutoPostBack="True" Cssclass="form-control"> </asp:TextBox>
                                 <asp:RequiredFieldValidator ID="FirstnameReqField" runat="server" ControlToValidate="TextFirstname" Display="Dynamic" ErrorMessage="Firstname is required" CssClass="text-danger"></asp:RequiredFieldValidator>
                         </div>
 
@@ -43,7 +43,7 @@
                         <div class="col-md-6">
                                 <br /> 
                                 <label for="TextLastname" class="control-label  text-info">Last name</label>
-                                <asp:TextBox id="TextLastname" Text="Please add lastname." runat="server" AutoPostBack="True" Cssclass="form-control"> </asp:TextBox>
+                                <asp:TextBox id="TextLastname" Text="Please add lastname." ToolTip="Edit lastname." runat="server" AutoPostBack="True" Cssclass="form-control"> </asp:TextBox>
                                 <asp:RequiredFieldValidator ID="LastNameReqField" runat="server" ControlToValidate="TextLastname" Display="Dynamic" ErrorMessage="Lastname is required" CssClass="text-danger"></asp:RequiredFieldValidator>
                         </div>     
                    </div>
@@ -54,7 +54,7 @@
                         <div class="col-md-6">
                                 <br />
                                 <label for="TextEmail" class="control-label  text-info">E-mail</label>
-                                <asp:TextBox id="TextEmail" Text="Please add email" runat="server" AutoPostBack="True" Cssclass="form-control" TextMode="email"> </asp:TextBox>
+                                <asp:TextBox id="TextEmail" Text="Please add email" ToolTip="Email address." runat="server" AutoPostBack="True" Cssclass="form-control" TextMode="email"> </asp:TextBox>
                                 <asp:RequiredFieldValidator ID="EmailReqField" runat="server" ControlToValidate="TextEmail" Display="Dynamic" ErrorMessage="Email is required" CssClass="text-danger"></asp:RequiredFieldValidator>
 
                         </div>
@@ -63,7 +63,7 @@
                         <div class="col-md-6">
                                 <br />
                                 <label for="TextPhone" class="control-label  text-info">Phone Number</label>
-                                <asp:TextBox id="TextPhone" Text="Please add phone number" runat="server" AutoPostBack="True" Cssclass="form-control" TextMode="Phone"> </asp:TextBox>
+                                <asp:TextBox id="TextPhone" Text="Please add phone number" ToolTip="Edit phonenumber." runat="server" AutoPostBack="True" Cssclass="form-control" TextMode="Phone"> </asp:TextBox>
                                 <asp:RequiredFieldValidator ID="PhoneNumberReqField" runat="server" ControlToValidate="TextPhone" Display="Dynamic" ErrorMessage="Phone number is required" CssClass="text-danger"></asp:RequiredFieldValidator>
                                 <asp:regularExpressionValidator ID="PhoneRegValid" runat="server" ErrorMessage="Should be 10 Digits or '+' and 11 Digits" ControlToValidate="TextPhone" Display="Dynamic"  ValidationExpression="(\+\d{1})?\d{10}$" CssClass="text-danger"></asp:RegularExpressionValidator>
                      
@@ -76,7 +76,7 @@
                         <div class="col-md-6">
                             <br />
                             <label for="TextBirthday" class="control-label  text-info">Birthdate</label>
-                            <asp:TextBox ID="TextBirthday" runat="server" Cssclass="form-control" TextMode="Date" > </asp:TextBox>
+                            <asp:TextBox ID="TextBirthday" ToolTip="Edit birthdate." runat="server" Cssclass="form-control" TextMode="Date" > </asp:TextBox>
                             <asp:RequiredFieldValidator ID="BirthdayReqField" runat="server"  ControlToValidate="TextBirthday" Display="Dynamic" CssClass="text-danger" ErrorMessage="Birthdate is required"></asp:RequiredFieldValidator>
                         </div>
 
@@ -99,7 +99,7 @@
                         <div class="col-md-2">
                             <br />
                             <label for="TextAdressnumber" class="control-label text-info">Address n°</label>
-                            <asp:TextBox ID="TextAddressnumber" runat="server" Cssclass="form-control" TextMode="Number"> </asp:TextBox>
+                            <asp:TextBox ID="TextAddressnumber" ToolTip="Edit address number." runat="server" Cssclass="form-control" TextMode="Number"> </asp:TextBox>
                             <asp:RequiredFieldValidator ID="AdressnumberReqField" runat="server" ErrorMessage="Adress number is required" ControlToValidate="TextAddressnumber" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>                           
                         </div>
 
@@ -107,7 +107,7 @@
                         <div class="col-md-10">
                             <br />
                             <label for="TextAddress " class="control-label text-info">Street Name</label>
-                            <asp:TextBox ID="TextAddress1" runat="server" Cssclass="form-control"> </asp:TextBox>
+                            <asp:TextBox ID="TextAddress1" ToolTip="Edit address." runat="server" Cssclass="form-control"> </asp:TextBox>
                             <asp:RequiredFieldValidator ID="AddressReqField" runat="server" ErrorMessage="Address is required" ControlToValidate="TextAddress1" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>                           
                         </div>         
                     </div>
@@ -119,7 +119,7 @@
                         <div class="col-md-6">
                             <br />
                             <label for="TextZip" class="control-label text-info">Zip Code</label>
-                            <asp:TextBox ID="TextZip" runat="server" Cssclass="form-control" TextMode="Number"> </asp:TextBox>
+                            <asp:TextBox ID="TextZip" ToolTip="Edit postcode." runat="server" Cssclass="form-control" TextMode="Number"> </asp:TextBox>
                             <asp:RequiredFieldValidator ID="ZipReqField" runat="server" ErrorMessage="Zip is required" ControlToValidate="TextZip" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                             <asp:regularExpressionValidator ID="ZipRegExpValid" runat="server" ErrorMessage="Should be 5 or 9 Digits" ControlToValidate="TextZip" Display="Dynamic"  ValidationExpression="\d{5}-?(\d{4})?$" CssClass="text-danger"></asp:RegularExpressionValidator>                      
                         </div>    
@@ -128,7 +128,7 @@
                         <div class="col-md-6">
                             <br />
                             <label for="TextCity" class="control-label text-info">City</label>
-                            <asp:TextBox ID="TextCity" runat="server" Cssclass="form-control"> </asp:TextBox>
+                            <asp:TextBox ID="TextCity" ToolTip="Edit city." runat="server" Cssclass="form-control"> </asp:TextBox>
                             <asp:RequiredFieldValidator ID="CityReqField" runat="server" ErrorMessage="City is required" ControlToValidate="TextCity" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
                         </div>         
                     </div>

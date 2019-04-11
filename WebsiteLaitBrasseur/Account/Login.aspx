@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label for="TextEmail" class="control-label col-md-3">E-mail</label>
                         <div class="col-md-3">
-                            <asp:TextBox ID="TextEmail" runat="server" Cssclass="form-control" TextMode="Email"> </asp:TextBox>
+                            <asp:TextBox ID="TextEmail" runat="server" ToolTip="Enter email." Cssclass="form-control" TextMode="Email"> </asp:TextBox>
                             <asp:RequiredFieldValidator ID="EmailReqField" runat="server" ErrorMessage="Email is required" ControlToValidate="TextEmail" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label for="TextPassword" class="control-label col-md-3">Password</label>
                         <div class="col-md-3">
-                            <asp:TextBox ID="TextPassword" runat="server" Cssclass="form-control" TextMode="Password"> </asp:TextBox>
+                            <asp:TextBox ID="TextPassword" runat="server" ToolTip="Enter password." Cssclass="form-control" TextMode="Password"> </asp:TextBox>
                             <asp:RequiredFieldValidator ID="PasswordReqField" runat="server" ErrorMessage="Password is required" ControlToValidate="TextPassword" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
                         </div>
                     </div>

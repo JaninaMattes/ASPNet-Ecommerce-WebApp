@@ -43,7 +43,7 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <asp:Button ID="AddButton" runat="server" Text="Add" OnClick="AddButton_Click" CssClass="btn btn-success" CausesValidation="true" ValidationGroup="Add"/>
+                        <asp:Button ID="AddButton" ToolTip="Add Shippment."  runat="server" Text="Add" OnClick="AddButton_Click" CssClass="btn btn-success" CausesValidation="true" ValidationGroup="Add"/>
                     </div>
                     <div class="col-md-3">
                         <asp:TextBox ID="TextAddProvider" runat="server" Text="Provider name" ValidationGroup="Add" CssClass="form-control"></asp:TextBox>

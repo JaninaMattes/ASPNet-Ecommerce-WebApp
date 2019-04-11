@@ -76,6 +76,12 @@ footer {
     margin-bottom: 5%;
 }
 
+/* Give an image a certain size*/
+img-cardView {
+    width: 340px;
+    height: 250px;
+}
+
     /* On mouse-over, add a deeper shadow */
     .card:hover {
         box-shadow: 0 16px 25px 0 rgba(0,0,0,0.2);

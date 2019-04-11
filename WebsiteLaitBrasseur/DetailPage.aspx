@@ -26,11 +26,11 @@
                 <div class="col-md-5">
                     <h2><asp:Label ID="LabelDetail" runat="server" Text="Product Detail Overview"></asp:Label></h2>
                     <!--Further product information about Price/ Total Amount / Product Quantity-->
-                    Product: <p><asp:Label ID="labelProduct" runat="server" Text=""></asp:Label></p><br />
-                    Producer: <p><asp:Label ID="labelProducer" runat="server" Text=""></asp:Label></p><br />
-                    Price: <p><asp:Label ID="labelPrice" runat="server" Text=""></asp:Label></p><br/>
+                    <p>Product:</p><p><asp:Label ID="labelProduct" runat="server" Text=""></asp:Label></p><br />
+                    <p>Producer:</p><p><asp:Label ID="labelProducer" runat="server" Text=""></asp:Label></p><br />
+                    <p>Price:</p><p><asp:Label ID="labelPrice" runat="server" Text=""></asp:Label></p><br/>
                     <!--Dropdown list with different sizes for the product to be selected-->
-                    Unit Size:
+                    <p>Unit Size:</p>
                     <asp:DropDownList ID="unitDropDownList" runat="server" Cssclass="form-control">
                                <asp:ListItem Value="1" Selected="true">250 gr</asp:ListItem>
                                <asp:ListItem Value="2">500 gr</asp:ListItem>
@@ -42,7 +42,7 @@
                          Text="*" ErrorMessage="ErrorMessage" CssClass="text-danger">
                     </asp:RequiredFieldValidator>
                     <!--Dropdown list with max 10 entries selectable-->
-                    Quantity:
+                    <p>Quantity:</p>
                     <asp:DropDownList ID="quantityDropDownList" runat="server" Cssclass="form-control">
                                <asp:ListItem Value="0" Selected="true">0</asp:ListItem>
                                <asp:ListItem Value="1">1</asp:ListItem>
@@ -60,13 +60,11 @@
                          ValidationGroup="g1" runat="server" ControlToValidate="quantityDropDownList"
                          Text="*" ErrorMessage="ErrorMessage" CssClass="text-danger">
                     </asp:RequiredFieldValidator>
-              
-                    <hr />
-                    Total Amount: <p><asp:Label ID="totalAmount" runat="server" Text=""></asp:Label></p><br />
+                    <p>Total Amount:</p><p><asp:Label ID="totalAmount" runat="server" Text=""></asp:Label></p><br />
                     <div class ="col-md-6">                                              
                     <!--Button to add products to shopping list-->
-                    <p>Add Product to Shopping Cart.</p><br />                   
-                   <asp:button ID="AddProduct" runat="server" Text="Add Product" class="btn btn-info"/><br />
+                    Add a product to the shopping cart.<br />                   
+                   <asp:button ID="AddProduct" ToolTip="Add product."  runat="server" Text="Add Product" class="btn btn-info"/><br />
              </div>
            </div>
                           

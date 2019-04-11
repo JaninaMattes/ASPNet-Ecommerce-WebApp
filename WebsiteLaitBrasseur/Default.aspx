@@ -19,7 +19,7 @@
                 <!--START Product CardView-->
                 <div id="cardView0" class="card">
                 <div id="img-cardview0">
-                    <asp:ImageButton id="img1" Width="340px" Heigth="100px" runat="server" ImageUrl="/Images/cheese13.jpg" OnCommand="imgCommand" CommandArgument="Cheese"/>      
+                    <asp:ImageButton id="img1" Width="340px" Heigth="100px" ToolTip="Select category." runat="server" ImageUrl="/Images/cheese13.jpg" OnCommand="imgCommand" CommandArgument="Cheese"/>      
                 </div>
                 <div id="container0" class="container clearfix">
                     <div class="profile-usertitle">
@@ -40,7 +40,7 @@
                 <!--START Product CardView-->
                 <div id="cardView1" class="card">
                 <div id="img-cardview1">
-                    <asp:ImageButton id="img2" Width="340px" Heigth="100px" runat="server" ImageUrl="/Images/beer1.jpg" OnCommand="imgCommand" CommandArgument="Beer"/>      
+                    <asp:ImageButton id="img2" Width="340px" Heigth="100px" ToolTip="Select category." runat="server" ImageUrl="/Images/beer1.jpg" OnCommand="imgCommand" CommandArgument="Beer"/>      
                 </div>
                 <div id="container1" class="container clearfix">
                     <div class="profile-usertitle">
