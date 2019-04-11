@@ -23,14 +23,14 @@ namespace WebsiteLaitBrasseur.Admin
         {
             if (ItemListTable.Rows.Count > 0)
             {
-                lblPostageList.Text = "There is " + ItemListTable.Rows.Count + " items";
+                //lblPostageList.Text = "There are " + ItemListTable.Rows.Count + " items.";
             }
         }
 
 
         protected void AddButton_Click(object sender, EventArgs e)
         {
-            lblError.Text = "Error : database connection";
+            lblError.Text = "Error : Database connection";
         }
 
         protected void PostageTable_RowEditing(object sender, GridViewEditEventArgs e)

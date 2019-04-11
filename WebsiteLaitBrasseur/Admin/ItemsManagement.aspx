@@ -33,12 +33,6 @@
                         </Columns>
                     </asp:gridview>
                 <asp:Button ID="AddButton" runat="server" Text="Add" OnClick="AddButton_Click" CssClass="btn btn-success" />
-
-
-
             </div>
-
 </div>
-
-
 </asp:Content>
