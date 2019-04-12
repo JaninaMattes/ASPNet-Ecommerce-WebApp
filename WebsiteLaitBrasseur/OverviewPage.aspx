@@ -15,7 +15,7 @@
       <div class="col-md-3">
         <!--1 Col Product card nested in repeater control-->
         <!--START Product CardView-->
-            <div id="cardView" >
+            <div id="cardView" class="card">
             <div id="img-cardview"  >
                 <asp:ImageButton id="img1" runat="server" class="img-fluid justify-content-center"  ToolTip="Select a product" ImageUrl='<%# Eval("ImagePath") %>'  OnCommand="imgCommand" CommandArgument='<%# Eval("Id") %>'/>      
             </div>
