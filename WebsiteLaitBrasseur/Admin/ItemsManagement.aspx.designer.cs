@@ -85,13 +85,13 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.TextBox TextUnit;
         
         /// <summary>
-        /// Contrôle TextQuantity.
+        /// TextStock control.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextQuantity;
+        protected global::System.Web.UI.WebControls.TextBox TextStock;
         
         /// <summary>
         /// Contrôle TextPrice.
@@ -139,22 +139,22 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator UnitRegValid;
         
         /// <summary>
-        /// Contrôle QuantityReqField.
+        /// StockReqField control.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator QuantityReqField;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator StockReqField;
         
         /// <summary>
-        /// Contrôle QuantityRegValid.
+        /// StockRegValid control.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator QuantityRegValid;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator StockRegValid;
         
         /// <summary>
         /// Contrôle PriceReqField.

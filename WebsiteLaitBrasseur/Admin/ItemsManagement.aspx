@@ -23,6 +23,7 @@
                             ItemTemplate
                             EditItemTemplate
                 -->
+
                 <asp:gridview id="ItemListTable" runat="server"
                     gridlines="none"
                     autogeneratecolumns="false"
@@ -124,8 +125,10 @@
                         </Columns>
                     </asp:gridview>
 
+
                 <!--Add a Product -->
                     <!--Row with TextBox/DropdownList for informations about the new product and "Add" button /Validators below -->
+
                 <div class="row">
 
                         <asp:Button ID="AddButton" ToolTip="Add item."  runat="server" Text="Add" OnClick="AddButton_Click" CssClass="btn btn-success" ValidationGroup="Add" CausesValidation="true" />
@@ -146,7 +149,7 @@
                     </div>
 
                     <div class="col-md-1">
-                        <asp:TextBox ID="TextQuantity" runat="server" text=""  ValidationGroup="Add" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                        <asp:TextBox ID="TextStock" runat="server" text=""  ValidationGroup="Add" CssClass="form-control" TextMode="Number"></asp:TextBox>
                     </div>
 
                     <div class="col-md-1">
@@ -162,13 +165,15 @@
 
                 </div>
 
+
                 <!--Validators for the new product informations -->
+
                 <div id="Validators">
                     <asp:RequiredFieldValidator ID="ProductNameReqField" runat="server"  ControlToValidate="TextProductName" ErrorMessage="Name is required" ValidationGroup="Add" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                     <asp:RequiredFieldValidator ID="UnitReqField" runat="server"  ControlToValidate="TextUnit" ErrorMessage="Unit is required" ValidationGroup="Add" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                     <asp:RegularExpressionValidator ID="UnitRegValid" runat="server" ControlToValidate="TextUnit"  ValidationExpression="[0-9]*" ErrorMessage="Must be positive number" ValidationGroup="Add" CssClass="text-danger"></asp:RegularExpressionValidator><br />
-                    <asp:RequiredFieldValidator ID="QuantityReqField" runat="server"  ControlToValidate="TextQuantity" ErrorMessage="Quantity is required" ValidationGroup="Add" CssClass="text-danger"></asp:RequiredFieldValidator><br />
-                    <asp:RegularExpressionValidator ID="QuantityRegValid" runat="server" ControlToValidate="TextQuantity" ValidationExpression="[0-9]*" ErrorMessage="Must be positive number" ValidationGroup="Add" CssClass="text-danger"></asp:RegularExpressionValidator><br />
+                    <asp:RequiredFieldValidator ID="StockReqField" runat="server"  ControlToValidate="TextStock" ErrorMessage="Stock amount is required" ValidationGroup="Add" CssClass="text-danger"></asp:RequiredFieldValidator><br />
+                    <asp:RegularExpressionValidator ID="StockRegValid" runat="server" ControlToValidate="TextStock" ValidationExpression="[0-9]*" ErrorMessage="Must be positive number" ValidationGroup="Add" CssClass="text-danger"></asp:RegularExpressionValidator><br />
                     <asp:RequiredFieldValidator ID="PriceReqField" runat="server"  ControlToValidate="TextPrice" ErrorMessage="Price is required" ValidationGroup="Add" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                     <asp:RegularExpressionValidator ID="PriceRegValid" runat="server" ControlToValidate="TextPrice" ValidationExpression="([0-9]*\,)?[0-9]*" ErrorMessage="Please enter a valid number (decimal with coma)"  ValidationGroup="Add" CssClass="text-danger"></asp:RegularExpressionValidator><br />
                 </div>  

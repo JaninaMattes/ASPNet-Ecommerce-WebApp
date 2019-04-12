@@ -28,14 +28,14 @@
                 <!--Label / TextBox / Validator  for Name -->
                 <label for="TextName" class="control-label col-md-3">Name (or Social Reason)*</label>
                 <div class="col-md-4">
-                    <asp:TextBox ID="TextName" runat="server" Cssclass="form-control"> </asp:TextBox>
+                    <asp:TextBox ID="TextName" runat="server" ToolTip="Add name." Cssclass="form-control"> </asp:TextBox>
                     <asp:RequiredFieldValidator ID="NameReqField" runat="server" ErrorMessage="Name is required" ControlToValidate="TextName" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
                 </div>
 
                 <!--Label / TextBox / Validator  for E-mail-->
                 <label for="TextEmail" class="control-label col-md-3">Email*</label>
                 <div class="col-md-4">
-                    <asp:TextBox ID="TextEmail" runat="server" Cssclass="form-control" TextMode="Email"> </asp:TextBox>
+                    <asp:TextBox ID="TextEmail" runat="server" ToolTip="Add email." Cssclass="form-control" TextMode="Email"> </asp:TextBox>
                     <asp:RequiredFieldValidator ID="EmailReqField" runat="server" ErrorMessage="E-mail is required" ControlToValidate="TextEmail" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
                 </div>
 
@@ -46,15 +46,15 @@
                 </div>
 
                 <!--Label / TextBox / Validator for Message-->
-                <label for="TextMessage" class="control-label col-md-3">Message</label>
+                <label for="TextMessage" class="control-label col-md-3" >Message</label>
                 <div class="col-md-4">
-                    <asp:TextBox ID="TextMessage" runat="server" Cssclass="form-control" Height="120px"> </asp:TextBox>
+                    <asp:TextBox ID="TextMessage" runat="server" ToolTip="Leave a message." Cssclass="form-control" Height="120px"> </asp:TextBox>
                     <asp:RequiredFieldValidator ID="MessageReqField" runat="server" ErrorMessage="Message is required" ControlToValidate="TextMessage" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
                 </div>
 
                 <!--Button submit + confimation Label -->
                 <div class="col-md-offset-3 col-md-4">
-                    <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" CssClass="btn btn-success"/>
+                    <asp:Button ID="SubmitButton" runat="server" Text="Submit" ToolTip="Submit" OnClick="SubmitButton_Click" CssClass="btn btn-success"/>
                     <asp:Label ID="ResultLabel" runat="server" Text="" CssClass=" text-success"></asp:Label>
                 </div>
             </div>
