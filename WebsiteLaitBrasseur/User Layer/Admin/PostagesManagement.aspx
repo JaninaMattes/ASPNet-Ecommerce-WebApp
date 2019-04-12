@@ -64,8 +64,6 @@
 
                             </asp:TemplateField>
                                                      
-
-
                             <asp:CommandField ShowEditButton="true" CausesValidation="true"  ButtonType="Button" ValidationGroup="edit"  ItemStyle-CssClass="col-sm-1 "  />
                             <asp:CommandField ShowDeleteButton="true" CausesValidation="false"  ButtonType="Button"  ItemStyle-CssClass=" col-sm-1" /> 
 

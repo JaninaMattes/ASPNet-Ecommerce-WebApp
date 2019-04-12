@@ -68,10 +68,12 @@
 
                    </div>
 
+                   <!--Label for total price -->
                    <div class="col-md-2   ">
                       <asp:Label ID="TotalBrune" runat="server" cssclass="text-info " Text=""></asp:Label>
                        <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
+
 
                    <div class="col-md-1">
                         <asp:checkbox ID="checkboxBrune" runat="server" />

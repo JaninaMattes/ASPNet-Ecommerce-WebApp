@@ -2,7 +2,10 @@
 
 
 
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+
+<!--Page managing the logout event  -->
+
     <div class="text-center text-info">
          <h3><asp:Label ID="lblGoodBye" runat="server" csslcass="text-info text-center" ></asp:Label></h3>
     </div>

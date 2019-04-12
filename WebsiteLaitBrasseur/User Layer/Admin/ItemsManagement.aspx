@@ -80,7 +80,7 @@
 
                             <asp:templateField HeaderText="Stock">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Stock") %>' ></asp:Label> <!-- Achanger -->
+                                    <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Stock") %>' ></asp:Label> 
                                 </ItemTemplate>
 
                                 <EditItemTemplate>

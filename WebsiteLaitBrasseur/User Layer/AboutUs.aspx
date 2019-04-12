@@ -3,6 +3,8 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
+<!--Page managing informations about the company -->
+
     <div class="container-fluid text-center" style="font-size:15px;font-family:cursive">
         <p>Craftsmanship, authenticity, heritage and transparency are the hallmarks of future leaders.
            The creation of a unique concept that links the dairy and brewing sector to reinvigorate local and regional products. 
