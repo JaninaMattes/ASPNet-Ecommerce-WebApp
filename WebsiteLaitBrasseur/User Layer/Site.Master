@@ -1,0 +1,87 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="WebsiteLaitBrasseur.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+
+    <!--All necessary meta data and scripts CSS / Bootstrap / JavaScript-->
+    <meta name="viewport"  content="width=device-width; initial-scale=1"/>
+    <title><%: Page.Title %> - LaitBrasseur</title>
+
+    <link href="/CSS/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/CSS/Content/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+    <script src="/CSS/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="/CSS/Scripts/bootstrap.min.js"></script>
+    <link href="/CSS/Content/site.css" rel="stylesheet" type="text/css" />
+
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
+</head>
+<!--Content for master page in which all other pages will be dynamically nested-->
+<body>
+    <header class="jumbotron" style="background-color: black">
+        <div class="container-fluid" >
+            <div class="row">
+
+                <div class="col-md-4 ">
+                    <a href="/User Layer/Default.aspx">
+                        <img id="logoLB" alt="LaitBrasseur_Logo" src="/Images/Logo-LaitBrasseur.png" class="img rounded img-fluid" style="text-align:left;width:181px; height:147px"  />
+                    </a>
+                 </div>
+
+                <div class="col-md-4 text-center">
+                     <h1   style="font-family: 'Microsoft Sans Serif'; color:white" >Spécialiste Lait Brasseur</h1>
+                </div>
+
+                <div class="col-md-4 text-right">
+
+                    <a href="/User Layer/Account/Login.aspx"  >
+                        <input id="LogInButton" runat="server" type="button" class="btn btn-outline-light" value="LogIn"/>
+                    </a>
+
+                    <br />
+                    <a href="/User Layer/Account/Logout.aspx"  >
+                        <asp:label id="lblLogout" runat="server" text="Logout" Visible="false"></asp:label>
+                    </a>
+                </div>
+                    
+            </div>
+        </div>
+        <br />
+        <!--Navigation bar for master page-->
+        <div class="container-fluid rounded" style="background-color:ghostwhite;">
+
+                        <div id="NavBar" class="navbar" >
+                            <div class="navbar " >
+                                <input id="TextSearch" type="text"  placeholder="Search" />
+                                <input id="SearchButton" type="button" class="btn btn-primary" onclick="window.location.href = '/User Layer/OverviewPage.aspx'" Value="Search" />
+                            </div>                    
+                            <div class="nav navbar-right">
+                                    <input id="CartButton" type="button" class="btn btn-primary" onclick="window.location.href='/User Layer/Cart.aspx'" value="Cart" />
+                                &nbsp;
+                                    <input id="ProfileButton" type="button" class="btn btn-primary" onclick="window.location.href='/User Layer/Account/Profile.aspx'" value="Profile" />
+                            </div>                   
+                        </div>
+
+        </div>
+    </header>
+    <br /><br />
+
+
+    <form id="MasterBodyForm" class="form-group" runat="server">
+        
+        <!--Placeholder for master page content-->
+        <div class="container-fluid body-content">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder><hr />
+        </div>  
+
+    </form>
+
+    <footer>
+        <p> &copy; <%: DateTime.Now.Year %> - <a runat="server" href="/User Layer/Contact.aspx">Contact</a>  - <a runat="server" href="/User Layer/AboutUs.aspx">About us</a> - <a runat="server" href="https://www.facebook.com/LaitBrasseurAdmin/">Facebook</a> </p>
+    </footer>
+</body>
+
+</html>
