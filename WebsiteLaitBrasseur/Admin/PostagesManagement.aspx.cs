@@ -142,11 +142,15 @@ namespace WebsiteLaitBrasseur.Admin
         protected List<Postage> getPostage()
         {
             List<Postage> postageLs = new List<Postage>();
-            Postage ls = new Postage(0, "Provider1", 2.50);
+            Postage ls = new Postage(0, "Hermes", 4.95);
             postageLs.Add(ls);
-            ls = new Postage(1, "Provider2", 5.0);
+            ls = new Postage(1, "Hermes Express", 20.95);
             postageLs.Add(ls);
-            ls = new Postage(2, "Provider3", 7.0);
+            ls = new Postage(2, "PDHL", 15.95);
+            postageLs.Add(ls);
+            ls = new Postage(2, "PDHL Express", 23.95);
+            postageLs.Add(ls);
+            ls = new Postage(2, "Postando", 4.95);
             postageLs.Add(ls);
 
             return postageLs;

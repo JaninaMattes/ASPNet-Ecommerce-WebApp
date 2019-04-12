@@ -85,13 +85,13 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.TextBox TextUnit;
         
         /// <summary>
-        /// TextQuantity control.
+        /// TextStock control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextQuantity;
+        protected global::System.Web.UI.WebControls.TextBox TextStock;
         
         /// <summary>
         /// TextPrice control.
@@ -139,22 +139,22 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator UnitRegValid;
         
         /// <summary>
-        /// QuantityReqField control.
+        /// StockReqField control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator QuantityReqField;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator StockReqField;
         
         /// <summary>
-        /// QuantityRegValid control.
+        /// StockRegValid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator QuantityRegValid;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator StockRegValid;
         
         /// <summary>
         /// PriceReqField control.

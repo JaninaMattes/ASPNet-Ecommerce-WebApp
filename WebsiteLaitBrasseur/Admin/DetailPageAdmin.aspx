@@ -6,8 +6,8 @@
     <div class="container-fluid row">
         <div class="col-md-6">
             <div class="col-md-6">
-                <asp:Image ID="destinationImg" runat="server" Width="450px" Height="300px"/><br /><br />
-                <asp:TextBox ID="TextImageLink" runat="server" Text="Image link" CssClass="form-control"></asp:TextBox>
+                <asp:Image ID="destinationImg" runat="server" ImageUrl="~/Images/photoIcon.png" ToolTip="Product Image." Width="350" Height="250px"/><br /><br />
+                <asp:TextBox ID="TextImageLink" runat="server" Text="Image link" CssClass="form-control"></asp:TextBox> <br />
                 <asp:Button ID="UploadButton" ToolTip="Update image." runat="server"  Text="Upload Image" CssClass="btn btn-primary" /><br />
             </div>
 
@@ -30,7 +30,7 @@
             <br />
             <div class="col-md-6">
                 <label for="TextShortDescription" class="control-label  text-info">Short Description</label><br />
-                <asp:TextBox ID="TextShortDescription" ToolTip="Update desription."  runat="server"  Text="" CssClass="form-control" style="width:400px;height:150px"></asp:TextBox> 
+                <asp:TextBox ID="TextShortDescription" ToolTip="Update desription."  runat="server"  Text="" CssClass="form-control" style="width:400px;height:150px"></asp:TextBox><br /><br />
                 <asp:Button ID="SaveButton" ToolTip="Save changes."  runat="server" Text="Save changes" CssClass="btn btn-success" />            
             </div>
             <br />

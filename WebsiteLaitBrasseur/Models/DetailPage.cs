@@ -20,6 +20,7 @@ namespace WebsiteLaitBrasseur.Models
         public string ProductType { get; set; }
         public decimal Unit { get; set; }
         public int Quantity { get; set; }
+        public int Stock { get; set; }
         public decimal Price { get; set; }
         public decimal TotalAmount { get; set; }
         public string Available { get; set; }

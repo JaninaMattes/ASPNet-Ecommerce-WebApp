@@ -43,7 +43,7 @@ namespace WebsiteLaitBrasseur.Admin
             newrow["productName"] =TextProductName.Text;
             newrow["productType"] = TypeList.SelectedItem.Text ;
             newrow["unit"] =TextUnit.Text;
-            newrow["quantity"] =TextQuantity.Text;
+            newrow["stock"] =TextStock.Text;
             newrow["price"] =TextPrice.Text;
             newrow["available"] =AvailableList.SelectedItem.Text;
             dtItem.Rows.Add(newrow);
@@ -96,7 +96,7 @@ namespace WebsiteLaitBrasseur.Admin
             dtItemList.Rows[row.DataItemIndex]["productType"] = ((TextBox)(row.Cells[2].Controls[0])).Text;
                     //dtItemList.Rows[row.DataItemIndex]["productType"] = ((DropDownList)(row.Cells[2].Controls[0])).SelectedValue;
             dtItemList.Rows[row.DataItemIndex]["unit"] = ((TextBox)(row.Cells[3].Controls[0])).Text;
-            dtItemList.Rows[row.DataItemIndex]["quantity"] = ((TextBox)(row.Cells[4].Controls[0])).Text;
+            dtItemList.Rows[row.DataItemIndex]["stock"] = ((TextBox)(row.Cells[4].Controls[0])).Text;
             dtItemList.Rows[row.DataItemIndex]["price"] = ((TextBox)(row.Cells[5].Controls[0])).Text;
             dtItemList.Rows[row.DataItemIndex]["available"] = ((TextBox)(row.Cells[6].Controls[0])).Text;
                     //dtItemList.Rows[row.DataItemIndex]["available"] = ((DropDownList)(row.Cells[6].Controls[0])).SelectedValue;
@@ -136,7 +136,7 @@ namespace WebsiteLaitBrasseur.Admin
             dtItem.Columns.Add("productName");
             dtItem.Columns.Add("ProductType");
             dtItem.Columns.Add("unit");
-            dtItem.Columns.Add("quantity");
+            dtItem.Columns.Add("stock");
             dtItem.Columns.Add("price");
             dtItem.Columns.Add("available");
 
@@ -148,7 +148,7 @@ namespace WebsiteLaitBrasseur.Admin
                 dr["productName"] = ItemListTable.Rows[i].Cells[1].Text;
                 dr["productType"] = ItemListTable.Rows[i].Cells[2].Text;
                 dr["unit"] = ItemListTable.Rows[i].Cells[3].Text;
-                dr["quantity"] = ItemListTable.Rows[i].Cells[4].Text;
+                dr["stock"] = ItemListTable.Rows[i].Cells[4].Text;
                 dr["price"] = ItemListTable.Rows[i].Cells[5].Text;
                 dr["available"] = ItemListTable.Rows[i].Cells[6].Text;
 
