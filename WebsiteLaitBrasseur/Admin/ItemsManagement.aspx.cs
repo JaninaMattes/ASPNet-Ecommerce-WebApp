@@ -98,7 +98,7 @@ namespace WebsiteLaitBrasseur.Admin
             dtItemList.Rows[row.DataItemIndex]["productName"] = ((TextBox)(row.FindControl("TextEditProductName"))).Text;
             dtItemList.Rows[row.DataItemIndex]["productType"] = (((DropDownList)(row.FindControl("DDLProductType")))).SelectedValue;
             dtItemList.Rows[row.DataItemIndex]["unit"] = ((TextBox)(row.FindControl("TextEditUnit"))).Text;
-            dtItemList.Rows[row.DataItemIndex]["quantity"] = ((TextBox)(row.FindControl("TextEditStock"))).Text;
+            dtItemList.Rows[row.DataItemIndex]["stock"] = ((TextBox)(row.FindControl("TextEditStock"))).Text;
             dtItemList.Rows[row.DataItemIndex]["price"] = ((TextBox)(row.FindControl("TextEditPrice"))).Text;
             dtItemList.Rows[row.DataItemIndex]["available"] =(((DropDownList)(row.FindControl("DDLAvailable")))).SelectedValue;
 

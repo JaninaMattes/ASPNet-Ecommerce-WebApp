@@ -85,7 +85,7 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.TextBox TextUnit;
         
         /// <summary>
-        /// TextStock control.
+        /// Contrôle TextStock.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
@@ -139,7 +139,7 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.RegularExpressionValidator UnitRegValid;
         
         /// <summary>
-        /// StockReqField control.
+        /// Contrôle StockReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
@@ -148,7 +148,7 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator StockReqField;
         
         /// <summary>
-        /// StockRegValid control.
+        /// Contrôle StockRegValid.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.

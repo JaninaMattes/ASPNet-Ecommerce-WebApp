@@ -80,11 +80,11 @@
 
                             <asp:templateField HeaderText="Stock">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Quantity") %>' ></asp:Label> <!-- Achanger -->
+                                    <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Stock") %>' ></asp:Label> <!-- Achanger -->
                                 </ItemTemplate>
 
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="TextEditStock" runat="server" text='<%# Bind("Quantity") %>'></asp:TextBox>
+                                    <asp:TextBox ID="TextEditStock" runat="server" text='<%# Bind("Stock") %>'></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="StockEditReqField" runat="server" ControlToValidate="TextEditStock" ErrorMessage="Stock is required" ValidationGroup="Edit" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                                     <asp:RegularExpressionValidator ID="StockEditRegValid" runat="server" ControlToValidate="TextEditStock" ValidationExpression="[0-9]*" ErrorMessage="Please enter positive integer" ValidationGroup="Edit" CssClass="text-danger"></asp:RegularExpressionValidator><br />
 
