@@ -3,15 +3,26 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-<div class="container-fluid">
+    <div class="container-fluid">
+
+<!--Page managing the items in the Admin side -->
 
             <h3 id="sheader">Manage Items</h3>
+        
+            <!--Information labels -->
             <asp:Label id="lblItemList" Text="The items list is empty." runat="server" /><br />
             <asp:Label ID="lblError" runat="server" Text="" CssClass="text-danger"></asp:Label><br />
             <asp:Label ID="lblInfo" runat="server" Text="" CssClass="text-info"></asp:Label>
+
+
             <div class="col-md-10">
 
-               <!-- GridView with  -->
+               <!-- GridView with seven fields and three buttons for edit the line / delete the line / show detail of the product  -->
+                <!--The gridview is built with this scheme :
+                        TemplateField
+                            ItemTemplate
+                            EditItemTemplate
+                -->
                 <asp:gridview id="ItemListTable" runat="server"
                     gridlines="none"
                     autogeneratecolumns="false"
@@ -21,14 +32,91 @@
                     OnRowEditing="ItemListTable_RowEditing"
                     OnRowUpdating="ItemListTable_RowUpdating"
                     OnRowCommand="ItemListTable_RowCommand">
+
                         <Columns>
                             <asp:BoundField DataField="id" HeaderText="Id Number" ReadOnly="true" />
-                            <asp:BoundField DataField="productName" HeaderText="Product Name" /> 
-                            <asp:BoundField DataField="productType" HeaderText="Product Type" />
-                            <asp:BoundField DataField="unit" HeaderText="Unit" />
-                            <asp:BoundField DataField="quantity" HeaderText="Quantity" />
-                            <asp:BoundField DataField="price" HeaderText="Price" />
-                            <asp:BoundField DataField="available" HeaderText="Available" />
+
+
+                            <asp:templateField HeaderText="Product Name">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblProductName" runat="server" Text='<%# Bind("ProductName") %>' ></asp:Label>
+                                </ItemTemplate>
+
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="TextEditProductName" runat="server" Text='<%# Bind("ProductName") %>'></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="ProductEditNameReqField" runat="server" ControlToValidate="TextEditProductName" ErrorMessage="Product Name is required" ValidationGroup="Edit" CssClass="text-danger"></asp:RequiredFieldValidator>
+                                </EditItemTemplate>
+                            </asp:templateField>
+
+
+                           <asp:templateField HeaderText="Product Type">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblProductType" runat="server" Text='<%# Bind("ProductType") %>' ></asp:Label>
+                                </ItemTemplate>
+
+                                <EditItemTemplate>
+                                    <asp:DropDownList ID="DDLProductType" runat="server"  >
+                                        <asp:ListItem Value="1" Selected="True" Text="Cheese"></asp:ListItem>
+                                        <asp:ListItem Value="2" Text="Beer"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </EditItemTemplate>
+                            </asp:templateField>
+
+
+                            <asp:templateField HeaderText="Unit">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblUnit" runat="server" Text='<%# Bind("Unit") %>' ></asp:Label>
+                                </ItemTemplate>
+
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="TextEditUnit" runat="server" text='<%# Bind("Unit") %>'></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID=UnitReqField runat="server" ControlToValidate="TextEditUnit" ErrorMessage="Unit is required" ValidationGroup="Edit" CssClass="text-danger"></asp:RequiredFieldValidator><br />
+                                    <asp:RegularExpressionValidator ID="UnitEditRegValid" runat="server" ControlToValidate="TextEditUnit"  ValidationExpression="[0-9]*" ErrorMessage="Please enter positive integer" ValidationGroup="Edit" CssClass="text-danger"></asp:RegularExpressionValidator><br />
+
+                                </EditItemTemplate>
+                            </asp:templateField>
+
+
+                            <asp:templateField HeaderText="Stock">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblStock" runat="server" Text='<%# Bind("Quantity") %>' ></asp:Label> <!-- Achanger -->
+                                </ItemTemplate>
+
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="TextEditStock" runat="server" text='<%# Bind("Quantity") %>'></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="StockEditReqField" runat="server" ControlToValidate="TextEditStock" ErrorMessage="Stock is required" ValidationGroup="Edit" CssClass="text-danger"></asp:RequiredFieldValidator><br />
+                                    <asp:RegularExpressionValidator ID="StockEditRegValid" runat="server" ControlToValidate="TextEditStock" ValidationExpression="[0-9]*" ErrorMessage="Please enter positive integer" ValidationGroup="Edit" CssClass="text-danger"></asp:RegularExpressionValidator><br />
+
+                                </EditItemTemplate>
+                            </asp:templateField>
+
+
+                            <asp:templateField HeaderText="Price">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblPrice" runat="server" Text='<%# Bind("Price") %>' ></asp:Label>
+                                </ItemTemplate>
+
+                                <EditItemTemplate>
+                                    <asp:TextBox ID="TextEditPrice" runat="server" text='<%# Bind("Price") %>'></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="PriceEditReqField" runat="server" ControlToValidate="TextEditPrice" ErrorMessage="Price is required" ValidationGroup="Edit" CssClass="text-danger"></asp:RequiredFieldValidator><br />
+                                    <asp:RegularExpressionValidator ID="PriceEditRegValid" runat="server" ControlToValidate="TextEditPrice" ValidationExpression="([0-9]*\,)?[0-9]*" ErrorMessage="Please enter a valid number (decimal with coma)"  ValidationGroup="Edit" CssClass="text-danger"></asp:RegularExpressionValidator><br />
+                                </EditItemTemplate>
+                            </asp:templateField>
+
+
+                            <asp:templateField HeaderText="Available">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblAvailable" runat="server" Text='<%# Bind("Available") %>' ></asp:Label>
+                                </ItemTemplate>
+
+                                <EditItemTemplate>
+                                    <asp:DropDownList ID="DDLAvailable" runat="server"  >
+                                        <asp:ListItem Value="1" Selected="True" Text="Available"></asp:ListItem>
+                                        <asp:ListItem Value="2" Text="Not available"></asp:ListItem>
+                                    </asp:DropDownList>
+                                </EditItemTemplate>
+                            </asp:templateField>
+
 
                             <asp:CommandField ShowEditButton="true" ButtonType="Button"  EditText="Edit" />
                             <asp:CommandField ShowDeleteButton="true"  ButtonType="Button"   DeleteText="Delete" />
@@ -36,7 +124,8 @@
                         </Columns>
                     </asp:gridview>
 
-
+                <!--Add a Product -->
+                    <!--Row with TextBox/DropdownList for informations about the new product and "Add" button /Validators below -->
                 <div class="row">
 
                         <asp:Button ID="AddButton" ToolTip="Add item."  runat="server" Text="Add" OnClick="AddButton_Click" CssClass="btn btn-success" ValidationGroup="Add" CausesValidation="true" />
@@ -73,7 +162,7 @@
 
                 </div>
 
-
+                <!--Validators for the new product informations -->
                 <div id="Validators">
                     <asp:RequiredFieldValidator ID="ProductNameReqField" runat="server"  ControlToValidate="TextProductName" ErrorMessage="Name is required" ValidationGroup="Add" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                     <asp:RequiredFieldValidator ID="UnitReqField" runat="server"  ControlToValidate="TextUnit" ErrorMessage="Unit is required" ValidationGroup="Add" CssClass="text-danger"></asp:RequiredFieldValidator><br />
@@ -88,5 +177,5 @@
 
 
             </div>
-</div>
+    </div>
 </asp:Content>

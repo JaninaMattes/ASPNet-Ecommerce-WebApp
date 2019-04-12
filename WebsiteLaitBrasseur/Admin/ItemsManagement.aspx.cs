@@ -13,8 +13,10 @@ namespace WebsiteLaitBrasseur.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
+            {   
+                //Initialize Data elements (Gridview / DataSource / session variable)
                 BindItems();
+
                 BindItemsLabel();
             }
         }
@@ -92,14 +94,12 @@ namespace WebsiteLaitBrasseur.Admin
             GridViewRow row = ItemListTable.Rows[e.RowIndex];
 
             //Update the values.
-            dtItemList.Rows[row.DataItemIndex]["productName"] = ((TextBox)(row.Cells[1].Controls[0])).Text;
-            dtItemList.Rows[row.DataItemIndex]["productType"] = ((TextBox)(row.Cells[2].Controls[0])).Text;
-                    //dtItemList.Rows[row.DataItemIndex]["productType"] = ((DropDownList)(row.Cells[2].Controls[0])).SelectedValue;
-            dtItemList.Rows[row.DataItemIndex]["unit"] = ((TextBox)(row.Cells[3].Controls[0])).Text;
-            dtItemList.Rows[row.DataItemIndex]["quantity"] = ((TextBox)(row.Cells[4].Controls[0])).Text;
-            dtItemList.Rows[row.DataItemIndex]["price"] = ((TextBox)(row.Cells[5].Controls[0])).Text;
-            dtItemList.Rows[row.DataItemIndex]["available"] = ((TextBox)(row.Cells[6].Controls[0])).Text;
-                    //dtItemList.Rows[row.DataItemIndex]["available"] = ((DropDownList)(row.Cells[6].Controls[0])).SelectedValue;
+            dtItemList.Rows[row.DataItemIndex]["productName"] = ((TextBox)(row.FindControl("TextEditProductName"))).Text;
+            dtItemList.Rows[row.DataItemIndex]["productType"] = (((DropDownList)(row.FindControl("DDLProductType")))).SelectedValue;
+            dtItemList.Rows[row.DataItemIndex]["unit"] = ((TextBox)(row.FindControl("TextEditUnit"))).Text;
+            dtItemList.Rows[row.DataItemIndex]["quantity"] = ((TextBox)(row.FindControl("TextEditStock"))).Text;
+            dtItemList.Rows[row.DataItemIndex]["price"] = ((TextBox)(row.FindControl("TextEditPrice"))).Text;
+            dtItemList.Rows[row.DataItemIndex]["available"] =(((DropDownList)(row.FindControl("DDLAvailable")))).SelectedValue;
 
 
             //Reset the edit index.
@@ -158,13 +158,17 @@ namespace WebsiteLaitBrasseur.Admin
         }
 
         protected void BindItems()
-        {
-            var db = new DAL.DemoDatabase();
-            var products = db.GetProducts();
+        {   
+            var db = new DAL.DemoDatabase();    //DB initialization
+            var products = db.GetProducts();    //Products recuperation
 
-            ItemListTable.DataSource = products;
-            ItemListTable.DataBind();
+            ItemListTable.DataSource = products;               //gridview DataSource creation with Products information
+            ItemListTable.DataBind();                          //Link gridView and DataSource
+
+              
         }
+
+
 
 
     }

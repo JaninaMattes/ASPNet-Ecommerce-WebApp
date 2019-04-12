@@ -15,9 +15,9 @@
       <div class="col-md-3">
         <!--1 Col Product card nested in repeater control-->
         <!--START Product CardView-->
-            <div id="cardView" class="card">
-            <div id="img-cardview" class="crop text-center">
-                <asp:ImageButton id="img1" runat="server" CssClass="img-cardView" ToolTip="Select a product" ImageUrl='<%# Eval("ImagePath") %>'  OnCommand="imgCommand" CommandArgument='<%# Eval("Id") %>'/>      
+            <div id="cardView" >
+            <div id="img-cardview"  >
+                <asp:ImageButton id="img1" runat="server" class="img-fluid justify-content-center"  ToolTip="Select a product" ImageUrl='<%# Eval("ImagePath") %>'  OnCommand="imgCommand" CommandArgument='<%# Eval("Id") %>'/>      
             </div>
             <div id="container1" class="container clearfix">
             <div class="profile-usertitle">
@@ -28,14 +28,14 @@
                 <div id="card-footer1" class="card-footer">
                     <hr/>
                     <!--START Footer CardView-->
-                    <table style="width:94%; margin-left: 0px; background-color: white">
+                    <table style="width:100%; margin-left: 0px; background-color: white">
                         <tr>
                             <th><p>Price</p></th>
                             <td><asp:Label id="LabelPrice" Text="" runat="server"/><%# Eval("Price")%> €</td>
                             <th><p>Size</p></th>
                             <td><asp:Label id="LabelAmount" Text="" runat="server"/><%# Eval("Unit")%> </td>
                             <th><p>Status</p></th>
-                            <td><asp:Label id="LabelAvailable" Text="" runat="server" style="color:aquamarine; margin: 5%"/><%# Eval("Available")%></td> 
+                            <td><asp:Label id="LabelAvailable" Text="" runat="server" style="color:aquamarine"/><%# Eval("Available")%></td> 
                         </tr>
                     </table>
                     <!--END Footer CardView-->

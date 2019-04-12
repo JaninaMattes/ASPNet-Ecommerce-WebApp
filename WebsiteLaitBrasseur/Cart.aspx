@@ -40,14 +40,14 @@
 
 
                 <!--First Item : Image / Name + Price / Dropdown List for quantity / CheckBox to remove the Item-->
-                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:150px;">
+                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:160px;">
                    <div class="col-md-3" >
-                       <img id="Brune" alt="Beer_Brown" src="/Images/Brune.jpg"  class="img-fluid"/>                 
+                       <img id="Brune" alt="Beer_Brown" src="https://images.pexels.com/photos/8812/food-wood-night-alcohol.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"  class="img-fluid rounded"/>                 
                    </div>
 
                    <div class="col-md-2  ">
-                       <asp:Label ID="NameBrune" runat="server" cssclass="text-info " Text="Blackaty"></asp:Label><br />
-                       <asp:Label ID="PriceBrune" runat="server" cssclass="text-info" Text="3"></asp:Label>
+                       <asp:Label ID="NameBrune" runat="server" cssclass="text-info " Text="Fleurac La Triple IPA"></asp:Label><br />
+                       <asp:Label ID="PriceBrune" runat="server" cssclass="text-info" Text="14,95"></asp:Label>
                        <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
@@ -79,14 +79,14 @@
                 </div>
 
                 <!--Second Item-->
-                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:150px">
+                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:160px">
                    <div class="col-md-3" ">
-                       <img id="Blonde" alt="Beer_Blonde" src="/Images/blond.jpg" class="img-fluid" />                     
+                       <img id="Blonde" alt="Beer_Blonde" src="https://images.pexels.com/photos/1089930/pexels-photo-1089930.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img-fluid rounded" />                     
                    </div>
 
                    <div class="col-md-2">
-                       <asp:Label ID="NameBlonde" runat="server" cssclass="text-info " Text="LaBlonde"></asp:Label><br />
-                       <asp:Label ID="PriceBlonde" runat="server" cssclass="text-info" Text="2"></asp:Label>
+                       <asp:Label ID="NameBlonde" runat="server" cssclass="text-info " Text="Pilsener de Rockefort"></asp:Label><br />
+                       <asp:Label ID="PriceBlonde" runat="server" cssclass="text-info" Text="9,95"></asp:Label>
                        <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
@@ -94,6 +94,7 @@
                    <asp:DropDownList ID="QuantityBlonde" runat="server">
                        <asp:ListItem Selected="True" Value="1"></asp:ListItem>
                        <asp:ListItem  Value="2"></asp:ListItem>
+                       <asp:ListItem  Value="3"></asp:ListItem>
                        <asp:ListItem  Value="4"></asp:ListItem>
                        <asp:ListItem  Value="5"></asp:ListItem>
                        <asp:ListItem  Value="6"></asp:ListItem>
@@ -117,14 +118,14 @@
 
 
                 <!--Third Item-->
-                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:150px">
+                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:160px">
                    <div class="col-md-3" ">
-                       <img id="Blanche" alt="Beer_Blanche" src="/Images/blanche.jpg" class="img-fluid"/>                  
+                       <img id="Blanche" alt="Beer_Blanche" src="https://images.pexels.com/photos/1727829/pexels-photo-1727829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img-fluid rounded"/>                  
                    </div>
 
                    <div class="col-md-2">
-                       <asp:Label ID="NameBlanche" runat="server" cssclass="text-info " Text="Blanchette"></asp:Label><br />
-                       <asp:Label ID="PriceBlanche" runat="server" cssclass="text-info" Text="1,5"></asp:Label>
+                       <asp:Label ID="NameBlanche" runat="server" cssclass="text-info " Text="La Choulette Blonde"></asp:Label><br />
+                       <asp:Label ID="PriceBlanche" runat="server" cssclass="text-info" Text="10,95"></asp:Label>
                        <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 
@@ -132,6 +133,7 @@
                    <asp:DropDownList ID="QuantityBlanche" runat="server">
                        <asp:ListItem Selected="True" Value="1"></asp:ListItem>
                        <asp:ListItem  Value="2"></asp:ListItem>
+                       <asp:ListItem  Value="3"></asp:ListItem>
                        <asp:ListItem  Value="4"></asp:ListItem>
                        <asp:ListItem  Value="5"></asp:ListItem>
                        <asp:ListItem  Value="6"></asp:ListItem>
@@ -154,14 +156,14 @@
                 </div>
 
                 <!--Fourth Item-->
-                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:150px">
+                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:160px">
                    <div class="col-md-3" ">
-                       <img id="Carre" alt="Cheese" src="/Images/cheese_carre_est.jpg" class="img-fluid"/>                  
+                       <img id="Carre" alt="Cheese" src="https://cdn.pixabay.com/photo/2016/01/19/16/57/cheese-1149471__340.jpg" class="img-fluid rounded"/>                  
                    </div>
 
-                   <div class="col-md-3 ">
-                       <asp:Label ID="NameCheese" runat="server" cssclass="text-info " Text="Le carré de l'Est"></asp:Label><br />
-                       <asp:Label ID="PriceCheese" runat="server" cssclass="text-info" Text="8"></asp:Label>
+                   <div class="col-md-2 ">
+                       <asp:Label ID="NameCheese" runat="server" cssclass="text-info " Text="Brie de Meaux"></asp:Label><br />
+                       <asp:Label ID="PriceCheese" runat="server" cssclass="text-info" Text="11,95"></asp:Label>
                        <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
                    </div>
 

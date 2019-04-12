@@ -24,11 +24,11 @@
            </div>
 
                 <div class="col-md-5">
-                    <h2><asp:Label ID="LabelDetail" runat="server" Text="Product Detail Overview"></asp:Label></h2>
+                    <h3><asp:Label ID="LabelDetail" runat="server" Text="Product Detail Overview"></asp:Label></h3>
                     <!--Further product information about Price/ Total Amount / Product Quantity-->
-                    <p>Product:</p><p><asp:Label ID="labelProduct" runat="server" Text=""></asp:Label></p><br />
-                    <p>Producer:</p><p><asp:Label ID="labelProducer" runat="server" Text=""></asp:Label></p><br />
-                    <p>Price:</p><p><asp:Label ID="labelPrice" runat="server" Text=""></asp:Label></p><br/>
+                    <p>Product:</p><p><asp:Label ID="labelProduct" runat="server" Text="" CssClass="text-info"></asp:Label></p><br />
+                    <p>Producer:</p><p><asp:Label ID="labelProducer" runat="server" Text="" CssClass="text-info"></asp:Label></p><br />
+                    <p>Price:</p><p><asp:Label ID="labelPrice" runat="server" Text="" CssClass="text-info"></asp:Label></p><br/>
                     <!--Dropdown list with different sizes for the product to be selected-->
                     <p>Unit Size:</p>
                     <asp:DropDownList ID="unitDropDownList" runat="server" Cssclass="form-control">

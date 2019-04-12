@@ -13,8 +13,9 @@ namespace WebsiteLaitBrasseur.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
+            {    
                 BindPostages();
+
                 BindPostageLabel();
             }
         }
@@ -63,7 +64,7 @@ namespace WebsiteLaitBrasseur.Admin
 
         }
 
-        //Row Updating (Non-functional)
+        //Row Updating
         protected void PostageTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             //DataTable and DataRow initiallization
@@ -71,8 +72,8 @@ namespace WebsiteLaitBrasseur.Admin
             GridViewRow row = PostageTable.Rows[e.RowIndex];
 
             //Update the values.
-            dtPostage.Rows[row.DataItemIndex]["ProviderName"] = ((TextBox)(row.Cells[1].Controls[0])).Text;
-            dtPostage.Rows[row.DataItemIndex]["CostPerUnit"] = ((TextBox)(row.Cells[2].Controls[0])).Text;
+            dtPostage.Rows[row.DataItemIndex]["ProviderName"] = ((TextBox)(row.FindControl("TextProviderName"))).Text;
+            dtPostage.Rows[row.DataItemIndex]["CostPerUnit"] = ((TextBox)(row.FindControl("TextCost"))).Text;
 
             //Reset the edit index.
             PostageTable.EditIndex = -1;
@@ -80,6 +81,8 @@ namespace WebsiteLaitBrasseur.Admin
             //Bind data to the GridView control.
             PostageTable.DataSource = dtPostage;
             PostageTable.DataBind();
+
+
 
         }
 
@@ -125,8 +128,9 @@ namespace WebsiteLaitBrasseur.Admin
 
         protected void BindPostages()
         {
-            PostageTable.DataSource = getPostage();
-            PostageTable.DataBind();
+            PostageTable.DataSource = getPostage();     //GridView datasource creation with getPostage
+            PostageTable.DataBind();                    //Link datasource to gridview
+
         }
 
         //Bind of beginning label informing about the number postage options
