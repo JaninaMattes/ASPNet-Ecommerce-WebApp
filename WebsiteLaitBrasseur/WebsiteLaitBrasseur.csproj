@@ -70,265 +70,265 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="User Layer\AboutUs.aspx" />
-    <Content Include="User Layer\Account\Logout.aspx" />
-    <Content Include="User Layer\Account\Register.aspx" />
-    <Content Include="User Layer\Admin\DetailPageAdmin.aspx" />
-    <Content Include="User Layer\Admin\ItemsManagement.aspx" />
-    <Content Include="User Layer\Admin\Transactions.aspx" />
-    <Content Include="User Layer\OverviewPage.aspx" />
-    <Content Include="User Layer\Account\Profile.aspx" />
-    <Content Include="User Layer\DetailPage.aspx" />
-    <Content Include="User Layer\Admin\AccountManagment.aspx" />
-    <Content Include="User Layer\Admin\Default.aspx" />
-    <Content Include="User Layer\Admin\LoginAdmin.aspx" />
-    <Content Include="User Layer\Admin\LogoutAdmin.aspx" />
-    <Content Include="User Layer\Admin\PostagesManagement.aspx" />
-    <Content Include="User Layer\Admin\RegisterAdmin.aspx" />
-    <Content Include="User Layer\Admin\VerificationPage.aspx" />
-    <Content Include="User Layer\Billing.aspx" />
-    <Content Include="User Layer\CardPayment.aspx" />
-    <Content Include="User Layer\Cart.aspx" />
-    <Content Include="User Layer\Contact.aspx" />
-    <Content Include="Images\AboutUPicture.jpg" />
-    <Content Include="CSS\Content\bootstrap-grid.css" />
-    <Content Include="CSS\Content\bootstrap-grid.min.css" />
-    <Content Include="CSS\Content\bootstrap-reboot.css" />
-    <Content Include="CSS\Content\bootstrap-reboot.min.css" />
-    <Content Include="CSS\Content\bootstrap.css" />
-    <Content Include="CSS\Content\bootstrap.min.css" />
-    <Content Include="User Layer\Default.aspx" />
-    <Content Include="User Layer\Account\Login.aspx" />
-    <Content Include="Images\mastercard-logo-.png" />
-    <Content Include="Images\visa_logo.jpg" />
-    <Content Include="Scripts\bootstrap.bundle.js" />
-    <Content Include="Scripts\bootstrap.bundle.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\bootstrap.min.js.map" />
-    <Content Include="Scripts\bootstrap.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
-    <Content Include="Scripts\bootstrap.bundle.js.map" />
-    <Content Include="CSS\Content\bootstrap.min.css.map" />
-    <Content Include="CSS\Content\bootstrap.css.map" />
-    <Content Include="CSS\Content\bootstrap-reboot.min.css.map" />
-    <Content Include="CSS\Content\bootstrap-reboot.css.map" />
-    <Content Include="CSS\Content\bootstrap-grid.min.css.map" />
-    <Content Include="CSS\Content\bootstrap-grid.css.map" />
-    <Content Include="Scripts\esm\popper-utils.js" />
-    <Content Include="Scripts\esm\popper-utils.min.js" />
-    <Content Include="Scripts\esm\popper.js" />
-    <Content Include="Scripts\esm\popper.min.js" />
-    <Content Include="Scripts\esm\popper.min.js.map" />
-    <Content Include="Scripts\esm\popper.js.map" />
-    <Content Include="Scripts\esm\popper-utils.min.js.map" />
-    <Content Include="Scripts\esm\popper-utils.js.map" />
-    <Content Include="User Layer\Admin\Admin.Master" />
-    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="CSS\Content\site.css" />
-    <Content Include="Scripts\popper-utils.js" />
-    <Content Include="Scripts\popper-utils.min.js" />
-    <Content Include="Scripts\popper.js" />
-    <Content Include="Scripts\popper.min.js" />
-    <Content Include="Scripts\umd\popper-utils.js" />
-    <Content Include="Scripts\umd\popper-utils.min.js" />
-    <Content Include="Scripts\umd\popper.js" />
-    <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="UL\AboutUs.aspx" />
+    <Content Include="UL\Account\Logout.aspx" />
+    <Content Include="UL\Account\Register.aspx" />
+    <Content Include="UL\Admin\DetailPageAdmin.aspx" />
+    <Content Include="UL\Admin\ItemsManagement.aspx" />
+    <Content Include="UL\Admin\Transactions.aspx" />
+    <Content Include="UL\OverviewPage.aspx" />
+    <Content Include="UL\Account\Profile.aspx" />
+    <Content Include="UL\DetailPage.aspx" />
+    <Content Include="UL\Admin\AccountManagment.aspx" />
+    <Content Include="UL\Admin\Default.aspx" />
+    <Content Include="UL\Admin\LoginAdmin.aspx" />
+    <Content Include="UL\Admin\LogoutAdmin.aspx" />
+    <Content Include="UL\Admin\PostagesManagement.aspx" />
+    <Content Include="UL\Admin\RegisterAdmin.aspx" />
+    <Content Include="UL\Admin\VerificationPage.aspx" />
+    <Content Include="UL\Billing.aspx" />
+    <Content Include="UL\CardPayment.aspx" />
+    <Content Include="UL\Cart.aspx" />
+    <Content Include="UL\Contact.aspx" />
+    <Content Include="UL\Images\AboutUPicture.jpg" />
+    <Content Include="UL\CSS\Content\bootstrap-grid.css" />
+    <Content Include="UL\CSS\Content\bootstrap-grid.min.css" />
+    <Content Include="UL\CSS\Content\bootstrap-reboot.css" />
+    <Content Include="UL\CSS\Content\bootstrap-reboot.min.css" />
+    <Content Include="UL\CSS\Content\bootstrap.css" />
+    <Content Include="UL\CSS\Content\bootstrap.min.css" />
+    <Content Include="UL\Default.aspx" />
+    <Content Include="UL\Account\Login.aspx" />
+    <Content Include="UL\Images\mastercard-logo-.png" />
+    <Content Include="UL\Images\visa_logo.jpg" />
+    <Content Include="UL\Scripts\bootstrap.bundle.js" />
+    <Content Include="UL\Scripts\bootstrap.bundle.min.js" />
+    <Content Include="UL\Scripts\bootstrap.js" />
+    <Content Include="UL\Scripts\bootstrap.min.js" />
+    <Content Include="UL\Scripts\bootstrap.min.js.map" />
+    <Content Include="UL\Scripts\bootstrap.js.map" />
+    <Content Include="UL\Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="UL\Scripts\bootstrap.bundle.js.map" />
+    <Content Include="UL\CSS\Content\bootstrap.min.css.map" />
+    <Content Include="UL\CSS\Content\bootstrap.css.map" />
+    <Content Include="UL\CSS\Content\bootstrap-reboot.min.css.map" />
+    <Content Include="UL\CSS\Content\bootstrap-reboot.css.map" />
+    <Content Include="UL\CSS\Content\bootstrap-grid.min.css.map" />
+    <Content Include="UL\CSS\Content\bootstrap-grid.css.map" />
+    <Content Include="UL\Scripts\esm\popper-utils.js" />
+    <Content Include="UL\Scripts\esm\popper-utils.min.js" />
+    <Content Include="UL\Scripts\esm\popper.js" />
+    <Content Include="UL\Scripts\esm\popper.min.js" />
+    <Content Include="UL\Scripts\esm\popper.min.js.map" />
+    <Content Include="UL\Scripts\esm\popper.js.map" />
+    <Content Include="UL\Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="UL\Scripts\esm\popper-utils.js.map" />
+    <Content Include="UL\Admin\Admin.Master" />
+    <None Include="UL\Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="UL\Scripts\jquery-3.3.1.js" />
+    <Content Include="UL\Scripts\jquery-3.3.1.min.js" />
+    <Content Include="UL\Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="UL\Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="UL\CSS\Content\site.css" />
+    <Content Include="UL\Scripts\popper-utils.js" />
+    <Content Include="UL\Scripts\popper-utils.min.js" />
+    <Content Include="UL\Scripts\popper.js" />
+    <Content Include="UL\Scripts\popper.min.js" />
+    <Content Include="UL\Scripts\umd\popper-utils.js" />
+    <Content Include="UL\Scripts\umd\popper-utils.min.js" />
+    <Content Include="UL\Scripts\umd\popper.js" />
+    <Content Include="UL\Scripts\umd\popper.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="User Layer\AboutUs.aspx.cs">
+    <Compile Include="UL\AboutUs.aspx.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\AboutUs.aspx.designer.cs">
+    <Compile Include="UL\AboutUs.aspx.designer.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Account\Logout.aspx.cs">
+    <Compile Include="UL\Account\Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Account\Logout.aspx.designer.cs">
+    <Compile Include="UL\Account\Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Account\Register.aspx.cs">
+    <Compile Include="UL\Account\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Account\Register.aspx.designer.cs">
+    <Compile Include="UL\Account\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\DetailPageAdmin.aspx.cs">
+    <Compile Include="UL\Admin\DetailPageAdmin.aspx.cs">
       <DependentUpon>DetailPageAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\DetailPageAdmin.aspx.designer.cs">
+    <Compile Include="UL\Admin\DetailPageAdmin.aspx.designer.cs">
       <DependentUpon>DetailPageAdmin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\ItemsManagement.aspx.cs">
+    <Compile Include="UL\Admin\ItemsManagement.aspx.cs">
       <DependentUpon>ItemsManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\ItemsManagement.aspx.designer.cs">
+    <Compile Include="UL\Admin\ItemsManagement.aspx.designer.cs">
       <DependentUpon>ItemsManagement.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\Transactions.aspx.cs">
+    <Compile Include="UL\Admin\Transactions.aspx.cs">
       <DependentUpon>Transactions.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\Transactions.aspx.designer.cs">
+    <Compile Include="UL\Admin\Transactions.aspx.designer.cs">
       <DependentUpon>Transactions.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\OverviewPage.aspx.cs">
+    <Compile Include="UL\OverviewPage.aspx.cs">
       <DependentUpon>OverviewPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\OverviewPage.aspx.designer.cs">
+    <Compile Include="UL\OverviewPage.aspx.designer.cs">
       <DependentUpon>OverviewPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Account\Profile.aspx.cs">
+    <Compile Include="UL\Account\Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Account\Profile.aspx.designer.cs">
+    <Compile Include="UL\Account\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\DetailPage.aspx.cs">
+    <Compile Include="UL\DetailPage.aspx.cs">
       <DependentUpon>DetailPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\DetailPage.aspx.designer.cs">
+    <Compile Include="UL\DetailPage.aspx.designer.cs">
       <DependentUpon>DetailPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\AccountManagment.aspx.cs">
+    <Compile Include="UL\Admin\AccountManagment.aspx.cs">
       <DependentUpon>AccountManagment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\AccountManagment.aspx.designer.cs">
+    <Compile Include="UL\Admin\AccountManagment.aspx.designer.cs">
       <DependentUpon>AccountManagment.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\Admin.Master.cs">
+    <Compile Include="UL\Admin\Admin.Master.cs">
       <DependentUpon>Admin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\Admin.Master.designer.cs">
+    <Compile Include="UL\Admin\Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\Default.aspx.cs">
+    <Compile Include="UL\Admin\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\Default.aspx.designer.cs">
+    <Compile Include="UL\Admin\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\LoginAdmin.aspx.cs">
+    <Compile Include="UL\Admin\LoginAdmin.aspx.cs">
       <DependentUpon>LoginAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\LoginAdmin.aspx.designer.cs">
+    <Compile Include="UL\Admin\LoginAdmin.aspx.designer.cs">
       <DependentUpon>LoginAdmin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\LogoutAdmin.aspx.cs">
+    <Compile Include="UL\Admin\LogoutAdmin.aspx.cs">
       <DependentUpon>LogoutAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\LogoutAdmin.aspx.designer.cs">
+    <Compile Include="UL\Admin\LogoutAdmin.aspx.designer.cs">
       <DependentUpon>LogoutAdmin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\PostagesManagement.aspx.cs">
+    <Compile Include="UL\Admin\PostagesManagement.aspx.cs">
       <DependentUpon>PostagesManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\PostagesManagement.aspx.designer.cs">
+    <Compile Include="UL\Admin\PostagesManagement.aspx.designer.cs">
       <DependentUpon>PostagesManagement.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\RegisterAdmin.aspx.cs">
+    <Compile Include="UL\Admin\RegisterAdmin.aspx.cs">
       <DependentUpon>RegisterAdmin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\RegisterAdmin.aspx.designer.cs">
+    <Compile Include="UL\Admin\RegisterAdmin.aspx.designer.cs">
       <DependentUpon>RegisterAdmin.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Admin\VerificationPage.aspx.cs">
+    <Compile Include="UL\Admin\VerificationPage.aspx.cs">
       <DependentUpon>VerificationPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Admin\VerificationPage.aspx.designer.cs">
+    <Compile Include="UL\Admin\VerificationPage.aspx.designer.cs">
       <DependentUpon>VerificationPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Billing.aspx.cs">
+    <Compile Include="UL\Billing.aspx.cs">
       <DependentUpon>Billing.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Billing.aspx.designer.cs">
+    <Compile Include="UL\Billing.aspx.designer.cs">
       <DependentUpon>Billing.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\CardPayment.aspx.cs">
+    <Compile Include="UL\CardPayment.aspx.cs">
       <DependentUpon>CardPayment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\CardPayment.aspx.designer.cs">
+    <Compile Include="UL\CardPayment.aspx.designer.cs">
       <DependentUpon>CardPayment.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Cart.aspx.cs">
+    <Compile Include="UL\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Cart.aspx.designer.cs">
+    <Compile Include="UL\Cart.aspx.designer.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Contact.aspx.cs">
+    <Compile Include="UL\Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Contact.aspx.designer.cs">
+    <Compile Include="UL\Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\DemoDatabase.cs" />
-    <Compile Include="User Layer\Default.aspx.cs">
+    <Compile Include="UL\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Default.aspx.designer.cs">
+    <Compile Include="UL\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="User Layer\Account\Login.aspx.cs">
+    <Compile Include="UL\Account\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Account\Login.aspx.designer.cs">
+    <Compile Include="UL\Account\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\DetailPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User Layer\Site.Master.cs">
+    <Compile Include="UL\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="User Layer\Site.Master.designer.cs">
+    <Compile Include="UL\Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Scripts\umd\popper.js.map" />
-    <Content Include="Scripts\umd\popper-utils.min.js.map" />
-    <Content Include="Scripts\umd\popper-utils.js.map" />
-    <Content Include="Scripts\README.md" />
-    <Content Include="Scripts\popper.min.js.map" />
-    <Content Include="Scripts\popper.js.map" />
-    <Content Include="Scripts\popper-utils.min.js.map" />
-    <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="User Layer\Site.Master" />
+    <Content Include="UL\Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="UL\Scripts\jquery-3.3.1.min.map" />
+    <Content Include="UL\Scripts\umd\popper.min.js.map" />
+    <Content Include="UL\Scripts\umd\popper.js.map" />
+    <Content Include="UL\Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="UL\Scripts\umd\popper-utils.js.map" />
+    <Content Include="UL\Scripts\README.md" />
+    <Content Include="UL\Scripts\popper.min.js.map" />
+    <Content Include="UL\Scripts\popper.js.map" />
+    <Content Include="UL\Scripts\popper-utils.min.js.map" />
+    <Content Include="UL\Scripts\popper-utils.js.map" />
+    <Content Include="UL\Site.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -343,7 +343,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Scripts\index.d.ts" />
+    <TypeScriptCompile Include="UL\Scripts\index.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

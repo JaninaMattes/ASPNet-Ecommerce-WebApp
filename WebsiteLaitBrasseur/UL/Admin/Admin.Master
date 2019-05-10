@@ -1,0 +1,67 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="WebsiteLaitBrasseur.Admin.Admin" %>
+
+<!DOCTYPE html>
+
+<!--Master page of the Admin side -->
+
+<html>
+<head runat="server">
+    <meta name="viewport"  content="width=device-width; initial-scale=1"/>
+
+    <!--Title -->
+    <title><%: Page.Title %> - Admin</title>
+
+    <!--CSS files -->
+    <link href="/UL/CSS/Content/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="/UL/CSS/Content/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="/CSS/Content/site.css" rel="stylesheet" type="text/css" />
+
+    <script src="/UL/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="/UL/Scripts/bootstrap.min.js"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+
+
+<body>
+   <header class="jumbotron" style="background-color: black">
+        <div class="container-fluid" >
+            <div class="row">
+
+                <!--Logo -->
+                <div class="col-md-4 ">
+                    <a href="/UL/Admin/Default.aspx">
+                        <img id="logoLB" alt="LaitBrasseur_Logo" src="/UL/Images/Logo-LaitBrasseur.png" class="img rounded img-fluid" style="text-align:left;width:181px; height:147px"  />
+                    </a>
+                 </div>
+
+                <!--Company name -->
+                <div class="col-md-4 text-center">
+                     <h1   style="font-family: 'Microsoft Sans Serif'; color:white" >Spécialiste Lait Brasseur</h1>
+                </div>
+
+                <!--LogIn/LogOut buttons -->
+                <div class="col-md-4 text-right">
+                    <a href="/UL/Admin/LoginAdmin.aspx"  >
+                        <input id="LogInButton" runat="server" type="button" class="btn btn-outline-light" value="LogIn"/>
+                    </a>
+
+                    <br />
+                    <a href="/UL/Admin/LogoutAdmin.aspx"  >
+                        <asp:label id="lblLogout" runat="server" text="Logout" Visible="false"></asp:label>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <br /><br />
+
+
+    <form id="AdminMasterBodyForm" class="form-group" runat="server">
+
+        <div class="container-fluid body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+</html>
