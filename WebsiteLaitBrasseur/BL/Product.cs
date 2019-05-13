@@ -5,18 +5,18 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public abstract class Product
+    public class Product
     {
         //private member
         private byte _id;
-        private string _name;
-        private string _type;
-        private string _producer;
+        private string _name = "";
+        private string _type = "";
+        private string _producer = "";
         private float _unitSize;
         private decimal _price;
-        private string _info;
-        private string _shortInfo;
-        private string _imgPath;
+        private string _info = "";
+        private string _shortInfo = "";
+        private string _imgPath = "";
         private byte _stock;
         private bool _status = false;
 
@@ -187,6 +187,11 @@ namespace WebsiteLaitBrasseur.BL
         {
             _imgPath = imgPath;
             _stock = stock;
+        }
+
+        public Product(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, byte stock, bool status) : this(id, name, type, producer, unitSize, price, info, shortInfo, imgPath, stock)
+        {
+            _status = status;
         }
 
         public override string ToString()

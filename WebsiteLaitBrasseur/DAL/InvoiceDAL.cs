@@ -95,20 +95,41 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all invoices per paymentdate
-        public Shippment FindBy(DateTime paymentDate)
+        public Invoice FindBy(DateTime paymentDate)
         {
-            Shippment shipper;
+            Invoice invoice;
             try
             {
-                shipper = new Shippment();
+                invoice = new Invoice();
                 //find entry in database where id = XY
-                return shipper;
+                return invoice;
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
 
+            return null;
+        }
+
+        //find all shipping companies available
+        public List<Invoice> FindAll()
+        {
+            Invoice invoice;
+            List<Invoice> list = new List<Invoice>();
+            try
+            {
+                invoice = new Invoice();
+                //find entry in database where id = XY
+                list.Add(invoice);
+
+                //after all products are retrieved from DB
+                return list;
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
             return null;
         }
     }

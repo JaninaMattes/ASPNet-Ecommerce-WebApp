@@ -95,7 +95,6 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-
             return null;
         }
 
@@ -112,28 +111,8 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-
             return null;
         }
-
-
-        public Shippment FindBy(DateTime arrivalDat)
-        {
-            Shippment shipper;
-            try
-            {
-                shipper = new Shippment();
-                //find entry in database where date = XY
-                return shipper;
-            }
-            catch (Exception e)
-            {
-                e.GetBaseException();
-            }
-
-            return null;
-        }
-
 
         public Shippment FindBy(decimal cost)
         {
@@ -148,11 +127,49 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-
             return null;
+        }
 
+        //find all shipping companies available
+        public List<Shippment> FindBy(DateTime arrivalDate)
+        {
+            Shippment shippment;
+            List<Shippment> list = new List<Shippment>();
+            try
+            {
+                shippment = new Shippment();
+                //find entry in database where id = XY
+                list.Add(shippment);
 
+                //after all products are retrieved from DB
+                return list;
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return null;
+        }
 
+        //find all shipping companies available
+        public List<Shippment> FindAll()
+        {
+            Shippment shippment;
+            List<Shippment> list = new List<Shippment>();
+            try
+            {
+                shippment = new Shippment();
+                //find entry in database where id = XY
+                list.Add(shippment);
+
+                //after all products are retrieved from DB
+                return list;
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return null;
         }
     }
 }

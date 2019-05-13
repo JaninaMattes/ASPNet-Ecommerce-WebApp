@@ -56,8 +56,11 @@ namespace WebsiteLaitBrasseur.BL
             this._id = id;
             this._email = email;
             this._password = pw;
-            //create new account with first log in
-            this._user = new Account();
+        }
+
+        public LogIn(byte id, string email, string password, Account user) : this(id, email, password)
+        {
+            _user = user;
         }
 
         public override bool Equals(object obj)

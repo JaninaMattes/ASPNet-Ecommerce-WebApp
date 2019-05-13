@@ -54,8 +54,26 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //read
-        //does the login already exist
+        //does the login email already exist
         public Login FindBy(byte id)
+        {
+            Login lg;
+            try
+            {
+                lg = new Login();
+                //find entry in database where id = XY
+                return lg;
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+
+            return null;
+        }
+
+        //does the login already exist
+        public Login FindBy(string email)
         {
             Login lg;
             try
