@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
@@ -127,7 +126,7 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         //constructor
-       public Account()
+        public Account()
         {
 
         }
@@ -140,12 +139,61 @@ namespace WebsiteLaitBrasseur.BL
             this._birthDate = birthdate;
             this._phoneNo = phoneNo;
             //new accounts are per default not suspendet
-            this._status = true; 
+            this._status = true;
+        }
+
+        public Account(byte id, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin) : this(id, firstName, lastName, birthDate, phoneNo)
+        {
+            this._imgPath = imgPath;
+            this._status = true;
+            this._isAdmin = isAdmin;
+        }
+
+        public Account(byte id, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, Address address) : this(id, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
+        {
+            this._address = address;
+        }
+
+        public Account(byte id, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, List<Invoice> invoiceList, Address address) : this(id, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
+        {
+            this._invoiceList = invoiceList;
+            this._address = address;
         }
 
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Account account &&
+                   _id == account._id &&
+                   _firstName == account._firstName &&
+                   _lastName == account._lastName &&
+                   _birthDate == account._birthDate &&
+                   _phoneNo == account._phoneNo &&
+                   _imgPath == account._imgPath &&
+                   _status == account._status &&
+                   _isAdmin == account._isAdmin &&
+                   EqualityComparer<List<Invoice>>.Default.Equals(_invoiceList, account._invoiceList) &&
+                   EqualityComparer<Address>.Default.Equals(_address, account._address);
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = -499183195;
+            hashCode = hashCode * -1521134295 + _id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_firstName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_lastName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_birthDate);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_phoneNo);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_imgPath);
+            hashCode = hashCode * -1521134295 + _status.GetHashCode();
+            hashCode = hashCode * -1521134295 + _isAdmin.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<Invoice>>.Default.GetHashCode(_invoiceList);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Address>.Default.GetHashCode(_address);
+            return hashCode;
         }
     }
 }

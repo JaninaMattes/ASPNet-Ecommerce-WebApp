@@ -181,24 +181,8 @@ namespace WebsiteLaitBrasseur.BL
             _products = new List<ProductSelection>();
         }
 
-        public Invoice(byte id, Account customer, Shippment shipping, byte totalQuantity, decimal totalShippingCost, decimal totalTaxes, 
-            decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email)
-        {
-            _id = id;
-            _customer = customer;
-            _shipping = shipping;
-            _totalQuantity = totalQuantity;
-            _totalShippingCost = totalShippingCost;
-            _totalTaxes = totalTaxes;
-            _totalAmount = totalAmount;
-            _orderDate = orderDate;
-            _paymentDate = paymentDate;
-            _email = email;
-            _products = new List<ProductSelection>();
-        }
-
-        public Invoice(byte id, Account customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost, decimal totalTaxes, 
-            decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email, bool status)
+        public Invoice(byte id, Account customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost, 
+            decimal totalTaxes, decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email)
         {
             _id = id;
             _customer = customer;
@@ -211,8 +195,12 @@ namespace WebsiteLaitBrasseur.BL
             _orderDate = orderDate;
             _paymentDate = paymentDate;
             _email = email;
+        }
+
+        public Invoice(byte id, Account customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost, decimal totalTaxes, 
+            decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email, bool status) : this(id, customer, products, shipping, totalQuantity, totalShippingCost, totalTaxes, totalAmount, orderDate, paymentDate, email)
+        {
             _status = status;
-            _products = new List<ProductSelection>();
         }
 
         public override string ToString()

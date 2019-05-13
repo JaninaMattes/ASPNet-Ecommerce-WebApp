@@ -10,10 +10,11 @@ namespace WebsiteLaitBrasseur.BL
 
         //private properties
         private byte _id;
-        private string _company;
+        private string _company = "";
         private DateTime _arrivalDate;
         private DateTime _postageDate;
         private decimal _cost;
+        private bool _status = false;
 
         //getter and setter
         public byte GetId()
@@ -63,6 +64,16 @@ namespace WebsiteLaitBrasseur.BL
             this._cost = cost;
         }
 
+        public bool GetStatus()
+        {
+            return this._status;
+        }
+
+        public void SetStatus(bool status)
+        {
+            this._status = status;
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Shippment shippment &&
@@ -70,23 +81,26 @@ namespace WebsiteLaitBrasseur.BL
                    _company == shippment._company &&
                    _arrivalDate == shippment._arrivalDate &&
                    _postageDate == shippment._postageDate &&
-                   _cost == shippment._cost;
+                   _cost == shippment._cost &&
+                   _status == shippment._status;
         }
 
         public override int GetHashCode()
         {
-            var hashCode = -430040211;
+            var hashCode = -1975167387;
             hashCode = hashCode * -1521134295 + _id.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_company);
             hashCode = hashCode * -1521134295 + _arrivalDate.GetHashCode();
             hashCode = hashCode * -1521134295 + _postageDate.GetHashCode();
             hashCode = hashCode * -1521134295 + _cost.GetHashCode();
+            hashCode = hashCode * -1521134295 + _status.GetHashCode();
             return hashCode;
         }
 
         //constructor
         public Shippment()
         {
+            _status = true;
         }
 
         public Shippment(byte id, string company, DateTime arrivalDate, DateTime postageDate, decimal cost)
@@ -96,6 +110,13 @@ namespace WebsiteLaitBrasseur.BL
             _arrivalDate = arrivalDate;
             _postageDate = postageDate;
             _cost = cost;
+            _status = true;
+        }
+
+        public Shippment(byte id, string company, DateTime arrivalDate, DateTime postageDate, decimal cost, bool status) 
+            : this(id, company, arrivalDate, postageDate, cost)
+        {
+            _status = status;
         }
 
     }
