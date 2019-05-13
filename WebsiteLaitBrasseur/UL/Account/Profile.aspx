@@ -1,6 +1,9 @@
 ﻿<%@ Page Language="C#" Title="Customer Profile" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.Profile" %>
 
 <asp:Content id="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+ <!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>
 
 <!--Page managing an user profile-->
 
@@ -189,4 +192,8 @@
 
         </div>
     </div>
+
+         <!--END UpdatePanel Enables sections of a page to be partially rendered without a postback. -->
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>

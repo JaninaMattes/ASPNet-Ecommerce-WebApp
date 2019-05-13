@@ -57,8 +57,9 @@
     <br /><br />
 
 
-    <form id="AdminMasterBodyForm" class="form-group" runat="server">
-
+    <form ID="AdminMasterBodyForm" class="form-group" runat="server">
+         <!--Include ScriptManager to Use AJAX async functionality -->
+        <asp:ScriptManager ID="ScriptManagerAdmin" runat="server"></asp:ScriptManager>
         <div class="container-fluid body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
         </div>

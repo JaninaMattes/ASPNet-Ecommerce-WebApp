@@ -1,6 +1,9 @@
 ﻿<%@ Page Title="Billing" Language="C#" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="Billing.aspx.cs" Inherits="WebsiteLaitBrasseur.Billing" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>
 
 <!--Page managing the collection of shipping informations -->
 
@@ -87,7 +90,8 @@
 
     </div>
 
-
-
+<!--END UpdatePanel Enables sections of a page to be partially rendered without a postback. -->
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>
 

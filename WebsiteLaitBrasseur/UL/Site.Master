@@ -15,8 +15,7 @@
 
     <script src="/UL/Scripts/jquery-3.3.1.min.js"></script>
     <script src="/UL/Scripts/bootstrap.min.js"></script>
-
-
+  
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 
 </head>
@@ -71,8 +70,9 @@
     <br /><br />
 
 
-    <form id="MasterBodyForm" class="form-group" runat="server">
-        
+    <form ID="MasterBodyForm" class="form-group" runat="server">
+        <!--Include ScriptManager to Use AJAX async functionality -->
+        <asp:ScriptManager ID="ScriptManagerCustomer" runat="server"></asp:ScriptManager> 
         <!--Placeholder for master page content-->
         <div class="container-fluid body-content">
                 <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder><hr />

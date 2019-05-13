@@ -1,6 +1,9 @@
 ﻿<%@ Page Title="Shopping History" Language="C#" MasterPageFile="/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="Transactions.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.Transactions" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>
 
 <!--Page managing the display of the transactions history of an user-->
 
@@ -20,4 +23,7 @@
                                 </Columns>
                             </asp:GridView>
                 </div>
+    <!--END UpdatePanel Enables sections of a page to be partially rendered without a postback. -->
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>

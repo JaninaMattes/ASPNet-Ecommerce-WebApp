@@ -2,6 +2,9 @@
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+     <!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>
 
     <div class="container-fluid">
 
@@ -183,4 +186,8 @@
 
             </div>
     </div>
+
+        <!--END UpdatePanel Enables sections of a page to be partially rendered without a postback. -->
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>

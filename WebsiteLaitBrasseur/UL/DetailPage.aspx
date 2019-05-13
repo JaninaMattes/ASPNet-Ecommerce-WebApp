@@ -1,6 +1,10 @@
 ﻿<%@ Page Language="C#" Title="Customer Profile" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="DetailPage.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.DetailPage" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+<!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>
+
 <!-- Content of detail view page-->
 <div class="container-fluid">
 
@@ -71,4 +75,7 @@
         </div>
     </div>
 
+        <!--END UpdatePanel Enables sections of a page to be partially rendered without a postback. -->
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>

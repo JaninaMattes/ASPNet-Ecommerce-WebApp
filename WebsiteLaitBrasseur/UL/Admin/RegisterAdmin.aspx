@@ -3,7 +3,10 @@
 
 
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
-    
+    <!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>
+
 <!--Page managing the registration of a new admin -->
 
     <h3>  Create a new Admin account</h3>
@@ -97,10 +100,9 @@
          <div class="col-md-offset-3 col-md-9">
                 <asp:Button ID="CreateAccountButton" runat="server" Text="Create Account" CssClass="btn btn-primary" OnClick="CreateAccountButton_Click"/>
                 <asp:button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-danger" CausesValidation="False" OnClick="CancelButton_Click"/>
-
          </div>
         
-
-
-                
+        <!--END UpdatePanel Enables sections of a page to be partially rendered without a postback. -->
+        </ContentTemplate>
+    </asp:UpdatePanel>                
 </asp:Content>

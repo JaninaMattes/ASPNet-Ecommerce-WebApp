@@ -1,6 +1,9 @@
 ﻿<%@ Page Title="Card Informations" Language="C#" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="CardPayment.aspx.cs" Inherits="WebsiteLaitBrasseur.CardPayment" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>
 
 <!--Page managing the payment via Credit Card -->
 
@@ -94,7 +97,9 @@
                         &nbsp;
                 <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" CssClass="btn btn-success"/>
            </div>
-
-
       </div>
+
+        <!--END UpdatePanel Enables sections of a page to be partially rendered without a postback. -->
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>

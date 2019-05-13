@@ -143,6 +143,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BL\Account.cs" />
+    <Compile Include="BL\Address.cs" />
+    <Compile Include="BL\Card.cs" />
+    <Compile Include="BL\Invoice.cs" />
+    <Compile Include="BL\LogIn.cs" />
+    <Compile Include="BL\PayPal.cs" />
+    <Compile Include="DAL\InputInvalidException.cs" />
+    <Compile Include="BL\Payment.cs" />
+    <Compile Include="BL\Product.cs" />
+    <Compile Include="BL\ProductSelection.cs" />
+    <Compile Include="BL\Shippment.cs" />
     <Compile Include="UL\AboutUs.aspx.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
