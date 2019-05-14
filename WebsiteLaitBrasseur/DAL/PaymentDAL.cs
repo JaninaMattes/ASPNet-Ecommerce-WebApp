@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using WebsiteLaitBrasseur.BL;
@@ -8,7 +10,8 @@ namespace WebsiteLaitBrasseur.DAL
 {
     public class PaymentDAL
     {
-        //create
+        //Get connection string from web.config file and create sql connection
+        SqlConnection con = new SqlConnection(SqlDataAccess.ConnectionString);
         public bool Create(byte id, decimal totalAmount, DateTime paymentDate)
         {
             try

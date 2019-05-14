@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using WebsiteLaitBrasseur.BL;
@@ -8,6 +10,9 @@ namespace WebsiteLaitBrasseur.DAL
 {
     public class InvoiceDAL
     {
+        //Get connection string from web.config file and create sql connection
+        SqlConnection con = new SqlConnection(SqlDataAccess.ConnectionString);
+
         //create
         public bool Create(byte id, Account customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost,
             decimal totalTaxes, decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email)
@@ -122,6 +127,27 @@ namespace WebsiteLaitBrasseur.DAL
                 invoice = new Invoice();
                 //find entry in database where id = XY
                 list.Add(invoice);
+
+                //after all products are retrieved from DB
+                return list;
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return null;
+        }
+
+        //find all invoices per customer id
+        public List<ProductSelection> FindAllPerCustomer(byte id)
+        {
+            ProductSelection selection;
+            List<ProductSelection> list = new List<ProductSelection>();
+            try
+            {
+                selection = new ProductSelection();
+                //find entry in database where id = XY
+                list.Add(selection);
 
                 //after all products are retrieved from DB
                 return list;

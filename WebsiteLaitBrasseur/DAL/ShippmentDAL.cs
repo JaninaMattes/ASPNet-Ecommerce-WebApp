@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using WebsiteLaitBrasseur.BL;
@@ -8,19 +10,41 @@ namespace WebsiteLaitBrasseur.DAL
 {
     public class ShippmentDAL
     {
+        //Get connection string from web.config file and create sql connection
+        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         //create
-        public bool Create(byte id, string company, DateTime arrivalDate, DateTime postageDate, decimal cost)
+        public int Create(string type, string company, DateTime arrivalDate, DateTime postageDate, decimal cost)
         {
+            int result;
+            //no need to explicitely set id as autoincrement is used
+            string queryString = "INSERT INTO Shippment(dbo.Shippment.shipType, dbo.Shippment.shipCompany, " +
+                "dbo.Shippment.arrivalDate, dbo.Shippment.postageDate, dbo.Shippment.shipCost ) " +
+                "VALUES('@shipType', '@shipCompany', '@arrivalDate', '@postageDate', @shipCost)";
             try
             {
                 //insert into database
-                return true;
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@shipType", type);
+                    cmd.Parameters.AddWithValue("@shipCompany", company);
+                    cmd.Parameters.AddWithValue("@arrivalDate", arrivalDate);
+                    cmd.Parameters.AddWithValue("@postageDate", postageDate);
+                    cmd.Parameters.AddWithValue("@shipCost", cost);
+                    connection.Open();
+                    result = cmd.ExecuteNonQuery();
+                    return result;
+                }
             }
             catch (Exception e)
             {
+                result = 0;
                 e.GetBaseException();
             }
-            return false;
+            finally
+            {
+                connection.Close();
+            }              
+            return result;
         }
 
         //update

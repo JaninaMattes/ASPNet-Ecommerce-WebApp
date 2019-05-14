@@ -6,7 +6,7 @@ using WebsiteLaitBrasseur.Account;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class LogIn
+    public class Login
     {
         //properties
         private byte _id;
@@ -51,21 +51,21 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         //constructor
-        public LogIn(byte id, string email, string pw)
+        public Login(byte id, string email, string pw)
         {
             this._id = id;
             this._email = email;
             this._password = pw;
         }
 
-        public LogIn(byte id, string email, string password, Account user) : this(id, email, password)
+        public Login(byte id, string email, string password, Account user) : this(id, email, password)
         {
             _user = user;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is LogIn @in &&
+            return obj is Login @in &&
                    _id == @in._id &&
                    _email == @in._email &&
                    _password == @in._password;

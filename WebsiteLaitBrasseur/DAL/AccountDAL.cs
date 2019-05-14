@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using WebsiteLaitBrasseur.BL;
@@ -8,22 +10,42 @@ namespace WebsiteLaitBrasseur.DAL
 {
     public class AccountDAL
     {
+        //Get connection string from web.config file and create sql connection
+        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         //create
-        public bool Create(byte id, string fname, string lname, string birthdate, string phoneNo)
+        public int Create(Login login, string fname, string lname, string birthdate, string phoneNo)
         {
+            int result;
+            //no need to explicitely set id as autoincrement is used
+            //when account is created after Login, the login id needs to be set
+            string queryString = "INSERT INTO Account(dbo.Account.loginId, dbo.Account.firstName, " +
+                "dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone) " +
+                "VALUES(@loginId, '@firstName', '@lastName', '@birthDate', @phone)";
             try
             {
-                bool status = true;
-                //insert into database 
-                //status = true(not suspendet)/false(suspendet)
-                //isAdmin = true / false
-                return true;
+                //insert into database
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@loginId", login);
+                    cmd.Parameters.AddWithValue("@firstName", fname);
+                    cmd.Parameters.AddWithValue("@lastName", lname);
+                    cmd.Parameters.AddWithValue("@birthDate", birthdate);
+                    cmd.Parameters.AddWithValue("@phone", phoneNo);
+                    connection.Open();
+                    result = cmd.ExecuteNonQuery(); //returns 1 if successfull
+                    return result;
+                }
             }
             catch (Exception e)
             {
+                result = 0;
                 e.GetBaseException();
             }
-            return false;
+            finally
+            {
+                connection.Close();
+            }
+            return result;
         }
 
         public bool Create(byte id, string fname, string lname, string birthdate, string phoneNo, bool status, bool isAdmin)

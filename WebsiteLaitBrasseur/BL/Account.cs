@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+//using static WebsiteLaitBrasseur.Account.Profile; //TODO check this
 
 namespace WebsiteLaitBrasseur.BL
 {
@@ -18,6 +19,7 @@ namespace WebsiteLaitBrasseur.BL
         private bool _isAdmin = false;
         private List<Invoice> _invoiceList = new List<Invoice>();
         private Address _address;
+        private Login _login;
 
         //getter and setter
         public int GetAccountId()
@@ -125,15 +127,26 @@ namespace WebsiteLaitBrasseur.BL
             this._address = address;
         }
 
+        public Login GetLogin()
+        {
+            return this._login;
+        }
+
+        public void SetLogin(Login login)
+        {
+            this._login = login;
+        }
+
         //constructor
         public Account()
         {
 
         }
 
-        public Account(byte id, string fname, string lname, string birthdate, string phoneNo)
+        public Account(byte id, Login login, string fname, string lname, string birthdate, string phoneNo)
         {
             this._id = id;
+            this._login = login;
             this._firstName = fname;
             this._lastName = lname;
             this._birthDate = birthdate;
@@ -142,19 +155,19 @@ namespace WebsiteLaitBrasseur.BL
             this._status = true;
         }
 
-        public Account(byte id, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin) : this(id, firstName, lastName, birthDate, phoneNo)
+        public Account(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin) : this(id, login, firstName, lastName, birthDate, phoneNo)
         {
             this._imgPath = imgPath;
             this._status = true;
             this._isAdmin = isAdmin;
         }
 
-        public Account(byte id, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, Address address) : this(id, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
+        public Account(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, Address address) : this(id, login, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
         {
             this._address = address;
         }
 
-        public Account(byte id, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, List<Invoice> invoiceList, Address address) : this(id, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
+        public Account(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, List<Invoice> invoiceList, Address address) : this(id, login, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
         {
             this._invoiceList = invoiceList;
             this._address = address;
@@ -177,12 +190,13 @@ namespace WebsiteLaitBrasseur.BL
                    _status == account._status &&
                    _isAdmin == account._isAdmin &&
                    EqualityComparer<List<Invoice>>.Default.Equals(_invoiceList, account._invoiceList) &&
-                   EqualityComparer<Address>.Default.Equals(_address, account._address);
+                   EqualityComparer<Address>.Default.Equals(_address, account._address) &&
+                   EqualityComparer<Login>.Default.Equals(_login, account._login);
         }
 
         public override int GetHashCode()
         {
-            var hashCode = -499183195;
+            var hashCode = 97198024;
             hashCode = hashCode * -1521134295 + _id.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_firstName);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_lastName);
@@ -193,6 +207,7 @@ namespace WebsiteLaitBrasseur.BL
             hashCode = hashCode * -1521134295 + _isAdmin.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<List<Invoice>>.Default.GetHashCode(_invoiceList);
             hashCode = hashCode * -1521134295 + EqualityComparer<Address>.Default.GetHashCode(_address);
+            hashCode = hashCode * -1521134295 + EqualityComparer<Login>.Default.GetHashCode(_login);
             return hashCode;
         }
     }

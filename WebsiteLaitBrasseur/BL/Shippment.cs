@@ -11,6 +11,7 @@ namespace WebsiteLaitBrasseur.BL
         //private properties
         private byte _id;
         private string _company = "";
+        private string _type = "";
         private DateTime _arrivalDate;
         private DateTime _postageDate;
         private decimal _cost;
@@ -35,6 +36,16 @@ namespace WebsiteLaitBrasseur.BL
         public void SetCompany(string company)
         {
             this._company = company;
+        }
+
+        public string GetType()
+        {
+            return this._type;
+        }
+
+        public void SetType(string type)
+        {
+            this._type = type;
         }
         public DateTime GetArrival()
         {
@@ -103,21 +114,19 @@ namespace WebsiteLaitBrasseur.BL
             _status = true;
         }
 
-        public Shippment(byte id, string company, DateTime arrivalDate, DateTime postageDate, decimal cost)
+        public Shippment(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost)
         {
             _id = id;
             _company = company;
+            _type = type;
             _arrivalDate = arrivalDate;
             _postageDate = postageDate;
             _cost = cost;
-            _status = true;
         }
 
-        public Shippment(byte id, string company, DateTime arrivalDate, DateTime postageDate, decimal cost, bool status) 
-            : this(id, company, arrivalDate, postageDate, cost)
+        public Shippment(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost, bool status) : this(id, company, type, arrivalDate, postageDate, cost)
         {
             _status = status;
         }
-
     }
 }
