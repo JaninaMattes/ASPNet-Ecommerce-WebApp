@@ -51,6 +51,11 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         //constructor
+        public Login()
+        {
+
+        }
+
         public Login(byte id, string email, string pw)
         {
             this._id = id;

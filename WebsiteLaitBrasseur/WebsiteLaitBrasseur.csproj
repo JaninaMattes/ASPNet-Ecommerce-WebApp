@@ -150,7 +150,7 @@
     <Compile Include="BL\Address.cs" />
     <Compile Include="BL\Card.cs" />
     <Compile Include="BL\Invoice.cs" />
-    <Compile Include="BL\LogIn.cs" />
+    <Compile Include="BL\Login.cs" />
     <Compile Include="BL\PayPal.cs" />
     <Compile Include="DAL\AccountDAL.cs" />
     <Compile Include="DAL\AddressDAL.cs" />
@@ -167,6 +167,7 @@
     <Compile Include="DAL\ProductDAL.cs" />
     <Compile Include="DAL\ProductSelectionDAL.cs" />
     <Compile Include="DAL\ShippmentDAL.cs" />
+    <Compile Include="DAL\SqlDataAccess.cs" />
     <Compile Include="UL\AboutUs.aspx.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

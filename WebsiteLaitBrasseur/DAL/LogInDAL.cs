@@ -8,24 +8,41 @@ using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
 {
-    public class LogInDAL
+    public class LoginDAL
     {
         //Get connection string from web.config file and create sql connection
-        SqlConnection con = new SqlConnection(SqlDataAccess.ConnectionString);
+        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         //create
-        public bool Create(byte id, string email, string password, Account user)
+        public int Create(string email, string password)
         {
+            int result;
+            //no need to explicitely set id as autoincrement is used
+            //when account is created after Login, the login id needs to be set
+            string queryString = "INSERT INTO Login(dbo.Login.email, dbo.Login.confirm, dbo.Login.password) " +
+                "VALUES('@email', '@confirm', '@password')";
             try
             {
                 //insert into database
-                //insert account simultaneously into database
-                return true;
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    cmd.Parameters.AddWithValue("@confirm", email);
+                    connection.Open();
+                    result = cmd.ExecuteNonQuery(); //returns (number of rows affected) if successfull 
+                    return result;
+                }
             }
             catch (Exception e)
             {
+                result = 0;
                 e.GetBaseException();
             }
-            return false;
+            finally
+            {
+                connection.Close();
+            }
+            return result;
         }
 
         //update

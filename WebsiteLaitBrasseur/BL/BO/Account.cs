@@ -143,6 +143,12 @@ namespace WebsiteLaitBrasseur.BL
 
         }
 
+        public Account(byte id, Login login)
+        {
+            _id = id;
+            _login = login;
+        }
+
         public Account(byte id, Login login, string fname, string lname, string birthdate, string phoneNo)
         {
             this._id = id;
