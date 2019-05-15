@@ -31,7 +31,9 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@password", password);
-                    return result = Convert.ToInt32(cmd.ExecuteScalar());
+                    connection.Open();
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
+                    Console.WriteLine("value returned " + result.ToString());
                 }
             } catch (Exception e)
             {

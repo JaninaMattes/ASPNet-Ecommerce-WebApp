@@ -17,8 +17,9 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 int count = login.Check(email, password);
+                Console.WriteLine("value returned " + count.ToString());
                 //check if login is correct = user already exists in database
-                if (count == 0)
+                if (count == 1)
                 {
                     return true;
                 }

@@ -76,12 +76,12 @@ namespace WebsiteLaitBrasseur.UL.Admin {
         protected global::System.Web.UI.WebControls.Button Register;
         
         /// <summary>
-        /// Label1-Steuerelement
+        /// LblErrorMessage-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label LblErrorMessage;
     }
 }
