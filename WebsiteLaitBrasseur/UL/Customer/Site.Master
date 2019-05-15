@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="WebsiteLaitBrasseur.UL" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.Site" %>
 
 <!DOCTYPE html>
 
@@ -37,12 +37,12 @@
 
                 <div class="col-md-4 text-right">
 
-                    <a href="/UL/Account/Login.aspx"  >
+                    <a href="/UL/Customer/Login.aspx"  >
                         <input id="LogInButton" runat="server" type="button" class="btn btn-outline-light" value="LogIn"/>
                     </a>
 
                     <br />
-                    <a href="/UL/Account/Logout.aspx"  >
+                    <a href="/UL/Customer/Logout.aspx"  >
                         <asp:label id="lblLogout" runat="server" text="Logout" Visible="false"></asp:label>
                     </a>
                 </div>
@@ -56,12 +56,12 @@
                         <div id="NavBar" class="navbar" >
                             <div class="navbar " >
                                 <input id="TextSearch" type="text"  placeholder="Search" />
-                                <input id="SearchButton" type="button" class="btn btn-primary" onclick="window.location.href = '/UL/OverviewPage.aspx'" Value="Search" />
+                                <input id="SearchButton" type="button" class="btn btn-primary" onclick="window.location.href = '/UL/Customer/OverviewPage.aspx'" Value="Search" />
                             </div>                    
                             <div class="nav navbar-right">
-                                    <input id="CartButton" type="button" class="btn btn-primary" onclick="window.location.href='/UL/Cart.aspx'" value="Cart" />
+                                    <input id="CartButton" type="button" class="btn btn-primary" onclick="window.location.href='/UL/Customer/Cart.aspx'" value="Cart" />
                                 &nbsp;
-                                    <input id="ProfileButton" type="button" class="btn btn-primary" onclick="window.location.href='/UL/Account/Profile.aspx'" value="Profile" />
+                                    <input id="ProfileButton" type="button" class="btn btn-primary" onclick="window.location.href='/UL/Customer/Profile.aspx'" value="Profile" />
                             </div>                   
                         </div>
 

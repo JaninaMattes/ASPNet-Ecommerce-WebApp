@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Detail Page" Language="C#" MasterPageFile="/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="DetailPageAdmin.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.DetailPageAdmin" %>
+﻿<%@ Page Title="Detail Page" Language="C#" MasterPageFile="/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="DetailPageAdmin.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Admin.DetailPageAdmin" %>
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -15,7 +15,7 @@
 
             <!--Image informations  -->
             <div class="col-md-6">
-                <asp:Image ID="destinationImg" runat="server" ImageUrl="~/Images/photoIcon.png" ToolTip="Product Image." Width="350" Height="250px"/><br /><br />
+                <asp:Image ID="DestinationImg" runat="server" ImageUrl="~/Images/photoIcon.png" ToolTip="Product Image." Width="350" Height="250px"/><br /><br />
 
                 <!--TextBox for add a link to the new image + button to upload it -->
                 <asp:TextBox ID="TextImageLink" runat="server" Text="Image link" CssClass="form-control"></asp:TextBox> <br />

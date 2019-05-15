@@ -7,7 +7,7 @@
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace WebsiteLaitBrasseur.Customer {
+namespace WebsiteLaitBrasseur.UL.Customer {
     
     
     public partial class OverviewPage {

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Items Management" Language="C#" MasterPageFile="/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="ItemsManagement.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.ItemsManagement" %>
+﻿<%@ Page Title="Items Management" Language="C#" MasterPageFile="~/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="ItemsManagement.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Admin.ItemsManagement" %>
 
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">

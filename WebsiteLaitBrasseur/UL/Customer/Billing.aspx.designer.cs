@@ -7,10 +7,10 @@
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace WebsiteLaitBrasseur {
+namespace WebsiteLaitBrasseur.UL.Customer {
     
     
-    public partial class CardPayment {
+    public partial class Billing {
         
         /// <summary>
         /// UpdatePanel1-Steuerelement
@@ -20,6 +20,15 @@ namespace WebsiteLaitBrasseur {
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        
+        /// <summary>
+        /// CountryDropDownList-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CountryDropDownList;
         
         /// <summary>
         /// TextName-Steuerelement
@@ -40,120 +49,138 @@ namespace WebsiteLaitBrasseur {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator NameReqField;
         
         /// <summary>
-        /// CreditCardButton-Steuerelement
+        /// TextAdressnumber-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList CreditCardButton;
+        protected global::System.Web.UI.WebControls.TextBox TextAdressnumber;
         
         /// <summary>
-        /// TypeCardReqField-Steuerelement
+        /// AdressnumberReqField-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator TypeCardReqField;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator AdressnumberReqField;
         
         /// <summary>
-        /// TextCardNumber-Steuerelement
+        /// TextAddress-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextCardNumber;
+        protected global::System.Web.UI.WebControls.TextBox TextAddress;
         
         /// <summary>
-        /// CardNumberReqFiled-Steuerelement
+        /// AddressReqField-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator CardNumberReqFiled;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator AddressReqField;
         
         /// <summary>
-        /// CardNumberRegValid-Steuerelement
+        /// TextCity-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator CardNumberRegValid;
+        protected global::System.Web.UI.WebControls.TextBox TextCity;
         
         /// <summary>
-        /// ExpirationLabel-Steuerelement
+        /// CityReqField-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ExpirationLabel;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator CityReqField;
         
         /// <summary>
-        /// MonthExpiration-Steuerelement
+        /// TextZip-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList MonthExpiration;
+        protected global::System.Web.UI.WebControls.TextBox TextZip;
         
         /// <summary>
-        /// YearExpiration-Steuerelement
+        /// ZipReqField-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList YearExpiration;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ZipReqField;
         
         /// <summary>
-        /// TextCSC-Steuerelement
+        /// ZipRegExpValid-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextCSC;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator ZipRegExpValid;
         
         /// <summary>
-        /// CSCReqField-Steuerelement
+        /// TextPhone-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator CSCReqField;
+        protected global::System.Web.UI.WebControls.TextBox TextPhone;
         
         /// <summary>
-        /// CSCRegValid-Steuerelement
+        /// PhoneReqField-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator CSCRegValid;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator PhoneReqField;
         
         /// <summary>
-        /// CancelButton-Steuerelement
+        /// PhoneRegValid-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CancelButton;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator PhoneRegValid;
         
         /// <summary>
-        /// SubmitButton-Steuerelement
+        /// SaveAdress-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SubmitButton;
+        protected global::System.Web.UI.WebControls.Button SaveAdress;
+        
+        /// <summary>
+        /// CreditCard-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CreditCard;
+        
+        /// <summary>
+        /// Paypal-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Paypal;
     }
 }

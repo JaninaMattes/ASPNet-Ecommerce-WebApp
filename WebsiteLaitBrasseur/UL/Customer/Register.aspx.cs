@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebsiteLaitBrasseur.Customer
+namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class Register : System.Web.UI.Page
     {
@@ -21,7 +21,7 @@ namespace WebsiteLaitBrasseur.Customer
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Account/Logout.aspx");
+            Response.Redirect("/UL/Customer/Logout.aspx");
         }
     }
 }

@@ -7,7 +7,7 @@
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace WebsiteLaitBrasseur.Admin {
+namespace WebsiteLaitBrasseur.UL.Admin {
     
     
     public partial class Transactions {

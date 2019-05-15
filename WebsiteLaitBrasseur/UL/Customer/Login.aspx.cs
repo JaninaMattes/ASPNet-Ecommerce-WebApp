@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebsiteLaitBrasseur.BL;
 
-namespace WebsiteLaitBrasseur.Customer
+namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class LoginWebForm : System.Web.UI.Page
     {
@@ -23,7 +23,7 @@ namespace WebsiteLaitBrasseur.Customer
                 {
                 //session is a dictionary inside ASP.NET
                 Session["email"] = TextEmail.Text.Trim();
-                Response.Redirect("/UL/Default.aspx");
+                Response.Redirect("/UL/Customer/Default.aspx");
 
                 //variable session creation
                 //Session.Add("email", TextEmail.Text);
@@ -37,7 +37,7 @@ namespace WebsiteLaitBrasseur.Customer
 
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Account/Register.aspx");
+            Response.Redirect("/UL/Customer/Register.aspx");
         }
 
     }

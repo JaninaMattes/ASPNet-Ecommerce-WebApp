@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Admin Registration" Language="C#" MasterPageFile="/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="RegisterAdmin.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.RegisterAdmin" %>
+﻿<%@ Page Title="Admin Registration" Language="C#" MasterPageFile="~/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="RegisterAdmin.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Admin.RegisterAdmin" %>
 
 
 

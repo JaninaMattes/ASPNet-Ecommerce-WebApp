@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Accueil" Language="C#" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebsiteLaitBrasseur.Default"%>
+﻿<%@ Page Title="Default" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.Default"%>
 
 
 <asp:Content ID="Body" ContentPlaceHolderID="MainContent" runat="server">

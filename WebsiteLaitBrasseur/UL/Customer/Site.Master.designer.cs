@@ -7,7 +7,7 @@
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace WebsiteLaitBrasseur {
+namespace WebsiteLaitBrasseur.UL.Customer {
     
     
     public partial class Site {

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Shopping History" Language="C#" MasterPageFile="/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="Transactions.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.Transactions" %>
+﻿<%@ Page Title="Shopping History" Language="C#" MasterPageFile="~/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="Transactions.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Admin.Transactions" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->

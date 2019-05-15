@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Accounts Managment" Language="C#" MasterPageFile="/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="AccountManagment.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.AccountManagment" %>
+﻿<%@ Page Title="Accounts Managment" Language="C#" MasterPageFile="~/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="AccountManagment.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Admin.AccountManagment" %>
 
 
 

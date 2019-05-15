@@ -5,18 +5,18 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebsiteLaitBrasseur
+namespace WebsiteLaitBrasseur.UL.Customer
 {
-    public partial class Billing : System.Web.UI.Page
+    public partial class Contact : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
 
         }
 
-        protected void CreditCardButton_Click(object sender, EventArgs e)
+        protected void SubmitButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/CardPayment.aspx");
+            ResultLabel.Text = "Your message has been delivered";
         }
     }
 }

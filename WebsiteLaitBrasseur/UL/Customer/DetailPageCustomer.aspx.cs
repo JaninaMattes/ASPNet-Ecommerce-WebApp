@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebsiteLaitBrasseur.BL;
 
-namespace WebsiteLaitBrasseur.Customer
+namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class DetailPage : System.Web.UI.Page
     {

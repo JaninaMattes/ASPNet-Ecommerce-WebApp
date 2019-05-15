@@ -73,15 +73,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="UL\AboutUs.aspx" />
+    <Content Include="UL\Customer\AboutUs.aspx" />
     <Content Include="UL\Customer\Logout.aspx" />
     <Content Include="UL\Customer\Register.aspx" />
     <Content Include="UL\Admin\DetailPageAdmin.aspx" />
     <Content Include="UL\Admin\ItemsManagement.aspx" />
     <Content Include="UL\Admin\Transactions.aspx" />
-    <Content Include="UL\OverviewPage.aspx" />
+    <Content Include="UL\Customer\OverviewPage.aspx" />
     <Content Include="UL\Customer\Profile.aspx" />
-    <Content Include="UL\DetailPageCustomer.aspx" />
+    <Content Include="UL\Customer\DetailPageCustomer.aspx" />
     <Content Include="UL\Admin\AccountManagment.aspx" />
     <Content Include="UL\Admin\Default.aspx" />
     <Content Include="UL\Admin\LoginAdmin.aspx" />
@@ -89,10 +89,10 @@
     <Content Include="UL\Admin\PostagesManagement.aspx" />
     <Content Include="UL\Admin\RegisterAdmin.aspx" />
     <Content Include="UL\Admin\VerificationPage.aspx" />
-    <Content Include="UL\Billing.aspx" />
-    <Content Include="UL\CardPayment.aspx" />
-    <Content Include="UL\Cart.aspx" />
-    <Content Include="UL\Contact.aspx" />
+    <Content Include="UL\Customer\Billing.aspx" />
+    <Content Include="UL\Customer\CardPayment.aspx" />
+    <Content Include="UL\Customer\Cart.aspx" />
+    <Content Include="UL\Customer\Contact.aspx" />
     <Content Include="UL\Images\AboutUPicture.jpg" />
     <Content Include="UL\CSS\Content\bootstrap-grid.css" />
     <Content Include="UL\CSS\Content\bootstrap-grid.min.css" />
@@ -100,7 +100,7 @@
     <Content Include="UL\CSS\Content\bootstrap-reboot.min.css" />
     <Content Include="UL\CSS\Content\bootstrap.css" />
     <Content Include="UL\CSS\Content\bootstrap.min.css" />
-    <Content Include="UL\Default.aspx" />
+    <Content Include="UL\Customer\Default.aspx" />
     <Content Include="UL\Customer\Login.aspx" />
     <Content Include="UL\Images\mastercard-logo-.png" />
     <Content Include="UL\Images\visa_logo.jpg" />
@@ -127,6 +127,7 @@
     <Content Include="UL\Scripts\esm\popper-utils.min.js.map" />
     <Content Include="UL\Scripts\esm\popper-utils.js.map" />
     <Content Include="UL\Admin\Admin.Master" />
+    <Content Include="Connected Services\Application Insights\ConnectedService.json" />
     <None Include="UL\Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="UL\Scripts\jquery-3.3.1.js" />
     <Content Include="UL\Scripts\jquery-3.3.1.min.js" />
@@ -172,11 +173,11 @@
     <Compile Include="DAL\ProductSelectionDAL.cs" />
     <Compile Include="DAL\ShippmentDAL.cs" />
     <Compile Include="DAL\SqlDataAccess.cs" />
-    <Compile Include="UL\AboutUs.aspx.cs">
+    <Compile Include="UL\Customer\AboutUs.aspx.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\AboutUs.aspx.designer.cs">
+    <Compile Include="UL\Customer\AboutUs.aspx.designer.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\Customer\Logout.aspx.cs">
@@ -214,11 +215,11 @@
     <Compile Include="UL\Admin\Transactions.aspx.designer.cs">
       <DependentUpon>Transactions.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\OverviewPage.aspx.cs">
+    <Compile Include="UL\Customer\OverviewPage.aspx.cs">
       <DependentUpon>OverviewPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\OverviewPage.aspx.designer.cs">
+    <Compile Include="UL\Customer\OverviewPage.aspx.designer.cs">
       <DependentUpon>OverviewPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\Customer\Profile.aspx.cs">
@@ -228,11 +229,11 @@
     <Compile Include="UL\Customer\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\DetailPageCustomer.aspx.cs">
+    <Compile Include="UL\Customer\DetailPageCustomer.aspx.cs">
       <DependentUpon>DetailPageCustomer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\DetailPageCustomer.aspx.designer.cs">
+    <Compile Include="UL\Customer\DetailPageCustomer.aspx.designer.cs">
       <DependentUpon>DetailPageCustomer.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\Admin\AccountManagment.aspx.cs">
@@ -291,39 +292,39 @@
     <Compile Include="UL\Admin\VerificationPage.aspx.designer.cs">
       <DependentUpon>VerificationPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\Billing.aspx.cs">
+    <Compile Include="UL\Customer\Billing.aspx.cs">
       <DependentUpon>Billing.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\Billing.aspx.designer.cs">
+    <Compile Include="UL\Customer\Billing.aspx.designer.cs">
       <DependentUpon>Billing.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\CardPayment.aspx.cs">
+    <Compile Include="UL\Customer\CardPayment.aspx.cs">
       <DependentUpon>CardPayment.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\CardPayment.aspx.designer.cs">
+    <Compile Include="UL\Customer\CardPayment.aspx.designer.cs">
       <DependentUpon>CardPayment.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\Cart.aspx.cs">
+    <Compile Include="UL\Customer\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\Cart.aspx.designer.cs">
+    <Compile Include="UL\Customer\Cart.aspx.designer.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\Contact.aspx.cs">
+    <Compile Include="UL\Customer\Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\Contact.aspx.designer.cs">
+    <Compile Include="UL\Customer\Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\Default.aspx.cs">
+    <Compile Include="UL\Customer\Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\Default.aspx.designer.cs">
+    <Compile Include="UL\Customer\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\Customer\Login.aspx.cs">
@@ -334,11 +335,11 @@
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UL\Site.Master.cs">
+    <Compile Include="UL\Customer\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\Site.Master.designer.cs">
+    <Compile Include="UL\Customer\Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -355,7 +356,7 @@
     <Content Include="UL\Scripts\popper.js.map" />
     <Content Include="UL\Scripts\popper-utils.min.js.map" />
     <Content Include="UL\Scripts\popper-utils.js.map" />
-    <Content Include="UL\Site.Master" />
+    <Content Include="UL\Customer\Site.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -371,6 +372,9 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="UL\Scripts\index.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

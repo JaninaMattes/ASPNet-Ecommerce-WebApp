@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Card Informations" Language="C#" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="CardPayment.aspx.cs" Inherits="WebsiteLaitBrasseur.CardPayment" %>
+﻿<%@ Page Title="Card Informations" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="CardPayment.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.CardPayment" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->

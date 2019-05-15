@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Product Overview" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="OverviewPage.aspx.cs" Inherits="WebsiteLaitBrasseur.Customer.OverviewPage" %>
+﻿<%@ Page Language="C#" Title="Product Overview" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="OverviewPage.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.OverviewPage" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
  <!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->

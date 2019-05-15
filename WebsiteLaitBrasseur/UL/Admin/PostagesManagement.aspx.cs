@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebsiteLaitBrasseur.Admin
+namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class PostagesOptions : System.Web.UI.Page
     {

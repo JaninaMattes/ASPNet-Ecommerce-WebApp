@@ -7,7 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebsiteLaitBrasseur.BL;
 
-namespace WebsiteLaitBrasseur.Admin
+namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class ItemsManagement : System.Web.UI.Page
     {

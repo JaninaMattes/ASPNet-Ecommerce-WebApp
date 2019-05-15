@@ -1,11 +1,11 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebsiteLaitBrasseur
+namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class Default : System.Web.UI.Page
     {
@@ -29,7 +29,7 @@ namespace WebsiteLaitBrasseur
         // image has a click interaction to overview page containing the requested products
         protected void imgCommand(object sender, CommandEventArgs e)
         {
-            Response.Redirect("/UL/OverviewPage.aspx?productType=" + e.CommandArgument);
+            Response.Redirect("/UL/Customer/OverviewPage.aspx?productType=" + e.CommandArgument);
         }
     }
 }

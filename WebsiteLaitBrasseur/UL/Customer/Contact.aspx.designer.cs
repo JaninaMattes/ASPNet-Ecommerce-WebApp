@@ -10,7 +10,25 @@
 namespace WebsiteLaitBrasseur.UL.Customer {
     
     
-    public partial class LoginWebForm {
+    public partial class Contact {
+        
+        /// <summary>
+        /// TextName-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextName;
+        
+        /// <summary>
+        /// NameReqField-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator NameReqField;
         
         /// <summary>
         /// TextEmail-Steuerelement
@@ -31,66 +49,48 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailReqField;
         
         /// <summary>
-        /// EmailRegValid-Steuerelement
+        /// TextObject-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailRegValid;
+        protected global::System.Web.UI.WebControls.TextBox TextObject;
         
         /// <summary>
-        /// TextPassword-Steuerelement
+        /// TextMessage-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextPassword;
+        protected global::System.Web.UI.WebControls.TextBox TextMessage;
         
         /// <summary>
-        /// PasswordReqField-Steuerelement
+        /// MessageReqField-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordReqField;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator MessageReqField;
         
         /// <summary>
-        /// RememberMeBox-Steuerelement
+        /// SubmitButton-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox RememberMeBox;
+        protected global::System.Web.UI.WebControls.Button SubmitButton;
         
         /// <summary>
-        /// LoginButton-Steuerelement
+        /// ResultLabel-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button LoginButton;
-        
-        /// <summary>
-        /// Register-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Register;
-        
-        /// <summary>
-        /// LblErrorMessage-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblErrorMessage;
+        protected global::System.Web.UI.WebControls.Label ResultLabel;
     }
 }

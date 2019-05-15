@@ -1,4 +1,4 @@
-﻿<%@ Page Title="PostagesOptions" Language="C#" MasterPageFile="/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="PostagesManagement.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.PostagesOptions" %>
+﻿<%@ Page Title="PostagesOptions" Language="C#" MasterPageFile="~/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="PostagesManagement.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Admin.PostagesOptions" %>
 
 
 

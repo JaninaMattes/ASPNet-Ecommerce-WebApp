@@ -7,7 +7,7 @@
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace WebsiteLaitBrasseur.Admin {
+namespace WebsiteLaitBrasseur.UL.Admin {
     
     
     public partial class DetailPageAdmin {
@@ -22,7 +22,7 @@ namespace WebsiteLaitBrasseur.Admin {
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// destinationImg-Steuerelement
+        /// DestinationImg-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld

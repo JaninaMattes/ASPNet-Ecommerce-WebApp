@@ -10,87 +10,69 @@
 namespace WebsiteLaitBrasseur.UL.Customer {
     
     
-    public partial class LoginWebForm {
+    public partial class Default {
         
         /// <summary>
-        /// TextEmail-Steuerelement
+        /// lblWelcome-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextEmail;
+        protected global::System.Web.UI.WebControls.Label lblWelcome;
         
         /// <summary>
-        /// EmailReqField-Steuerelement
+        /// img1-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailReqField;
+        protected global::System.Web.UI.WebControls.ImageButton img1;
         
         /// <summary>
-        /// EmailRegValid-Steuerelement
+        /// Title0-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailRegValid;
+        protected global::System.Web.UI.WebControls.Label Title0;
         
         /// <summary>
-        /// TextPassword-Steuerelement
+        /// Subtitle0-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextPassword;
+        protected global::System.Web.UI.WebControls.Label Subtitle0;
         
         /// <summary>
-        /// PasswordReqField-Steuerelement
+        /// img2-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordReqField;
+        protected global::System.Web.UI.WebControls.ImageButton img2;
         
         /// <summary>
-        /// RememberMeBox-Steuerelement
+        /// Title1-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox RememberMeBox;
+        protected global::System.Web.UI.WebControls.Label Title1;
         
         /// <summary>
-        /// LoginButton-Steuerelement
+        /// Subtitle1-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button LoginButton;
-        
-        /// <summary>
-        /// Register-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Register;
-        
-        /// <summary>
-        /// LblErrorMessage-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblErrorMessage;
+        protected global::System.Web.UI.WebControls.Label Subtitle1;
     }
 }

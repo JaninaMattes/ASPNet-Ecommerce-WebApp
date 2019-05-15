@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Default" Language="C#" MasterPageFile="/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebsiteLaitBrasseur.Admin.Default" %>
+﻿<%@ Page Title="Default" Language="C#" MasterPageFile="~/UL/Admin/Admin.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Admin.Default" %>
 
 
 

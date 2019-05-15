@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebsiteLaitBrasseur.Admin
+namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class AccountManagment : System.Web.UI.Page
     {
@@ -16,7 +16,6 @@ namespace WebsiteLaitBrasseur.Admin
                 BindUserLabel();
                 BindCustomer();
             }
-
         }
 
         ////Grid methods

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebsiteLaitBrasseur
+namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class CardPayment : System.Web.UI.Page
     {
@@ -21,7 +21,7 @@ namespace WebsiteLaitBrasseur
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Cart.aspx");
+            Response.Redirect("/UL/Customer/Cart.aspx");
         }
     }
 }

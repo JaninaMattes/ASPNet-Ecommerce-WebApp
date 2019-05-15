@@ -6,7 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using WebsiteLaitBrasseur.BL;
 
-namespace WebsiteLaitBrasseur.Customer
+namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class OverviewPage : System.Web.UI.Page
     {
@@ -60,7 +60,7 @@ namespace WebsiteLaitBrasseur.Customer
 
         protected void imgCommand(object sender, CommandEventArgs e)
         {
-            Response.Redirect("/UL/DetailPage.aspx?id=" + e.CommandArgument);
+            Response.Redirect("/UL/Customer/DetailPage.aspx?id=" + e.CommandArgument);
         }
 
         protected void ImageRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Cart" Language="C#" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="WebsiteLaitBrasseur.Cart" %>
+﻿<%@ Page Title="Cart" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.Cart" %>
 
 
 <asp:Content ID="Body" ContentPlaceHolderID="MainContent" runat="server">
