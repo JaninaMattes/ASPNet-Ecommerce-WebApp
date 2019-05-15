@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace WebsiteLaitBrasseur.Account
+namespace WebsiteLaitBrasseur.Customer
 {
     public partial class Register : System.Web.UI.Page
     {

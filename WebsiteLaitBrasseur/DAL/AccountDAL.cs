@@ -8,6 +8,11 @@ using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
 {
+    /// <summary>
+    /// The Account DAL contains all sql commands
+    /// to program against the database and 
+    /// open the connection via an SQLConnection object. 
+    /// </summary>
     public class AccountDAL
     {
         //Get connection string from web.config file and create sql connection
@@ -21,21 +26,9 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "INSERT INTO Account(dbo.Account.loginId, dbo.Account.firstName, " +
                 "dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.status, dbo.Account.isAdmin) " +
                 "VALUES(@loginId, '@firstName', '@lastName', '@birthDate', '@phone', @status, @isAdmin)";
-            string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM ProjectGroup ORDER BY 1 DESC";
+            string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM Account ORDER BY 1 DESC";
             try
             {
-
-                SqlCommand command = new SqlCommand("SELECT TOP(1) GroupID FROM ProjectGroup ORDER BY 1 DESC", connection);
-
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                //won't need a while, since it will only retrieve one row
-                reader.Read();
-
-                //here is your data
-                string data = reader["GroupID"].ToString();
-
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -47,9 +40,20 @@ namespace WebsiteLaitBrasseur.DAL
                     cmd.Parameters.AddWithValue("@status", status);
                     cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
                     connection.Open();
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                    return result;
+                    cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
+
+                ///find the last manipulated id due to autoincrement and return it
+                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    //won't need a while, since it will only retrieve one row
+                    reader.Read();
+                    //here is your data
+                    result = (Int32) reader["accountID"];
+                }
+                return result;
             }
             catch (Exception e)
             {
@@ -58,7 +62,7 @@ namespace WebsiteLaitBrasseur.DAL
             }
             finally
             {
-                connection.Close();
+               
             }
             return result;
         }
@@ -95,7 +99,7 @@ namespace WebsiteLaitBrasseur.DAL
             return false;
         }
 
-        public bool Update(byte id, string phoneNo)
+        public bool UpdatePhoneNo(byte id, string phoneNo)
         {
             try
             {
@@ -125,7 +129,7 @@ namespace WebsiteLaitBrasseur.DAL
             return false;
         }
 
-        public bool Update(byte id, string imgPath)
+        public bool UpdateImg(byte id, string imgPath)
         {
             try
             {
@@ -158,12 +162,12 @@ namespace WebsiteLaitBrasseur.DAL
 
         //read
         //find one specific person in the database
-        public Account FindBy(byte id)
+        public AccountBO FindBy(byte id)
         {
-            Account account;
+            AccountBO account;
             try
             {
-                account = new Account();
+                account = new AccountBO();
                 //find entry in database where id = XY
                 return account;
             }
@@ -175,12 +179,12 @@ namespace WebsiteLaitBrasseur.DAL
             return null;
         }
         //find all admins in the database
-        public Account FindBy(bool isAdmin)
+        public AccountBO FindBy(bool isAdmin)
         {
-            Account account;
+            AccountBO account;
             try
             {
-                account = new Account();
+                account = new AccountBO();
                 //find entry in database where isAdmin = true (Admin) else Customer
                 return account;
             }
@@ -192,12 +196,12 @@ namespace WebsiteLaitBrasseur.DAL
             return null;
         }
 
-        public Account FindByStatus(bool status)
+        public AccountBO FindByStatus(bool status)
         {
-            Account account;
+            AccountBO account;
             try
             {
-                account = new Account();
+                account = new AccountBO();
                 //find entry in database where status = suspendet/enabled
                 return account;
             }
@@ -210,12 +214,12 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find person in database by name
-        public Account FindBy(string fname, string lname)
+        public AccountBO FindBy(string fname, string lname)
         {
-            Account account;
+            AccountBO account;
             try
             {
-                account = new Account();
+                account = new AccountBO();
                 //find entry in database where name = fname + lname
                 return account;
             }

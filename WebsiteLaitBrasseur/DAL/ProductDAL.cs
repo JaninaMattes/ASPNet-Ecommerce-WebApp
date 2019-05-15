@@ -11,9 +11,9 @@ namespace WebsiteLaitBrasseur.DAL
     public class ProductDAL
     {
         //Get connection string from web.config file and create sql connection
-        SqlConnection con = new SqlConnection(SqlDataAccess.ConnectionString);
+        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         //create
-        public bool Create(byte id, string name, string type, string producer, float unitSize, 
+        public bool Create(uint id, string name, string type, string producer, float unitSize, 
             decimal price, string info, string shortInf)
         {
             try
@@ -28,8 +28,8 @@ namespace WebsiteLaitBrasseur.DAL
             return false;
         }
 
-        public bool Create(byte id, string name, string type, string producer, float unitSize, decimal price, string info, 
-            string shortInfo, string imgPath, byte stock, bool status)
+        public bool Create(uint id, string name, string type, string producer, float unitSize, decimal price, string info, 
+            string shortInfo, string imgPath, uint stock, bool status)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace WebsiteLaitBrasseur.DAL
 
         //update
         //set status available or unavailable if product is not in store
-        public bool Update(byte id, bool status)
+        public bool Update(uint id, bool status)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update stock amount
-        public bool Update(byte id, byte stock)
+        public bool Update(uint id, uint stock)
         {
             try
             {
@@ -75,7 +75,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update product image
-        public bool UpdateImg(byte id, string imgPath)
+        public bool UpdateImg(uint id, string imgPath)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update producer
-        public bool UpdateProducer(byte id, string producer)
+        public bool UpdateProducer(uint id, string producer)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update title/name
-        public bool UpdateName(byte id, string name)
+        public bool UpdateName(uint id, string name)
         {
             try
             {
@@ -120,7 +120,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update short info
-        public bool UpdateShortInfo(byte id, string longInfo)
+        public bool UpdateShortInfo(uint id, string longInfo)
         {
             try
             {
@@ -135,7 +135,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update long info
-        public bool UpdateLongInfo(byte id, string longInfo)
+        public bool UpdateLongInfo(uint id, string longInfo)
         {
             try
             {
@@ -150,7 +150,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update complete info
-        public bool Update(byte id, string longInfo, string shortInfo)
+        public bool Update(uint id, string longInfo, string shortInfo)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update unit size
-        public bool Update(byte id, float unitSize)
+        public bool Update(uint id, float unitSize)
         {
             try
             {
@@ -180,7 +180,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update price
-        public bool Update(byte id, decimal price)
+        public bool Update(uint id, decimal price)
         {
             try
             {
@@ -195,8 +195,8 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update complete product 
-        public bool Update(byte id, string name, string type, string producer, float unitSize, decimal price, string longInfo,
-            string shortInfo, string imgPath, byte stock, bool status)
+        public bool Update(uint id, string name, string type, string producer, float unitSize, decimal price, string longInfo,
+            string shortInfo, string imgPath, uint stock, bool status)
         {
             try
             {
@@ -211,14 +211,36 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //read
-        public Product FindBy(byte id)
+        public Product FindBy(int id)
         {
+            string queryString = "SELECT * FROM dbo.Product WHERE productID=@id";
             Product product;
             try
-            {
-                product = new Product();
+            {                
                 //find entry in database where id = XY
-                return product;
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {                        
+                        if (reader.Read())
+                        {
+                            product = new Product();
+                            product.SetId((int)reader["productID"]);
+                            product.SetName(reader["pName"].ToString());
+                            product.SetType(reader["pType"].ToString());
+                            product.SetProducer(reader["producer"].ToString());
+                            product.SetUnit((float)reader["unitSize"]);
+                            product.SetPrice((decimal)reader["unitPrice"]);
+                            product.SetInfo(reader["longInfo"].ToString());
+                            product.SetShortInfo(reader["shortInfo"].ToString());
+                            product.SetImgPath(reader["imgPath"].ToString());
+                            product.SetStock((int)reader["inStock"]);
+                            product.SetStatus((int)reader["pStatus"]);
+                            //return product instance as data object 
+                            return product;
+                        }                         
+                    }
+                }   
             }
             catch (Exception e)
             {

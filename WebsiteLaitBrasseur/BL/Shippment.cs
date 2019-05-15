@@ -38,7 +38,7 @@ namespace WebsiteLaitBrasseur.BL
             this._company = company;
         }
 
-        public string GetType()
+        public string GetShipType()
         {
             return this._type;
         }

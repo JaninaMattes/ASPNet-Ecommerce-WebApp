@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Logout" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="Logout.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.Logout" %>
+﻿<%@ Page Language="C#" Title="Logout" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="Logout.aspx.cs" Inherits="WebsiteLaitBrasseur.Customer.Logout" %>
 
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">

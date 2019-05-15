@@ -74,13 +74,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="UL\AboutUs.aspx" />
-    <Content Include="UL\Account\Logout.aspx" />
-    <Content Include="UL\Account\Register.aspx" />
+    <Content Include="UL\Customer\Logout.aspx" />
+    <Content Include="UL\Customer\Register.aspx" />
     <Content Include="UL\Admin\DetailPageAdmin.aspx" />
     <Content Include="UL\Admin\ItemsManagement.aspx" />
     <Content Include="UL\Admin\Transactions.aspx" />
     <Content Include="UL\OverviewPage.aspx" />
-    <Content Include="UL\Account\Profile.aspx" />
+    <Content Include="UL\Customer\Profile.aspx" />
     <Content Include="UL\DetailPage.aspx" />
     <Content Include="UL\Admin\AccountManagment.aspx" />
     <Content Include="UL\Admin\Default.aspx" />
@@ -101,7 +101,7 @@
     <Content Include="UL\CSS\Content\bootstrap.css" />
     <Content Include="UL\CSS\Content\bootstrap.min.css" />
     <Content Include="UL\Default.aspx" />
-    <Content Include="UL\Account\Login.aspx" />
+    <Content Include="UL\Customer\Login.aspx" />
     <Content Include="UL\Images\mastercard-logo-.png" />
     <Content Include="UL\Images\visa_logo.jpg" />
     <Content Include="UL\Scripts\bootstrap.bundle.js" />
@@ -146,12 +146,15 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL\Account.cs" />
+    <Compile Include="BL\AccountBO.cs" />
+    <Compile Include="BL\AccountBL.cs" />
     <Compile Include="BL\Address.cs" />
     <Compile Include="BL\Card.cs" />
     <Compile Include="BL\Invoice.cs" />
     <Compile Include="BL\Login.cs" />
+    <Compile Include="BL\LoginBL.cs" />
     <Compile Include="BL\PayPal.cs" />
+    <Compile Include="BL\ProductBL.cs" />
     <Compile Include="DAL\AccountDAL.cs" />
     <Compile Include="DAL\AddressDAL.cs" />
     <Compile Include="DAL\CardDAL.cs" />
@@ -175,18 +178,18 @@
     <Compile Include="UL\AboutUs.aspx.designer.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\Account\Logout.aspx.cs">
+    <Compile Include="UL\Customer\Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\Account\Logout.aspx.designer.cs">
+    <Compile Include="UL\Customer\Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\Account\Register.aspx.cs">
+    <Compile Include="UL\Customer\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\Account\Register.aspx.designer.cs">
+    <Compile Include="UL\Customer\Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\Admin\DetailPageAdmin.aspx.cs">
@@ -217,11 +220,11 @@
     <Compile Include="UL\OverviewPage.aspx.designer.cs">
       <DependentUpon>OverviewPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\Account\Profile.aspx.cs">
+    <Compile Include="UL\Customer\Profile.aspx.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\Account\Profile.aspx.designer.cs">
+    <Compile Include="UL\Customer\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\DetailPage.aspx.cs">
@@ -322,11 +325,11 @@
     <Compile Include="UL\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\Account\Login.aspx.cs">
+    <Compile Include="UL\Customer\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\Account\Login.aspx.designer.cs">
+    <Compile Include="UL\Customer\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

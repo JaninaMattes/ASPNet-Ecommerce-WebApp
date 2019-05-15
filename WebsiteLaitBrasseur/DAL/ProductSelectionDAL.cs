@@ -8,10 +8,10 @@ using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
 {
-    //Get connection string from web.config file and create sql connection
-    SqlConnection con = new SqlConnection(SqlDataAccess.ConnectionString);
     public class ProductSelectionDAL
     {
+        //Get connection string from web.config file and create sql connection
+        SqlConnection con = new SqlConnection(SqlDataAccess.ConnectionString);
         //create
         public bool Create(byte id, Product selection, int quantity, decimal origPrice)
         {

@@ -7,7 +7,7 @@
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace WebsiteLaitBrasseur.Account {
+namespace WebsiteLaitBrasseur.Customer {
     
     
     public partial class Profile {

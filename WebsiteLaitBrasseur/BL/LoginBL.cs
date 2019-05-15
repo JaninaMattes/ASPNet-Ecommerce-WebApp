@@ -11,23 +11,49 @@ namespace WebsiteLaitBrasseur.BL
      */
     public class LoginBL
     {
+        public bool Check(string email, string password)
+        {
+            LoginDAL login = new LoginDAL();
+            try
+            {
+                int count = login.Check(email, password);
+                //check if login is correct = user already exists in database
+                if (count == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return false;
+        }
+
         /// <summary>
         /// create new login and simultaneously 
         /// the correct account that belongs to a login
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
-        public void createLogin(string email, string password)
+        public int CreateLogin(string email, string password)
         {
-            LoginDAL lg = new LoginDAL();
+            LoginDAL login = new LoginDAL();
+            int column = 0;
             try
             {
-                lg.Create(email, password);
+                return column = login.Create(email, password);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 e.GetBaseException();
             }
+
+            return column;
         }
     }
 }

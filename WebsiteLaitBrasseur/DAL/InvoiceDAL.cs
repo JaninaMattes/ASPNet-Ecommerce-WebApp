@@ -14,7 +14,7 @@ namespace WebsiteLaitBrasseur.DAL
         SqlConnection con = new SqlConnection(SqlDataAccess.ConnectionString);
 
         //create
-        public bool Create(byte id, Account customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost,
+        public bool Create(byte id, AccountBO customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost,
             decimal totalTaxes, decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email)
         {
             bool paymentStatus = false;
@@ -64,7 +64,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all bills by customer
-        public Shippment FindBy(Account customer)
+        public Shippment FindBy(AccountBO customer)
         {
             Shippment shipper;
             try
@@ -82,7 +82,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all unpaied/paied bills per customer
-        public Shippment FindBy(Account customer, bool paymentStatus)
+        public Shippment FindBy(AccountBO customer, bool paymentStatus)
         {
             Shippment shipper;
             try

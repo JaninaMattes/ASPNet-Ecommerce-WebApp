@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class Account
+    public class AccountBO
     {
         //private properties
         private byte _id;
@@ -138,18 +138,18 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         //constructor
-        public Account()
+        public AccountBO()
         {
 
         }
 
-        public Account(byte id, Login login)
+        public AccountBO(byte id, Login login)
         {
             _id = id;
             _login = login;
         }
 
-        public Account(byte id, Login login, string fname, string lname, string birthdate, string phoneNo)
+        public AccountBO(byte id, Login login, string fname, string lname, string birthdate, string phoneNo)
         {
             this._id = id;
             this._login = login;
@@ -161,19 +161,19 @@ namespace WebsiteLaitBrasseur.BL
             this._status = true;
         }
 
-        public Account(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin) : this(id, login, firstName, lastName, birthDate, phoneNo)
+        public AccountBO(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin) : this(id, login, firstName, lastName, birthDate, phoneNo)
         {
             this._imgPath = imgPath;
             this._status = true;
             this._isAdmin = isAdmin;
         }
 
-        public Account(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, Address address) : this(id, login, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
+        public AccountBO(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, Address address) : this(id, login, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
         {
             this._address = address;
         }
 
-        public Account(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, List<Invoice> invoiceList, Address address) : this(id, login, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
+        public AccountBO(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, List<Invoice> invoiceList, Address address) : this(id, login, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
         {
             this._invoiceList = invoiceList;
             this._address = address;
@@ -186,7 +186,7 @@ namespace WebsiteLaitBrasseur.BL
 
         public override bool Equals(object obj)
         {
-            return obj is Account account &&
+            return obj is AccountBO account &&
                    _id == account._id &&
                    _firstName == account._firstName &&
                    _lastName == account._lastName &&

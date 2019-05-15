@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Customer Profile" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.Profile" %>
+﻿<%@ Page Language="C#" Title="Customer Profile" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="WebsiteLaitBrasseur.Customer.Profile" %>
 
 <asp:Content id="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
  <!--START UpdatePanel fEnables sections of a page to be partially rendered without a postback. -->

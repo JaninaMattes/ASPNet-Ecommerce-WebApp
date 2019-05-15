@@ -12,7 +12,41 @@ namespace WebsiteLaitBrasseur.DAL
     {
         //Get connection string from web.config file and create sql connection
         SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
-        //create
+
+        /// <summary>
+        /// check in the database if the user is already existent
+        /// if a user exists already in the database a result > 0 is expected.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public int Check(string email, string password)
+        {
+            int result = 0;
+            string queryString = "SELECT COUNT(1) FROM dbo.Login WHERE dbo.email=@email AND dbo.password=@password";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    return result = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            } catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return result;
+        }
+        //------------ CREATE ------------------------
+        /// <summary>
+        /// after the CRUD principle for databases create
+        /// a new log in with only email and password
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public int Create(string email, string password)
         {
             int result;
@@ -20,27 +54,34 @@ namespace WebsiteLaitBrasseur.DAL
             //when account is created after Login, the login id needs to be set
             string queryString = "INSERT INTO Login(dbo.Login.email, dbo.Login.confirm, dbo.Login.password) " +
                 "VALUES('@email', '@confirm', '@password')";
+            string queryAutoIncr = "SELECT TOP(1) dbo.Login.loginID FROM Login ORDER BY 1 DESC";
             try
             {
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@password", password);
                     cmd.Parameters.AddWithValue("@confirm", email);
+                    cmd.Parameters.AddWithValue("@password", password);
                     connection.Open();
-                    result = cmd.ExecuteNonQuery(); //returns (number of rows affected) if successfull 
-                    return result;
+                    cmd.ExecuteNonQuery(); //returns (number of rows affected) if successfull                    
                 }
+                ///find the last manipulated id due to autoincrement and return it
+                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    //won't need a while, since it will only retrieve one row
+                    reader.Read();
+                    //here is your data
+                    result = (int)reader["loginID"];                    
+                }
+                return result;
             }
             catch (Exception e)
             {
                 result = 0;
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }

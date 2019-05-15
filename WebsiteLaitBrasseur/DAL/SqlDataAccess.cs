@@ -13,7 +13,9 @@ namespace WebsiteLaitBrasseur.DAL
     public class SqlDataAccess
     {
         //Default connection string. a connection named MsSql should be defined in web.config file.
-            public const string CONNECTION_STRING_NAME = "LocalHostLaitBrasseurConnectionString";
+        //tutorial: https://www.youtube.com/watch?v=aoFDyt8oG0k&list=PL6n9fhu94yhX5dzHunAI2t4kE0kOuv4D7 
+        //public const string CONNECTION_STRING_LOCALH = "datasource = .; database = LaitBrasseurDatabase; integrated security=SSPI"; 
+        public const string CONNECTION_STRING_NAME = "LaitBrasseurDB";
 
             //This returns the connection string  
             private static string _connectionString = string.Empty;

@@ -14,7 +14,7 @@ namespace WebsiteLaitBrasseur.BL
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
-        public void createAccount(Login login, string firstName, string lastName, string birthDate, string phoneNo, bool status, bool isAdmin)
+        public void createAccount(Login login, string firstName, string lastName, string birthDate, string phoneNo, Int16 status, Int16 isAdmin)
         {
             try
             {

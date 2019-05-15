@@ -12,7 +12,7 @@ namespace WebsiteLaitBrasseur.BL
         private byte _id;
         private string _email;
         private string _password;
-        private Account _user;
+        private AccountBO _user;
 
         //getter and setter
         public int GetId()
@@ -45,7 +45,7 @@ namespace WebsiteLaitBrasseur.BL
             this._password = pw;
         }
 
-        public Account GetAccount()
+        public AccountBO GetAccount()
         {
             return this._user;
         }
@@ -63,7 +63,7 @@ namespace WebsiteLaitBrasseur.BL
             this._password = pw;
         }
 
-        public Login(byte id, string email, string password, Account user) : this(id, email, password)
+        public Login(byte id, string email, string password, AccountBO user) : this(id, email, password)
         {
             _user = user;
         }

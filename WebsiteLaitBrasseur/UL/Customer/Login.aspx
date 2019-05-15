@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Title="Log In" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="WebsiteLaitBrasseur.Account.WebForm1" %>
+﻿<%@ Page Language="C#" Title="Login" MasterPageFile="/UL/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="WebsiteLaitBrasseur.Customer.LoginWebForm" %>
 
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
@@ -40,14 +40,15 @@
                     <!--Login/Register button & Forgot Password link -->
                     <div class="col-md-offset-3 col-md-9">
                         <asp:Button ID="LoginButton" runat="server" Text="Login" OnClick="LoginButton_Click" CssClass="btn btn-primary"/>
-                        <a href='/UL/Account/Logout.aspx'>Forgot password ?</a><br />
+                        <a href='/UL/Account/Logout.aspx'>Forgot password ?</a>
+                        <br />
                         <asp:Button ID="Register" runat="server" Text="Register" OnClick="RegisterButton_Click" CausesValidation="False" CssClass="btn btn-info"/>
 
                     </div>
 
 
                     <div class="col-md-offset-3 col-md-9">
-                        <asp:Label ID="Label1" runat="server" CssClass="text-info"></asp:Label>
+                        <asp:Label ID="LblErrorMessage" runat="server" CssClass="text-info">Username or Password does not exist.</asp:Label>
                     </div>
             </div>
 </asp:Content>

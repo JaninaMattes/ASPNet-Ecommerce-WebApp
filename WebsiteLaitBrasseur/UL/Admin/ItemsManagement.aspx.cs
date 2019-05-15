@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.Admin
 {
@@ -160,8 +161,9 @@ namespace WebsiteLaitBrasseur.Admin
         }
 
         protected void BindItems()
-        {   
-            var db = new DAL.DemoDatabase();    //DB initialization
+        {
+            //call product from Database                
+            ProductBL db = new ProductBL();    //DB initialization
             var products = db.GetProducts();    //Products recuperation
 
             ItemListTable.DataSource = products;               //gridview DataSource creation with Products information

@@ -8,7 +8,7 @@ namespace WebsiteLaitBrasseur.BL
     public class Product
     {
         //private member
-        private byte _id;
+        private int _id;
         private string _name = "";
         private string _type = "";
         private string _producer = "";
@@ -17,16 +17,16 @@ namespace WebsiteLaitBrasseur.BL
         private string _info = "";
         private string _shortInfo = "";
         private string _imgPath = "";
-        private byte _stock;
-        private bool _status = false;
+        private int _stock;
+        private int _status = 0;
 
         //getter and setter
-        public byte GetId()
+        public int GetId()
         {
             return this._id;
         }
 
-        public void SetId(byte id)
+        public void SetId(int id)
         {
             this._id = id;
         }
@@ -112,22 +112,22 @@ namespace WebsiteLaitBrasseur.BL
             this._imgPath = imgPath;
         }
 
-        public byte GetStock()
+        public int GetStock()
         {
             return _stock;
         }
 
-        public void SetStock(byte amount)
+        public void SetStock(int amount)
         {
             this._stock = amount;
         }
 
-        public bool GetStatus()
+        public int GetStatus()
         {
             return _status;
         }
 
-        public void SetStatus(bool status)
+        public void SetStatus(int status)
         {
             this._status = status;
         }

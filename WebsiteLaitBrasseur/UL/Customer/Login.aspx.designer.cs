@@ -7,108 +7,90 @@
 // </automatisch generiert>
 //------------------------------------------------------------------------------
 
-namespace WebsiteLaitBrasseur.Admin {
+namespace WebsiteLaitBrasseur.Customer {
     
     
-    public partial class DetailPageAdmin {
+    public partial class LoginWebForm {
         
         /// <summary>
-        /// UpdatePanel1-Steuerelement
+        /// TextEmail-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.WebControls.TextBox TextEmail;
         
         /// <summary>
-        /// destinationImg-Steuerelement
+        /// EmailReqField-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image DestinationImg;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailReqField;
         
         /// <summary>
-        /// TextImageLink-Steuerelement
+        /// EmailRegValid-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextImageLink;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailRegValid;
         
         /// <summary>
-        /// UploadButton-Steuerelement
+        /// TextPassword-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button UploadButton;
+        protected global::System.Web.UI.WebControls.TextBox TextPassword;
         
         /// <summary>
-        /// TextLongDescription-Steuerelement
+        /// PasswordReqField-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextLongDescription;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordReqField;
         
         /// <summary>
-        /// LongReqField-Steuerelement
+        /// RememberMeBox-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator LongReqField;
+        protected global::System.Web.UI.WebControls.CheckBox RememberMeBox;
         
         /// <summary>
-        /// TextProducer-Steuerelement
+        /// LoginButton-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextProducer;
+        protected global::System.Web.UI.WebControls.Button LoginButton;
         
         /// <summary>
-        /// ProducerReqField-Steuerelement
+        /// Register-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator ProducerReqField;
+        protected global::System.Web.UI.WebControls.Button Register;
         
         /// <summary>
-        /// TextShortDescription-Steuerelement
+        /// LblErrorMessage-Steuerelement
         /// </summary>
         /// <remarks>
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextShortDescription;
-        
-        /// <summary>
-        /// ShortReqField-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator ShortReqField;
-        
-        /// <summary>
-        /// SaveButton-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SaveButton;
+        protected global::System.Web.UI.WebControls.Label LblErrorMessage;
     }
 }

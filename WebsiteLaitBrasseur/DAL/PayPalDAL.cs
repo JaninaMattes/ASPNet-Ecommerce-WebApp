@@ -7,11 +7,11 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.DAL
 {
-    //Get connection string from web.config file and create sql connection
-    SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
 
     public class PayPalDAL
     {
+        //Get connection string from web.config file and create sql connection
+        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         //TOODO
     }
 }
