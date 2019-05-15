@@ -182,14 +182,14 @@ namespace WebsiteLaitBrasseur.BL
             _shortInfo = shortInfo;
         }
 
-        public Product(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, byte stock) 
+        public Product(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, int stock) 
             : this(id, name, type, producer, unitSize, price, info, shortInfo)
         {
             _imgPath = imgPath;
             _stock = stock;
         }
 
-        public Product(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, byte stock, bool status) : this(id, name, type, producer, unitSize, price, info, shortInfo, imgPath, stock)
+        public Product(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, int stock, int status) : this(id, name, type, producer, unitSize, price, info, shortInfo, imgPath, stock)
         {
             _status = status;
         }

@@ -81,7 +81,7 @@
     <Content Include="UL\Admin\Transactions.aspx" />
     <Content Include="UL\OverviewPage.aspx" />
     <Content Include="UL\Customer\Profile.aspx" />
-    <Content Include="UL\DetailPage.aspx" />
+    <Content Include="UL\DetailPageCustomer.aspx" />
     <Content Include="UL\Admin\AccountManagment.aspx" />
     <Content Include="UL\Admin\Default.aspx" />
     <Content Include="UL\Admin\LoginAdmin.aspx" />
@@ -150,6 +150,7 @@
     <Compile Include="BL\AccountBL.cs" />
     <Compile Include="BL\Address.cs" />
     <Compile Include="BL\Card.cs" />
+    <Compile Include="BL\EmptyRowException.cs" />
     <Compile Include="BL\Invoice.cs" />
     <Compile Include="BL\Login.cs" />
     <Compile Include="BL\LoginBL.cs" />
@@ -227,12 +228,12 @@
     <Compile Include="UL\Customer\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
     </Compile>
-    <Compile Include="UL\DetailPage.aspx.cs">
-      <DependentUpon>DetailPage.aspx</DependentUpon>
+    <Compile Include="UL\DetailPageCustomer.aspx.cs">
+      <DependentUpon>DetailPageCustomer.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UL\DetailPage.aspx.designer.cs">
-      <DependentUpon>DetailPage.aspx</DependentUpon>
+    <Compile Include="UL\DetailPageCustomer.aspx.designer.cs">
+      <DependentUpon>DetailPageCustomer.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\Admin\AccountManagment.aspx.cs">
       <DependentUpon>AccountManagment.aspx</DependentUpon>

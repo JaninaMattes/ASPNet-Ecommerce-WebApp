@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.master.cs" Inherits="WebsiteLaitBrasseur.Admin.Admin" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Admin.Master.cs" Inherits="WebsiteLaitBrasseur.Admin.Admin" %>
 
 <!DOCTYPE html>
 

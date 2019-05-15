@@ -164,12 +164,11 @@ namespace WebsiteLaitBrasseur.Admin
         {
             //call product from Database                
             ProductBL db = new ProductBL();    //DB initialization
-            var products = db.GetProducts();    //Products recuperation
+            var products = db.GetAllProducts();   //Products recuperation
 
-            ItemListTable.DataSource = products;               //gridview DataSource creation with Products information
-            ItemListTable.DataBind();                          //Link gridView and DataSource
-
-              
+            //TODO:
+            ItemListTable.DataSource = products;  //gridview DataSource creation with Products information
+            ItemListTable.DataBind();             //Link gridView and DataSource              
         }
 
 

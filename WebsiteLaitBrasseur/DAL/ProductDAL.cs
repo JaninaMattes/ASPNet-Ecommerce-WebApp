@@ -253,22 +253,47 @@ namespace WebsiteLaitBrasseur.DAL
         //find a product by type 
         public List<Product> FindByType(string type)
         {
-            Product product;
-            List<Product> list = new List<Product>();
+            List<Product> results = new List<Product>();
+            string queryString = "SELECT * FROM dbo.Product WHERE pType=@type";
             try
             {
-                product = new Product();
                 //find entry in database where id = XY
-                list.Add(product);
-                
-                //after all products are retrieved from DB
-                return list;
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                Product product = new Product();
+                                product.SetId((int)reader["productID"]);
+                                product.SetName(reader["pName"].ToString());
+                                product.SetType(reader["pType"].ToString());
+                                product.SetProducer(reader["producer"].ToString());
+                                product.SetUnit((float)reader["unitSize"]);
+                                product.SetPrice((decimal)reader["unitPrice"]);
+                                product.SetInfo(reader["longInfo"].ToString());
+                                product.SetShortInfo(reader["shortInfo"].ToString());
+                                product.SetImgPath(reader["imgPath"].ToString());
+                                product.SetStock((int)reader["inStock"]);
+                                product.SetStatus((int)reader["pStatus"]);
+                                //add data objects to result-list 
+                                results.Add(product);
+                            }
+                            return results;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
-
             return null;
         }
 
@@ -340,17 +365,44 @@ namespace WebsiteLaitBrasseur.DAL
 
         //find all products 
         public List<Product> FindAll()
-        {
-            Product product;
-            List<Product> list = new List<Product>();
+        {            
+            List<Product> results = new List<Product>();
+            string queryString = "SELECT * FROM dbo.Product";
             try
             {
-                product = new Product();
                 //find entry in database where id = XY
-                list.Add(product);
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                Product product = new Product();
+                                product.SetId((int)reader["productID"]);
+                                product.SetName(reader["pName"].ToString());
+                                product.SetType(reader["pType"].ToString());
+                                product.SetProducer(reader["producer"].ToString());
+                                product.SetUnit((float)reader["unitSize"]);
+                                product.SetPrice((decimal)reader["unitPrice"]);
+                                product.SetInfo(reader["longInfo"].ToString());
+                                product.SetShortInfo(reader["shortInfo"].ToString());
+                                product.SetImgPath(reader["imgPath"].ToString());
+                                product.SetStock((int)reader["inStock"]);
+                                product.SetStatus((int)reader["pStatus"]);
+                                //add data objects to result-list 
+                                results.Add(product);
+                            }
 
-                //after all products are retrieved from DB
-                return list;
+                            return results;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {

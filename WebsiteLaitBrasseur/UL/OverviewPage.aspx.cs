@@ -4,8 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebsiteLaitBrasseur.BL;
 
-namespace WebsiteLaitBrasseur.Account
+namespace WebsiteLaitBrasseur.Customer
 {
     public partial class OverviewPage : System.Web.UI.Page
     {
@@ -15,8 +16,7 @@ namespace WebsiteLaitBrasseur.Account
             
             if (!IsPostBack)
             {
-                var db = new DAL.DemoDatabase();
-
+                ProductBL db = new ProductBL();
                 // get id from query string and try to parse
                 var type = Request.QueryString["productType"];
                 if (!string.IsNullOrEmpty(type))
@@ -29,10 +29,10 @@ namespace WebsiteLaitBrasseur.Account
                         var products = db.GetProducts(type);                                            
                         if (products != null)
                         {
-                            for (int i = 0; i < products.Length; i++)
+                            for (int i = 0; i < products.Count(); i++)
                             {
                                 //debugging purpose, will later remove
-                                System.Diagnostics.Debug.WriteLine("debugging--" + products[i].ImagePath);
+                                System.Diagnostics.Debug.WriteLine("debugging--" + products[i].GetImgPath());
                             }
                             ImageRepeater.DataSource = products;
                             ImageRepeater.DataBind();
@@ -47,7 +47,7 @@ namespace WebsiteLaitBrasseur.Account
                 else
                 {
                     // retrieve a list of all prodcuts from the db
-                    var products = db.GetProducts();
+                    var products = db.GetAllProducts();
                     if (products != null)
                     {
                         ImageRepeater.DataSource = products;
