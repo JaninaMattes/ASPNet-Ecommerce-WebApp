@@ -26,7 +26,7 @@
             <div class="row">
 
                 <div class="col-md-4 ">
-                    <a href="/UL/Default.aspx">
+                    <a href="/UL/Customer/Default.aspx">
                         <img id="logoLB" alt="LaitBrasseur_Logo" src="/UL/Images/Logo-LaitBrasseur.png" class="img rounded img-fluid" style="text-align:left;width:181px; height:147px"  />
                     </a>
                  </div>
@@ -81,7 +81,7 @@
     </form>
 
     <footer>
-        <p> &copy; <%: DateTime.Now.Year %> - <a runat="server" href="/UL/Contact.aspx">Contact</a>  - <a runat="server" href="/UL/AboutUs.aspx">About us</a> - <a runat="server" href="https://www.facebook.com/LaitBrasseurAdmin/">Facebook</a> </p>
+        <p> &copy; <%: DateTime.Now.Year %> - <a runat="server" href="/UL/Customer/Contact.aspx">Contact</a>  - <a runat="server" href="/UL/Customer/AboutUs.aspx">About us</a> - <a runat="server" href="https://www.facebook.com/LaitBrasseurAdmin/">Facebook</a> </p>
     </footer>
 </body>
 

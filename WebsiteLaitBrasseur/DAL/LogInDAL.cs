@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
@@ -23,10 +24,12 @@ namespace WebsiteLaitBrasseur.DAL
         public int Check(string email, string password)
         {
             int result = 0;
-            string queryString = "SELECT COUNT(1) FROM dbo.Login WHERE dbo.email=@email AND dbo.password=@password";
+            string queryString = "SELECT COUNT(1) FROM dbo.Login WHERE email=@email AND password=@password";
+
 
             try
             {
+
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@email", email);
@@ -35,9 +38,12 @@ namespace WebsiteLaitBrasseur.DAL
                     result = Convert.ToInt32(cmd.ExecuteScalar());
                     Console.WriteLine("value returned " + result.ToString());
                 }
-            } catch (Exception e)
+             } catch (Exception e)
             {
+                e.ToString();
                 e.GetBaseException();
+                Debug.Print(e.ToString());
+
             }
             return result;
         }
