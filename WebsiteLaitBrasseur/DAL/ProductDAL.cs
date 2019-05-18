@@ -13,19 +13,53 @@ namespace WebsiteLaitBrasseur.DAL
         //Get connection string from web.config file and create sql connection
         SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         //create
-        public bool Create(uint id, string name, string type, string producer, float unitSize, 
-            decimal price, string info, string shortInf)
+        public int Insert(string name, string type, string producer, string longInfo, string shortInfo, string imgPath,
+            int stock, int status)
         {
+            int result;
+            //no need to explicitely set id as autoincrement is used
+            string queryString = "INSERT INTO dbo.Product(dbo.Product.pName, dbo.Product.pType, dbo.Product.producer, dbo.Product.longInfo, dbo.Product.shortInfo, " +
+                "dbo.Product.imgPath, dbo.Product.inStock, dbo.Product.pStatus) " +
+                "VALUES('@name', '@type', '@producer', '@longInfo', '@shortInfo', '@imgPath', @stock, @status)";
+            string queryAutoIncr = "SELECT TOP(1) dbo.Product.productID FROM dbo.Product ORDER BY 1 DESC";
             try
             {
                 //insert into database
-                return true;
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", fname);
+                    cmd.Parameters.AddWithValue("@isConfirmed", isConfirmed);
+                    cmd.Parameters.AddWithValue("@firstName", fname);
+                    cmd.Parameters.AddWithValue("@lastName", lname);
+                    cmd.Parameters.AddWithValue("@birthDate", birthdate);
+                    cmd.Parameters.AddWithValue("@phone", phoneNo);
+                    cmd.Parameters.AddWithValue("@imgPath", imgPath);
+                    cmd.Parameters.AddWithValue("@status", status);
+                    cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
+                    cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                }
+
+                ///find the last manipulated id due to autoincrement and return it
+                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    //won't need a while, since it will only retrieve one row
+                    reader.Read();
+                    //this is the id of the newly created data field
+                    result = (Int32)reader["accountID"];
+                    Debug.Print("AccountDAL: /Insert/ " + result.ToString());
+                }
+                return result;
             }
             catch (Exception e)
             {
+                result = 0;
                 e.GetBaseException();
             }
-            return false;
+            return result;
         }
 
         public bool Create(uint id, string name, string type, string producer, float unitSize, decimal price, string info, 
