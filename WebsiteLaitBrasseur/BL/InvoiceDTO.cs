@@ -5,20 +5,20 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class Invoice
+    public class InvoiceDTO
     {
         //private properties
         private byte _id;
         private AccountDTO _customer;
-        private List<ProductSelection> _products;
-        private Shippment _shipping;
+        private List<ProductSelectionDTO> _products;
+        private ShippmentDTO _shipping;
         private byte _totalQuantity;
         private decimal _totalShippingCost;
         private decimal _totalTaxes;
         private decimal _totalAmount;
         private DateTime _orderDate;
         private DateTime _paymentDate;
-        private string _email;
+        private string _email ="";
         private bool _status = false;
 
         //getter and setter
@@ -42,27 +42,27 @@ namespace WebsiteLaitBrasseur.BL
             this._customer = customer;
         }
 
-        public List<ProductSelection> GetProductSelections()
+        public List<ProductSelectionDTO> GetProductSelections()
         {
             return _products;
         }
 
-        public void SetProductSelections(List<ProductSelection> selections)
+        public void SetProductSelections(List<ProductSelectionDTO> selections)
         {
             this._products = selections;
         }
 
-        public void AddProductSelection(ProductSelection selection)
+        public void AddProductSelection(ProductSelectionDTO selection)
         {
             _products.Add(selection);
         }
 
-        public Shippment GetShippment()
+        public ShippmentDTO GetShippment()
         {
             return this._shipping;
         }
 
-        public void SetShippment(Shippment shipping)
+        public void SetShippment(ShippmentDTO shipping)
         {
             this._shipping = shipping;
         }
@@ -142,11 +142,11 @@ namespace WebsiteLaitBrasseur.BL
 
         public override bool Equals(object obj)
         {
-            return obj is Invoice invoice &&
+            return obj is InvoiceDTO invoice &&
                    _id == invoice._id &&
                    EqualityComparer<AccountDTO>.Default.Equals(_customer, invoice._customer) &&
-                   EqualityComparer<List<ProductSelection>>.Default.Equals(_products, invoice._products) &&
-                   EqualityComparer<Shippment>.Default.Equals(_shipping, invoice._shipping) &&
+                   EqualityComparer<List<ProductSelectionDTO>>.Default.Equals(_products, invoice._products) &&
+                   EqualityComparer<ShippmentDTO>.Default.Equals(_shipping, invoice._shipping) &&
                    _totalQuantity == invoice._totalQuantity &&
                    _totalShippingCost == invoice._totalShippingCost &&
                    _totalTaxes == invoice._totalTaxes &&
@@ -162,8 +162,8 @@ namespace WebsiteLaitBrasseur.BL
             var hashCode = 147119704;
             hashCode = hashCode * -1521134295 + _id.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<AccountDTO>.Default.GetHashCode(_customer);
-            hashCode = hashCode * -1521134295 + EqualityComparer<List<ProductSelection>>.Default.GetHashCode(_products);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Shippment>.Default.GetHashCode(_shipping);
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<ProductSelectionDTO>>.Default.GetHashCode(_products);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ShippmentDTO>.Default.GetHashCode(_shipping);
             hashCode = hashCode * -1521134295 + _totalQuantity.GetHashCode();
             hashCode = hashCode * -1521134295 + _totalShippingCost.GetHashCode();
             hashCode = hashCode * -1521134295 + _totalTaxes.GetHashCode();
@@ -176,12 +176,12 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         //constructor
-        public Invoice()
+        public InvoiceDTO()
         {
-            _products = new List<ProductSelection>();
+            _products = new List<ProductSelectionDTO>();
         }
 
-        public Invoice(byte id, AccountDTO customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost, 
+        public InvoiceDTO(byte id, AccountDTO customer, List<ProductSelectionDTO> products, ShippmentDTO shipping, byte totalQuantity, decimal totalShippingCost, 
             decimal totalTaxes, decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email)
         {
             _id = id;
@@ -197,7 +197,7 @@ namespace WebsiteLaitBrasseur.BL
             _email = email;
         }
 
-        public Invoice(byte id, AccountDTO customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost, decimal totalTaxes, 
+        public InvoiceDTO(byte id, AccountDTO customer, List<ProductSelectionDTO> products, ShippmentDTO shipping, byte totalQuantity, decimal totalShippingCost, decimal totalTaxes, 
             decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email, bool status) : this(id, customer, products, shipping, totalQuantity, totalShippingCost, totalTaxes, totalAmount, orderDate, paymentDate, email)
         {
             _status = status;

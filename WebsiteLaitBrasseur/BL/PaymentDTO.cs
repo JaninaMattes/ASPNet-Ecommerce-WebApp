@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class Payment
+    public class PaymentDTO
     {
         //private properties
         private byte _id;
@@ -43,11 +43,11 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         //constructor
-        public Payment()
+        public PaymentDTO()
         {
         }
 
-        public Payment(byte id, decimal totalAmount, DateTime paymentDate)
+        public PaymentDTO(byte id, decimal totalAmount, DateTime paymentDate)
         {
             _id = id;
             _totalAmount = totalAmount;
@@ -56,7 +56,7 @@ namespace WebsiteLaitBrasseur.BL
 
         public override bool Equals(object obj)
         {
-            return obj is Payment payment &&
+            return obj is PaymentDTO payment &&
                    _id == payment._id &&
                    _totalAmount == payment._totalAmount &&
                    _paymentDate == payment._paymentDate;

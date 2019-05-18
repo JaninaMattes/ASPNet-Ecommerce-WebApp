@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class Shippment
+    public class ShippmentDTO
     {
 
         //private properties
@@ -87,7 +87,7 @@ namespace WebsiteLaitBrasseur.BL
 
         public override bool Equals(object obj)
         {
-            return obj is Shippment shippment &&
+            return obj is ShippmentDTO shippment &&
                    _id == shippment._id &&
                    _company == shippment._company &&
                    _arrivalDate == shippment._arrivalDate &&
@@ -109,12 +109,12 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         //constructor
-        public Shippment()
+        public ShippmentDTO()
         {
             _status = true;
         }
 
-        public Shippment(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost)
+        public ShippmentDTO(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost)
         {
             _id = id;
             _company = company;
@@ -124,7 +124,7 @@ namespace WebsiteLaitBrasseur.BL
             _cost = cost;
         }
 
-        public Shippment(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost, bool status) : this(id, company, type, arrivalDate, postageDate, cost)
+        public ShippmentDTO(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost, bool status) : this(id, company, type, arrivalDate, postageDate, cost)
         {
             _status = status;
         }

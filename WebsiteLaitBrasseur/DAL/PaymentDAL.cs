@@ -57,12 +57,12 @@ namespace WebsiteLaitBrasseur.DAL
 
         //read
         //find a specific transaction
-        public Payment FindBy(byte id)
+        public PaymentDTO FindBy(byte id)
         {
-            Payment payment;
+            PaymentDTO payment;
             try
             {
-                payment = new Payment();
+                payment = new PaymentDTO();
                 //find entry in database where id = XY
                 return payment;
             }
@@ -74,12 +74,12 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find transactions on a specific date
-        public Payment FindBy(DateTime paymentDate)
+        public PaymentDTO FindBy(DateTime paymentDate)
         {
-            Payment payment;
+            PaymentDTO payment;
             try
             {
-                payment = new Payment();
+                payment = new PaymentDTO();
                 //find entry in database where id = XY
                 return payment;
             }

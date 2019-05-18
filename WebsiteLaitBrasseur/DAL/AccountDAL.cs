@@ -19,6 +19,7 @@ namespace WebsiteLaitBrasseur.DAL
         //Get connection string from web.config file and create sql connection
         SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         /// <summary>
+        /// New User Registration
         /// This function inserts data of the DTO persistantly into the DB
         /// The return value contains the autoincremented ID for the Account.
         /// </summary>

@@ -92,7 +92,7 @@ namespace WebsiteLaitBrasseur.DAL
 
         public bool Update(byte id, string company, DateTime arrivalDate, DateTime postageDate, decimal cost, bool status)
         {
-            Shippment shipper = new Shippment();
+            ShippmentDTO shipper = new ShippmentDTO();
             try
             {
                 //update into database where id = XY
@@ -106,12 +106,12 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //read
-        public Shippment FindBy(byte id)
+        public ShippmentDTO FindBy(byte id)
         {
-            Shippment shipper;
+            ShippmentDTO shipper;
             try
             {
-                shipper = new Shippment();
+                shipper = new ShippmentDTO();
                 //find entry in database where id = XY
                 return shipper;
             }
@@ -122,12 +122,12 @@ namespace WebsiteLaitBrasseur.DAL
             return null;
         }
 
-        public Shippment FindBy(string name)
+        public ShippmentDTO FindBy(string name)
         {
-            Shippment shipper;
+            ShippmentDTO shipper;
             try
             {
-                shipper = new Shippment();
+                shipper = new ShippmentDTO();
                 //find entry in database where name = XY
                 return shipper;
             }
@@ -138,12 +138,12 @@ namespace WebsiteLaitBrasseur.DAL
             return null;
         }
 
-        public Shippment FindBy(decimal cost)
+        public ShippmentDTO FindBy(decimal cost)
         {
-            Shippment shipper;
+            ShippmentDTO shipper;
             try
             {
-                shipper = new Shippment();
+                shipper = new ShippmentDTO();
                 //find entry in database where cost = XY
                 return shipper;
             }
@@ -155,13 +155,13 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all shipping companies available
-        public List<Shippment> FindBy(DateTime arrivalDate)
+        public List<ShippmentDTO> FindBy(DateTime arrivalDate)
         {
-            Shippment shippment;
-            List<Shippment> list = new List<Shippment>();
+            ShippmentDTO shippment;
+            List<ShippmentDTO> list = new List<ShippmentDTO>();
             try
             {
-                shippment = new Shippment();
+                shippment = new ShippmentDTO();
                 //find entry in database where id = XY
                 list.Add(shippment);
 
@@ -176,13 +176,13 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all shipping companies available
-        public List<Shippment> FindAll()
+        public List<ShippmentDTO> FindAll()
         {
-            Shippment shippment;
-            List<Shippment> list = new List<Shippment>();
+            ShippmentDTO shippment;
+            List<ShippmentDTO> list = new List<ShippmentDTO>();
             try
             {
-                shippment = new Shippment();
+                shippment = new ShippmentDTO();
                 //find entry in database where id = XY
                 list.Add(shippment);
 

@@ -14,9 +14,9 @@ namespace WebsiteLaitBrasseur.BL
     {
         private readonly ProductDAL db = new ProductDAL();
 
-        public Product GetProduct(int id)
+        public ProductDTO GetProduct(int id)
         {
-            Product product = new Product();
+            ProductDTO product = new ProductDTO();
             try
             {
                 product = db.FindBy(id);
@@ -30,9 +30,9 @@ namespace WebsiteLaitBrasseur.BL
             return product;
         }
 
-        public List<Product> GetProducts(string type)
+        public List<ProductDTO> GetProducts(string type)
         {
-            List<Product> results = new List<Product>();
+            List<ProductDTO> results = new List<ProductDTO>();
             try
             {
                 results = db.FindByType(type);
@@ -51,9 +51,9 @@ namespace WebsiteLaitBrasseur.BL
             return results;
         }
 
-        public List<Product> GetAllProducts()
+        public List<ProductDTO> GetAllProducts()
         {
-            List<Product> results = new List<Product>();
+            List<ProductDTO> results = new List<ProductDTO>();
             try
             {
                 results = db.FindAll(); 

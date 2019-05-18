@@ -14,7 +14,7 @@ namespace WebsiteLaitBrasseur.DAL
         SqlConnection con = new SqlConnection(SqlDataAccess.ConnectionString);
 
         //create
-        public bool Create(byte id, AccountDTO customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost,
+        public bool Create(byte id, AccountDTO customer, List<ProductSelectionDTO> products, ShippmentDTO shipping, byte totalQuantity, decimal totalShippingCost,
             decimal totalTaxes, decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email)
         {
             bool paymentStatus = false;
@@ -46,12 +46,12 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //read
-        public Shippment FindBy(byte id)
+        public ShippmentDTO FindBy(byte id)
         {
-            Shippment shipper;
+            ShippmentDTO shipper;
             try
             {
-                shipper = new Shippment();
+                shipper = new ShippmentDTO();
                 //find entry in database where id = XY
                 return shipper;
             }
@@ -64,12 +64,12 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all bills by customer
-        public Shippment FindBy(AccountDTO customer)
+        public ShippmentDTO FindBy(AccountDTO customer)
         {
-            Shippment shipper;
+            ShippmentDTO shipper;
             try
             {
-                shipper = new Shippment();
+                shipper = new ShippmentDTO();
                 //find entry in database where id = XY
                 return shipper;
             }
@@ -82,12 +82,12 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all unpaied/paied bills per customer
-        public Shippment FindBy(AccountDTO customer, bool paymentStatus)
+        public ShippmentDTO FindBy(AccountDTO customer, bool paymentStatus)
         {
-            Shippment shipper;
+            ShippmentDTO shipper;
             try
             {
-                shipper = new Shippment();
+                shipper = new ShippmentDTO();
                 //find entry in database where id = XY
                 return shipper;
             }
@@ -100,12 +100,12 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all invoices per paymentdate
-        public Invoice FindBy(DateTime paymentDate)
+        public InvoiceDTO FindBy(DateTime paymentDate)
         {
-            Invoice invoice;
+            InvoiceDTO invoice;
             try
             {
-                invoice = new Invoice();
+                invoice = new InvoiceDTO();
                 //find entry in database where id = XY
                 return invoice;
             }
@@ -118,13 +118,13 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all shipping companies available
-        public List<Invoice> FindAll()
+        public List<InvoiceDTO> FindAll()
         {
-            Invoice invoice;
-            List<Invoice> list = new List<Invoice>();
+            InvoiceDTO invoice;
+            List<InvoiceDTO> list = new List<InvoiceDTO>();
             try
             {
-                invoice = new Invoice();
+                invoice = new InvoiceDTO();
                 //find entry in database where id = XY
                 list.Add(invoice);
 
@@ -139,13 +139,13 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all invoices per customer id
-        public List<ProductSelection> FindAllPerCustomer(byte id)
+        public List<ProductSelectionDTO> FindAllPerCustomer(byte id)
         {
-            ProductSelection selection;
-            List<ProductSelection> list = new List<ProductSelection>();
+            ProductSelectionDTO selection;
+            List<ProductSelectionDTO> list = new List<ProductSelectionDTO>();
             try
             {
-                selection = new ProductSelection();
+                selection = new ProductSelectionDTO();
                 //find entry in database where id = XY
                 list.Add(selection);
 

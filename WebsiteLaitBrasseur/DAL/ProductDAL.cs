@@ -211,10 +211,10 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //read
-        public Product FindBy(int id)
+        public ProductDTO FindBy(int id)
         {
             string queryString = "SELECT * FROM dbo.Product WHERE productID=@id";
-            Product product;
+            ProductDTO product;
             try
             {                
                 //find entry in database where id = XY
@@ -226,7 +226,7 @@ namespace WebsiteLaitBrasseur.DAL
                     {                        
                         if (reader.Read())
                         {
-                            product = new Product();
+                            product = new ProductDTO();
                             product.SetId((int)reader["productID"]);
                             product.SetName(reader["pName"].ToString());
                             product.SetType(reader["pType"].ToString());
@@ -253,9 +253,9 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find a product by type 
-        public List<Product> FindByType(string type)
+        public List<ProductDTO> FindByType(string type)
         {
-            List<Product> results = new List<Product>();
+            List<ProductDTO> results = new List<ProductDTO>();
             string queryString = "SELECT * FROM dbo.Product WHERE pType=@type";
             try
             {
@@ -270,7 +270,7 @@ namespace WebsiteLaitBrasseur.DAL
                         {
                             while (reader.Read())
                             {
-                                Product product = new Product();
+                                ProductDTO product = new ProductDTO();
                                 product.SetId((int)reader["productID"]);
                                 product.SetName(reader["pName"].ToString());
                                 product.SetType(reader["pType"].ToString());
@@ -302,13 +302,13 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find a product by name 
-        public List<Product> FindByName(string name)
+        public List<ProductDTO> FindByName(string name)
         {
-            Product product;
-            List<Product> list = new List<Product>();
+            ProductDTO product;
+            List<ProductDTO> list = new List<ProductDTO>();
             try
             {
-                product = new Product();
+                product = new ProductDTO();
                 //find entry in database where id = XY
                 list.Add(product);
 
@@ -324,13 +324,13 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find a product by producer 
-        public List<Product> FindByProducer(string producer)
+        public List<ProductDTO> FindByProducer(string producer)
         {
-            Product product;
-            List<Product> list = new List<Product>();
+            ProductDTO product;
+            List<ProductDTO> list = new List<ProductDTO>();
             try
             {
-                product = new Product();
+                product = new ProductDTO();
                 //find entry in database where id = XY
                 list.Add(product);
 
@@ -346,13 +346,13 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find a product by price
-        public List<Product> FindByPrice(decimal price)
+        public List<ProductDTO> FindByPrice(decimal price)
         {
-            Product product;
-            List<Product> list = new List<Product>();
+            ProductDTO product;
+            List<ProductDTO> list = new List<ProductDTO>();
             try
             {
-                product = new Product();
+                product = new ProductDTO();
                 //find entry in database where id = XY
                 list.Add(product);
 
@@ -368,9 +368,9 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all products 
-        public List<Product> FindAll()
+        public List<ProductDTO> FindAll()
         {            
-            List<Product> results = new List<Product>();
+            List<ProductDTO> results = new List<ProductDTO>();
             string queryString = "SELECT * FROM dbo.Product";
             try
             {
@@ -383,7 +383,7 @@ namespace WebsiteLaitBrasseur.DAL
                         {
                             while (reader.Read())
                             {
-                                Product product = new Product();
+                                ProductDTO product = new ProductDTO();
                                 product.SetId((int)reader["productID"]);
                                 product.SetName(reader["pName"].ToString());
                                 product.SetType(reader["pType"].ToString());

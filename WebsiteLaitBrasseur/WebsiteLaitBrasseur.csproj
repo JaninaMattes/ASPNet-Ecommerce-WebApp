@@ -147,22 +147,22 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BL\AccountBO.cs" />
+    <Compile Include="BL\AccountDTO.cs" />
     <Compile Include="BL\AccountBL.cs" />
-    <Compile Include="BL\Address.cs" />
-    <Compile Include="BL\Card.cs" />
+    <Compile Include="BL\AddressDTO.cs" />
+    <Compile Include="BL\CardDTO.cs" />
     <Compile Include="BL\EmptyRowException.cs" />
-    <Compile Include="BL\Invoice.cs" />
-    <Compile Include="BL\PayPal.cs" />
+    <Compile Include="BL\InvoiceDTO.cs" />
+    <Compile Include="BL\PayPalDTO.cs" />
     <Compile Include="BL\ProductBL.cs" />
     <Compile Include="DAL\AccountDAL.cs" />
     <Compile Include="DAL\AddressDAL.cs" />
     <Compile Include="DAL\CardDAL.cs" />
     <Compile Include="BL\InputInvalidException.cs" />
-    <Compile Include="BL\Payment.cs" />
-    <Compile Include="BL\Product.cs" />
-    <Compile Include="BL\ProductSelection.cs" />
-    <Compile Include="BL\Shippment.cs" />
+    <Compile Include="BL\PaymentDTO.cs" />
+    <Compile Include="BL\ProductDTO.cs" />
+    <Compile Include="BL\ProductSelectionDTO.cs" />
+    <Compile Include="BL\ShippmentDTO.cs" />
     <Compile Include="DAL\InvoiceDAL.cs" />
     <Compile Include="DAL\PaymentDAL.cs" />
     <Compile Include="DAL\PayPalDAL.cs" />

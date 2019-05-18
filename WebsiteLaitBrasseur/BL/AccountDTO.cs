@@ -19,7 +19,7 @@ namespace WebsiteLaitBrasseur.BL
         private string _imgPath = "";
         private int _status = 0;
         private int _isAdmin = 0;
-        private List<Invoice> _invoiceList = new List<Invoice>();
+        private List<InvoiceDTO> _invoiceList = new List<InvoiceDTO>();
         private AddressDTO _address;
 
         //getter and setter
@@ -122,17 +122,17 @@ namespace WebsiteLaitBrasseur.BL
             this._isAdmin = isAdmin;
         }
 
-        public List<Invoice> GetInvoices()
+        public List<InvoiceDTO> GetInvoices()
         {
             return this._invoiceList;
         }
 
-        public void SetInvoices(List<Invoice> invoices)
+        public void SetInvoices(List<InvoiceDTO> invoices)
         {
             this._invoiceList = invoices;
         }
 
-        public void AddInvoice(Invoice invoice)
+        public void AddInvoice(InvoiceDTO invoice)
         {
             this._invoiceList.Add(invoice);
         }
@@ -174,7 +174,7 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         public AccountDTO(byte id, string email, int isConfirmed, string password, string firstName, string lastName, 
-            string birthDate, string phoneNo, string imgPath, int status, int isAdmin, List<Invoice> invoiceList, AddressDTO address)
+            string birthDate, string phoneNo, string imgPath, int status, int isAdmin, List<InvoiceDTO> invoiceList, AddressDTO address)
         {
             _id = id;
             _email = email;
@@ -211,7 +211,7 @@ namespace WebsiteLaitBrasseur.BL
                    _imgPath == bO._imgPath &&
                    _status == bO._status &&
                    _isAdmin == bO._isAdmin &&
-                   EqualityComparer<List<Invoice>>.Default.Equals(_invoiceList, bO._invoiceList) &&
+                   EqualityComparer<List<InvoiceDTO>>.Default.Equals(_invoiceList, bO._invoiceList) &&
                    EqualityComparer<AddressDTO>.Default.Equals(_address, bO._address);
         }
 
@@ -229,7 +229,7 @@ namespace WebsiteLaitBrasseur.BL
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_imgPath);
             hashCode = hashCode * -1521134295 + _status.GetHashCode();
             hashCode = hashCode * -1521134295 + _isAdmin.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<List<Invoice>>.Default.GetHashCode(_invoiceList);
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<InvoiceDTO>>.Default.GetHashCode(_invoiceList);
             hashCode = hashCode * -1521134295 + EqualityComparer<AddressDTO>.Default.GetHashCode(_address);
             return hashCode;
         }
