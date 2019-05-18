@@ -151,6 +151,7 @@
     <Compile Include="BL\AccountBL.cs" />
     <Compile Include="BL\AddressDTO.cs" />
     <Compile Include="BL\CardDTO.cs" />
+    <Compile Include="BL\CityDTO.cs" />
     <Compile Include="BL\EmptyRowException.cs" />
     <Compile Include="BL\InvoiceDTO.cs" />
     <Compile Include="BL\PayPalDTO.cs" />

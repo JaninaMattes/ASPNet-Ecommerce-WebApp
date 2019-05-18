@@ -12,13 +12,13 @@ namespace WebsiteLaitBrasseur.BL
         private string _name = "";
         private string _type = "";
         private string _producer = "";
-        private float _unitSize;
-        private decimal _price;
         private string _info = "";
         private string _shortInfo = "";
         private string _imgPath = "";
         private int _stock;
         private int _status = 0;
+        //stores all possible sizes and prices of a product
+        private IDictionary<int, decimal> dict = new Dictionary<int, decimal>();
 
         //getter and setter
         public int GetId()

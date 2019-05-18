@@ -23,7 +23,7 @@ namespace WebsiteLaitBrasseur.BL
         private AddressDTO _address;
 
         //getter and setter
-        public int GetAccountId()
+        public int GetID()
         {
             return this._id;
         }
@@ -157,7 +157,6 @@ namespace WebsiteLaitBrasseur.BL
         {
             _id = id;
             _email = email;
-            _password = pw;
         }
 
         public AccountDTO(byte id, string email, string password, string firstName, 
@@ -173,13 +172,12 @@ namespace WebsiteLaitBrasseur.BL
             _address = address;
         }
 
-        public AccountDTO(byte id, string email, int isConfirmed, string password, string firstName, string lastName, 
+        public AccountDTO(byte id, string email, int isConfirmed, string firstName, string lastName, 
             string birthDate, string phoneNo, string imgPath, int status, int isAdmin, List<InvoiceDTO> invoiceList, AddressDTO address)
         {
             _id = id;
             _email = email;
             _isConfirmed = isConfirmed;
-            _password = password;
             _firstName = firstName;
             _lastName = lastName;
             _birthDate = birthDate;
@@ -203,7 +201,6 @@ namespace WebsiteLaitBrasseur.BL
                    _id == bO._id &&
                    _email == bO._email &&
                    _isConfirmed == bO._isConfirmed &&
-                   _password == bO._password &&
                    _firstName == bO._firstName &&
                    _lastName == bO._lastName &&
                    _birthDate == bO._birthDate &&
@@ -221,7 +218,6 @@ namespace WebsiteLaitBrasseur.BL
             hashCode = hashCode * -1521134295 + _id.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_email);
             hashCode = hashCode * -1521134295 + _isConfirmed.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_password);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_firstName);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_lastName);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_birthDate);
