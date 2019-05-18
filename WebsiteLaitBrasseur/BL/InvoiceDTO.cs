@@ -8,26 +8,28 @@ namespace WebsiteLaitBrasseur.BL
     public class InvoiceDTO
     {
         //private properties
-        private byte _id;
+        private int _id;
         private AccountDTO _customer;
         private List<ProductSelectionDTO> _products;
         private ShippmentDTO _shipping;
-        private byte _totalQuantity;
+        private int _totalQuantity;
         private decimal _totalShippingCost;
         private decimal _totalTaxes;
         private decimal _totalAmount;
         private DateTime _orderDate;
         private DateTime _paymentDate;
+        private DateTime _arrivalDate;
+        private DateTime _postageDate;
         private string _email ="";
-        private bool _status = false;
+        private int _paymentStatus = 0;
 
         //getter and setter
-        public byte GetId()
+        public int GetId()
         {
             return this._id;
         }
 
-        public void SetId(byte id)
+        public void SetId(int id)
         {
             this._id = id;
         }
@@ -67,12 +69,12 @@ namespace WebsiteLaitBrasseur.BL
             this._shipping = shipping;
         }
 
-        public byte GetQuantity()
+        public int GetQuantity()
         {
             return this._totalQuantity;
         }
 
-        public void SetQuantity(byte quantity)
+        public void SetQuantity(int quantity)
         {
             this._totalQuantity = quantity;
         }
@@ -112,6 +114,27 @@ namespace WebsiteLaitBrasseur.BL
         {
             this._orderDate = date;
         }
+
+        public DateTime GetPostDate()
+        {
+            return this._postageDate;
+        }
+
+        public void SetPostDate(DateTime date)
+        {
+            this._postageDate = date;
+        }
+
+        public DateTime GetArrivalDate()
+        {
+            return this._arrivalDate;
+        }
+
+        public void SetArrivalDate(DateTime date)
+        {
+            this._arrivalDate = date;
+        }
+
         public DateTime GetPaymentDate()
         {
             return this._paymentDate;
@@ -130,49 +153,14 @@ namespace WebsiteLaitBrasseur.BL
         {
             this._email = email;
         }
-        public bool GetStatus()
+        public int GetStatus()
         {
-            return this._status;
+            return this._paymentStatus;
         }
 
-        public void SetStatus(bool status)
+        public void SetStatus(int status)
         {
-            this._status = status;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is InvoiceDTO invoice &&
-                   _id == invoice._id &&
-                   EqualityComparer<AccountDTO>.Default.Equals(_customer, invoice._customer) &&
-                   EqualityComparer<List<ProductSelectionDTO>>.Default.Equals(_products, invoice._products) &&
-                   EqualityComparer<ShippmentDTO>.Default.Equals(_shipping, invoice._shipping) &&
-                   _totalQuantity == invoice._totalQuantity &&
-                   _totalShippingCost == invoice._totalShippingCost &&
-                   _totalTaxes == invoice._totalTaxes &&
-                   _totalAmount == invoice._totalAmount &&
-                   _orderDate == invoice._orderDate &&
-                   _paymentDate == invoice._paymentDate &&
-                   _email == invoice._email &&
-                   _status == invoice._status;
-        }
-
-        public override int GetHashCode()
-        {
-            var hashCode = 147119704;
-            hashCode = hashCode * -1521134295 + _id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<AccountDTO>.Default.GetHashCode(_customer);
-            hashCode = hashCode * -1521134295 + EqualityComparer<List<ProductSelectionDTO>>.Default.GetHashCode(_products);
-            hashCode = hashCode * -1521134295 + EqualityComparer<ShippmentDTO>.Default.GetHashCode(_shipping);
-            hashCode = hashCode * -1521134295 + _totalQuantity.GetHashCode();
-            hashCode = hashCode * -1521134295 + _totalShippingCost.GetHashCode();
-            hashCode = hashCode * -1521134295 + _totalTaxes.GetHashCode();
-            hashCode = hashCode * -1521134295 + _totalAmount.GetHashCode();
-            hashCode = hashCode * -1521134295 + _orderDate.GetHashCode();
-            hashCode = hashCode * -1521134295 + _paymentDate.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_email);
-            hashCode = hashCode * -1521134295 + _status.GetHashCode();
-            return hashCode;
+            this._paymentStatus = status;
         }
 
         //constructor
@@ -198,14 +186,50 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         public InvoiceDTO(byte id, AccountDTO customer, List<ProductSelectionDTO> products, ShippmentDTO shipping, byte totalQuantity, decimal totalShippingCost, decimal totalTaxes, 
-            decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email, bool status) : this(id, customer, products, shipping, totalQuantity, totalShippingCost, totalTaxes, totalAmount, orderDate, paymentDate, email)
+            decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email, int status) : this(id, customer, products, shipping, totalQuantity, totalShippingCost, totalTaxes, totalAmount, orderDate, paymentDate, email)
         {
-            _status = status;
+            _paymentStatus = status;
         }
+
 
         public override string ToString()
         {
             return base.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is InvoiceDTO dTO &&
+                   _id == dTO._id &&
+                   EqualityComparer<AccountDTO>.Default.Equals(_customer, dTO._customer) &&
+                   EqualityComparer<List<ProductSelectionDTO>>.Default.Equals(_products, dTO._products) &&
+                   EqualityComparer<ShippmentDTO>.Default.Equals(_shipping, dTO._shipping) &&
+                   _totalQuantity == dTO._totalQuantity &&
+                   _totalShippingCost == dTO._totalShippingCost &&
+                   _totalTaxes == dTO._totalTaxes &&
+                   _totalAmount == dTO._totalAmount &&
+                   _orderDate == dTO._orderDate &&
+                   _paymentDate == dTO._paymentDate &&
+                   _email == dTO._email &&
+                   _paymentStatus == dTO._paymentStatus;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 382889966;
+            hashCode = hashCode * -1521134295 + _id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<AccountDTO>.Default.GetHashCode(_customer);
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<ProductSelectionDTO>>.Default.GetHashCode(_products);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ShippmentDTO>.Default.GetHashCode(_shipping);
+            hashCode = hashCode * -1521134295 + _totalQuantity.GetHashCode();
+            hashCode = hashCode * -1521134295 + _totalShippingCost.GetHashCode();
+            hashCode = hashCode * -1521134295 + _totalTaxes.GetHashCode();
+            hashCode = hashCode * -1521134295 + _totalAmount.GetHashCode();
+            hashCode = hashCode * -1521134295 + _orderDate.GetHashCode();
+            hashCode = hashCode * -1521134295 + _paymentDate.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_email);
+            hashCode = hashCode * -1521134295 + _paymentStatus.GetHashCode();
+            return hashCode;
         }
     }
 }

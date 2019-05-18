@@ -68,6 +68,7 @@ namespace WebsiteLaitBrasseur.DAL
                     reader.Read();
                     //this is the id of the newly created data field
                     result = (Int32) reader["accountID"];
+                    Debug.Print("AccountDAL: /Insert/ " + result.ToString());
                 }
                 return result;
             }
