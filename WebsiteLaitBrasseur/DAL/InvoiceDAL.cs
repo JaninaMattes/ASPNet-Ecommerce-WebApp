@@ -171,7 +171,7 @@ namespace WebsiteLaitBrasseur.DAL
                             account = new AccountDTO();
                             shipping = new ShippmentDTO();
 
-                            invoice.SetId((int)reader["invoiceID"]);
+                            invoice.SetID((int)reader["invoiceID"]);
                             account.SetAccountID((int)reader["accountID"]);
                             shipping.SetID((int)reader["shippingID"]);
                             invoice.SetCustomer(account);
@@ -232,7 +232,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
 
-                                invoice.SetId((int)reader["invoiceID"]);
+                                invoice.SetID((int)reader["invoiceID"]);
                                 account.SetAccountID((int)reader["accountID"]);
                                 shipping.SetID((int)reader["shippingID"]);
                                 invoice.SetCustomer(account);
@@ -301,7 +301,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
 
-                                invoice.SetId((int)reader["invoiceID"]);
+                                invoice.SetID((int)reader["invoiceID"]);
                                 account.SetAccountID((int)reader["accountID"]);
                                 shipping.SetID((int)reader["shippingID"]);
                                 invoice.SetCustomer(account);
@@ -383,7 +383,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
 
-                                invoice.SetId((int)reader["invoiceID"]);
+                                invoice.SetID((int)reader["invoiceID"]);
                                 account.SetAccountID((int)reader["accountID"]);
                                 shipping.SetID((int)reader["shippingID"]);
                                 invoice.SetCustomer(account);
@@ -450,7 +450,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
 
-                                invoice.SetId((int)reader["invoiceID"]);
+                                invoice.SetID((int)reader["invoiceID"]);
                                 account.SetAccountID((int)reader["accountID"]);
                                 shipping.SetID((int)reader["shippingID"]);
                                 invoice.SetCustomer(account);
@@ -515,7 +515,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
 
-                                invoice.SetId((int)reader["invoiceID"]);
+                                invoice.SetID((int)reader["invoiceID"]);
                                 account.SetAccountID((int)reader["accountID"]);
                                 shipping.SetID((int)reader["shippingID"]);
                                 invoice.SetCustomer(account);

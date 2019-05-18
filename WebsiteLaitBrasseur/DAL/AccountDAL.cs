@@ -395,6 +395,63 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         /// <summary>
+        /// Find all user in the database 
+        /// and return the list.
+        /// </summary>
+        /// <returns></returns>
+        public List<AccountDTO> FindAll()
+        {
+            string queryString = "SELECT * FROM dbo.Account";
+            List<AccountDTO> results = new List<AccountDTO>();
+            try
+            {
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                AccountDTO account = new AccountDTO();
+                                AddressDTO address = new AddressDTO();
+                                account.SetAccountID((int)reader["accountID"]);
+                                address.SetID((int)reader["addressID"]);
+                                account.SetAddress(address);
+                                account.SetEmail(reader["email"].ToString());
+                                account.SetFirstName(reader["firstName"].ToString());
+                                account.SetLastName(reader["lastName"].ToString());
+                                account.SetBirthdate(reader["birthDate"].ToString());
+                                account.SetPhoneNo(reader["phone"].ToString());
+                                account.SetImgPath(reader["imgPath"].ToString());
+                                account.SetIsAdmin((int)reader["isAdmin"]);
+                                account.SetIsConfirmed((int)reader["isConfirmed"]);
+                                account.SetStatus((int)reader["status"]);
+                                //return product instance as data object 
+                                Debug.Print("AccountDAL: /FindAllUserBy/ " + account.ToString());
+
+                                //add data objects to result-list 
+                                results.Add(account);
+                            }
+                            return results;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Find all suspendet User by status = 1
         /// Find all not suspendet User by status = 0
         /// </summary>

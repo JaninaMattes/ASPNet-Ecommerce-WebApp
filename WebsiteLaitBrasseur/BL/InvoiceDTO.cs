@@ -24,12 +24,12 @@ namespace WebsiteLaitBrasseur.BL
         private int _paymentStatus = 0;
 
         //getter and setter
-        public int GetId()
+        public int GetID()
         {
             return this._id;
         }
 
-        public void SetId(int id)
+        public void SetID(int id)
         {
             this._id = id;
         }
