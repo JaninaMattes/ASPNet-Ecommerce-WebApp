@@ -11,7 +11,8 @@ namespace WebsiteLaitBrasseur.BL
 {
     public class AccountBL
     {
-        private AccountDAL dAL = new AccountDAL();
+        private AccountDAL db = new AccountDAL();
+        private static int count = 0;
 
         /// <summary>
         /// create new login and simultaneously C:\Users\Janina\Documents\DEV\LaitBrasseur-WebStore\WebsiteC:\Users\Janina\Documents\DEV\LaitBrasseur-WebStore\WebsiteLaitBrasseur\BL\BO\Account.csLaitBrasseur\BL\BO\Account.cs
@@ -52,7 +53,8 @@ namespace WebsiteLaitBrasseur.BL
                 //if both are correct return 0
                 if (isCorrect == 0)
                 {
-                    dAL.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin);
+                    //returns the created Account ID as integer value
+                    db.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin);
                 }                
             }
             catch (Exception e)
@@ -62,29 +64,43 @@ namespace WebsiteLaitBrasseur.BL
             return isCorrect;
         }
 
-        public bool IsCorrect(string email, string password)
-        {
-            LoginDAL login = new LoginDAL();
+        /// <summary>
+        /// Function to check if password and email address are
+        /// correctly entered in a textbox.
+        /// a) Password and Username are correct and exist in DB return = 1
+        /// b) Password is incorrect return = 2
+        /// c) Username is incorrect return = 3
+        /// d) Password and Username are not correct return = 0
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public int IsCorrect(string email, string password)
+        {           
+            int isCorrect = 0;
             try
             {
-                int count = login.Check(email, password);
-                Console.WriteLine("value returned " + count.ToString());
-                //check if login is correct = user already exists in database
-                if (count == 1)
+                //TODO hash password
+                if (db.FindLoginEmail(email) != 1) return isCorrect = 3;
+                if (db.FindLoginPW(password) != 1)
                 {
-                    return true;
+                    return isCorrect = 2;
                 }
                 else
                 {
-                    return false;
+                    //check if login is correct = user already exists in database
+                    isCorrect = db.FindLoginCred(email, password);
+                    Console.WriteLine("value returned " + isCorrect.ToString());
                 }
+                count++;
+                //TODO if count is > 3 within certain amount of time, set counter back to 0 after 10min
+                //then block the user account for 1 hour
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-
             }
-            return false;
+            return isCorrect;
         }
 
 
@@ -106,6 +122,12 @@ namespace WebsiteLaitBrasseur.BL
             }
         }
 
+        /// <summary>
+        /// source https://docs.microsoft.com/en-us/dotnet/standard/base-types/how-to-verify-that-strings-are-in-valid-email-format
+        /// Check if email format is correct and return a boolean value for true/false
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public static bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -199,7 +221,6 @@ namespace WebsiteLaitBrasseur.BL
                     return PasswordScore.Blank;
                 if (password.Length < 4)
                     return PasswordScore.VeryWeak;
-
                 if (password.Length >= 8)
                     score++;
                 if (password.Length >= 12)

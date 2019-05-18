@@ -10,7 +10,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class LoginWebForm : System.Web.UI.Page
     {
-        
+        AccountBL bl = new AccountBL();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             LblErrorMessage.Visible = false;
@@ -18,8 +19,11 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            LoginBL bl = new LoginBL();
-                if (bl.Check(TextEmail.Text.Trim(), TextPassword.Text.Trim()))
+            var isCorrect = bl.IsCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
+
+            //TODO switch case check password and email correct
+
+                if (isCorrect == 0)
                 {
                 //session is a dictionary inside ASP.NET
                 Session["email"] = TextEmail.Text.Trim();

@@ -22,8 +22,26 @@ namespace WebsiteLaitBrasseur.UL.Admin
             if (IsValid)
             {
                 var isAdmin = 1;
-                bl.createAccount(); //TODO
+                var status = 0; //per default not suspendet user
+                var imgPath = ""; //if there is non
 
+                   var check = bl.createAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
+                   TextLastName.Text.Trim(), TextBirthday.Text.Trim(), TextPhone.Text.Trim(), imgPath, status, isAdmin);
+
+                switch (check)
+                {
+                    case 0:
+                        lblRegResult.Text = "Password and email is correct.";
+                        break;
+                    case 1:
+                        lblRegResult.Text = "The email format is wrong.";
+                        break;
+                    case 2:
+                        lblRegResult.Text = "The password format does not meet the requirements."; //TODO explain requirements
+                        break;
+                    default:
+                        break;
+                }
                 //variable session creation
                 Session["email"] = TextEmail.Text.Trim();
                 MailSender();
@@ -64,7 +82,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
             }
             else
                 lblRegResult.Text = "There is a problem with your email.";
-
 
         }
     }

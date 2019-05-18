@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using WebsiteLaitBrasseur.BL;
@@ -245,5 +246,95 @@ namespace WebsiteLaitBrasseur.DAL
             return null;
         }
 
+        /// <summary>
+        /// Finds if login credentials exist in database
+        /// if the credentials of a user exist the effected number of rows = 1 returned
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public int FindLoginCred(string email, string password)
+        {
+            int result = 0;
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE email=@email AND password=@password";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    connection.Open();
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
+                    Console.WriteLine("value returned " + result.ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                e.GetBaseException();
+                Debug.Print(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Find the entry for the email address
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public int FindLoginEmail(string email)
+        {
+            int result = 0;
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE email=@email";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@email", email);
+                    connection.Open();
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
+                    Console.WriteLine("value returned " + result.ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                e.GetBaseException();
+                Debug.Print(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Find the entry for the password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public int FindLoginPW(string password)
+        {
+            int result = 0;
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE password=@password";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@password", password);
+                    connection.Open();
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
+                    Console.WriteLine("value returned " + result.ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                e.GetBaseException();
+                Debug.Print(e.ToString());
+            }
+            return result;
+        }
+        
     }
 }
