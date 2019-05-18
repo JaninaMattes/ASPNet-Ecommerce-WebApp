@@ -6,13 +6,12 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class AccountBO
+    public class AccountDTO
     {
         //private properties
-        private byte _id;
+        private int _id;
         private string _email = "";
         private int _isConfirmed = 0;
-        private string _password = "";
         private string _firstName = "";
         private string _lastName = "";
         private string _birthDate = "";
@@ -21,7 +20,7 @@ namespace WebsiteLaitBrasseur.BL
         private int _status = 0;
         private int _isAdmin = 0;
         private List<Invoice> _invoiceList = new List<Invoice>();
-        private Address _address;
+        private AddressDTO _address;
 
         //getter and setter
         public int GetAccountId()
@@ -29,7 +28,7 @@ namespace WebsiteLaitBrasseur.BL
             return this._id;
         }
 
-        public void SetAccountID(byte id)
+        public void SetAccountID(int id)
         {
             this._id = id;
         }
@@ -41,16 +40,6 @@ namespace WebsiteLaitBrasseur.BL
         public void SetEmail(string email)
         {
             this._email = email;
-        }
-
-        public string GetPassword()
-        {
-            return this._password;
-        }
-
-        public void SetPassword(string pw)
-        {
-            this._password = pw;
         }
 
         public int GetIsConfirmed()
@@ -148,31 +137,31 @@ namespace WebsiteLaitBrasseur.BL
             this._invoiceList.Add(invoice);
         }
 
-        public Address GetAddress()
+        public AddressDTO GetAddress()
         {
             return this._address;
         }
 
-        public void SetAddress(Address address)
+        public void SetAddress(AddressDTO address)
         {
             this._address = address;
         }
 
         //constructor
-        public AccountBO()
+        public AccountDTO()
         {
 
         }
 
-        public AccountBO(byte id, string email, string pw)
+        public AccountDTO(byte id, string email, string pw)
         {
             _id = id;
             _email = email;
             _password = pw;
         }
 
-        public AccountBO(byte id, string email, string password, string firstName, 
-            string lastName, string birthDate, string phoneNo, int status, int isAdmin, Address address) : 
+        public AccountDTO(byte id, string email, string password, string firstName, 
+            string lastName, string birthDate, string phoneNo, int status, int isAdmin, AddressDTO address) : 
             this(id, email, password)
         {
             _firstName = firstName;
@@ -184,8 +173,8 @@ namespace WebsiteLaitBrasseur.BL
             _address = address;
         }
 
-        public AccountBO(byte id, string email, int isConfirmed, string password, string firstName, string lastName, 
-            string birthDate, string phoneNo, string imgPath, int status, int isAdmin, List<Invoice> invoiceList, Address address)
+        public AccountDTO(byte id, string email, int isConfirmed, string password, string firstName, string lastName, 
+            string birthDate, string phoneNo, string imgPath, int status, int isAdmin, List<Invoice> invoiceList, AddressDTO address)
         {
             _id = id;
             _email = email;
@@ -210,7 +199,7 @@ namespace WebsiteLaitBrasseur.BL
 
         public override bool Equals(object obj)
         {
-            return obj is AccountBO bO &&
+            return obj is AccountDTO bO &&
                    _id == bO._id &&
                    _email == bO._email &&
                    _isConfirmed == bO._isConfirmed &&
@@ -223,7 +212,7 @@ namespace WebsiteLaitBrasseur.BL
                    _status == bO._status &&
                    _isAdmin == bO._isAdmin &&
                    EqualityComparer<List<Invoice>>.Default.Equals(_invoiceList, bO._invoiceList) &&
-                   EqualityComparer<Address>.Default.Equals(_address, bO._address);
+                   EqualityComparer<AddressDTO>.Default.Equals(_address, bO._address);
         }
 
         public override int GetHashCode()
@@ -241,7 +230,7 @@ namespace WebsiteLaitBrasseur.BL
             hashCode = hashCode * -1521134295 + _status.GetHashCode();
             hashCode = hashCode * -1521134295 + _isAdmin.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<List<Invoice>>.Default.GetHashCode(_invoiceList);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Address>.Default.GetHashCode(_address);
+            hashCode = hashCode * -1521134295 + EqualityComparer<AddressDTO>.Default.GetHashCode(_address);
             return hashCode;
         }
     }

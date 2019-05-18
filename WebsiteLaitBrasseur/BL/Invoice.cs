@@ -9,7 +9,7 @@ namespace WebsiteLaitBrasseur.BL
     {
         //private properties
         private byte _id;
-        private AccountBO _customer;
+        private AccountDTO _customer;
         private List<ProductSelection> _products;
         private Shippment _shipping;
         private byte _totalQuantity;
@@ -32,12 +32,12 @@ namespace WebsiteLaitBrasseur.BL
             this._id = id;
         }
 
-        public AccountBO GetCustomer()
+        public AccountDTO GetCustomer()
         {
             return this._customer;
         }
 
-        public void SetCustomer(AccountBO customer)
+        public void SetCustomer(AccountDTO customer)
         {
             this._customer = customer;
         }
@@ -144,7 +144,7 @@ namespace WebsiteLaitBrasseur.BL
         {
             return obj is Invoice invoice &&
                    _id == invoice._id &&
-                   EqualityComparer<AccountBO>.Default.Equals(_customer, invoice._customer) &&
+                   EqualityComparer<AccountDTO>.Default.Equals(_customer, invoice._customer) &&
                    EqualityComparer<List<ProductSelection>>.Default.Equals(_products, invoice._products) &&
                    EqualityComparer<Shippment>.Default.Equals(_shipping, invoice._shipping) &&
                    _totalQuantity == invoice._totalQuantity &&
@@ -161,7 +161,7 @@ namespace WebsiteLaitBrasseur.BL
         {
             var hashCode = 147119704;
             hashCode = hashCode * -1521134295 + _id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<AccountBO>.Default.GetHashCode(_customer);
+            hashCode = hashCode * -1521134295 + EqualityComparer<AccountDTO>.Default.GetHashCode(_customer);
             hashCode = hashCode * -1521134295 + EqualityComparer<List<ProductSelection>>.Default.GetHashCode(_products);
             hashCode = hashCode * -1521134295 + EqualityComparer<Shippment>.Default.GetHashCode(_shipping);
             hashCode = hashCode * -1521134295 + _totalQuantity.GetHashCode();
@@ -181,7 +181,7 @@ namespace WebsiteLaitBrasseur.BL
             _products = new List<ProductSelection>();
         }
 
-        public Invoice(byte id, AccountBO customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost, 
+        public Invoice(byte id, AccountDTO customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost, 
             decimal totalTaxes, decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email)
         {
             _id = id;
@@ -197,7 +197,7 @@ namespace WebsiteLaitBrasseur.BL
             _email = email;
         }
 
-        public Invoice(byte id, AccountBO customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost, decimal totalTaxes, 
+        public Invoice(byte id, AccountDTO customer, List<ProductSelection> products, Shippment shipping, byte totalQuantity, decimal totalShippingCost, decimal totalTaxes, 
             decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email, bool status) : this(id, customer, products, shipping, totalQuantity, totalShippingCost, totalTaxes, totalAmount, orderDate, paymentDate, email)
         {
             _status = status;

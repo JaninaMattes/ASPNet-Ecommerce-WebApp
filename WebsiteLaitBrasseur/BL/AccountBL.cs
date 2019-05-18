@@ -209,6 +209,7 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         /// <summary>
+        /// Check quality of password
         /// source: https://stackoverflow.com/questions/12899876/checking-strings-for-a-strong-enough-password
         /// </summary>
         public class PasswordAdvisor

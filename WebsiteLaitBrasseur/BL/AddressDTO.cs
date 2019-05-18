@@ -5,22 +5,22 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class Address
+    public class AddressDTO
     {
-        private byte _id;
-        private string _streetName;
-        private string _streetNo;
-        private string _country;
-        private string _zipCode;
-        private string _city;
+        private int _id;
+        private string _streetName ="";
+        private string _streetNo = "";
+        private string _country = "";
+        private string _zipCode = "";
+        private string _city = "";
 
         //getter and setter
-        public byte GetId()
+        public int GetID()
         {
             return this._id;
         }
 
-        public void SetId(byte id)
+        public void SetID(int id)
         {
             this._id = id;
         }
@@ -77,7 +77,7 @@ namespace WebsiteLaitBrasseur.BL
 
         public override bool Equals(object obj)
         {
-            return obj is Address address &&
+            return obj is AddressDTO address &&
                    _id == address._id &&
                    _streetName == address._streetName &&
                    _streetNo == address._streetNo &&
@@ -99,12 +99,12 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         //constructor
-        public Address()
+        public AddressDTO()
         {
 
         }
 
-        public Address(byte id, string streetName, string streetNo, string country, string zipCode, string city)
+        public AddressDTO(byte id, string streetName, string streetNo, string country, string zipCode, string city)
         {
             _id = id;
             _streetName = streetName;

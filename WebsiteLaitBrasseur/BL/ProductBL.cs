@@ -38,6 +38,11 @@ namespace WebsiteLaitBrasseur.BL
                 results = db.FindByType(type);
                 //TODO: if product is suspendet status = 0 
                 //needs to be greyed out or not visible to customer
+                for (int i = 0; i < results.Count(); i++)
+                {
+                    //debugging purpose, will later remove
+                    System.Diagnostics.Debug.WriteLine("products found--" + results[i].GetId());
+                }
             }
             catch (Exception e)
             {

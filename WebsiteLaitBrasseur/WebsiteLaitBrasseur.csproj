@@ -153,8 +153,6 @@
     <Compile Include="BL\Card.cs" />
     <Compile Include="BL\EmptyRowException.cs" />
     <Compile Include="BL\Invoice.cs" />
-    <Compile Include="BL\Login.cs" />
-    <Compile Include="BL\LoginBL.cs" />
     <Compile Include="BL\PayPal.cs" />
     <Compile Include="BL\ProductBL.cs" />
     <Compile Include="DAL\AccountDAL.cs" />
@@ -166,7 +164,6 @@
     <Compile Include="BL\ProductSelection.cs" />
     <Compile Include="BL\Shippment.cs" />
     <Compile Include="DAL\InvoiceDAL.cs" />
-    <Compile Include="DAL\LogInDAL.cs" />
     <Compile Include="DAL\PaymentDAL.cs" />
     <Compile Include="DAL\PayPalDAL.cs" />
     <Compile Include="DAL\ProductDAL.cs" />

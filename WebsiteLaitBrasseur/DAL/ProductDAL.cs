@@ -220,6 +220,8 @@ namespace WebsiteLaitBrasseur.DAL
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {                        
                         if (reader.Read())
@@ -260,6 +262,8 @@ namespace WebsiteLaitBrasseur.DAL
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@type", type);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
