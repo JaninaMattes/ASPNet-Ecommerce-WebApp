@@ -6,24 +6,27 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class RegisterAdmin : System.Web.UI.Page
     {
+        AccountBL bl = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
+           //TODO
         }
         protected void CreateAccountButton_Click(object sender, EventArgs e)
         {
             if (IsValid)
             {
-                //variable session creation
-                Session.Add("email", TextEmail.Text);
-                MailSender();
+                var isAdmin = 1;
+                bl.createAccount(); //TODO
 
+                //variable session creation
+                Session["email"] = TextEmail.Text.Trim();
+                MailSender();
             }
         }
 
@@ -34,8 +37,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         private void MailSender()
         {
-
-            
             string email = this.Session["email"].ToString(); ;    //Cookie recuperation
 
             if (email != null)

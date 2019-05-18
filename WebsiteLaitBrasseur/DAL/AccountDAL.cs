@@ -17,26 +17,40 @@ namespace WebsiteLaitBrasseur.DAL
     {
         //Get connection string from web.config file and create sql connection
         SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
-        //create
-        public int Create(Login login, string fname, string lname, string birthdate, string phoneNo, Int16 status, Int16 isAdmin)
+        /// <summary>
+        /// This function inserts data of the DTO persistantly into the DB
+        /// The return value contains the autoincremented ID for the Account.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="fname"></param>
+        /// <param name="lname"></param>
+        /// <param name="birthdate"></param>
+        /// <param name="phoneNo"></param>
+        /// <param name="status"></param>
+        /// <param name="isAdmin"></param>
+        /// <returns>The id value of the account.</returns>
+        public int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate, string phoneNo, string imgPath, int status, int isAdmin)
         {
             int result;
             //no need to explicitely set id as autoincrement is used
-            //when account is created after Login, the login id needs to be set
-            string queryString = "INSERT INTO Account(dbo.Account.loginId, dbo.Account.firstName, " +
-                "dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.status, dbo.Account.isAdmin) " +
-                "VALUES(@loginId, '@firstName', '@lastName', '@birthDate', '@phone', @status, @isAdmin)";
-            string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM Account ORDER BY 1 DESC";
+            string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, dbo.Account.firstName, " +
+                "dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.imgPath, dbo.Account.status, dbo.Account.isAdmin) " +
+                "VALUES('@email', '@password', @isConfirmed, '@firstName', '@lastName', '@birthDate', '@phone', '@imgPath', @status, @isAdmin)";
+            string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM dbo.Account ORDER BY 1 DESC";
             try
             {
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@loginId", login.GetId());
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", fname);
+                    cmd.Parameters.AddWithValue("@isConfirmed", isConfirmed);
                     cmd.Parameters.AddWithValue("@firstName", fname);
                     cmd.Parameters.AddWithValue("@lastName", lname);
                     cmd.Parameters.AddWithValue("@birthDate", birthdate);
                     cmd.Parameters.AddWithValue("@phone", phoneNo);
+                    cmd.Parameters.AddWithValue("@imgPath", imgPath);
                     cmd.Parameters.AddWithValue("@status", status);
                     cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
                     connection.Open();
@@ -50,7 +64,7 @@ namespace WebsiteLaitBrasseur.DAL
                     SqlDataReader reader = command.ExecuteReader();
                     //won't need a while, since it will only retrieve one row
                     reader.Read();
-                    //here is your data
+                    //this is the id of the newly created data field
                     result = (Int32) reader["accountID"];
                 }
                 return result;

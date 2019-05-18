@@ -36,7 +36,7 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 results = db.FindByType(type);
-                //TODO: if product is suspendet status = 1 
+                //TODO: if product is suspendet status = 0 
                 //needs to be greyed out or not visible to customer
             }
             catch (Exception e)

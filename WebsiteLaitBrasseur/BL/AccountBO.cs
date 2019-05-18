@@ -10,16 +10,18 @@ namespace WebsiteLaitBrasseur.BL
     {
         //private properties
         private byte _id;
-        private string _firstName;
-        private string _lastName;
-        private string _birthDate;
-        private string _phoneNo;
-        private string _imgPath;
-        private bool _status = false;
-        private bool _isAdmin = false;
+        private string _email = "";
+        private int _isConfirmed = 0;
+        private string _password = "";
+        private string _firstName = "";
+        private string _lastName = "";
+        private string _birthDate = "";
+        private string _phoneNo = "";
+        private string _imgPath = "";
+        private int _status = 0;
+        private int _isAdmin = 0;
         private List<Invoice> _invoiceList = new List<Invoice>();
         private Address _address;
-        private Login _login;
 
         //getter and setter
         public int GetAccountId()
@@ -30,6 +32,35 @@ namespace WebsiteLaitBrasseur.BL
         public void SetAccountID(byte id)
         {
             this._id = id;
+        }
+        public string GetEmail()
+        {
+            return this._email;
+        }
+
+        public void SetEmail(string email)
+        {
+            this._email = email;
+        }
+
+        public string GetPassword()
+        {
+            return this._password;
+        }
+
+        public void SetPassword(string pw)
+        {
+            this._password = pw;
+        }
+
+        public int GetIsConfirmed()
+        {
+            return this._isConfirmed;
+        }
+
+        public void SetIsConfirmed(int isConf)
+        {
+            this._isConfirmed = isConf;
         }
 
         public string GetFirstName()
@@ -82,22 +113,22 @@ namespace WebsiteLaitBrasseur.BL
             this._imgPath = imgPath;
         }
 
-        public bool GetStatus()
+        public int GetStatus()
         {
             return this._status;
         }
 
-        public void SetStatus(bool status)
+        public void SetStatus(int status)
         {
             this._status = status;
         }
 
-        public bool GetIsAdmin()
+        public int GetIsAdmin()
         {
             return this._isAdmin;
         }
 
-        public void SetIsAdmin(bool isAdmin)
+        public void SetIsAdmin(int isAdmin)
         {
             this._isAdmin = isAdmin;
         }
@@ -127,57 +158,50 @@ namespace WebsiteLaitBrasseur.BL
             this._address = address;
         }
 
-        public Login GetLogin()
-        {
-            return this._login;
-        }
-
-        public void SetLogin(Login login)
-        {
-            this._login = login;
-        }
-
         //constructor
         public AccountBO()
         {
 
         }
 
-        public AccountBO(byte id, Login login)
+        public AccountBO(byte id, string email, string pw)
         {
             _id = id;
-            _login = login;
+            _email = email;
+            _password = pw;
         }
 
-        public AccountBO(byte id, Login login, string fname, string lname, string birthdate, string phoneNo)
+        public AccountBO(byte id, string email, string password, string firstName, 
+            string lastName, string birthDate, string phoneNo, int status, int isAdmin, Address address) : 
+            this(id, email, password)
         {
-            this._id = id;
-            this._login = login;
-            this._firstName = fname;
-            this._lastName = lname;
-            this._birthDate = birthdate;
-            this._phoneNo = phoneNo;
-            //new accounts are per default not suspendet
-            this._status = true;
+            _firstName = firstName;
+            _lastName = lastName;
+            _birthDate = birthDate;
+            _phoneNo = phoneNo;
+            _status = status;
+            _isAdmin = isAdmin;
+            _address = address;
         }
 
-        public AccountBO(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin) : this(id, login, firstName, lastName, birthDate, phoneNo)
+        public AccountBO(byte id, string email, int isConfirmed, string password, string firstName, string lastName, 
+            string birthDate, string phoneNo, string imgPath, int status, int isAdmin, List<Invoice> invoiceList, Address address)
         {
-            this._imgPath = imgPath;
-            this._status = true;
-            this._isAdmin = isAdmin;
+            _id = id;
+            _email = email;
+            _isConfirmed = isConfirmed;
+            _password = password;
+            _firstName = firstName;
+            _lastName = lastName;
+            _birthDate = birthDate;
+            _phoneNo = phoneNo;
+            _imgPath = imgPath;
+            _status = status;
+            _isAdmin = isAdmin;
+            _invoiceList = invoiceList;
+            _address = address;
         }
 
-        public AccountBO(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, Address address) : this(id, login, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
-        {
-            this._address = address;
-        }
-
-        public AccountBO(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin, List<Invoice> invoiceList, Address address) : this(id, login, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin)
-        {
-            this._invoiceList = invoiceList;
-            this._address = address;
-        }
 
         public override string ToString()
         {
@@ -186,24 +210,29 @@ namespace WebsiteLaitBrasseur.BL
 
         public override bool Equals(object obj)
         {
-            return obj is AccountBO account &&
-                   _id == account._id &&
-                   _firstName == account._firstName &&
-                   _lastName == account._lastName &&
-                   _birthDate == account._birthDate &&
-                   _phoneNo == account._phoneNo &&
-                   _imgPath == account._imgPath &&
-                   _status == account._status &&
-                   _isAdmin == account._isAdmin &&
-                   EqualityComparer<List<Invoice>>.Default.Equals(_invoiceList, account._invoiceList) &&
-                   EqualityComparer<Address>.Default.Equals(_address, account._address) &&
-                   EqualityComparer<Login>.Default.Equals(_login, account._login);
+            return obj is AccountBO bO &&
+                   _id == bO._id &&
+                   _email == bO._email &&
+                   _isConfirmed == bO._isConfirmed &&
+                   _password == bO._password &&
+                   _firstName == bO._firstName &&
+                   _lastName == bO._lastName &&
+                   _birthDate == bO._birthDate &&
+                   _phoneNo == bO._phoneNo &&
+                   _imgPath == bO._imgPath &&
+                   _status == bO._status &&
+                   _isAdmin == bO._isAdmin &&
+                   EqualityComparer<List<Invoice>>.Default.Equals(_invoiceList, bO._invoiceList) &&
+                   EqualityComparer<Address>.Default.Equals(_address, bO._address);
         }
 
         public override int GetHashCode()
         {
-            var hashCode = 97198024;
+            var hashCode = -111360723;
             hashCode = hashCode * -1521134295 + _id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_email);
+            hashCode = hashCode * -1521134295 + _isConfirmed.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_password);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_firstName);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_lastName);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_birthDate);
@@ -213,7 +242,6 @@ namespace WebsiteLaitBrasseur.BL
             hashCode = hashCode * -1521134295 + _isAdmin.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<List<Invoice>>.Default.GetHashCode(_invoiceList);
             hashCode = hashCode * -1521134295 + EqualityComparer<Address>.Default.GetHashCode(_address);
-            hashCode = hashCode * -1521134295 + EqualityComparer<Login>.Default.GetHashCode(_login);
             return hashCode;
         }
     }

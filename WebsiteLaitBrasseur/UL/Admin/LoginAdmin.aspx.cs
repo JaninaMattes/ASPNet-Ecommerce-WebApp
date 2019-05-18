@@ -18,10 +18,9 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            LoginBL bl = new LoginBL();
+            AccountBL bl = new AccountBL();
 
-
-            if (bl.Check(TextEmail.Text.Trim(), TextPassword.Text.Trim()))
+            if (bl.IsCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim()))
             {
                 //variable session creation
                 //session is a dictionary inside ASP.NET
