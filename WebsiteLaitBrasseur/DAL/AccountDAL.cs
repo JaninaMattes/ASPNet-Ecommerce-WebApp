@@ -230,6 +230,58 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         /// <summary>
+        /// Find a specific user in the database by its 
+        /// unique indentifier accountID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public AccountDTO FindBy(int id)
+        {
+            AccountDTO account;
+            AddressDTO address;
+            string queryString = "SELECT * FROM dbo.Account WHERE accountID=@id";
+
+            try
+            {
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            account = new AccountDTO();
+                            address = new AddressDTO();
+                            account.SetAccountID((int)reader["accountID"]);
+                            address.SetID((int)reader["addressID"]);
+                            account.SetAddress(address);
+                            account.SetEmail(reader["email"].ToString());
+                            account.SetFirstName(reader["firstName"].ToString());
+                            account.SetLastName(reader["lastName"].ToString());
+                            account.SetBirthdate(reader["birthDate"].ToString());
+                            account.SetPhoneNo(reader["phone"].ToString());
+                            account.SetImgPath(reader["imgPath"].ToString());
+                            account.SetIsAdmin((int)reader["isAdmin"]);
+                            account.SetIsConfirmed((int)reader["isConfirmed"]);
+                            account.SetStatus((int)reader["status"]);
+                            //return product instance as data object 
+                            Debug.Print("AccountDAL: /FindByMail/ " + account.ToString());
+                            return account;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+                Debug.Print(e.ToString());
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Read operation find a specific user in the database
         /// by selecting his unique email address to indentify the entry.
         /// </summary>
@@ -267,7 +319,7 @@ namespace WebsiteLaitBrasseur.DAL
                             account.SetIsConfirmed((int)reader["isConfirmed"]);
                             account.SetStatus((int)reader["status"]);
                             //return product instance as data object 
-                            Debug.Print("AccountDAL: /FindBy/ " + account.ToString());
+                            Debug.Print("AccountDAL: /FindByMail/ " + account.ToString());
                             return account;
                         }
                     }
@@ -281,40 +333,121 @@ namespace WebsiteLaitBrasseur.DAL
             return null;
         }
 
-        //find all admins in the database
-        public List<AccountDTO> FindAll(int isAdmin)
+        /// <summary>
+        /// Find all Admins in DB by passing isAdmin = 1 OR
+        /// Find all Customer in DB by passing isAdmin = 0
+        /// </summary>
+        /// <param name="isAdmin"></param>
+        /// <returns></returns>
+        public List<AccountDTO> FindAllUserBy(int isAdmin)
         {
-            AccountDTO account;
+            string queryString = "SELECT * FROM dbo.Account WHERE isAdmin=@isAdmin";
+            List<AccountDTO> results = new List<AccountDTO>();
             try
             {
-                account = new AccountDTO();
-                //find entry in database where isAdmin = true (Admin) else Customer
-                return account;
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                AccountDTO account = new AccountDTO();
+                                AddressDTO address = new AddressDTO();
+                                account.SetAccountID((int)reader["accountID"]);
+                                address.SetID((int)reader["addressID"]);
+                                account.SetAddress(address);
+                                account.SetEmail(reader["email"].ToString());
+                                account.SetFirstName(reader["firstName"].ToString());
+                                account.SetLastName(reader["lastName"].ToString());
+                                account.SetBirthdate(reader["birthDate"].ToString());
+                                account.SetPhoneNo(reader["phone"].ToString());
+                                account.SetImgPath(reader["imgPath"].ToString());
+                                account.SetIsAdmin((int)reader["isAdmin"]);
+                                account.SetIsConfirmed((int)reader["isConfirmed"]);
+                                account.SetStatus((int)reader["status"]);
+                                //return product instance as data object 
+                                Debug.Print("AccountDAL: /FindAllUserBy/ " + account.ToString());
+                               
+                                //add data objects to result-list 
+                                results.Add(account);
+                            }
+                            return results;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-                Debug.Print(e.ToString());
             }
-
             return null;
         }
 
-        public AccountDTO FindByStatus(bool status)
+        /// <summary>
+        /// Find all suspendet User by status = 1
+        /// Find all not suspendet User by status = 0
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public List<AccountDTO> FindByStatus(int status)
         {
-            AccountDTO account;
+            string queryString = "SELECT * FROM dbo.Account WHERE status=@status";
+            List<AccountDTO> results = new List<AccountDTO>();
             try
             {
-                account = new AccountDTO();
-                //find entry in database where status = suspendet/enabled
-                return account;
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@status", status);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                AccountDTO account = new AccountDTO();
+                                AddressDTO address = new AddressDTO();
+                                account.SetAccountID((int)reader["accountID"]);
+                                address.SetID((int)reader["addressID"]);
+                                account.SetAddress(address);
+                                account.SetEmail(reader["email"].ToString());
+                                account.SetFirstName(reader["firstName"].ToString());
+                                account.SetLastName(reader["lastName"].ToString());
+                                account.SetBirthdate(reader["birthDate"].ToString());
+                                account.SetPhoneNo(reader["phone"].ToString());
+                                account.SetImgPath(reader["imgPath"].ToString());
+                                account.SetIsAdmin((int)reader["isAdmin"]);
+                                account.SetIsConfirmed((int)reader["isConfirmed"]);
+                                account.SetStatus((int)reader["status"]);
+                                //return product instance as data object 
+                                Debug.Print("AccountDAL: /FindAllByStatus/ " + status + " " + account.ToString());
+
+                                //add data objects to result-list 
+                                results.Add(account);
+                            }
+                            return results;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-                Debug.Print(e.ToString());
             }
-
             return null;
         }
 
@@ -349,7 +482,7 @@ namespace WebsiteLaitBrasseur.DAL
                             account.SetIsConfirmed((int)reader["isConfirmed"]);
                             account.SetStatus((int)reader["status"]);
                             //return product instance as data object 
-                            Debug.Print("AccountDAL: /FindBy/ " + account.ToString());
+                            Debug.Print("AccountDAL: /FindByName/ " + fname + " " + lname + " " + account.ToString());
                             return account;
                         }
                     }
@@ -397,9 +530,10 @@ namespace WebsiteLaitBrasseur.DAL
 
         /// <summary>
         /// Find the entry for the email address
+        /// Will return a value of 1 if email is found in DB.
         /// </summary>
         /// <param name="email"></param>
-        /// <returns></returns>
+        /// <returns>int value = 1, if entry found in DB</returns>
         public int FindLoginEmail(string email)
         {
             int result = 0;
@@ -426,6 +560,7 @@ namespace WebsiteLaitBrasseur.DAL
 
         /// <summary>
         /// Find the entry for the password
+        /// Will return a value of 1 if email is found in DB.
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
