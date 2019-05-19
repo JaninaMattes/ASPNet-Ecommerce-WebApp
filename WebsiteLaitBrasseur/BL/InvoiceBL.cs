@@ -17,11 +17,12 @@ namespace WebsiteLaitBrasseur.BL
         /// As soon as the customer hits the buy product button 
         /// and pays the item or chooses to pay later the 
         /// invoice is created.
+        /// Returns the InvoiceID
         /// </summary>
         /// <param name="email"></param>
         /// <param name="shippingID"></param>
         /// <param name="products"></param>
-        /// <returns></returns>
+        /// <returns>Int InvoiceID</returns>
         public int CreateInvoice(string email, int shippingID, List<ProductSelectionDTO> products, int paymentStatus)
         {
             AccountDTO customer = new AccountDTO();
