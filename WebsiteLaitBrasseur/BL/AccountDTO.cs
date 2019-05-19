@@ -11,6 +11,7 @@ namespace WebsiteLaitBrasseur.BL
         //private properties
         private int _id;
         private string _email = "";
+        private string _password = "";
         private int _isConfirmed = 0;
         private string _firstName = "";
         private string _lastName = "";
@@ -40,6 +41,16 @@ namespace WebsiteLaitBrasseur.BL
         public void SetEmail(string email)
         {
             this._email = email;
+        }
+
+        public string GetPW()
+        {
+            return this._password;
+        }
+
+        public void SetPw(string pw)
+        {
+            this._password = pw;
         }
 
         public int GetIsConfirmed()

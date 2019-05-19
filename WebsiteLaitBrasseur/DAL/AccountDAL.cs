@@ -266,6 +266,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <summary>
         /// Find a specific user in the database by its 
         /// unique indentifier accountID
+        /// This contains in addition the encrypted PW
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -292,6 +293,7 @@ namespace WebsiteLaitBrasseur.DAL
                             address.SetID((int)reader["addressID"]);
                             account.SetAddress(address);
                             account.SetEmail(reader["email"].ToString());
+                            account.SetPw(reader["password"].ToString());
                             account.SetFirstName(reader["firstName"].ToString());
                             account.SetLastName(reader["lastName"].ToString());
                             account.SetBirthdate(reader["birthDate"].ToString());
@@ -318,6 +320,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <summary>
         /// Read operation find a specific user in the database
         /// by selecting his unique email address to indentify the entry.
+        /// This contains in addition the encrypted password of the user.
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
@@ -344,6 +347,7 @@ namespace WebsiteLaitBrasseur.DAL
                             address.SetID((int)reader["addressID"]);
                             account.SetAddress(address);                            
                             account.SetEmail(reader["email"].ToString());
+                            account.SetPw(reader["password"].ToString());
                             account.SetFirstName(reader["firstName"].ToString());
                             account.SetLastName(reader["lastName"].ToString());
                             account.SetBirthdate(reader["birthDate"].ToString());
