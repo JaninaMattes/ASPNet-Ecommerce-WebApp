@@ -265,7 +265,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="status"></param>
         /// <returns>List<ShippmentDTO</returns>
-        public List<ShippmentDTO> FindAll(int status)
+        public List<ShippmentDTO> FindAllBy(int status)
         {
             string queryString = "SELECT * FROM dbo.Shippment WHERE status = @status";
             List<ShippmentDTO> results = new List<ShippmentDTO>();

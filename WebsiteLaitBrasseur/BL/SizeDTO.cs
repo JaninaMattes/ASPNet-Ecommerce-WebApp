@@ -10,7 +10,7 @@ namespace WebsiteLaitBrasseur.BL
         private int _id;
         private int _size;
         private decimal _price;
-        private ProductBL _product;
+        private ProductDTO _product;
 
         //getter and setter
         public int GetID()
@@ -43,14 +43,26 @@ namespace WebsiteLaitBrasseur.BL
             this._price = price;
         }
 
-        public ProductBL GetProduct()
+        public ProductDTO GetProduct()
         {
             return this._product;
         }
 
-        public void SetProduct(ProductBL product)
+        public void SetProduct(ProductDTO product)
         {
             this._product = product;
+        }
+
+        public SizeDTO()
+        {
+        }
+
+        public SizeDTO(int id, int size, decimal price, ProductDTO product)
+        {
+            _id = id;
+            _size = size;
+            _price = price;
+            _product = product;
         }
     }
 }

@@ -153,10 +153,12 @@ namespace WebsiteLaitBrasseur.BL
             }
             catch (RegexMatchTimeoutException e)
             {
+                e.GetBaseException();
                 return false;
             }
             catch (ArgumentException e)
             {
+                e.GetBaseException();
                 return false;
             }
 
