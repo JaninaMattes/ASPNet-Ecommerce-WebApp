@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Web;
 using WebsiteLaitBrasseur.DAL;
+using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace WebsiteLaitBrasseur.BL
 {
@@ -26,7 +28,8 @@ namespace WebsiteLaitBrasseur.BL
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
-        public int createAccount(string email, string password, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, int status, int isAdmin)
+        public int CreateAccount(string email, string password, string firstName, string lastName, 
+            string birthDate, string phoneNo, string imgPath, int status, int isAdmin)
         {
             int isCorrect = 0;
             try
@@ -53,6 +56,8 @@ namespace WebsiteLaitBrasseur.BL
                 //if both are correct return 0
                 if (isCorrect == 0)
                 {
+                    //encrypt the password before it is sent to the DB
+                    password = this.HashPassword(password);
                     //returns the created Account ID as integer value
                     db.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin);
                 }                
@@ -67,30 +72,34 @@ namespace WebsiteLaitBrasseur.BL
         /// <summary>
         /// Function to check if password and email address are
         /// correctly entered in a textbox.
-        /// a) Password and Username are correct and exist in DB return = 1
-        /// b) Password is incorrect return = 2
-        /// c) Username is incorrect return = 3
-        /// d) Password and Username are not correct return = 0
+        /// Business Rules:
+        /// a) Password and Username are not correct return = 0
+        /// b) Password and Username are correct and exist return = 1
+        /// c) Password is incorrect return = 2
+        /// d) Username is incorrect return = 3        /// 
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public int IsCorrect(string email, string password)
+        private int IsCorrect(string email, string password)
         {           
             int isCorrect = 0;
+            string hashPW = HashPassword(password);
             try
             {
-                //TODO hash password
-                if (db.FindLoginEmail(email) != 1) return isCorrect = 3;
-                if (db.FindLoginPW(password) != 1)
+                if (db.FindLoginEmail(email) != 1)
+                {
+                    return isCorrect = 3;
+                }
+                if (db.FindLoginPW(hashPW) != 1)
                 {
                     return isCorrect = 2;
                 }
                 else
                 {
                     //check if login is correct = user already exists in database
-                    isCorrect = db.FindLoginCred(email, password);
-                    Console.WriteLine("value returned " + isCorrect.ToString());
+                    isCorrect = db.FindLoginCred(email, hashPW);
+                    Debug.Print("AccountBL / value returned " + isCorrect.ToString());
                 }
                 count++;
                 //TODO if count is > 3 within certain amount of time, set counter back to 0 after 10min
@@ -109,7 +118,7 @@ namespace WebsiteLaitBrasseur.BL
         /// </summary>
         /// <param name="emailaddress"></param>
         /// <returns></returns>
-        public bool IsEmailValid(string emailaddress)
+        private bool IsEmailValid(string emailaddress)
         {
             try
             {
@@ -128,7 +137,7 @@ namespace WebsiteLaitBrasseur.BL
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public static bool IsValidEmail(string email)
+        private static bool IsValidEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
                 return false;
@@ -180,17 +189,16 @@ namespace WebsiteLaitBrasseur.BL
         /// this returns a true or false value if the business rules are kept correctly
         /// Rules for the Password are:
         /// * avoid spaces in the string
-        /// * Length: Minimum eight and maximum 10 characters
+        /// * Length: Maximum 10 characters
         /// * UpperCase: at least one uppercase letter
         /// * LowerCase: at least one lowercase letter
         /// * Number: at least one number
-        /// * Special Character: at least one special character
         /// </summary>
         /// <param name="password"></param>
         /// <returns>boolean value</returns>
-        public bool IsValidPassword(string password)
+        private bool IsValidPassword(string password)
         {
-            string MatchPasswordRules = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$";
+            string MatchPasswordRules = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$/";
             if (password != null) return Regex.IsMatch(password, MatchPasswordRules);
             else return false;
         }
@@ -200,7 +208,7 @@ namespace WebsiteLaitBrasseur.BL
         /// PasswordAdvisor class
         /// </summary>
 
-        public enum PasswordScore
+        private enum PasswordScore
         {
             Blank = 0,
             VeryWeak = 1,
@@ -214,7 +222,7 @@ namespace WebsiteLaitBrasseur.BL
         /// Check quality of password
         /// source: https://stackoverflow.com/questions/12899876/checking-strings-for-a-strong-enough-password
         /// </summary>
-        public class PasswordAdvisor
+        private class PasswordAdvisor
         {
             public static PasswordScore CheckStrength(string password)
             {
@@ -238,6 +246,27 @@ namespace WebsiteLaitBrasseur.BL
 
                 return (PasswordScore)score;
             }
+        }
+
+        /// <summary>
+        /// Source Stackoverflow: https://stackoverflow.com/questions/4181198/how-to-hash-a-password/10402129#10402129
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        private string HashPassword(string password)
+        {
+            byte[] salt;
+            string savedPasswordHash;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+            //get hash value
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+            //combine both
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+            //return the created hash password
+            return savedPasswordHash = Convert.ToBase64String(hashBytes); 
         }
     }
 }

@@ -70,7 +70,7 @@ namespace WebsiteLaitBrasseur.DAL
                     result = (Int32) reader["accountID"];
                     Debug.Print("AccountDAL: /Insert/ " + result.ToString());
                 }
-                return result;
+               
             }
             catch (Exception e)
             {
@@ -231,6 +231,38 @@ namespace WebsiteLaitBrasseur.DAL
             return result;
         }
 
+        public int UpdateAll(int accountID, string email, string password, string fname, string lname, 
+            string birthdate, string phoneNo, string imgPath)
+        {
+            int result = 0;
+            string queryString = "UPDATE dbo.Account SET email = @email, password = @, firstName = @fname, lastName = @lname, " +
+                "birthDate = @birthdate, phone = @phoneNo, imgPath = @imgPath, status = @status, isAdmin = @isAdmin WHERE accountID = @accountID";
+            try
+            {
+                //update into database where id = XY to status suspendet(false) or enabled(true) 
+                //e.g. after three false log in attempts / upaied bills
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@accountID", accountID);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    cmd.Parameters.AddWithValue("@fname", fname);
+                    cmd.Parameters.AddWithValue("@lname", lname);
+                    cmd.Parameters.AddWithValue("@birthdate", birthdate);
+                    cmd.Parameters.AddWithValue("@phoneNo", phoneNo);
+                    cmd.Parameters.AddWithValue("@imgPath", imgPath);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return result;
+        }
+
         /// <summary>
         /// Find a specific user in the database by its 
         /// unique indentifier accountID
@@ -241,7 +273,7 @@ namespace WebsiteLaitBrasseur.DAL
         {
             AccountDTO account;
             AddressDTO address;
-            string queryString = "SELECT * FROM dbo.Account WHERE accountID=@id";
+            string queryString = "SELECT * FROM dbo.Account WHERE accountID = @id";
 
             try
             {
@@ -293,7 +325,7 @@ namespace WebsiteLaitBrasseur.DAL
         {
             AccountDTO account;
             AddressDTO address;
-            string queryString = "SELECT * FROM dbo.Account WHERE email=@email";
+            string queryString = "SELECT * FROM dbo.Account WHERE email = @email";
           
             try
             {
@@ -343,7 +375,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
         public List<AccountDTO> FindAllUserBy(int isAdmin)
         {
-            string queryString = "SELECT * FROM dbo.Account WHERE isAdmin=@isAdmin";
+            string queryString = "SELECT * FROM dbo.Account WHERE isAdmin = @isAdmin";
             List<AccountDTO> results = new List<AccountDTO>();
             try
             {
@@ -459,7 +491,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
         public List<AccountDTO> FindByStatus(int status)
         {
-            string queryString = "SELECT * FROM dbo.Account WHERE status=@status";
+            string queryString = "SELECT * FROM dbo.Account WHERE status = @status";
             List<AccountDTO> results = new List<AccountDTO>();
             try
             {
@@ -515,13 +547,16 @@ namespace WebsiteLaitBrasseur.DAL
         {
             AccountDTO account;
             AddressDTO address;
-            string queryString = "SELECT * FROM dbo.Account WHERE firstName=@fname AND lastName=@lname";
+            string queryString = "SELECT * FROM dbo.Account WHERE firstName = @fname AND lastName = @lname";
 
             try
             {
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@fname", fname);
+                    cmd.Parameters.AddWithValue("@lname", lname);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
@@ -574,8 +609,8 @@ namespace WebsiteLaitBrasseur.DAL
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@password", password);
                     connection.Open();
-                    result = Convert.ToInt32(cmd.ExecuteScalar());
-                    Console.WriteLine("value returned " + result.ToString());
+                    result = Convert.ToInt32(cmd.ExecuteScalar()); //is expected to return value 1 if successfull
+                    Debug.Print("AccountDAL / FindLoginCred / value returned " + result.ToString());
                 }
             }
             catch (Exception e)
@@ -605,7 +640,7 @@ namespace WebsiteLaitBrasseur.DAL
                     cmd.Parameters.AddWithValue("@email", email);
                     connection.Open();
                     result = Convert.ToInt32(cmd.ExecuteScalar());
-                    Console.WriteLine("value returned " + result.ToString());
+                    Debug.Print("AccountDAL / FindLoginCred / value returned " + result.ToString());
                 }
             }
             catch (Exception e)
@@ -635,7 +670,7 @@ namespace WebsiteLaitBrasseur.DAL
                     cmd.Parameters.AddWithValue("@password", password);
                     connection.Open();
                     result = Convert.ToInt32(cmd.ExecuteScalar());
-                    Console.WriteLine("value returned " + result.ToString());
+                    Debug.Print("AccountDAL / FindLoginCred / value returned " + result.ToString());
                 }
             }
             catch (Exception e)
