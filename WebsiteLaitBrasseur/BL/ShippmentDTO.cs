@@ -47,7 +47,7 @@ namespace WebsiteLaitBrasseur.BL
             this._type = type;
         }
 
-        public string GetDeliveryTime()
+        public int GetDeliveryTime()
         {
             return this._deliveryTime;
         }
@@ -113,6 +113,10 @@ namespace WebsiteLaitBrasseur.BL
             this(id, company, type, deliveryTime, cost)
         {
             _status = status;
+        }
+
+        public ShippmentDTO()
+        {
         }
     }
 }
