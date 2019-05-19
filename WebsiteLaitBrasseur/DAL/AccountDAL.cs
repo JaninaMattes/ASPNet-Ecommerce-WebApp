@@ -665,7 +665,7 @@ namespace WebsiteLaitBrasseur.DAL
         public int FindLoginPW(string password)
         {
             int result = 0;
-            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE password=@password";
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE password = @password";
 
             try
             {

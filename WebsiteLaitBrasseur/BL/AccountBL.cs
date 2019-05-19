@@ -8,17 +8,18 @@ using System.Web;
 using WebsiteLaitBrasseur.DAL;
 using System.Security.Cryptography;
 using System.Diagnostics;
+using System.Timers;
 
 namespace WebsiteLaitBrasseur.BL
 {
     public class AccountBL
     {
-        private AccountDAL db = new AccountDAL();
+        private AccountDAL DB = new AccountDAL();
         private static int count = 0;
 
         /// <summary>
-        /// create new login and simultaneously C:\Users\Janina\Documents\DEV\LaitBrasseur-WebStore\WebsiteC:\Users\Janina\Documents\DEV\LaitBrasseur-WebStore\WebsiteLaitBrasseur\BL\BO\Account.csLaitBrasseur\BL\BO\Account.cs
-        /// the correct account that belongs to a login
+        /// Register a new User and create an account. 
+        /// An admin has isAdmin = 1, a customer has isAdmin = 0
         /// 
         /// Check correctness:
         /// a) Email is not correct in terms of not valid -> return 1
@@ -35,12 +36,14 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 int isConfirmed = 0;
-                //check if format of email is correct else return = 1
-                if (IsValidEmail(email)) {
+                //check if format of email is correct && it doesnt already exist in DB 
+                //else return = 1
+                if (IsValidEmail(email) && (DB.FindLoginEmail(email) != 1))
+                {
                 //check if the email address is an existing mail
-                if (IsEmailValid(email))
+                    if (IsEmailValid(email))
                     {
-                        isConfirmed = 1; //is correct mail
+                        isConfirmed = 1; //is a correct mail address
                     }
                     else
                     {
@@ -48,9 +51,8 @@ namespace WebsiteLaitBrasseur.BL
                     }
                 }
                 //check if format of password is correct else return = 2
-                if (IsValidPassword(password)) {
-                    isCorrect = 0;
-                } else {
+                if (!IsValidPassword(password))
+                {
                     return isCorrect = 2; //is not correct
                 }
                 //if both are correct return 0
@@ -58,8 +60,9 @@ namespace WebsiteLaitBrasseur.BL
                 {
                     //encrypt the password before it is sent to the DB
                     password = this.HashPassword(password);
+                    Debug.Print("AccountBL / Password hashed " + password.ToString());
                     //returns the created Account ID as integer value
-                    db.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin);
+                    DB.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin);
                 }                
             }
             catch (Exception e)
@@ -76,40 +79,158 @@ namespace WebsiteLaitBrasseur.BL
         /// a) Password and Username are not correct return = 0
         /// b) Password and Username are correct and exist return = 1
         /// c) Password is incorrect return = 2
-        /// d) Username is incorrect return = 3        /// 
+        /// d) Username is incorrect return = 3
+        /// e) User is suspendet = 4, don't allow login
+        /// f) User is suspendet for 1 hour then reset = 5
+        /// 
         /// </summary>
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        private int IsCorrect(string email, string password)
+        private int IsLoginCorrect(string email, string password)
         {           
             int isCorrect = 0;
             string hashPW = HashPassword(password);
+            if(count == 3)
+            {
+                // 5 = suspend the user
+                isCorrect = 5;
+                //Call timer
+                StartTimer();
+            }
             try
             {
-                if (db.FindLoginEmail(email) != 1)
+                if (DB.FindLoginEmail(email) != 1)
                 {
-                    return isCorrect = 3;
+                    // 3 = email is not correct
+                    return isCorrect = 3; 
                 }
-                if (db.FindLoginPW(hashPW) != 1)
+                if (DB.FindLoginPW(hashPW) != 1)
                 {
-                    return isCorrect = 2;
+                    // 2 = password is not correct
+                    return isCorrect = 2; 
+                }
+                if (isUserSuspendet(email))
+                {
+                    // 4 = user is suspendet
+                    return isCorrect = 4; 
                 }
                 else
                 {
-                    //check if login is correct = user already exists in database
-                    isCorrect = db.FindLoginCred(email, hashPW);
+                    //check if login is correct AND user already exists in database
+                    // 1 = user exists in DB and email and PW are correct
+                    isCorrect = DB.FindLoginCred(email, hashPW);
                     Debug.Print("AccountBL / value returned " + isCorrect.ToString());
                 }
+
+                //count the login attempts
                 count++;
-                //TODO if count is > 3 within certain amount of time, set counter back to 0 after 10min
-                //then block the user account for 1 hour
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
             return isCorrect;
+        }
+
+        /// <summary>
+        /// First add new Address and then use returning ID
+        /// to set the new address as well as reference in Account.
+        /// Returns the value of the effected rows.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="addressID"></param>
+        /// <returns></returns>
+        public int AddAddress(string email, int addressID)
+        {
+            int result = 0;
+            if ((DB.FindLoginEmail(email) == 1) && addressID > 0)
+            {
+                result = DB.UpdateAddress(email, addressID);
+                Debug.Print("AccountBL / value returned " + result.ToString());
+            }
+            else
+            {
+                throw new InputInvalidException("The input value is invalid.");
+            }
+            return result;
+        }
+
+       /// <summary>
+       /// Suspend or reaccredit a user.
+       /// When successfull the result = 1
+       /// </summary>
+       /// <param name="accountID"></param>
+       /// <param name="status"></param>
+       /// <returns>int result</returns>
+        public int UpdateStatus(string email, int status)
+        {
+            int result = 0;
+            if (status >= 0 && status <= 1)
+            {
+                result = DB.UpdateStatus(email, status);
+                Debug.Print("AccountBL / value returned " + result.ToString());
+            }
+            else
+            {
+                throw new InputInvalidException("The user input is invalid.");
+            }
+            return result;
+        } 
+
+        public int UpdateAll()
+        {
+            //TODO
+            return 0;
+        }
+
+        /// <summary>
+        /// Find all Customers in DB.
+        /// </summary>
+        /// <returns></returns>
+        public List<AccountDTO> FindAllCustomers()
+        {
+            int isAdmin = 0;
+            List<AccountDTO> results = new List<AccountDTO>();
+            results = DB.FindAllUserBy(isAdmin);
+            return results;
+        }
+
+        /// <summary>
+        /// Find all Admins in DB.
+        /// </summary>
+        /// <returns></returns>
+        public List<AccountDTO> FindAllAdmin()
+        {
+            int isAdmin = 1;
+            List<AccountDTO> results = new List<AccountDTO>();
+            results = DB.FindAllUserBy(isAdmin);
+            return results;
+        }
+
+        private bool isUserSuspendet(string email)
+        {
+            AccountDTO customer = new AccountDTO();
+            customer = DB.FindBy(email);
+            int status = customer.GetStatus();
+            if (customer != null && status != 1)
+            {
+                return true;
+            }
+            else
+            {
+                throw new ArgumentNullException($"No customer found for {email}");
+            }
+        }
+
+        /// <summary>
+        /// Timer to set the counter back
+        /// and allow user to log in again.
+        /// </summary>
+        private void StartTimer()
+        {
+            count = 0;
+            //TODO
         }
 
 

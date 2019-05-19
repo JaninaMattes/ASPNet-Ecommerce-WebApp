@@ -21,7 +21,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             AccountBL bl = new AccountBL();
 
-            var isCorrect = bl.IsCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
+            var isCorrect = bl.IsLoginCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
             switch (isCorrect)
             {
                 case 0:
