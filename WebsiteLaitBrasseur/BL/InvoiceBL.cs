@@ -12,6 +12,7 @@ namespace WebsiteLaitBrasseur.BL
         AccountDAL AB = new AccountDAL();
         ShippmentDAL SB = new ShippmentDAL();
         ProductSelectionDAL PB = new ProductSelectionDAL();
+        ProductDAL PPB = new ProductDAL();
 
         /// <summary>
         /// As soon as the customer hits the buy product button 
@@ -47,6 +48,8 @@ namespace WebsiteLaitBrasseur.BL
                     decimal totalProductCost = CalculateProductCost(products);
                     decimal totalTaxes = CalculateTax(totalProductCost);
                     decimal totalAmount = totalTaxes + totalProductCost + totalShippingCost;
+
+                    UpdateProductInfo(products);
 
                     if (paymentStatus == 1)
                     {
@@ -192,6 +195,33 @@ namespace WebsiteLaitBrasseur.BL
         {
             decimal taxCost = (decimal)((int)cost * 0.1);
             return taxCost;
+        }
+
+        private int UpdateProductInfo(List<ProductSelectionDTO> products)
+        {
+            int result = 0;
+            ProductDTO product = new ProductDTO();
+            try
+            {
+                int stock = 0;
+                foreach (ProductSelectionDTO p in products)
+                {
+                    product = PPB.FindBy(p.GetProduct().GetId());
+                    stock = product.GetStock() - p.GetQuantity();
+                    result = PPB.UpdateStock(p.GetProduct().GetId(), stock);
+                    if (stock == 0)
+                    {
+                        //suspend the product if the stock is too low
+                        PPB.UpdateStatus(p.GetProduct().GetId(), 1);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            
+            return result;
         }
     }
 }

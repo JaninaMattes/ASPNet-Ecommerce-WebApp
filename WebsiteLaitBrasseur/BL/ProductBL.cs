@@ -214,5 +214,26 @@ namespace WebsiteLaitBrasseur.BL
             }
             return result;
         }
+
+        /// <summary>
+        /// Update the stock available after customer 
+        /// has pruchased a product.
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="stock"></param>
+        /// <returns></returns>
+        public int ChangeStock(int productID, int stock)
+        {
+            int result = 0;
+            try
+            {
+                result = DB.UpdateStock(productID, stock);
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return result;
+        }
     }
 }

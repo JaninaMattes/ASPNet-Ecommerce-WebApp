@@ -11,7 +11,7 @@ namespace WebsiteLaitBrasseur.BL
         ProductSelectionDAL DB = new ProductSelectionDAL();
 
         /// <summary>
-        /// TODO Check the logic of shopping
+        /// TODO Check the logic of shopping => Customer can only buy if product is availbale
         /// </summary>
         /// <param name="invoiceID"></param>
         /// <param name="quantity"></param>
