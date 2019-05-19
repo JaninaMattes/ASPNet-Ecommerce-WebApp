@@ -604,7 +604,7 @@ namespace WebsiteLaitBrasseur.DAL
         public int FindLoginCred(string email, string password)
         {
             int result = 0;
-            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE email=@email AND password=@password";
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE email = @email AND password = @password";
 
             try
             {
@@ -635,7 +635,7 @@ namespace WebsiteLaitBrasseur.DAL
         public int FindLoginEmail(string email)
         {
             int result = 0;
-            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE email=@email";
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE email = @email";
 
             try
             {
