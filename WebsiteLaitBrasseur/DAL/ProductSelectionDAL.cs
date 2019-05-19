@@ -237,7 +237,7 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "SELECT dbo.Product_ProdSelection.productID, dbo.ProductSelection.selectionID, " +
                 "dbo.ProductSelection.invoiceID, dbo.ProductSelection.quantity, dbo.ProductSelection.originalSize, " +
                 "dbo.ProductSelection.originalPrice FROM dbo.Product_ProdSelection " +
-                "INNER JOIN dbo.ProductSelection ON dbo.Product_ProdSelection.selectionID = dbo.ProductSelection.selectionID";            
+                "INNER JOIN dbo.ProductSelection ON dbo.Product_ProdSelection.selectionID = dbo.ProductSelection.selectionID";
             try
             {
                 //find entry in database where id = XY
@@ -330,4 +330,5 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return null;
         }
+    }
 }

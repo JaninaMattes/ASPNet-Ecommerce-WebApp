@@ -36,7 +36,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns>Invoice ID</returns>
         public int Insert(int accountID, int shippingID, int totalQuantity, decimal totalShippingCost,
             decimal totalProductCost, decimal totalTaxes, decimal totalAmount, DateTime orderDate, DateTime paymentDate, 
-            DateTime arrivalDate, DateTime postageDate, int paymentStatus, string customerMail, string email)
+            DateTime arrivalDate, DateTime postageDate, int paymentStatus, string customerMail)
         {
             int result;
             //no need to explicitely set id as autoincrement is used
@@ -61,6 +61,7 @@ namespace WebsiteLaitBrasseur.DAL
                     cmd.Parameters.AddWithValue("@totalAmount", totalAmount);
                     cmd.Parameters.AddWithValue("@orderDate", orderDate);
                     cmd.Parameters.AddWithValue("@paymentDate", paymentDate);
+                    cmd.Parameters.AddWithValue("@postageDate", postageDate);
                     cmd.Parameters.AddWithValue("@paymentStatus", paymentStatus);
                     cmd.Parameters.AddWithValue("@customerMail", customerMail);
                     cmd.Parameters.AddWithValue("@arrivalDate", arrivalDate);
