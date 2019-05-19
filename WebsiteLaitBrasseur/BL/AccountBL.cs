@@ -177,11 +177,53 @@ namespace WebsiteLaitBrasseur.BL
             }
             return result;
         } 
-
-        public int UpdateAll()
+        /// <summary>
+        /// Business Rules
+        /// If email is not correct return => 2
+        /// If password is not correct return => 3
+        /// 
+        /// </summary>
+        /// <param name="mail"></param>
+        /// <param name="password"></param>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="birthDate"></param>
+        /// <param name="phoneNo"></param>
+        /// <param name="imgPath"></param>
+        /// <returns></returns>
+        public int UpdateAll(string mail, string password, string firstName, string lastName,
+            string birthDate, string phoneNo, string imgPath)
         {
-            //TODO
-            return 0;
+            int IsCorrect = 0;
+
+            //TODO isConfirmed
+
+            AccountDTO customer = new AccountDTO();
+            string saltedPassword;
+            if (IsValidEmail(mail))
+            {
+                customer = DB.FindBy(mail);
+                Debug.Print("AccountBL / UpdateAll value returned " + customer.ToString());
+            }
+            else
+            {   //email is not correct => 2
+                IsCorrect = 2;
+                throw new InputInvalidException("The email is not valid");
+            }
+            if (IsValidPassword(password))
+            {
+                saltedPassword = HashPassword(password);
+                //if update was successfull => 1
+                IsCorrect = DB.UpdateAll(customer.GetID(), mail, saltedPassword, firstName, lastName, birthDate, phoneNo, imgPath);
+            }
+            else
+            {
+                //password is not correct => 3
+                IsCorrect = 3;
+                throw new InputInvalidException("The password is not valid");
+            }
+            Debug.Print("AccountBL / UpdateAll correction: " + IsCorrect);
+            return IsCorrect;
         }
 
         /// <summary>
@@ -208,6 +250,11 @@ namespace WebsiteLaitBrasseur.BL
             return results;
         }
 
+        /// <summary>
+        /// Check if a user is suspendet.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         private bool isUserSuspendet(string email)
         {
             AccountDTO customer = new AccountDTO();
