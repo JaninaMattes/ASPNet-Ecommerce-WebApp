@@ -12,8 +12,7 @@ namespace WebsiteLaitBrasseur.BL
         private int _id;
         private string _company = "";
         private string _type = "";
-        private DateTime _arrivalDate;
-        private DateTime _postageDate;
+        private int _deliveryTime = 0;
         private decimal _cost;
         private int _status = 0;
 
@@ -47,24 +46,17 @@ namespace WebsiteLaitBrasseur.BL
         {
             this._type = type;
         }
-        public DateTime GetArrival()
+
+        public string GetDeliveryTime()
         {
-            return this._arrivalDate;
+            return this._deliveryTime;
         }
 
-        public void SetArrival(DateTime date)
+        public void SetDeliveryTime(int days)
         {
-            this._arrivalDate = date;
-        }
-        public DateTime GetPostage()
-        {
-            return this._postageDate;
+            this._deliveryTime = days;
         }
 
-        public void SetPostage(DateTime date)
-        {
-            this._postageDate = date;
-        }
         public decimal GetCost()
         {
             return this._cost;
@@ -87,46 +79,40 @@ namespace WebsiteLaitBrasseur.BL
 
         public override bool Equals(object obj)
         {
-            return obj is ShippmentDTO shippment &&
-                   _id == shippment._id &&
-                   _company == shippment._company &&
-                   _arrivalDate == shippment._arrivalDate &&
-                   _postageDate == shippment._postageDate &&
-                   _cost == shippment._cost &&
-                   _status == shippment._status;
+            return obj is ShippmentDTO dTO &&
+                   _id == dTO._id &&
+                   _company == dTO._company &&
+                   _type == dTO._type &&
+                   _deliveryTime == dTO._deliveryTime &&
+                   _cost == dTO._cost &&
+                   _status == dTO._status;
         }
 
         public override int GetHashCode()
         {
-            var hashCode = -1975167387;
+            var hashCode = 402499420;
             hashCode = hashCode * -1521134295 + _id.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_company);
-            hashCode = hashCode * -1521134295 + _arrivalDate.GetHashCode();
-            hashCode = hashCode * -1521134295 + _postageDate.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_type);
+            hashCode = hashCode * -1521134295 + _deliveryTime.GetHashCode();
             hashCode = hashCode * -1521134295 + _cost.GetHashCode();
             hashCode = hashCode * -1521134295 + _status.GetHashCode();
             return hashCode;
         }
 
-        //constructor
-        public ShippmentDTO()
-        {
-          
-        }
-
-        public ShippmentDTO(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost)
+        public ShippmentDTO(int id, string company, string type, int deliveryTime, decimal cost)
         {
             _id = id;
             _company = company;
             _type = type;
-            _arrivalDate = arrivalDate;
-            _postageDate = postageDate;
+            _deliveryTime = deliveryTime;
             _cost = cost;
         }
 
-        public ShippmentDTO(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost, int status) : this(id, company, type, arrivalDate, postageDate, cost)
+        public ShippmentDTO(int id, string company, string type, int deliveryTime, decimal cost, int status) : 
+            this(id, company, type, deliveryTime, cost)
         {
-            this._status = status;
+            _status = status;
         }
     }
 }

@@ -8,28 +8,29 @@ namespace WebsiteLaitBrasseur.BL
     public class ProductSelectionDTO
     {
         //private properties
-        private byte _id;
+        private int _id;
         private ProductDTO _selection;
         private int _quantity;
         private decimal _origPrice;
+        private int _origSize;
 
         //getter and setter
-        public byte GetId()
+        public int GetID()
         {
             return this._id;
         }
 
-        public void SetId(byte id)
+        public void SetID(int id)
         {
             this._id = id;
         }
 
-        public ProductDTO GetSelection()
+        public ProductDTO GetProduct()
         {
             return this._selection;
         }
 
-        public void SetSelection(ProductDTO select)
+        public void SetProduct(ProductDTO select)
         {
             this._selection = select;
         }
@@ -54,18 +55,28 @@ namespace WebsiteLaitBrasseur.BL
             this._origPrice = price;
         }
 
+        public int GetOrigSize()
+        {
+            return this._origSize;
+        }
+
+        public void SetOrigSize(int size)
+        {
+            this._origSize = size;
+        }
 
         //constructor
         public ProductSelectionDTO()
         {
         }
 
-        public ProductSelectionDTO(byte id, ProductDTO selection, int quantity, decimal origPrice)
+        public ProductSelectionDTO(int id, ProductDTO selection, int quantity, decimal origPrice, int origSize)
         {
             _id = id;
             _selection = selection;
             _quantity = quantity;
             _origPrice = origPrice;
+            _origSize = origSize;
         }
 
         public override bool Equals(object obj)

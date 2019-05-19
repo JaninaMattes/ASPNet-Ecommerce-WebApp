@@ -61,26 +61,6 @@ namespace WebsiteLaitBrasseur.BL
             this._producer = producer;
         }
 
-        public float GetUnit()
-        {
-            return _unitSize;
-        }
-
-        public void SetUnit(float unit)
-        {
-            this._unitSize = unit;
-        }
-
-
-        public decimal GetPrice()
-        {
-            return _price;
-        }
-
-        public void SetPrice(decimal price)
-        {
-            this._price = price;
-        }
 
         public string GetInfo()
         {
@@ -139,8 +119,6 @@ namespace WebsiteLaitBrasseur.BL
                    _name == product._name &&
                    _type == product._type &&
                    _producer == product._producer &&
-                   _unitSize == product._unitSize &&
-                   _price == product._price &&
                    _info == product._info &&
                    _shortInfo == product._shortInfo &&
                    _imgPath == product._imgPath &&
@@ -155,8 +133,6 @@ namespace WebsiteLaitBrasseur.BL
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_name);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_type);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_producer);
-            hashCode = hashCode * -1521134295 + _unitSize.GetHashCode();
-            hashCode = hashCode * -1521134295 + _price.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_info);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_shortInfo);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_imgPath);
@@ -170,28 +146,24 @@ namespace WebsiteLaitBrasseur.BL
         {
         }
 
-        public ProductDTO(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo)
+        public ProductDTO(int id, string name, string type, string producer, string info, string shortInfo, 
+            string imgPath, int stock, int status)
         {
             _id = id;
             _name = name;
             _type = type;
             _producer = producer;
-            _unitSize = unitSize;
-            _price = price;
             _info = info;
             _shortInfo = shortInfo;
-        }
-
-        public ProductDTO(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, int stock) 
-            : this(id, name, type, producer, unitSize, price, info, shortInfo)
-        {
             _imgPath = imgPath;
             _stock = stock;
+            _status = status;
         }
 
-        public ProductDTO(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, int stock, int status) : this(id, name, type, producer, unitSize, price, info, shortInfo, imgPath, stock)
+        public ProductDTO(int id, string name, string type, string producer, string info, string shortInfo, string imgPath, 
+            int stock, int status, IDictionary<int, decimal> dict) : this(id, name, type, producer, info, shortInfo, imgPath, stock, status)
         {
-            _status = status;
+            this.dict = dict;
         }
 
         public override string ToString()
