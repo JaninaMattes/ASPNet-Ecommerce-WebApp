@@ -516,7 +516,115 @@ namespace WebsiteLaitBrasseur.DAL
             return null;
         }
 
-        //find all products 
+        /// <summary>
+        /// Find all active products that have not been
+        /// suspendet form the Product List.
+        /// pStatus = 1 is active
+        /// pStatus = 0 is inactive
+        /// </summary>
+        /// <param name="pStatus"></param>
+        /// <returns></returns>
+        public List<ProductDTO> FindActiveProducts(int pStatus)
+        {
+            List<ProductDTO> results = new List<ProductDTO>();
+            string queryString = "SELECT * FROM dbo.Product WHERE pStatus=@pStatus";
+            try
+            {
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@pStatus", pStatus);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                ProductDTO product = new ProductDTO();
+                                product.SetId((int)reader["productID"]);
+                                product.SetName(reader["pName"].ToString());
+                                product.SetType(reader["pType"].ToString());
+                                product.SetProducer(reader["producer"].ToString());
+                                product.SetInfo(reader["longInfo"].ToString());
+                                product.SetShortInfo(reader["shortInfo"].ToString());
+                                product.SetImgPath(reader["imgPath"].ToString());
+                                product.SetStock((int)reader["inStock"]);
+                                product.SetStatus((int)reader["pStatus"]);
+                                Debug.Print("ProductDAL: /FindByStatus/ " + product.ToString());
+                                //add data objects to result-list 
+                                results.Add(product);
+                            }
+                            return results;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return null;
+        }
+
+        public List<ProductDTO> FindActiveProducts(int pStatus, string type)
+        {
+            List<ProductDTO> results = new List<ProductDTO>();
+            string queryString = "SELECT * FROM dbo.Product WHERE pStatus=@pStatus AND pType = @type";
+            try
+            {
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@pStatus", pStatus);
+                    cmd.Parameters.AddWithValue("@pType", type);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                ProductDTO product = new ProductDTO();
+                                product.SetId((int)reader["productID"]);
+                                product.SetName(reader["pName"].ToString());
+                                product.SetType(reader["pType"].ToString());
+                                product.SetProducer(reader["producer"].ToString());
+                                product.SetInfo(reader["longInfo"].ToString());
+                                product.SetShortInfo(reader["shortInfo"].ToString());
+                                product.SetImgPath(reader["imgPath"].ToString());
+                                product.SetStock((int)reader["inStock"]);
+                                product.SetStatus((int)reader["pStatus"]);
+                                Debug.Print("ProductDAL: /FindByStatus/ " + product.ToString());
+                                //add data objects to result-list 
+                                results.Add(product);
+                            }
+                            return results;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Find all products that are in the DB
+        /// The suspendet and not suspendet products 
+        /// are included.
+        /// </summary>
+        /// <returns></returns>
         public List<ProductDTO> FindAll()
         {            
             List<ProductDTO> results = new List<ProductDTO>();

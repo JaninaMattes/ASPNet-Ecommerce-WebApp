@@ -230,7 +230,7 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all Customers in DB.
         /// </summary>
         /// <returns></returns>
-        public List<AccountDTO> FindAllCustomers()
+        public List<AccountDTO> GetAllCustomers()
         {
             int isAdmin = 0;
             List<AccountDTO> results = new List<AccountDTO>();
@@ -242,7 +242,7 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all Admins in DB.
         /// </summary>
         /// <returns></returns>
-        public List<AccountDTO> FindAllAdmin()
+        public List<AccountDTO> GetAllAdmins()
         {
             int isAdmin = 1;
             List<AccountDTO> results = new List<AccountDTO>();

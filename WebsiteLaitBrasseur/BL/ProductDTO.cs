@@ -17,8 +17,7 @@ namespace WebsiteLaitBrasseur.BL
         private string _imgPath = "";
         private int _stock;
         private int _status = 0;
-        //stores all possible sizes and prices of a product
-        private IDictionary<int, decimal> dict = new Dictionary<int, decimal>();
+        private List<SizeDTO> _details;
 
         //getter and setter
         public int GetId()
@@ -112,6 +111,16 @@ namespace WebsiteLaitBrasseur.BL
             this._status = status;
         }
 
+        public List<SizeDTO> GetDetails()
+        {
+            return _details;
+        }
+
+        public void SetDetails(List<SizeDTO> details)
+        {
+            this._details = details;
+        }
+
         public override bool Equals(object obj)
         {
             return obj is ProductDTO product &&
@@ -161,9 +170,9 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         public ProductDTO(int id, string name, string type, string producer, string info, string shortInfo, string imgPath, 
-            int stock, int status, IDictionary<int, decimal> dict) : this(id, name, type, producer, info, shortInfo, imgPath, stock, status)
+            int stock, int status, List<SizeDTO> details) : this(id, name, type, producer, info, shortInfo, imgPath, stock, status)
         {
-            this.dict = dict;
+            this._details = details;
         }
 
         public override string ToString()
