@@ -10,6 +10,8 @@ namespace WebsiteLaitBrasseur.BL
     {
         //private properties
         private byte _id;
+        private string _email;
+        private string _password;
         private string _firstName;
         private string _lastName;
         private string _birthDate;
@@ -17,9 +19,10 @@ namespace WebsiteLaitBrasseur.BL
         private string _imgPath;
         private bool _status = false;
         private bool _isAdmin = false;
+        private bool _isConfirmed = false;
         private List<Invoice> _invoiceList = new List<Invoice>();
         private Address _address;
-        private Login _login;
+
 
         //getter and setter
         public int GetAccountId()
@@ -127,14 +130,33 @@ namespace WebsiteLaitBrasseur.BL
             this._address = address;
         }
 
-        public Login GetLogin()
+        public String GetEmail()
         {
-            return this._login;
+            return this._email;
         }
 
-        public void SetLogin(Login login)
+        public void SetEmail(string email)
         {
-            this._login = login;
+            this._email = email;
+        }
+        public String GetPassword()
+        {
+            return this._password;
+        }
+
+        public void SetPassword(string passwd)
+        {
+            this._password=passwd;
+        }
+
+        public bool GetIsConfirmed()
+        {
+            return this._isConfirmed;
+        }
+
+        public void SetIsConfirmed(bool isConf)
+        {
+            this._isConfirmed = isConf;
         }
 
         //constructor
@@ -143,22 +165,27 @@ namespace WebsiteLaitBrasseur.BL
 
         }
 
-        public AccountBO(byte id, Login login)
+        public AccountBO(byte id, string email, string password, bool isConfirmed)
         {
             _id = id;
-            _login = login;
+            _email = email;
+            _password = password;
+            _isConfirmed = isConfirmed;
+
         }
 
-        public AccountBO(byte id, Login login, string fname, string lname, string birthdate, string phoneNo)
+        public AccountBO(byte id, string email,string passwd, bool isConf , string fname, string lname, string birthdate, string phoneNo)
         {
             this._id = id;
-            this._login = login;
+            this._email = email;
+            this._password = passwd;
             this._firstName = fname;
             this._lastName = lname;
             this._birthDate = birthdate;
             this._phoneNo = phoneNo;
             //new accounts are per default not suspendet
             this._status = true;
+            this._isConfirmed = isConf;
         }
 
         public AccountBO(byte id, Login login, string firstName, string lastName, string birthDate, string phoneNo, string imgPath, bool status, bool isAdmin) : this(id, login, firstName, lastName, birthDate, phoneNo)
