@@ -97,7 +97,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="paymentStatus"></param>
         /// <returns></returns>
-        public int Update(int id, bool paymentStatus)
+        public int Update(int id, int paymentStatus)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Invoice SET paymentStatus = @paymentStatus WHERE invoiceID = @id";

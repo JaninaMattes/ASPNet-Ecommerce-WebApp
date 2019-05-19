@@ -73,6 +73,20 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         /// <summary>
+        /// Update the payment status and set
+        /// an invoice to "paied"
+        /// </summary>
+        /// <param name="invoiceID"></param>
+        /// <returns></returns>
+        public int SetAsPaied(int invoiceID)
+        {
+            int result = 0;
+            int paymentStatus = 1;
+            result = DB.Update(invoiceID, paymentStatus);
+            return result;
+        }
+
+        /// <summary>
         /// Find all invoices of one Customer.
         /// </summary>
         /// <param name="email"></param>
@@ -99,6 +113,49 @@ namespace WebsiteLaitBrasseur.BL
             result = DB.FindAll();
             return result;
         }
+
+        /// <summary>
+        /// Find all paied invoices per Customer that are 
+        /// paymentStatus = 0 (unpaied) OR
+        /// paymentStatus = 1 (paied)
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public List<InvoiceDTO> FindPaied(string email)
+        {
+            AccountDTO customer = new AccountDTO();
+            customer = AB.FindBy(email);
+            int status = 1;
+            List<InvoiceDTO> result = new List<InvoiceDTO>();
+            if (customer != null)
+            {
+                result = DB.FindByStatus(customer.GetID(), status);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Find all unpaied invoices per Customer that are 
+        /// paymentStatus = 0 (unpaied) OR
+        /// paymentStatus = 1 (paied)
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public List<InvoiceDTO> FindUnPaied(string email)
+        {
+            AccountDTO customer = new AccountDTO();
+            customer = AB.FindBy(email);
+            int status = 0;
+            List<InvoiceDTO> result = new List<InvoiceDTO>();
+            if (customer != null)
+            {
+                result = DB.FindByStatus(customer.GetID(), status);
+            }
+            return result;
+        }
+
 
         private int CalculateWeight(List<ProductSelectionDTO> products)
         {
