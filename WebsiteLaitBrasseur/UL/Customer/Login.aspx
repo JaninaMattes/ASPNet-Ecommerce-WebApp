@@ -48,7 +48,7 @@
 
 
                     <div class="col-md-offset-3 col-md-9">
-                        <asp:Label ID="LblErrorMessage" runat="server" CssClass="text-info">Username or Password does not exist.</asp:Label>
+                        <asp:Label ID="LblErrorMessage" runat="server" CssClass="text-info"></asp:Label>
                     </div>
             </div>
 </asp:Content>

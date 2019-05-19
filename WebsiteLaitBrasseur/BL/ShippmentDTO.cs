@@ -5,25 +5,25 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class Shippment
+    public class ShippmentDTO
     {
 
         //private properties
-        private byte _id;
+        private int _id;
         private string _company = "";
         private string _type = "";
         private DateTime _arrivalDate;
         private DateTime _postageDate;
         private decimal _cost;
-        private bool _status = false;
+        private int _status = 0;
 
         //getter and setter
-        public byte GetId()
+        public int GetID()
         {
             return this._id;
         }
 
-        public void SetId(byte id)
+        public void SetID(int id)
         {
             this._id = id;
         }
@@ -75,19 +75,19 @@ namespace WebsiteLaitBrasseur.BL
             this._cost = cost;
         }
 
-        public bool GetStatus()
+        public int GetStatus()
         {
             return this._status;
         }
 
-        public void SetStatus(bool status)
+        public void SetStatus(int status)
         {
             this._status = status;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is Shippment shippment &&
+            return obj is ShippmentDTO shippment &&
                    _id == shippment._id &&
                    _company == shippment._company &&
                    _arrivalDate == shippment._arrivalDate &&
@@ -109,12 +109,12 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         //constructor
-        public Shippment()
+        public ShippmentDTO()
         {
-            _status = true;
+          
         }
 
-        public Shippment(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost)
+        public ShippmentDTO(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost)
         {
             _id = id;
             _company = company;
@@ -124,9 +124,9 @@ namespace WebsiteLaitBrasseur.BL
             _cost = cost;
         }
 
-        public Shippment(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost, bool status) : this(id, company, type, arrivalDate, postageDate, cost)
+        public ShippmentDTO(byte id, string company, string type, DateTime arrivalDate, DateTime postageDate, decimal cost, int status) : this(id, company, type, arrivalDate, postageDate, cost)
         {
-            _status = status;
+            this._status = status;
         }
     }
 }

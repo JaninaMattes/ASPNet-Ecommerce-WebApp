@@ -5,20 +5,20 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class Product
+    public class ProductDTO
     {
         //private member
         private int _id;
         private string _name = "";
         private string _type = "";
         private string _producer = "";
-        private float _unitSize;
-        private decimal _price;
         private string _info = "";
         private string _shortInfo = "";
         private string _imgPath = "";
         private int _stock;
         private int _status = 0;
+        //stores all possible sizes and prices of a product
+        private IDictionary<int, decimal> dict = new Dictionary<int, decimal>();
 
         //getter and setter
         public int GetId()
@@ -134,7 +134,7 @@ namespace WebsiteLaitBrasseur.BL
 
         public override bool Equals(object obj)
         {
-            return obj is Product product &&
+            return obj is ProductDTO product &&
                    _id == product._id &&
                    _name == product._name &&
                    _type == product._type &&
@@ -166,11 +166,11 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         //constructor
-        public Product()
+        public ProductDTO()
         {
         }
 
-        public Product(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo)
+        public ProductDTO(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo)
         {
             _id = id;
             _name = name;
@@ -182,14 +182,14 @@ namespace WebsiteLaitBrasseur.BL
             _shortInfo = shortInfo;
         }
 
-        public Product(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, int stock) 
+        public ProductDTO(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, int stock) 
             : this(id, name, type, producer, unitSize, price, info, shortInfo)
         {
             _imgPath = imgPath;
             _stock = stock;
         }
 
-        public Product(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, int stock, int status) : this(id, name, type, producer, unitSize, price, info, shortInfo, imgPath, stock)
+        public ProductDTO(byte id, string name, string type, string producer, float unitSize, decimal price, string info, string shortInfo, string imgPath, int stock, int status) : this(id, name, type, producer, unitSize, price, info, shortInfo, imgPath, stock)
         {
             _status = status;
         }

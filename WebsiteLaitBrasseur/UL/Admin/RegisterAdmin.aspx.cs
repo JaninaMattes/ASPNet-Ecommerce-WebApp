@@ -6,24 +6,45 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class RegisterAdmin : System.Web.UI.Page
     {
+        AccountBL bl = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
+           //TODO
         }
         protected void CreateAccountButton_Click(object sender, EventArgs e)
         {
             if (IsValid)
             {
-                //variable session creation
-                Session.Add("email", TextEmail.Text);
-                MailSender();
+                var isAdmin = 1;
+                var status = 0; //per default not suspendet user
+                var imgPath = ""; //if there is non
 
+                   var check = bl.createAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
+                   TextLastName.Text.Trim(), TextBirthday.Text.Trim(), TextPhone.Text.Trim(), imgPath, status, isAdmin);
+
+                switch (check)
+                {
+                    case 0:
+                        lblRegResult.Text = "Password and email is correct.";
+                        break;
+                    case 1:
+                        lblRegResult.Text = "The email format is wrong.";
+                        break;
+                    case 2:
+                        lblRegResult.Text = "The password format does not meet the requirements."; //TODO explain requirements
+                        break;
+                    default:
+                        break;
+                }
+                //variable session creation
+                Session["email"] = TextEmail.Text.Trim();
+                MailSender();
             }
         }
 
@@ -34,8 +55,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         private void MailSender()
         {
-
-            
             string email = this.Session["email"].ToString(); ;    //Cookie recuperation
 
             if (email != null)
@@ -63,7 +82,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
             }
             else
                 lblRegResult.Text = "There is a problem with your email.";
-
 
         }
     }

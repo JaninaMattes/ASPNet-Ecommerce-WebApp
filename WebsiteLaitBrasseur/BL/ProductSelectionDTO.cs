@@ -5,11 +5,11 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class ProductSelection
+    public class ProductSelectionDTO
     {
         //private properties
         private byte _id;
-        private Product _selection;
+        private ProductDTO _selection;
         private int _quantity;
         private decimal _origPrice;
 
@@ -24,12 +24,12 @@ namespace WebsiteLaitBrasseur.BL
             this._id = id;
         }
 
-        public Product GetSelection()
+        public ProductDTO GetSelection()
         {
             return this._selection;
         }
 
-        public void SetSelection(Product select)
+        public void SetSelection(ProductDTO select)
         {
             this._selection = select;
         }
@@ -56,11 +56,11 @@ namespace WebsiteLaitBrasseur.BL
 
 
         //constructor
-        public ProductSelection()
+        public ProductSelectionDTO()
         {
         }
 
-        public ProductSelection(byte id, Product selection, int quantity, decimal origPrice)
+        public ProductSelectionDTO(byte id, ProductDTO selection, int quantity, decimal origPrice)
         {
             _id = id;
             _selection = selection;
@@ -70,9 +70,9 @@ namespace WebsiteLaitBrasseur.BL
 
         public override bool Equals(object obj)
         {
-            return obj is ProductSelection selection &&
+            return obj is ProductSelectionDTO selection &&
                    _id == selection._id &&
-                   EqualityComparer<Product>.Default.Equals(_selection, selection._selection) &&
+                   EqualityComparer<ProductDTO>.Default.Equals(_selection, selection._selection) &&
                    _quantity == selection._quantity &&
                    _origPrice == selection._origPrice;
         }
@@ -81,7 +81,7 @@ namespace WebsiteLaitBrasseur.BL
         {
             var hashCode = -692213418;
             hashCode = hashCode * -1521134295 + _id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<Product>.Default.GetHashCode(_selection);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ProductDTO>.Default.GetHashCode(_selection);
             hashCode = hashCode * -1521134295 + _quantity.GetHashCode();
             hashCode = hashCode * -1521134295 + _origPrice.GetHashCode();
             return hashCode;

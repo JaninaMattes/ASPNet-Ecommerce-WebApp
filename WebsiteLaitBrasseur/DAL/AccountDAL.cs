@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using WebsiteLaitBrasseur.BL;
@@ -17,29 +18,44 @@ namespace WebsiteLaitBrasseur.DAL
     {
         //Get connection string from web.config file and create sql connection
         SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
-        //create
-        public int Create(Login login, string fname, string lname, string birthdate, string phoneNo, Int16 status, Int16 isAdmin)
+        /// <summary>
+        /// New User Registration
+        /// This function inserts data of the DTO persistantly into the DB
+        /// The return value contains the autoincremented ID for the Account.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="fname"></param>
+        /// <param name="lname"></param>
+        /// <param name="birthdate"></param>
+        /// <param name="phoneNo"></param>
+        /// <param name="status"></param>
+        /// <param name="isAdmin"></param>
+        /// <returns>The id value of the account.</returns>
+        public int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate, string phoneNo, string imgPath, int status, int isAdmin)
         {
             int result;
             //no need to explicitely set id as autoincrement is used
-            //when account is created after Login, the login id needs to be set
-            string queryString = "INSERT INTO Account(dbo.Account.loginId, dbo.Account.firstName, " +
-                "dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.status, dbo.Account.isAdmin) " +
-                "VALUES(@loginId, '@firstName', '@lastName', '@birthDate', '@phone', @status, @isAdmin)";
-            string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM Account ORDER BY 1 DESC";
+            string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, dbo.Account.firstName, " +
+                "dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.imgPath, dbo.Account.status, dbo.Account.isAdmin) " +
+                "VALUES('@email', '@password', @isConfirmed, '@firstName', '@lastName', '@birthDate', '@phone', '@imgPath', @status, @isAdmin)";
+            string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM dbo.Account ORDER BY 1 DESC";
             try
             {
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@loginId", login.GetId());
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", fname);
+                    cmd.Parameters.AddWithValue("@isConfirmed", isConfirmed);
                     cmd.Parameters.AddWithValue("@firstName", fname);
                     cmd.Parameters.AddWithValue("@lastName", lname);
                     cmd.Parameters.AddWithValue("@birthDate", birthdate);
                     cmd.Parameters.AddWithValue("@phone", phoneNo);
+                    cmd.Parameters.AddWithValue("@imgPath", imgPath);
                     cmd.Parameters.AddWithValue("@status", status);
-                    cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
-                    connection.Open();
+                    cmd.Parameters.AddWithValue("@isAdmin", isAdmin);                    
                     cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
 
@@ -50,8 +66,9 @@ namespace WebsiteLaitBrasseur.DAL
                     SqlDataReader reader = command.ExecuteReader();
                     //won't need a while, since it will only retrieve one row
                     reader.Read();
-                    //here is your data
+                    //this is the id of the newly created data field
                     result = (Int32) reader["accountID"];
+                    Debug.Print("AccountDAL: /Insert/ " + result.ToString());
                 }
                 return result;
             }
@@ -60,176 +77,575 @@ namespace WebsiteLaitBrasseur.DAL
                 result = 0;
                 e.GetBaseException();
             }
-            finally
+            return result;
+        }
+
+        /// <summary>
+        /// Suspend a user account or reactivate a user account
+        /// by setting the status = 1 (suspendet) status = 0 (activated)
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public int UpdateStatus(string email, int status)
+        {
+            int result = 0;
+            string queryString = "UPDATE dbo.Account SET status = @status WHERE email = @email";
+            try
             {
-               
+                //update into database where email = XY to status suspendet(false) or enabled(true) 
+                //e.g. after three false log in attempts / upaied bills
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@status", status);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
             }
             return result;
         }
 
-        public bool Create(byte id, string fname, string lname, string birthdate, string phoneNo, bool status, bool isAdmin, Address address)
+        /// <summary>
+        /// Update the user image of a user in the database.
+        /// The user can be found via his unique email address.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="imgPath"></param>
+        /// <returns></returns>
+        public int UpdateUsername(string email, string fName, string lName)
         {
-            try
-            {
-                //insert into database 
-                //status = true(not suspendet)/false(suspendet)
-                //isAdmin = true / false
-                return true;
-            }
-            catch (Exception e)
-            {
-                e.GetBaseException();
-            }
-            return false;
-        }
-
-        //update
-        public bool Update(byte id, bool status)
-        {
+            int result = 0;
+            string queryString = "UPDATE dbo.Account SET firstName = @fName, lastName = @lName WHERE email = @email";
             try
             {
                 //update into database where id = XY to status suspendet(false) or enabled(true) 
                 //e.g. after three false log in attempts / upaied bills
-                return true;
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@fName", fName);
+                    cmd.Parameters.AddWithValue("@lName", lName);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
-            return false;
+            return result;
         }
 
-        public bool UpdatePhoneNo(byte id, string phoneNo)
+        /// <summary>
+        /// Update the phone number of a user in the database
+        /// The user can be found via passing over the email address
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="phoneNo"></param>
+        /// <returns></returns>
+        public int UpdatePhoneNo(string email, string phoneNo)
         {
+            int result = 0;
+            string queryString = "UPDATE dbo.Account SET phone = @phoneNo WHERE email = @email";
+            try
+            {
+                //update into database where email = XY to status suspendet(false) or enabled(true) 
+                //e.g. after three false log in attempts / upaied bills
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@phoneNo", phoneNo);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Update the user address of a user in the database.
+        /// The user can be found via his unique email address.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="addressID"></param>
+        /// <returns></returns>
+        public int UpdateAddress(string email, int addressID)
+        {
+            int result = 0;
+            string queryString = "UPDATE dbo.Account SET addressID = @addressID WHERE email = @email";
             try
             {
                 //update into database where id = XY to status suspendet(false) or enabled(true) 
                 //e.g. after three false log in attempts / upaied bills
-                return true;
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@addressID", addressID);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
-            return false;
+            return result;
         }
 
-        public bool Update(byte id, Address address)
+        /// <summary>
+        /// Update the user image of a user in the database.
+        /// The user can be found via his unique email address.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="imgPath"></param>
+        /// <returns></returns>
+        public int UpdateImg(string email, string imgPath)
         {
+            int result = 0;
+            string queryString = "UPDATE dbo.Account SET imgPath = @imgPath WHERE email = @email";
             try
             {
                 //update into database where id = XY to status suspendet(false) or enabled(true) 
                 //e.g. after three false log in attempts / upaied bills
-                return true;
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@imgPath", imgPath);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
-            return false;
+            return result;
         }
 
-        public bool UpdateImg(byte id, string imgPath)
+        /// <summary>
+        /// Find a specific user in the database by its 
+        /// unique indentifier accountID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public AccountDTO FindBy(int id)
         {
-            try
-            {
-                //update into database where id = XY and set new image
-                //e.g. after three false log in attempts / upaied bills
-                return true;
-            }
-            catch (Exception e)
-            {
-                e.GetBaseException();
-            }
-            return false;
-        }
+            AccountDTO account;
+            AddressDTO address;
+            string queryString = "SELECT * FROM dbo.Account WHERE accountID=@id";
 
-        public bool Update(byte id, string fname, string lname, string birthdate, string phoneNo, bool status, bool isAdmin, Address address)
-        {
             try
             {
-                //insert into database 
-                //status = true(not suspendet)/false(suspendet)
-                //isAdmin = true / false
-                return true;
-            }
-            catch (Exception e)
-            {
-                e.GetBaseException();
-            }
-            return false;
-        }
-
-        //read
-        //find one specific person in the database
-        public AccountBO FindBy(byte id)
-        {
-            AccountBO account;
-            try
-            {
-                account = new AccountBO();
                 //find entry in database where id = XY
-                return account;
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@id", id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            account = new AccountDTO();
+                            address = new AddressDTO();
+                            account.SetAccountID((int)reader["accountID"]);
+                            address.SetID((int)reader["addressID"]);
+                            account.SetAddress(address);
+                            account.SetEmail(reader["email"].ToString());
+                            account.SetFirstName(reader["firstName"].ToString());
+                            account.SetLastName(reader["lastName"].ToString());
+                            account.SetBirthdate(reader["birthDate"].ToString());
+                            account.SetPhoneNo(reader["phone"].ToString());
+                            account.SetImgPath(reader["imgPath"].ToString());
+                            account.SetIsAdmin((int)reader["isAdmin"]);
+                            account.SetIsConfirmed((int)reader["isConfirmed"]);
+                            account.SetStatus((int)reader["status"]);
+                            //return product instance as data object 
+                            Debug.Print("AccountDAL: /FindByMail/ " + account.ToString());
+                            return account;
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Print(e.ToString());
             }
-
             return null;
         }
-        //find all admins in the database
-        public AccountBO FindBy(bool isAdmin)
+
+        /// <summary>
+        /// Read operation find a specific user in the database
+        /// by selecting his unique email address to indentify the entry.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public AccountDTO FindBy(string email)
         {
-            AccountBO account;
+            AccountDTO account;
+            AddressDTO address;
+            string queryString = "SELECT * FROM dbo.Account WHERE email=@email";
+          
             try
             {
-                account = new AccountBO();
-                //find entry in database where isAdmin = true (Admin) else Customer
-                return account;
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@email", email);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            account = new AccountDTO();
+                            address = new AddressDTO();
+                            account.SetAccountID((int)reader["accountID"]);
+                            address.SetID((int)reader["addressID"]);
+                            account.SetAddress(address);                            
+                            account.SetEmail(reader["email"].ToString());
+                            account.SetFirstName(reader["firstName"].ToString());
+                            account.SetLastName(reader["lastName"].ToString());
+                            account.SetBirthdate(reader["birthDate"].ToString());
+                            account.SetPhoneNo(reader["phone"].ToString());
+                            account.SetImgPath(reader["imgPath"].ToString());
+                            account.SetIsAdmin((int)reader["isAdmin"]);
+                            account.SetIsConfirmed((int)reader["isConfirmed"]);
+                            account.SetStatus((int)reader["status"]);
+                            //return product instance as data object 
+                            Debug.Print("AccountDAL: /FindByMail/ " + account.ToString());
+                            return account;
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Print(e.ToString());
             }
-
             return null;
         }
 
-        public AccountBO FindByStatus(bool status)
+        /// <summary>
+        /// Find all Admins in DB by passing isAdmin = 1 OR
+        /// Find all Customer in DB by passing isAdmin = 0
+        /// </summary>
+        /// <param name="isAdmin"></param>
+        /// <returns></returns>
+        public List<AccountDTO> FindAllUserBy(int isAdmin)
         {
-            AccountBO account;
+            string queryString = "SELECT * FROM dbo.Account WHERE isAdmin=@isAdmin";
+            List<AccountDTO> results = new List<AccountDTO>();
             try
             {
-                account = new AccountBO();
-                //find entry in database where status = suspendet/enabled
-                return account;
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                AccountDTO account = new AccountDTO();
+                                AddressDTO address = new AddressDTO();
+                                account.SetAccountID((int)reader["accountID"]);
+                                address.SetID((int)reader["addressID"]);
+                                account.SetAddress(address);
+                                account.SetEmail(reader["email"].ToString());
+                                account.SetFirstName(reader["firstName"].ToString());
+                                account.SetLastName(reader["lastName"].ToString());
+                                account.SetBirthdate(reader["birthDate"].ToString());
+                                account.SetPhoneNo(reader["phone"].ToString());
+                                account.SetImgPath(reader["imgPath"].ToString());
+                                account.SetIsAdmin((int)reader["isAdmin"]);
+                                account.SetIsConfirmed((int)reader["isConfirmed"]);
+                                account.SetStatus((int)reader["status"]);
+                                //return product instance as data object 
+                                Debug.Print("AccountDAL: /FindAllUserBy/ " + account.ToString());
+                               
+                                //add data objects to result-list 
+                                results.Add(account);
+                            }
+                            return results;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
+            return null;
+        }
 
+        /// <summary>
+        /// Find all user in the database 
+        /// and return the list.
+        /// </summary>
+        /// <returns></returns>
+        public List<AccountDTO> FindAll()
+        {
+            string queryString = "SELECT * FROM dbo.Account";
+            List<AccountDTO> results = new List<AccountDTO>();
+            try
+            {
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                AccountDTO account = new AccountDTO();
+                                AddressDTO address = new AddressDTO();
+                                account.SetAccountID((int)reader["accountID"]);
+                                address.SetID((int)reader["addressID"]);
+                                account.SetAddress(address);
+                                account.SetEmail(reader["email"].ToString());
+                                account.SetFirstName(reader["firstName"].ToString());
+                                account.SetLastName(reader["lastName"].ToString());
+                                account.SetBirthdate(reader["birthDate"].ToString());
+                                account.SetPhoneNo(reader["phone"].ToString());
+                                account.SetImgPath(reader["imgPath"].ToString());
+                                account.SetIsAdmin((int)reader["isAdmin"]);
+                                account.SetIsConfirmed((int)reader["isConfirmed"]);
+                                account.SetStatus((int)reader["status"]);
+                                //return product instance as data object 
+                                Debug.Print("AccountDAL: /FindAllUserBy/ " + account.ToString());
+
+                                //add data objects to result-list 
+                                results.Add(account);
+                            }
+                            return results;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Find all suspendet User by status = 1
+        /// Find all not suspendet User by status = 0
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public List<AccountDTO> FindByStatus(int status)
+        {
+            string queryString = "SELECT * FROM dbo.Account WHERE status=@status";
+            List<AccountDTO> results = new List<AccountDTO>();
+            try
+            {
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@status", status);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                AccountDTO account = new AccountDTO();
+                                AddressDTO address = new AddressDTO();
+                                account.SetAccountID((int)reader["accountID"]);
+                                address.SetID((int)reader["addressID"]);
+                                account.SetAddress(address);
+                                account.SetEmail(reader["email"].ToString());
+                                account.SetFirstName(reader["firstName"].ToString());
+                                account.SetLastName(reader["lastName"].ToString());
+                                account.SetBirthdate(reader["birthDate"].ToString());
+                                account.SetPhoneNo(reader["phone"].ToString());
+                                account.SetImgPath(reader["imgPath"].ToString());
+                                account.SetIsAdmin((int)reader["isAdmin"]);
+                                account.SetIsConfirmed((int)reader["isConfirmed"]);
+                                account.SetStatus((int)reader["status"]);
+                                //return product instance as data object 
+                                Debug.Print("AccountDAL: /FindAllByStatus/ " + status + " " + account.ToString());
+
+                                //add data objects to result-list 
+                                results.Add(account);
+                            }
+                            return results;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
             return null;
         }
 
         //find person in database by name
-        public AccountBO FindBy(string fname, string lname)
+        public AccountDTO FindByName(string fname, string lname)
         {
-            AccountBO account;
+            AccountDTO account;
+            AddressDTO address;
+            string queryString = "SELECT * FROM dbo.Account WHERE firstName=@fname AND lastName=@lname";
+
             try
             {
-                account = new AccountBO();
-                //find entry in database where name = fname + lname
-                return account;
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            account = new AccountDTO();
+                            address = new AddressDTO();
+                            account.SetAccountID((int)reader["accountID"]);
+                            address.SetID((int)reader["addressID"]);
+                            account.SetAddress(address);
+                            account.SetEmail(reader["email"].ToString());
+                            account.SetFirstName(reader["firstName"].ToString());
+                            account.SetLastName(reader["lastName"].ToString());
+                            account.SetBirthdate(reader["birthDate"].ToString());
+                            account.SetPhoneNo(reader["phone"].ToString());
+                            account.SetImgPath(reader["imgPath"].ToString());
+                            account.SetIsAdmin((int)reader["isAdmin"]);
+                            account.SetIsConfirmed((int)reader["isConfirmed"]);
+                            account.SetStatus((int)reader["status"]);
+                            //return product instance as data object 
+                            Debug.Print("AccountDAL: /FindByName/ " + fname + " " + lname + " " + account.ToString());
+                            return account;
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Print(e.ToString());
             }
-
             return null;
         }
 
+        /// <summary>
+        /// Finds if login credentials exist in database
+        /// if the credentials of a user exist the effected number of rows = 1 returned
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public int FindLoginCred(string email, string password)
+        {
+            int result = 0;
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE email=@email AND password=@password";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", password);
+                    connection.Open();
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
+                    Console.WriteLine("value returned " + result.ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                e.GetBaseException();
+                Debug.Print(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Find the entry for the email address
+        /// Will return a value of 1 if email is found in DB.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>int value = 1, if entry found in DB</returns>
+        public int FindLoginEmail(string email)
+        {
+            int result = 0;
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE email=@email";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@email", email);
+                    connection.Open();
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
+                    Console.WriteLine("value returned " + result.ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                e.GetBaseException();
+                Debug.Print(e.ToString());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Find the entry for the password
+        /// Will return a value of 1 if email is found in DB.
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public int FindLoginPW(string password)
+        {
+            int result = 0;
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE password=@password";
+
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@password", password);
+                    connection.Open();
+                    result = Convert.ToInt32(cmd.ExecuteScalar());
+                    Console.WriteLine("value returned " + result.ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                e.ToString();
+                e.GetBaseException();
+                Debug.Print(e.ToString());
+            }
+            return result;
+        }
+        
     }
 }

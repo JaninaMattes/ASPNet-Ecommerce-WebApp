@@ -13,7 +13,7 @@ namespace WebsiteLaitBrasseur.DAL
         //Get connection string from web.config file and create sql connection
         SqlConnection con = new SqlConnection(SqlDataAccess.ConnectionString);
         //create
-        public bool Create(byte id, Product selection, int quantity, decimal origPrice)
+        public bool Create(byte id, ProductDTO selection, int quantity, decimal origPrice)
         {
             //string sql = 
             try
@@ -29,7 +29,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update
-        public bool Update(byte id, Product selection)
+        public bool Update(byte id, ProductDTO selection)
         {
             try
             {
@@ -72,13 +72,13 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all shipping companies available
-        public List<ProductSelection> FindAll()
+        public List<ProductSelectionDTO> FindAll()
         {
-            ProductSelection selection;
-            List<ProductSelection> list = new List<ProductSelection>();
+            ProductSelectionDTO selection;
+            List<ProductSelectionDTO> list = new List<ProductSelectionDTO>();
             try
             {
-                selection = new ProductSelection();
+                selection = new ProductSelectionDTO();
                 //find entry in database where id = XY
                 list.Add(selection);
 
@@ -92,13 +92,13 @@ namespace WebsiteLaitBrasseur.DAL
             return null;
         }
 
-        public List<ProductSelection> FindAllPerCustomer(byte id)
+        public List<ProductSelectionDTO> FindAllPerCustomer(byte id)
         {
-            ProductSelection selection;
-            List<ProductSelection> list = new List<ProductSelection>();
+            ProductSelectionDTO selection;
+            List<ProductSelectionDTO> list = new List<ProductSelectionDTO>();
             try
             {
-                selection = new ProductSelection();
+                selection = new ProductSelectionDTO();
                 //find entry in database where id = XY
                 list.Add(selection);
 

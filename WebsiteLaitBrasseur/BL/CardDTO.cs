@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebsiteLaitBrasseur.BL
 {
-    public class PayPal: Payment
+    public class CardDTO: PaymentDTO
     {
         //TODO
     }
