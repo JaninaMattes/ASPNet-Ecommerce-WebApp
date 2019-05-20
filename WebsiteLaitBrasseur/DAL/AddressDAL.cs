@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -32,10 +33,13 @@ namespace WebsiteLaitBrasseur.DAL
             string queryAutoIncr = "SELECT TOP(1) dbo.Address.addressID FROM dbo.Address ORDER BY 1 DESC";
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@cityID", cityID);
                     cmd.Parameters.AddWithValue("@streetName", streetName);
                     cmd.Parameters.AddWithValue("@streetNo", streetNo);
@@ -51,7 +55,7 @@ namespace WebsiteLaitBrasseur.DAL
                     //won't need a while, since it will only retrieve one row
                     reader.Read();
                     //this is the id of the newly created data field
-                    result = (Int32)reader["addressID"];
+                    result = Convert.ToInt32(reader["addressID"]);
                 }
                 return result;
             }
@@ -59,6 +63,10 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 result = 0;
                 e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
             }
             return result;
         }
@@ -79,11 +87,14 @@ namespace WebsiteLaitBrasseur.DAL
                 "streetName = @streetName, streetNo = @streetNo, addressType = @addressType WHERE addressID = @addressID";
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where email = XY to status suspendet(false) or enabled(true) 
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@addressID", addressID);
                     cmd.Parameters.AddWithValue("@cityID", cityID);
                     cmd.Parameters.AddWithValue("@streetName", streetName);
@@ -95,6 +106,10 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
             }
             return result;
         }
@@ -108,14 +123,17 @@ namespace WebsiteLaitBrasseur.DAL
         {
             AddressDTO address;
             CityDTO city;
-            string queryString = "SELECT * FROM dbo.Address WHERE addressID=@id";
+            string queryString = "SELECT * FROM dbo.Address WHERE addressID = @id";
 
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -123,11 +141,11 @@ namespace WebsiteLaitBrasseur.DAL
                         {                            
                             address = new AddressDTO();
                             city = new CityDTO();
-                            city.SetId((int)reader["cityID"]);
+                            city.SetId(Convert.ToInt32(reader["cityID"]));
                             address.SetCity(city);
-                            address.SetCountry(reader["country"].ToString());
-                            address.SetID((int)reader["addressID"]);
+                            address.SetID(Convert.ToInt32(reader["addressID"]));
                             address.SetStreetName(reader["streetName"].ToString());
+                            address.SetStreetName(reader["streetNo"].ToString());
                             address.SetType(reader["addressType"].ToString());
 
                             //return product instance as data object 
@@ -142,6 +160,10 @@ namespace WebsiteLaitBrasseur.DAL
                 e.GetBaseException();
                 Debug.Print(e.ToString());
             }
+            finally
+            {
+                connection.Close();
+            }
             return null;
         }
 
@@ -155,14 +177,17 @@ namespace WebsiteLaitBrasseur.DAL
         {
             AddressDTO address;
             CityDTO city;
-            string queryString = "SELECT * FROM dbo.Address WHERE addressType=@type";
+            string queryString = "SELECT * FROM dbo.Address WHERE addressType = @type";
 
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@type", type);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -170,11 +195,11 @@ namespace WebsiteLaitBrasseur.DAL
                         {
                             address = new AddressDTO();
                             city = new CityDTO();
-                            city.SetId((int)reader["cityID"]);
+                            city.SetId(Convert.ToInt32(reader["cityID"]));
                             address.SetCity(city);
-                            address.SetCountry(reader["country"].ToString());
-                            address.SetID((int)reader["addressID"]);
+                            address.SetID(Convert.ToInt32(reader["addressID"]));
                             address.SetStreetName(reader["streetName"].ToString());
+                            address.SetStreetName(reader["streetNo"].ToString());
                             address.SetType(reader["addressType"].ToString());
 
                             //return product instance as data object 
@@ -188,6 +213,10 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
+            }
+            finally
+            {
+                connection.Close();
             }
             return null;
         }

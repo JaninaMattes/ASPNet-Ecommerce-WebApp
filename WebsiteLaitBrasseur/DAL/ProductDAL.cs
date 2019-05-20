@@ -58,7 +58,7 @@ namespace WebsiteLaitBrasseur.DAL
                     //won't need a while, since it will only retrieve one row
                     reader.Read();
                     //this is the id of the newly created data field
-                    result = (Int32)reader["accountID"];
+                    result = Convert.ToInt32(reader["accountID"]);
                     Debug.Print("ProductDAL: /Insert/ " + result.ToString());
                 }
                 return result;
