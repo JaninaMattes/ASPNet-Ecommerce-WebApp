@@ -90,7 +90,7 @@ namespace WebsiteLaitBrasseur.BL
         public int IsLoginCorrect(string email, string password)
         {           
             int isCorrect = 0;
-            string hashPW = HashPassword(password);
+            string hashPW = password; //= HashPassword(password);
             if(count == 3)
             {
                 // 5 = suspend the user
@@ -110,13 +110,15 @@ namespace WebsiteLaitBrasseur.BL
                     // 2 = password is not correct
                     return isCorrect = 2; 
                 }
-                if (isUserSuspendet(email))
+                if (isUserSuspendet(email) == true)
                 {
+                    Debug.Write("AccountBL / is suspesded  / status = "+ isUserSuspendet(email));   //DEBUG
                     // 4 = user is suspendet
                     return isCorrect = 4; 
                 }
                 else
                 {
+                    Debug.Write("AccountBL / Dans else  / YOUPI" );   //DEBUG
                     //check if login is correct AND user already exists in database
                     // 1 = user exists in DB and email and PW are correct
                     isCorrect = DB.FindLoginCred(email, hashPW);
@@ -260,9 +262,14 @@ namespace WebsiteLaitBrasseur.BL
             AccountDTO customer = new AccountDTO();
             customer = DB.FindBy(email);
             int status = customer.GetStatus();
+            Debug.Print("AccountBL: /isUserSuspendet/status " + customer.GetStatus());
             if (customer != null && status != 1)
             {
-                return true;
+                return false;       //isSuspended=0 ;false
+            }
+            else if (customer != null && status != 0)
+            {
+                return true;   //isSuspended=1 ;true
             }
             else
             {

@@ -389,6 +389,7 @@ namespace WebsiteLaitBrasseur.DAL
             }
             catch (Exception e)
             {
+                Debug.Print("DANS DAL ///////////////////////////////////////////////////");
                 e.GetBaseException();
             }
             finally

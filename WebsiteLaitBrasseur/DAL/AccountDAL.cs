@@ -355,7 +355,7 @@ namespace WebsiteLaitBrasseur.DAL
                             account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
                             account.SetStatus(Convert.ToInt32(reader["status"]));
                             //return product instance as data object 
-                            Debug.Print("AccountDAL: /FindByMail/ " + account.ToString());
+                            Debug.Print("AccountDAL: /FindBy(Int)/ " + account.ToString());
                             return account;
                         }
                     }
@@ -416,10 +416,12 @@ namespace WebsiteLaitBrasseur.DAL
                             account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
                             account.SetStatus(Convert.ToInt32(reader["status"]));
                             //return product instance as data object 
-                            Debug.Print("AccountDAL: /FindByMail/ " + account.ToString());
+                            Debug.Print("AccountDAL: /FindByMail/ " + account.GetEmail().ToString());
+                            connection.Close();
                             return account;
                         }
                     }
+
                 }
             }
             catch (Exception e)
@@ -749,7 +751,8 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@email", email);
                     result = Convert.ToInt32(cmd.ExecuteScalar());
-                    Debug.Print("AccountDAL / FindLoginCred / value returned " + result.ToString());
+                    Debug.Print("AccountDAL / FindLoginEmail / value returned " + result.ToString());
+                    connection.Close();
                 }
             }
             catch (Exception e)
@@ -767,7 +770,7 @@ namespace WebsiteLaitBrasseur.DAL
 
         /// <summary>
         /// Find the entry for the password
-        /// Will return a value of 1 if email is found in DB.
+        /// Will return a value of 1 if password is found in DB.
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
@@ -786,7 +789,8 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@password", password);
                     result = Convert.ToInt32(cmd.ExecuteScalar());
-                    Debug.Print("AccountDAL / FindLoginCred / value returned " + result.ToString());
+                    Debug.Print("AccountDAL / FindLoginPW / value returned  " + result.ToString());
+                    connection.Close();
                 }
             }
             catch (Exception e)

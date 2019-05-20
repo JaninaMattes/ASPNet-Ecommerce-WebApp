@@ -41,6 +41,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     LblErrorMessage.Visible = true;
                     LblErrorMessage.Text = "Email address is incorrect.";
                     break;
+                case 4:
+                    LblErrorMessage.Visible = true;
+                    LblErrorMessage.Text = "Your account is currently suspended";
+                    break;
                 default:
                     break;
             }

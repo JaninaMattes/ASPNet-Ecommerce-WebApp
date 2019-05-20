@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
+using WebsiteLaitBrasseur.DAL; //debug
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
@@ -17,10 +19,23 @@ namespace WebsiteLaitBrasseur.UL.Customer
             // get id from query string and try to parse
             var idString = Request.QueryString["id"];
             int id;
+
+            //DEBUG
+            id = 1;
+            ProductDAL test = new ProductDAL();
+            ProductDTO testDTO = new ProductDTO();
+
+            testDTO = test.FindBy(1);
+
+            //
+
+
+
             if (!string.IsNullOrEmpty(idString) && int.TryParse(idString, out id))
             {
                 //call product from Database                
                 ProductBL db = new ProductBL();
+
                 SizeBL sb = new SizeBL();
                 if (!IsPostBack)
                 {
