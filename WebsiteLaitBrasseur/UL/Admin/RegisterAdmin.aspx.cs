@@ -6,7 +6,9 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
+using System.Text.RegularExpressions;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
@@ -15,7 +17,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
         AccountBL bl = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
-           //TODO
+            //TODO
         }
         protected void CreateAccountButton_Click(object sender, EventArgs e)
         {
@@ -31,7 +33,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 switch (check)
                 {
                     case 0:
-                        lblRegResult.Text = "Password and email is correct.";
+                        lblRegResult.Text = "Password and email are correct.";
+
+                        MailSender();
+                        Session["emailRegister"] = TextEmail.Text.Trim();
                         break;
                     case 1:
                         lblRegResult.Text = "The email format is wrong.";
@@ -42,9 +47,8 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     default:
                         break;
                 }
-                //variable session creation
-                Session["email"] = TextEmail.Text.Trim();
-                MailSender();
+                Debug.Write("Check Value : " + check);
+
             }
         }
 
@@ -55,19 +59,21 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         private void MailSender()
         {
-            string email = this.Session["email"].ToString(); ;    //Cookie recuperation
+            //variable session creation
+            Random aleatoire = new Random();
+            Session["ConfID"] = aleatoire.Next();
 
-            if (email != null)
+            string confID = this.Session["ConfID"].ToString() ;    //Cookie recuperation
+
+            if (confID != null)
             {
-                lblRegResult.Text = "A confirmation email has been sent.";
-
                 //Mail sending procedure
-                /*
+                
                 //Message creation (To / From/ link to verification)
                 MailMessage mm = new MailMessage();                                         
                 mm.To.Add(new MailAddress(TextEmail.Text, "Request for Verification"));
                 mm.From = new MailAddress("webProgProjUon@gmail.com");
-                mm.Body = "<a href='http://localhost:54429//UL/Admin/VerificationPage.aspx?email=" + email + " '> click here to verify </a>" ;
+                mm.Body = "<a href='http://localhost:54429//UL/Admin/VerificationPage.aspx?ConfID=" + confID + " '> click here to verify </a>" ;
                 mm.IsBodyHtml = true;
                 mm.Subject = "Verification";
 
@@ -78,7 +84,9 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 smcl.Credentials = new NetworkCredential("webProgProjUon@gmail.com", "clementjanina");
                 smcl.EnableSsl = true;
                 smcl.Send(mm);
-                */
+
+                lblRegResult.CssClass = "text-success";
+                lblRegResult.Text = "A confirmation email has been sent.";
             }
             else
                 lblRegResult.Text = "There is a problem with your email.";

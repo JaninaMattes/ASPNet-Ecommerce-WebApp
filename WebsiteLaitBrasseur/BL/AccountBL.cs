@@ -41,11 +41,7 @@ namespace WebsiteLaitBrasseur.BL
                 if (IsValidEmail(email) && (DB.FindLoginEmail(email) != 1))
                 {
                 //check if the email address is an existing mail
-                    if (IsEmailValid(email))
-                    {
-                        isConfirmed = 1; //is a correct mail address
-                    }
-                    else
+                    if (IsEmailValid(email) == false)
                     {
                         return isCorrect = 1; //is not correct
                     }
@@ -62,7 +58,7 @@ namespace WebsiteLaitBrasseur.BL
                     password = this.HashPassword(password);
                     Debug.Print("AccountBL / Password hashed " + password.ToString());
                     //returns the created Account ID as integer value
-                    DB.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin);
+                    DB.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin); //Need Debug
                 }                
             }
             catch (Exception e)
@@ -112,13 +108,11 @@ namespace WebsiteLaitBrasseur.BL
                 }
                 if (isUserSuspendet(email) == true)
                 {
-                    Debug.Write("AccountBL / is suspesded  / status = "+ isUserSuspendet(email));   //DEBUG
                     // 4 = user is suspendet
                     return isCorrect = 4; 
                 }
                 else
                 {
-                    Debug.Write("AccountBL / Dans else  / YOUPI" );   //DEBUG
                     //check if login is correct AND user already exists in database
                     // 1 = user exists in DB and email and PW are correct
                     isCorrect = DB.FindLoginCred(email, hashPW);
@@ -179,6 +173,16 @@ namespace WebsiteLaitBrasseur.BL
             }
             return result;
         } 
+
+        public int UpdateIsConfirmed(string email)
+        {
+            int result = 0;
+            DB.UpdateIsConfirmed(email);
+            Debug.Print("AccountBL / update is confirmed " + result.ToString());
+
+            return result;
+        }
+
         /// <summary>
         /// Business Rules
         /// If email is not correct return => 2
@@ -373,7 +377,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns>boolean value</returns>
         private bool IsValidPassword(string password)
         {
-            string MatchPasswordRules = "/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$/";
+            string MatchPasswordRules =  "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$";
             if (password != null) return Regex.IsMatch(password, MatchPasswordRules);
             else return false;
         }
@@ -411,7 +415,7 @@ namespace WebsiteLaitBrasseur.BL
                     score++;
                 if (password.Length >= 12)
                     score++;
-                if (Regex.Match(password, @"/\d+/", RegexOptions.ECMAScript).Success)
+                if (Regex.Match(password, @"/\d+/", RegexOptions.ECMAScript).Success)       
                     score++;
                 if (Regex.Match(password, @"/[a-z]/", RegexOptions.ECMAScript).Success &&
                   Regex.Match(password, @"/[A-Z]/", RegexOptions.ECMAScript).Success)
