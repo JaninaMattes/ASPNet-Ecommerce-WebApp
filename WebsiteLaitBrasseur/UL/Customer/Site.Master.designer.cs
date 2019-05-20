@@ -1,10 +1,10 @@
 ﻿//------------------------------------------------------------------------------
-// <généré automatiquement>
-//     Ce code a été généré par un outil.
+// <automatisch generiert>
+//     Dieser Code wurde von einem Tool generiert.
 //
-//     Les modifications apportées à ce fichier peuvent provoquer un comportement incorrect et seront perdues si
-//     le code est régénéré.
-// </généré automatiquement>
+//     Änderungen an dieser Datei können fehlerhaftes Verhalten verursachen und gehen verloren, wenn
+//     der Code neu generiert wird.
+// </automatisch generiert>
 //------------------------------------------------------------------------------
 
 namespace WebsiteLaitBrasseur.UL.Customer {
@@ -13,56 +13,56 @@ namespace WebsiteLaitBrasseur.UL.Customer {
     public partial class Site {
         
         /// <summary>
-        /// Contrôle head.
+        /// head-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
         
         /// <summary>
-        /// Contrôle LogInButton.
+        /// LogInButton-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputButton LogInButton;
         
         /// <summary>
-        /// Contrôle lblLogout.
+        /// lblLogout-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblLogout;
         
         /// <summary>
-        /// Contrôle MasterBodyForm.
+        /// MasterBodyForm-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm MasterBodyForm;
         
         /// <summary>
-        /// Contrôle ScriptManagerCustomer.
+        /// ScriptManagerCustomer-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManagerCustomer;
         
         /// <summary>
-        /// Contrôle MainContent.
+        /// MainContent-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder MainContent;
     }

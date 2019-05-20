@@ -32,7 +32,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                             for (int i = 0; i < products.Count(); i++)
                             {
                                 //debugging purpose, will later remove
-                                System.Diagnostics.Debug.WriteLine("debugging--" + products[i].GetImgPath());
+                                System.Diagnostics.Debug.WriteLine("debugging ProductID--" + products[i].GetId());
                             }
                             ImageRepeater.DataSource = products;
                             ImageRepeater.DataBind();

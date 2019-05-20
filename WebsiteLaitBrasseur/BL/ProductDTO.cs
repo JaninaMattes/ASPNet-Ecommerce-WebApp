@@ -15,7 +15,7 @@ namespace WebsiteLaitBrasseur.BL
         private string _info = "";
         private string _shortInfo = "";
         private string _imgPath = "";
-        private int _stock;
+        private int _stock = 0;
         private int _status = 0;
         private List<SizeDTO> _details;
 
