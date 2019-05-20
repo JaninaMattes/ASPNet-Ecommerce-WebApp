@@ -21,10 +21,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
             {
                 //call product from Database                
                 ProductBL db = new ProductBL();
+                SizeBL sb = new SizeBL();
                 if (!IsPostBack)
                 {
                     // retrieve a prodcut from our db
                     var product = db.GetProduct(id);
+                    var details = sb.GetDetails(product.GetId());
                     if (product != null && product.GetStatus()==1)
                     {
                         // set up detail page elements
@@ -35,8 +37,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         nameLabel.Text = product.GetName();
                         labelProduct.Text = product.GetProductType();
                         labelProducer.Text = product.GetProducer();
-                        labelPrice.Text = product.GetPrice().ToString();
-                        unitDropDownList.Text = product.GetUnit().ToString();
+                        labelPrice.Text = details[0].GetPrice().ToString();
+                        unitDropDownList.Text = details[0].GetSize().ToString();
                         quantityDropDownList.Text = product.GetStock().ToString();
                         totalAmount.Text = product.GetStock().ToString();
                     }

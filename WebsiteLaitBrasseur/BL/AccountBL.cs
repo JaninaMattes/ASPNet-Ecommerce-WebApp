@@ -87,7 +87,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        private int IsLoginCorrect(string email, string password)
+        public int IsLoginCorrect(string email, string password)
         {           
             int isCorrect = 0;
             string hashPW = HashPassword(password);
