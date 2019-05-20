@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -37,7 +38,10 @@ namespace WebsiteLaitBrasseur.DAL
             string queryAutoIncr = "SELECT TOP(1) dbo.Product.productID FROM dbo.Product ORDER BY 1 DESC";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -58,7 +62,7 @@ namespace WebsiteLaitBrasseur.DAL
                     //won't need a while, since it will only retrieve one row
                     reader.Read();
                     //this is the id of the newly created data field
-                    result = Convert.ToInt32(reader["accountID"]);
+                    result = Convert.ToInt32(reader["productID"]);
                     Debug.Print("ProductDAL: /Insert/ " + result.ToString());
                 }
                 return result;
@@ -88,7 +92,10 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Product SET status = @status WHERE productID = @id";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where status = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -120,7 +127,10 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Product SET stock = @stock WHERE productID = @id";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where status = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -152,7 +162,10 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Product SET imgPath = @imgPath WHERE productID = @id";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where status = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -184,7 +197,10 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Product SET producer = @producer WHERE productID = @id";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where status = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -217,7 +233,10 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Product SET pName = @name WHERE productID = @id";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where status = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -249,7 +268,10 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Product SET longInfo = @longInfo WHERE productID = @id";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where status = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -281,7 +303,10 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Product SET shortInfo = @shortInfo WHERE productID = @id";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where status = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -322,7 +347,10 @@ namespace WebsiteLaitBrasseur.DAL
                 " WHERE productID = @id";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where status = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -336,6 +364,7 @@ namespace WebsiteLaitBrasseur.DAL
                     cmd.Parameters.AddWithValue("@stock", stock);
                     cmd.Parameters.AddWithValue("@pStatus", status);
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    Debug.Print("ProductDAL: /UpdateALL/ " + result.ToString());
                 }
             }
             catch (Exception e)
@@ -357,11 +386,14 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
         public ProductDTO FindBy(int id)
         {
-            string queryString = "SELECT * FROM dbo.Product WHERE productID=@id";
+            string queryString = "SELECT * FROM dbo.Product WHERE productID = @id";
             ProductDTO product;
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -371,7 +403,7 @@ namespace WebsiteLaitBrasseur.DAL
                         if (reader.Read())
                         {
                             product = new ProductDTO();
-                            product.SetId((int)reader["productID"]);
+                            product.SetId(Convert.ToInt32(reader["productID"]));
                             product.SetName(reader["pName"].ToString());
                             product.SetType(reader["pType"].ToString());
                             product.SetProducer(reader["producer"].ToString());
@@ -382,6 +414,7 @@ namespace WebsiteLaitBrasseur.DAL
                             product.SetStatus(Int32.Parse(reader["pStatus"].ToString()));   //Cannot be cast as : (int)
                             //return product instance as data object 
                             Debug.Print("ProductDAL: /FindByID/ Name : " + product.GetName().ToString());
+
                             return product;
                         }                         
                     }
@@ -395,7 +428,6 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 connection.Close();
             }
-
             return null;
         }
 
@@ -408,13 +440,16 @@ namespace WebsiteLaitBrasseur.DAL
         public List<ProductDTO> FindByType(string type)
         {
             //debugging purpose, will later remove
-            System.Diagnostics.Debug.WriteLine("debugging DAL FindByType--" + type);
+            Debug.WriteLine("debugging DAL FindByType--" + type);
 
             List<ProductDTO> results = new List<ProductDTO>();
             string queryString = "SELECT * FROM dbo.Product WHERE pType = @type";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {                    
@@ -436,7 +471,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 product.SetStock(Convert.ToInt32(reader["stock"]));
                                 product.SetStatus(Convert.ToInt32(reader["pStatus"]));
                                 //add data objects to result-list 
-                                Debug.Print("ProductDAL: /FindByType/ " + product.GetName().ToString());
+                                Debug.Print("ProductDAL: /FindByType/ " + product.GetId().ToString());
                                 for (int i = 0; i < reader.FieldCount; i++)
                                 {
                                     Console.WriteLine(reader.GetValue(i));
@@ -471,9 +506,13 @@ namespace WebsiteLaitBrasseur.DAL
         public List<ProductDTO> FindByName(string name)
         {
             List<ProductDTO> results = new List<ProductDTO>();
-            string queryString = "SELECT * FROM dbo.Product WHERE pName=@name";
+            string queryString = "SELECT * FROM dbo.Product WHERE pName = @name";
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -486,17 +525,17 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId((int)reader["productID"]);
+                                product.SetId(Convert.ToInt32(reader["productID"]));
                                 product.SetName(reader["pName"].ToString());
                                 product.SetType(reader["pType"].ToString());
                                 product.SetProducer(reader["producer"].ToString());
                                 product.SetInfo(reader["longInfo"].ToString());
                                 product.SetShortInfo(reader["shortInfo"].ToString());
                                 product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock((int)reader["stock"]);
-                                product.SetStatus((int)reader["pStatus"]);
+                                product.SetStock(Convert.ToInt32(reader["stock"]));
+                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
                                 //add data objects to result-list 
-                                Debug.Print("ProductDAL: /FindByName/ " + product.GetName().ToString());
+                                Debug.Print("ProductDAL: /FindByName/ " + product.GetId().ToString());
                                 results.Add(product);
                             }
                             return results;
@@ -527,10 +566,13 @@ namespace WebsiteLaitBrasseur.DAL
         public List<ProductDTO> FindByProducer(string producer)
         {
             List<ProductDTO> results = new List<ProductDTO>();
-            string queryString = "SELECT * FROM dbo.Product WHERE producer=@producer";
+            string queryString = "SELECT * FROM dbo.Product WHERE producer = @producer";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -542,16 +584,16 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId((int)reader["productID"]);
+                                product.SetId(Convert.ToInt32(reader["productID"]));
                                 product.SetName(reader["pName"].ToString());
                                 product.SetType(reader["pType"].ToString());
                                 product.SetProducer(reader["producer"].ToString());
                                 product.SetInfo(reader["longInfo"].ToString());
                                 product.SetShortInfo(reader["shortInfo"].ToString());
                                 product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock((int)reader["stock"]);
-                                product.SetStatus((int)reader["pStatus"]);
-                                Debug.Print("ProductDAL: /FindByProducer/ " + product.GetName().ToString());
+                                product.SetStock(Convert.ToInt32(reader["stock"]));
+                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
+                                Debug.Print("ProductDAL: /FindByProducer/ " + product.GetId().ToString());
                                 //add data objects to result-list 
                                 results.Add(product);
                             }
@@ -586,10 +628,13 @@ namespace WebsiteLaitBrasseur.DAL
         public List<ProductDTO> FindActiveProducts(int pStatus)
         {
             List<ProductDTO> results = new List<ProductDTO>();
-            string queryString = "SELECT * FROM dbo.Product WHERE pStatus=@pStatus";
+            string queryString = "SELECT * FROM dbo.Product WHERE pStatus = @pStatus";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -601,16 +646,16 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId((int)reader["productID"]);
+                                product.SetId(Convert.ToInt32(reader["productID"]));
                                 product.SetName(reader["pName"].ToString());
                                 product.SetType(reader["pType"].ToString());
                                 product.SetProducer(reader["producer"].ToString());
                                 product.SetInfo(reader["longInfo"].ToString());
                                 product.SetShortInfo(reader["shortInfo"].ToString());
                                 product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock((int)reader["stock"]);
-                                product.SetStatus((int)reader["pStatus"]);
-                                Debug.Print("ProductDAL: /FindByStatus/ " + product.GetName().ToString());
+                                product.SetStock(Convert.ToInt32(reader["stock"]));
+                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
+                                Debug.Print("ProductDAL: /FindByStatus/ " + product.GetId().ToString());
                                 //add data objects to result-list 
                                 results.Add(product);
                             }
@@ -637,10 +682,13 @@ namespace WebsiteLaitBrasseur.DAL
         public List<ProductDTO> FindActiveProducts(int pStatus, string type)
         {
             List<ProductDTO> results = new List<ProductDTO>();
-            string queryString = "SELECT * FROM dbo.Product WHERE pStatus=@pStatus AND pType = @type";
+            string queryString = "SELECT * FROM dbo.Product WHERE pStatus = @pStatus AND pType = @type";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {                    
@@ -653,16 +701,16 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId((int)reader["productID"]);
+                                product.SetId(Convert.ToInt32(reader["productID"]));
                                 product.SetName(reader["pName"].ToString());
                                 product.SetType(reader["pType"].ToString());
                                 product.SetProducer(reader["producer"].ToString());
                                 product.SetInfo(reader["longInfo"].ToString());
                                 product.SetShortInfo(reader["shortInfo"].ToString());
                                 product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock((int)reader["stock"]);
-                                product.SetStatus((int)reader["pStatus"]);
-                                Debug.Print("ProductDAL: /FindByStatus/ " + product.GetName().ToString());
+                                product.SetStock(Convert.ToInt32(reader["stock"]));
+                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
+                                Debug.Print("ProductDAL: /FindByStatus/ " + product.GetId().ToString());
                                 //add data objects to result-list 
                                 results.Add(product);
                             }
@@ -698,7 +746,10 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "SELECT * FROM dbo.Product";
             try
             {
-                connection.Open();
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
@@ -710,17 +761,17 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId((int)reader["productID"]);
+                                product.SetId(Convert.ToInt32(reader["productID"]));
                                 product.SetName(reader["pName"].ToString());
                                 product.SetType(reader["pType"].ToString());
                                 product.SetProducer(reader["producer"].ToString());
                                 product.SetInfo(reader["longInfo"].ToString());
                                 product.SetShortInfo(reader["shortInfo"].ToString());
                                 product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock((int)reader["stock"]);
-                                product.SetStatus((int)reader["pStatus"]);
+                                product.SetStock(Convert.ToInt32(reader["stock"]));
+                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
                                 //add data objects to result-list 
-                                Debug.Print("ProductDAL: /FindAll/ " + product.GetName().ToString());
+                                Debug.Print("ProductDAL: /FindAll/ " + product.GetId().ToString());
                                 results.Add(product);
                             }
 

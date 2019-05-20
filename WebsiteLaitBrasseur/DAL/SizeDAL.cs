@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace WebsiteLaitBrasseur.DAL
     public class SizeDAL
     {
         //Get connection string from web.config file and create sql connection
-        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
 
         /// <summary>
         /// Insert new value into DB
@@ -36,10 +37,13 @@ namespace WebsiteLaitBrasseur.DAL
             string queryAutoIncr = "SELECT TOP(1) dbo.Size.sizeID FROM dbo.Size ORDER BY 1 DESC";
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@size", size);
                     cmd.Parameters.AddWithValue("@price", price);
                     cmd.Parameters.AddWithValue("@productID", productID);
@@ -49,12 +53,11 @@ namespace WebsiteLaitBrasseur.DAL
                 ///find the last manipulated id due to autoincrement and return it
                 using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
                 {
-                    connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     //won't need a while, since it will only retrieve one row
                     reader.Read();
                     //this is the id of the newly created data field
-                    result = (Int32)reader["sizeID"];
+                    result = Convert.ToInt32(reader["sizeID"]);
                     Debug.Print("SizeDAL: /Insert/ " + result.ToString());
                 }
 
@@ -63,6 +66,10 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 result = 0;
                 e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
             }
             return result;
         }
@@ -73,11 +80,14 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Size SET unitSize = @size, unitPrice = @price, productID = @productID WHERE sizeID = @id";
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where email = XY to status suspendet(false) or enabled(true) 
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@size", size);
                     cmd.Parameters.AddWithValue("@price", price);
@@ -88,6 +98,10 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
             }
             return result;
         }
@@ -105,10 +119,13 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@sizeID", sizeID);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -118,14 +135,13 @@ namespace WebsiteLaitBrasseur.DAL
                             product = new ProductDTO();
                             size = new SizeDTO();
                             product = new ProductDTO();
-                            product.SetId((int)reader["productID"]);
+                            product.SetId(Convert.ToInt32(reader["productID"]));
                             size.SetProduct(product);
-                            size.SetID((int)reader["sizeID"]);
-                            size.SetPrice( Decimal.Parse(reader["unitPrice"].ToString()));
-                            size.SetSize((int)reader["unitSize"]);
+                            size.SetID(Convert.ToInt32(reader["sizeID"]));
+                            size.SetPrice(Convert.ToDecimal(reader["unitPrice"]));
+                            size.SetSize(Convert.ToInt32(reader["unitSize"]));
                             //return product instance as data object 
-                            Debug.Print("SizeDAL: /FindByProduct/ sizeID : " + size.GetID().ToString());
-                            connection.Close();
+                            Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
                             return size;
                         }
                     }
@@ -135,6 +151,10 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
+            }
+            finally
+            {
+                connection.Close();
             }
             return null;
         }
@@ -154,10 +174,13 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@id", productID);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -165,16 +188,16 @@ namespace WebsiteLaitBrasseur.DAL
                         {
                             while (reader.Read())
                             {
-                                size = new SizeDTO();
-                                product = new ProductDTO();
-                                product.SetId((int)reader["productID"]);
-                                size.SetProduct(product);
-                                size.SetID((int)reader["sizeID"]);
-                                size.SetPrice(Decimal.Parse(reader["unitPrice"].ToString()));
-                                size.SetSize((int)reader["unitSize"]);
-                                //return product instance as data object 
-                                Debug.Print("SizeDAL: /FindByProduct/ size : " + size.GetSize().ToString());
-                                results.Add(size);
+                            size = new SizeDTO();
+                            product = new ProductDTO();
+                            product.SetId(Convert.ToInt32(reader["productID"]));
+                            size.SetProduct(product);
+                            size.SetID(Convert.ToInt32(reader["sizeID"]));
+                            size.SetPrice(Convert.ToDecimal(reader["unitPrice"]));
+                            size.SetSize(Convert.ToInt32(reader["unitSize"]));
+                            //return product instance as data object 
+                            Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
+                            results.Add(size);
                             }
                             connection.Close();
                             return results;
@@ -189,6 +212,10 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
             }
             return null;
         }
@@ -248,10 +275,13 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -260,13 +290,13 @@ namespace WebsiteLaitBrasseur.DAL
                             {
                                 size = new SizeDTO();
                                 product = new ProductDTO();
-                                product.SetId((int)reader["productID"]);
+                                product.SetId(Convert.ToInt32(reader["productID"]));
                                 size.SetProduct(product);
-                                size.SetID((int)reader["sizeID"]);
-                                size.SetPrice((decimal)reader["unitPrice"]);
-                                size.SetSize((int)reader["unitSize"]);
+                                size.SetID(Convert.ToInt32(reader["sizeID"]));
+                                size.SetPrice(Convert.ToDecimal(reader["unitPrice"]));
+                                size.SetSize(Convert.ToInt32(reader["unitSize"]));
                                 //return product instance as data object 
-                                Debug.Print("SizeDAL: /FindByProduct/ " + size.ToString());
+                                Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
                                 results.Add(size);
                             }
                             return results;
@@ -281,6 +311,10 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
             }
             return null;
         }

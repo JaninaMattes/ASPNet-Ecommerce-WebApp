@@ -531,7 +531,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
         public List<InvoiceDTO> FindAllByStatus(int paymentStatus)
         {
-            string queryString = "SELECT * FROM dbo.Invoice WHERE paymentStatus=@paymentStatus";
+            string queryString = "SELECT * FROM dbo.Invoice WHERE paymentStatus = @paymentStatus";
             List<InvoiceDTO> results = new List<InvoiceDTO>();
             InvoiceDTO invoice;
             AccountDTO account;
@@ -604,7 +604,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
         public List<InvoiceDTO> FindAllByCustomer(int accountID)
         {
-            string queryString = "SELECT * FROM dbo.Invoice WHERE accountID=@accountID";
+            string queryString = "SELECT * FROM dbo.Invoice WHERE accountID = @accountID";
             List<InvoiceDTO> results = new List<InvoiceDTO>();
             InvoiceDTO invoice;
             AccountDTO account;

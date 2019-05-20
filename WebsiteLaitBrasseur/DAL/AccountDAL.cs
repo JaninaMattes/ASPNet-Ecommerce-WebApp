@@ -17,7 +17,7 @@ namespace WebsiteLaitBrasseur.DAL
     public class AccountDAL
     {
         //Get connection string from web.config file and create sql connection
-        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         /// <summary>
         /// New User Registration
         /// This function inserts data of the DTO persistantly into the DB
@@ -355,7 +355,7 @@ namespace WebsiteLaitBrasseur.DAL
                             account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
                             account.SetStatus(Convert.ToInt32(reader["status"]));
                             //return product instance as data object 
-                            Debug.Print("AccountDAL: /FindBy(Int)/ " + account.ToString());
+                            Debug.Print("AccountDAL: /FindBy(Int)/ " + account.GetID().ToString());
                             return account;
                         }
                     }
@@ -478,7 +478,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
                                 account.SetStatus(Convert.ToInt32(reader["status"]));
                                 //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindAllUserBy/ " + account.ToString());
+                                Debug.Print("AccountDAL: /FindAllUserBy/ " + account.GetID().ToString());
                                
                                 //add data objects to result-list 
                                 results.Add(account);
@@ -543,7 +543,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
                                 account.SetStatus(Convert.ToInt32(reader["status"]));
                                 //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindAllUserBy/ " + account.ToString());
+                                Debug.Print("AccountDAL: /FindAllUserBy/ " + account.GetID().ToString());
 
                                 //add data objects to result-list 
                                 results.Add(account);
@@ -610,7 +610,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
                                 account.SetStatus(Convert.ToInt32(reader["status"]));
                                 //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindAllByStatus/ " + status + " " + account.ToString());
+                                Debug.Print("AccountDAL: /FindAllByStatus/ " + status + " " + account.GetID().ToString());
 
                                 //add data objects to result-list 
                                 results.Add(account);
@@ -673,7 +673,7 @@ namespace WebsiteLaitBrasseur.DAL
                             account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
                             account.SetStatus(Convert.ToInt32(reader["status"]));
                             //return product instance as data object 
-                            Debug.Print("AccountDAL: /FindByName/ " + fname + " " + lname + " " + account.ToString());
+                            Debug.Print("AccountDAL: /FindByName/ " + fname + " " + lname + " " + account.GetID().ToString());
                             return account;
                         }
                     }

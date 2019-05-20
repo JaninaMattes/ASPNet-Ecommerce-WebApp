@@ -10,6 +10,7 @@ namespace WebsiteLaitBrasseur.BL
         //private properties
         private int _id;
         private ProductDTO _selection;
+        //private InvoiceDTO _invoice;
         private int _quantity;
         private decimal _origPrice;
         private int _origSize;

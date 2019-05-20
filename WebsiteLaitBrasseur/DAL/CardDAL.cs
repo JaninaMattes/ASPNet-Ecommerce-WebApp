@@ -10,7 +10,7 @@ namespace WebsiteLaitBrasseur.DAL
     public class CardDAL
     {
         //Get connection string from web.config file and create sql connection
-        SqlConnection con = new SqlConnection(SqlDataAccess.ConnectionString);
+        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         //TODO
     }
 }
