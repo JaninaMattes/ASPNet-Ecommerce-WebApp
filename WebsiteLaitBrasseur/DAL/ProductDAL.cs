@@ -386,7 +386,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
         public ProductDTO FindBy(int id)
         {
-            string queryString = "SELECT * FROM dbo.Product WHERE productID=@id";
+            string queryString = "SELECT * FROM dbo.Product WHERE productID = @id";
             ProductDTO product;
             try
             {
@@ -505,7 +505,7 @@ namespace WebsiteLaitBrasseur.DAL
         public List<ProductDTO> FindByName(string name)
         {
             List<ProductDTO> results = new List<ProductDTO>();
-            string queryString = "SELECT * FROM dbo.Product WHERE pName=@name";
+            string queryString = "SELECT * FROM dbo.Product WHERE pName = @name";
             try
             {
                 if (connection.State == ConnectionState.Closed)
@@ -565,7 +565,7 @@ namespace WebsiteLaitBrasseur.DAL
         public List<ProductDTO> FindByProducer(string producer)
         {
             List<ProductDTO> results = new List<ProductDTO>();
-            string queryString = "SELECT * FROM dbo.Product WHERE producer=@producer";
+            string queryString = "SELECT * FROM dbo.Product WHERE producer = @producer";
             try
             {
                 if (connection.State == ConnectionState.Closed)
@@ -627,7 +627,7 @@ namespace WebsiteLaitBrasseur.DAL
         public List<ProductDTO> FindActiveProducts(int pStatus)
         {
             List<ProductDTO> results = new List<ProductDTO>();
-            string queryString = "SELECT * FROM dbo.Product WHERE pStatus=@pStatus";
+            string queryString = "SELECT * FROM dbo.Product WHERE pStatus = @pStatus";
             try
             {
                 if (connection.State == ConnectionState.Closed)
