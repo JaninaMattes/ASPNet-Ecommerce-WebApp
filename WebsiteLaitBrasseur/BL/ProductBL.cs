@@ -44,7 +44,13 @@ namespace WebsiteLaitBrasseur.BL
             List<SizeDTO> list = new List<SizeDTO>();
             try
             {
-                results = DB.FindByType(type);
+                results = DB.FindByType(type);                
+                foreach (ProductDTO p in results)
+                {
+                    //debugging purpose, will later remove
+                    System.Diagnostics.Debug.WriteLine("debugging--" + p);
+                }
+                
                 //TODO: if product is suspendet status = 0 
                 //needs to be greyed out or not visible to customer
                 for (int i = 0; i < results.Count(); i++)

@@ -20,7 +20,7 @@
         <!--START Product CardView-->
             <div id="cardView" >
             <div id="img-cardview"  >
-                <asp:ImageButton id="img1" runat="server" class="img-fluid justify-content-center"  ToolTip="Select a product" ImageUrl='<%# Eval("ImagePath") %>'  OnCommand="imgCommand" CommandArgument='<%# Eval("Id") %>'/>      
+                <asp:ImageButton id="img1" runat="server" class="img-fluid justify-content-center"  ToolTip="Select a product" ImageUrl='<%# Eval("_imgPath") %>'  OnCommand="imgCommand" CommandArgument='<%# Eval("Id") %>'/>      
             </div>
             <div id="container1" class="container clearfix">
             <div class="profile-usertitle">
