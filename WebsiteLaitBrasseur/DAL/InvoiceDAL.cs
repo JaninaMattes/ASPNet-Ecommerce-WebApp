@@ -13,7 +13,7 @@ namespace WebsiteLaitBrasseur.DAL
     public class InvoiceDAL
     {
         //Get connection string from web.config file and create sql connection
-        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
 
         /// <summary>
         /// Insert a new Invoice into the DB

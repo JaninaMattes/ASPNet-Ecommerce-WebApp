@@ -13,7 +13,7 @@ namespace WebsiteLaitBrasseur.DAL
     public class ShippmentDAL
     {
         //Get connection string from web.config file and create sql connection
-        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         /// <summary>
         /// To Insert another Shipping company into the DB
         /// a status = 0 means the company is available

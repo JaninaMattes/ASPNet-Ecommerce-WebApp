@@ -12,7 +12,7 @@ namespace WebsiteLaitBrasseur.DAL
     public class CityDAL
     {
         //Get connection string from web.config file and create sql connection
-        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
 
         public int Insert(string zipCode, string cityName)
         {

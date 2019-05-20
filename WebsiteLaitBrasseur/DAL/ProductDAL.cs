@@ -13,7 +13,7 @@ namespace WebsiteLaitBrasseur.DAL
     public class ProductDAL
     {
         //Get connection string from web.config file and create sql connection
-        SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         /// <summary>
         /// Insert new product into DB
         /// Returns integer value of ProductID
