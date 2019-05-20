@@ -17,6 +17,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
             ResultLabel.Text = "Your message has been delivered";
+            //send email ?
         }
     }
 }

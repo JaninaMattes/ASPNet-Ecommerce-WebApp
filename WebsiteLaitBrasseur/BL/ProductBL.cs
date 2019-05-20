@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Diagnostics;
 using WebsiteLaitBrasseur.DAL;
 
 namespace WebsiteLaitBrasseur.BL
@@ -22,13 +23,15 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 product = DB.FindBy(id);
-                list = SB.FindByProduct(id);
-                product.SetDetails(list);
+                //list = SB.FindByProduct(id);
+                //product.SetDetails(list);
+                
                 //TODO: if product is suspendet status = 1 
                 //needs to be greyed out or not visible to customer
             }
             catch (Exception e)
             {
+                Debug.Write("Dans productBL");
                 e.GetBaseException();
             }
             return product;
