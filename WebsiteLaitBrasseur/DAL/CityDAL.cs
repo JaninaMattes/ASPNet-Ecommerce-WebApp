@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -22,10 +23,13 @@ namespace WebsiteLaitBrasseur.DAL
             string queryAutoIncr = "SELECT TOP(1) dbo.City.cityID FROM dbo.City ORDER BY 1 DESC";
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@zipCode", zipCode);
                     cmd.Parameters.AddWithValue("@cityName", cityName);
                     cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
@@ -34,7 +38,6 @@ namespace WebsiteLaitBrasseur.DAL
                 ///find the last manipulated id due to autoincrement and return it
                 using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
                 {
-                    connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     //won't need a while, since it will only retrieve one row
                     reader.Read();
@@ -49,6 +52,10 @@ namespace WebsiteLaitBrasseur.DAL
                 result = 0;
                 e.GetBaseException();
             }
+            finally
+            {
+                connection.Close();
+            }
             return result;
         }
 
@@ -59,11 +66,14 @@ namespace WebsiteLaitBrasseur.DAL
                 "WHERE cityID = @cityID";
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //update into database where email = XY to status suspendet(false) or enabled(true) 
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@cityID", cityID);
                     cmd.Parameters.AddWithValue("@zipCode", zipCode);
                     cmd.Parameters.AddWithValue("@cityName", cityName);
@@ -73,6 +83,10 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
             }
             return result;
         }
@@ -89,17 +103,20 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             city = new CityDTO();
-                            city.SetId((int)reader["cityID"]);
+                            city.SetId(Convert.ToInt32(reader["cityID"]));
                             city.SetCity(reader["cityName"].ToString());
                             city.SetZip(reader["cityCode"].ToString());
                             //return product instance as data object 
@@ -113,6 +130,10 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
+            }
+            finally
+            {
+                connection.Close();
             }
             return null;
         }
@@ -129,17 +150,20 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@name", name);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             city = new CityDTO();
-                            city.SetId((int)reader["cityID"]);
+                            city.SetId(Convert.ToInt32(reader["cityID"]));
                             city.SetCity(reader["cityName"].ToString());
                             city.SetZip(reader["cityCode"].ToString());
                             //return product instance as data object 
@@ -153,6 +177,10 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
+            }
+            finally
+            {
+                connection.Close();
             }
             return null;
         }
