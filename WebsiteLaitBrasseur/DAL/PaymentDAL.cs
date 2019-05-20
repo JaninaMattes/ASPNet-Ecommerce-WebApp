@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
@@ -32,10 +33,13 @@ namespace WebsiteLaitBrasseur.DAL
             string queryAutoIncr = "SELECT TOP(1) dbo.Payment.paymentID FROM dbo.Payment ORDER BY 1 DESC";
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@invoiceID", invoiceID);
                     cmd.Parameters.AddWithValue("@accountID", accountID);
                     cmd.Parameters.AddWithValue("@amount", totalAmount);
@@ -46,12 +50,11 @@ namespace WebsiteLaitBrasseur.DAL
                 ///find the last manipulated id due to autoincrement and return it
                 using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
                 {
-                    connection.Open();
                     SqlDataReader reader = command.ExecuteReader();
                     //won't need a while, since it will only retrieve one row
                     reader.Read();
                     //this is the id of the newly created data field
-                    result = (Int32)reader["paymentID"];
+                    result = Convert.ToInt32(reader["paymentID"]);
                     Debug.Print("PaymentDAL: /Insert/ " + result.ToString());
                 }
                 return result;
@@ -60,6 +63,10 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 result = 0;
                 e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
             }
             return result;
         }
@@ -79,10 +86,13 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -91,12 +101,13 @@ namespace WebsiteLaitBrasseur.DAL
                             account = new AccountDTO();
                             invoice = new InvoiceDTO();
                             payment = new PaymentDTO();
-                            account.SetAccountID((int)reader["accountID"]);
-                            invoice.SetID((int)reader["invoiceID"]);
+                            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
+                            invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
                             payment.SetCustomer(account);
                             payment.SetInvoice(invoice);
-                            payment.SetID((int)reader["paymentID"]);
-                            payment.SetPaymentDate((DateTime)reader["paymentDate"]);
+                            payment.SetID(Convert.ToInt32(reader["paymentID"]));
+                            payment.SetID(Convert.ToInt32(reader["amount"]));
+                            payment.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
                             //return product instance as data object 
                             Debug.Print("PaymentDAL: /FindByID/ " + payment.ToString());
                             return payment;
@@ -108,6 +119,10 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
+            }
+            finally
+            {
+                connection.Close();
             }
             return null;
         }
@@ -126,10 +141,13 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@paymentDate", paymentDate);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -138,12 +156,13 @@ namespace WebsiteLaitBrasseur.DAL
                             account = new AccountDTO();
                             invoice = new InvoiceDTO();
                             payment = new PaymentDTO();
-                            account.SetAccountID((int)reader["accountID"]);
-                            invoice.SetID((int)reader["invoiceID"]);
+                            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
+                            invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
                             payment.SetCustomer(account);
                             payment.SetInvoice(invoice);
-                            payment.SetID((int)reader["paymentID"]);
-                            payment.SetPaymentDate((DateTime)reader["paymentDate"]);
+                            payment.SetID(Convert.ToInt32(reader["paymentID"]));
+                            payment.SetID(Convert.ToInt32(reader["amount"]));
+                            payment.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
                             //return product instance as data object 
                             Debug.Print("PaymentDAL: /FindByDate/ " + payment.ToString());
                             return payment;
@@ -155,6 +174,10 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
+            }
+            finally
+            {
+                connection.Close();
             }
             return null;
         }
@@ -173,10 +196,13 @@ namespace WebsiteLaitBrasseur.DAL
             InvoiceDTO invoice;
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@accountID", accountID);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -187,19 +213,19 @@ namespace WebsiteLaitBrasseur.DAL
                                 account = new AccountDTO();
                                 invoice = new InvoiceDTO();
                                 payment = new PaymentDTO();
-                                account.SetAccountID((int)reader["accountID"]);
-                                invoice.SetID((int)reader["invoiceID"]);
+                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
+                                invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
                                 payment.SetCustomer(account);
                                 payment.SetInvoice(invoice);
-                                payment.SetID((int)reader["paymentID"]);
-                                payment.SetPaymentDate((DateTime)reader["paymentDate"]);
+                                payment.SetID(Convert.ToInt32(reader["paymentID"]));
+                                payment.SetID(Convert.ToInt32(reader["amount"]));
+                                payment.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
                                 //return product instance as data object 
                                 Debug.Print("PaymentDAL: /FindByCustomer/ " + payment.ToString());
 
                                 //add data objects to result-list 
                                 results.Add(payment);
                             }
-                            return results;
                         }
                         else
                         {
@@ -212,7 +238,11 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            return null;
+            finally
+            {
+                connection.Close();
+            }
+            return results;
         }
 
         public List<PaymentDTO> FindAll()
@@ -224,10 +254,13 @@ namespace WebsiteLaitBrasseur.DAL
             InvoiceDTO invoice;
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -237,19 +270,19 @@ namespace WebsiteLaitBrasseur.DAL
                                 account = new AccountDTO();
                                 invoice = new InvoiceDTO();
                                 payment = new PaymentDTO();
-                                account.SetAccountID((int)reader["accountID"]);
-                                invoice.SetID((int)reader["invoiceID"]);
+                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
+                                invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
                                 payment.SetCustomer(account);
                                 payment.SetInvoice(invoice);
-                                payment.SetID((int)reader["paymentID"]);
-                                payment.SetPaymentDate((DateTime)reader["paymentDate"]);
+                                payment.SetID(Convert.ToInt32(reader["paymentID"]));
+                                payment.SetID(Convert.ToInt32(reader["amount"]));
+                                payment.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
                                 //return product instance as data object 
                                 Debug.Print("PaymentDAL: /FindByAll/ " + payment.ToString());
 
                                 //add data objects to result-list 
                                 results.Add(payment);
                             }
-                            return results;
                         }
                         else
                         {
@@ -262,7 +295,11 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            return null;
+            finally
+            {
+                connection.Close();
+            }
+            return results;
         }
     }
 }
