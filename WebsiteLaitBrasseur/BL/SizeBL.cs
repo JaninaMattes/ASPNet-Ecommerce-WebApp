@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Diagnostics;
 using WebsiteLaitBrasseur.DAL;
 
 namespace WebsiteLaitBrasseur.BL
@@ -31,6 +32,9 @@ namespace WebsiteLaitBrasseur.BL
             return result;
         }
 
+
+    
+
         /// <summary>
         /// Get the details of one single product.
         /// </summary>
@@ -43,11 +47,30 @@ namespace WebsiteLaitBrasseur.BL
             {
                 results = DB.FindByProduct(productID);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 e.GetBaseException();
             }
             return results;
         }
+
+        /// <summary>
+        /// Get the price of a product in function of its size.
+        /// <param name="productID" , size="UnitSize"></param>
+        /// <returns>Price</returns>
+        public decimal GetPriceBySize(int id, int size)
+        {
+            SizeDTO product = new SizeDTO();
+            try
+            {
+                product = DB.FindPriceBySize(id, size);
+
+            }catch(Exception e)
+            {
+                e.GetBaseException();
+            }
+            return product.GetPrice();
+        }
+
     }
 }

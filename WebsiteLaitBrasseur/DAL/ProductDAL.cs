@@ -379,9 +379,9 @@ namespace WebsiteLaitBrasseur.DAL
                             product.SetShortInfo(reader["shortInfo"].ToString());
                             product.SetImgPath(reader["imgPath"].ToString());
                             product.SetStock((int)reader["stock"]);
-                            product.SetStatus((int)reader["pStatus"]);
+                            product.SetStatus(Int32.Parse(reader["pStatus"].ToString()));   //Cannot be cast as : (int)
                             //return product instance as data object 
-                            Debug.Print("ProductDAL: /FindByID/ " + product.ToString());
+                            Debug.Print("ProductDAL: /FindByID/ Name : " + product.GetName().ToString());
                             return product;
                         }                         
                     }
@@ -389,7 +389,6 @@ namespace WebsiteLaitBrasseur.DAL
             }
             catch (Exception e)
             {
-                Debug.Print("DANS DAL ///////////////////////////////////////////////////");
                 e.GetBaseException();
             }
             finally
@@ -437,7 +436,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 product.SetStock(Convert.ToInt32(reader["stock"]));
                                 product.SetStatus(Convert.ToInt32(reader["pStatus"]));
                                 //add data objects to result-list 
-                                Debug.Print("ProductDAL: /FindByType/ " + product.ToString());
+                                Debug.Print("ProductDAL: /FindByType/ " + product.GetName().ToString());
                                 for (int i = 0; i < reader.FieldCount; i++)
                                 {
                                     Console.WriteLine(reader.GetValue(i));
@@ -497,7 +496,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 product.SetStock((int)reader["stock"]);
                                 product.SetStatus((int)reader["pStatus"]);
                                 //add data objects to result-list 
-                                Debug.Print("ProductDAL: /FindByName/ " + product.ToString());
+                                Debug.Print("ProductDAL: /FindByName/ " + product.GetName().ToString());
                                 results.Add(product);
                             }
                             return results;
@@ -552,7 +551,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 product.SetImgPath(reader["imgPath"].ToString());
                                 product.SetStock((int)reader["stock"]);
                                 product.SetStatus((int)reader["pStatus"]);
-                                Debug.Print("ProductDAL: /FindByProducer/ " + product.ToString());
+                                Debug.Print("ProductDAL: /FindByProducer/ " + product.GetName().ToString());
                                 //add data objects to result-list 
                                 results.Add(product);
                             }
@@ -611,7 +610,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 product.SetImgPath(reader["imgPath"].ToString());
                                 product.SetStock((int)reader["stock"]);
                                 product.SetStatus((int)reader["pStatus"]);
-                                Debug.Print("ProductDAL: /FindByStatus/ " + product.ToString());
+                                Debug.Print("ProductDAL: /FindByStatus/ " + product.GetName().ToString());
                                 //add data objects to result-list 
                                 results.Add(product);
                             }
@@ -663,7 +662,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 product.SetImgPath(reader["imgPath"].ToString());
                                 product.SetStock((int)reader["stock"]);
                                 product.SetStatus((int)reader["pStatus"]);
-                                Debug.Print("ProductDAL: /FindByStatus/ " + product.ToString());
+                                Debug.Print("ProductDAL: /FindByStatus/ " + product.GetName().ToString());
                                 //add data objects to result-list 
                                 results.Add(product);
                             }
@@ -721,7 +720,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 product.SetStock((int)reader["stock"]);
                                 product.SetStatus((int)reader["pStatus"]);
                                 //add data objects to result-list 
-                                Debug.Print("ProductDAL: /FindAll/ " + product.ToString());
+                                Debug.Print("ProductDAL: /FindAll/ " + product.GetName().ToString());
                                 results.Add(product);
                             }
 

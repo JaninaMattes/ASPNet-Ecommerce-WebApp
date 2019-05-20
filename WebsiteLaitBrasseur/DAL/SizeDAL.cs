@@ -121,10 +121,11 @@ namespace WebsiteLaitBrasseur.DAL
                             product.SetId((int)reader["productID"]);
                             size.SetProduct(product);
                             size.SetID((int)reader["sizeID"]);
-                            size.SetPrice((decimal)reader["unitSize"]);
+                            size.SetPrice( Decimal.Parse(reader["unitPrice"].ToString()));
                             size.SetSize((int)reader["unitSize"]);
                             //return product instance as data object 
-                            Debug.Print("SizeDAL: /FindByProduct/ " + size.ToString());
+                            Debug.Print("SizeDAL: /FindByProduct/ sizeID : " + size.GetID().ToString());
+                            connection.Close();
                             return size;
                         }
                     }
@@ -164,17 +165,18 @@ namespace WebsiteLaitBrasseur.DAL
                         {
                             while (reader.Read())
                             {
-                            size = new SizeDTO();
-                            product = new ProductDTO();
-                            product.SetId((int)reader["productID"]);
-                            size.SetProduct(product);
-                            size.SetID((int)reader["sizeID"]);
-                            size.SetPrice((decimal)reader["unitSize"]);
-                            size.SetSize((int)reader["unitSize"]);
-                            //return product instance as data object 
-                            Debug.Print("SizeDAL: /FindByProduct/ " + size.ToString());
-                            results.Add(size);
+                                size = new SizeDTO();
+                                product = new ProductDTO();
+                                product.SetId((int)reader["productID"]);
+                                size.SetProduct(product);
+                                size.SetID((int)reader["sizeID"]);
+                                size.SetPrice(Decimal.Parse(reader["unitPrice"].ToString()));
+                                size.SetSize((int)reader["unitSize"]);
+                                //return product instance as data object 
+                                Debug.Print("SizeDAL: /FindByProduct/ size : " + size.GetSize().ToString());
+                                results.Add(size);
                             }
+                            connection.Close();
                             return results;
                         }
                         else
@@ -190,6 +192,48 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return null;
         }
+
+        /// <summary>
+        /// Get the price of a product in function of its size.
+        /// <param name="productID" , size="UnitSize"></param>
+        /// <returns>Price</returns>
+        public SizeDTO FindPriceBySize(int productID, int sizeProduct)
+        {
+            SizeDTO result = new SizeDTO();
+            string queryString= "SELECT* FROM dbo.Size WHERE unitSize = @unitSize AND productID = @id";
+
+            try
+            {
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@unitSize", sizeProduct);
+                    cmd.Parameters.AddWithValue("@id", productID);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            result.SetPrice(Decimal.Parse(reader["unitPrice"].ToString()));
+                            Debug.Print("SizeDAL: /FindByProduct/ price : " + result.GetPrice().ToString());   
+                            connection.Close();
+                            return result;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return null;
+        }
+    
 
         /// <summary>
         /// Find all sizes and their prices available in the DB.
@@ -219,7 +263,7 @@ namespace WebsiteLaitBrasseur.DAL
                                 product.SetId((int)reader["productID"]);
                                 size.SetProduct(product);
                                 size.SetID((int)reader["sizeID"]);
-                                size.SetPrice((decimal)reader["unitSize"]);
+                                size.SetPrice((decimal)reader["unitPrice"]);
                                 size.SetSize((int)reader["unitSize"]);
                                 //return product instance as data object 
                                 Debug.Print("SizeDAL: /FindByProduct/ " + size.ToString());

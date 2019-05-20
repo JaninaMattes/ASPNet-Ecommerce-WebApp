@@ -6,7 +6,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
-using WebsiteLaitBrasseur.DAL; //debug
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
@@ -20,28 +19,23 @@ namespace WebsiteLaitBrasseur.UL.Customer
             var idString = Request.QueryString["id"];
             int id;
 
-            //DEBUG
-            id = 1;
-            ProductDAL test = new ProductDAL();
-            ProductDTO testDTO = new ProductDTO();
-
-            testDTO = test.FindBy(1);
-
-            //
-
-
-
             if (!string.IsNullOrEmpty(idString) && int.TryParse(idString, out id))
             {
                 //call product from Database                
                 ProductBL db = new ProductBL();
-
                 SizeBL sb = new SizeBL();
+
+                if (IsPostBack)
+                {
+                    labelPrice.Text = sb.GetPriceBySize(id, Int32.Parse(unitDropDownList.SelectedValue)).ToString();
+                    totalAmount.Text = GetTotalAmount(labelPrice.Text , quantityDropDownList.SelectedValue.ToString());
+                }
                 if (!IsPostBack)
                 {
                     // retrieve a prodcut from our db
                     var product = db.GetProduct(id);
                     var details = sb.GetDetails(product.GetId());
+
                     if (product != null && product.GetStatus()==1)
                     {
                         // set up detail page elements
@@ -52,10 +46,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         nameLabel.Text = product.GetName();
                         labelProduct.Text = product.GetProductType();
                         labelProducer.Text = product.GetProducer();
-                        labelPrice.Text = details[0].GetPrice().ToString();
-                        unitDropDownList.Text = details[0].GetSize().ToString();
-                        quantityDropDownList.Text = product.GetStock().ToString();
-                        totalAmount.Text = product.GetStock().ToString();
+                        for (int i = 0; i < details.Count; i++)  {  unitDropDownList.Items.Add(details[i].GetSize().ToString());  }
+                        labelPrice.Text = sb.GetPriceBySize ( id , Int32.Parse(unitDropDownList.SelectedValue)).ToString();
+                        for (int i = 0; i < product.GetStock(); i++) { quantityDropDownList.Items.Add(i.ToString()); }
                     }
                     else
                     {
@@ -69,5 +62,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected void AddButton_Click(object sender, EventArgs e)
         {
         }
+
+        private string GetTotalAmount(string priceStr, string QuantityStr)
+        {
+            decimal price = Decimal.Parse(priceStr);
+            int quantity = Int32.Parse(QuantityStr);
+            return Convert.ToString((price * quantity));
+        }
+
     }
 }

@@ -29,42 +29,33 @@
 
                 <div class="col-md-5">
                     <h3><asp:Label ID="LabelDetail" runat="server" Text="Product Detail Overview"></asp:Label></h3>
+
                     <!--Further product information about Price/ Total Amount / Product Quantity-->
                     <p>Product:</p><p><asp:Label ID="labelProduct" runat="server" Text="" CssClass="text-info"></asp:Label></p><br />
                     <p>Producer:</p><p><asp:Label ID="labelProducer" runat="server" Text="" CssClass="text-info"></asp:Label></p><br />
-                    <p>Price:</p><p><asp:Label ID="labelPrice" runat="server" Text="" CssClass="text-info"></asp:Label></p><br/>
+                    <p>Price:</p><p class="text-info"><asp:Label ID="labelPrice" runat="server" Text="" CssClass="text-info"></asp:Label> €</p><br/>
+
                     <!--Dropdown list with different sizes for the product to be selected-->
-                    <p>Unit Size:</p>
-                    <asp:DropDownList ID="unitDropDownList" runat="server" Cssclass="form-control">
-                               <asp:ListItem Value="1" Selected="true">250 gr</asp:ListItem>
-                               <asp:ListItem Value="2">500 gr</asp:ListItem>
-                               <asp:ListItem Value="3">750 gr</asp:ListItem>
-                               <asp:ListItem Value="4">1000 gr</asp:ListItem>
-                    </asp:DropDownList><b/>
+                    <p>Unit Size (gr):</p>
+                    <asp:DropDownList ID="unitDropDownList" runat="server" Cssclass="form-control" AutoPostBack="true" >
+                    </asp:DropDownList>
                     <asp:RequiredFieldValidator InitialValue="-1" ID="Req_ID" Display="Dynamic" 
                          ValidationGroup="g1" runat="server" ControlToValidate="unitDropDownList"
                          Text="*" ErrorMessage="ErrorMessage" CssClass="text-danger">
                     </asp:RequiredFieldValidator>
+                    </br>
+
                     <!--Dropdown list with max 10 entries selectable-->
                     <p>Quantity:</p>
-                    <asp:DropDownList ID="quantityDropDownList" runat="server" Cssclass="form-control">
-                               <asp:ListItem Value="0" Selected="true">0</asp:ListItem>
-                               <asp:ListItem Value="1">1</asp:ListItem>
-                               <asp:ListItem Value="2">2</asp:ListItem>
-                               <asp:ListItem Value="3">3</asp:ListItem>
-                               <asp:ListItem Value="4">4</asp:ListItem>
-                               <asp:ListItem Value="5">5</asp:ListItem>
-                               <asp:ListItem Value="6">6</asp:ListItem>
-                               <asp:ListItem Value="7">7</asp:ListItem>
-                               <asp:ListItem Value="8">8</asp:ListItem>
-                               <asp:ListItem Value="9">9</asp:ListItem>
-                               <asp:ListItem Value="10">10</asp:ListItem>
-                    </asp:DropDownList><b/>
+                    <asp:DropDownList ID="quantityDropDownList" runat="server" Cssclass="form-control"  AutoPostBack="true">
+                    </asp:DropDownList>
                     <asp:RequiredFieldValidator InitialValue="-1" ID="RequiredFieldValidator1" Display="Dynamic" 
                          ValidationGroup="g1" runat="server" ControlToValidate="quantityDropDownList"
                          Text="*" ErrorMessage="ErrorMessage" CssClass="text-danger">
                     </asp:RequiredFieldValidator>
-                    <p>Total Amount:</p><p><asp:Label ID="totalAmount" runat="server" Text=""></asp:Label></p><br />
+                    </br>
+
+                    <p>Total Amount:</p><p><asp:Label ID="totalAmount" runat="server" Text="" CssClass="text-info"></asp:Label></p><br />
                     <div class ="col-md-6">                                              
                     <!--Button to add products to shopping list-->
                     Add a product to the shopping cart.<br />                   
