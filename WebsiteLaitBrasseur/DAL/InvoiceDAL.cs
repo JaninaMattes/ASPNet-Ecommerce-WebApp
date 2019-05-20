@@ -538,10 +538,13 @@ namespace WebsiteLaitBrasseur.DAL
             ShippmentDTO shipping;
             try
             {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    connection.Open();
                     cmd.Parameters.AddWithValue("@paymentStatus", paymentStatus);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -608,9 +611,12 @@ namespace WebsiteLaitBrasseur.DAL
             ShippmentDTO shipping;
             try
             {
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                if (connection.State == ConnectionState.Closed)
                 {
                     connection.Open();
+                }
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
                     cmd.Parameters.AddWithValue("@accountID", accountID);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
