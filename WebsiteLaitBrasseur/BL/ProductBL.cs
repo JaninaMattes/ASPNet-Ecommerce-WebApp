@@ -23,8 +23,8 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 product = DB.FindBy(id);
-                //list = SB.FindByProduct(id);
-                //product.SetDetails(list);
+                list = SB.FindByProduct(id);
+                product.SetDetails(list);
                 
                 //TODO: if product is suspendet status = 1 
                 //needs to be greyed out or not visible to customer

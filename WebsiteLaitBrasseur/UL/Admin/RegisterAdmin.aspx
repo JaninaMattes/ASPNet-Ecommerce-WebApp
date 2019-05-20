@@ -13,7 +13,7 @@
 
         <!--Label result to inform the user that a confirmation email has been sent -->
         <div class="col-md-9">
-            <asp:Label ID="lblRegResult" runat="server" CssClass="text-info"></asp:Label>
+            <asp:Label ID="lblRegResult" runat="server" CssClass="text-danger"></asp:Label>
         </div>
 
 

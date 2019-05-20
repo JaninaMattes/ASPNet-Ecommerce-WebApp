@@ -199,6 +199,7 @@ namespace WebsiteLaitBrasseur.DAL
                             Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
                             results.Add(size);
                             }
+                            connection.Close();
                             return results;
                         }
                         else
@@ -218,6 +219,48 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return null;
         }
+
+        /// <summary>
+        /// Get the price of a product in function of its size.
+        /// <param name="productID" , size="UnitSize"></param>
+        /// <returns>Price</returns>
+        public SizeDTO FindPriceBySize(int productID, int sizeProduct)
+        {
+            SizeDTO result = new SizeDTO();
+            string queryString= "SELECT* FROM dbo.Size WHERE unitSize = @unitSize AND productID = @id";
+
+            try
+            {
+                //find entry in database where id = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    connection.Open();
+                    cmd.Parameters.AddWithValue("@unitSize", sizeProduct);
+                    cmd.Parameters.AddWithValue("@id", productID);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            result.SetPrice(Decimal.Parse(reader["unitPrice"].ToString()));
+                            Debug.Print("SizeDAL: /FindByProduct/ price : " + result.GetPrice().ToString());   
+                            connection.Close();
+                            return result;
+                        }
+                        else
+                        {
+                            throw new EmptyRowException();
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return null;
+        }
+    
 
         /// <summary>
         /// Find all sizes and their prices available in the DB.

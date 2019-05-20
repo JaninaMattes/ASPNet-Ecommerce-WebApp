@@ -410,10 +410,11 @@ namespace WebsiteLaitBrasseur.DAL
                             product.SetInfo(reader["longInfo"].ToString());
                             product.SetShortInfo(reader["shortInfo"].ToString());
                             product.SetImgPath(reader["imgPath"].ToString());
-                            product.SetStock(Convert.ToInt32(reader["stock"]));
-                            product.SetStatus(Convert.ToInt32(reader["pStatus"]));
+                            product.SetStock((int)reader["stock"]);
+                            product.SetStatus(Int32.Parse(reader["pStatus"].ToString()));   //Cannot be cast as : (int)
                             //return product instance as data object 
-                            Debug.Print("ProductDAL: /FindByID/ " + product.GetId().ToString());
+                            Debug.Print("ProductDAL: /FindByID/ Name : " + product.GetName().ToString());
+
                             return product;
                         }                         
                     }

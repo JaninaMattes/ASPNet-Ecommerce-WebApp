@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Diagnostics;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.Admin
 {
@@ -13,10 +15,21 @@ namespace WebsiteLaitBrasseur.Admin
         {
             if (!IsPostBack)
             {
-                if (Request.QueryString["email"] != null)
+                //User informations recuperated from cookie
+                if ((Request.QueryString["ConfID"] != null) && (Request.QueryString["ConfID"] == this.Session["ConfID"].ToString()))
                 {
-                    string CustomerEmail = Request.QueryString["email"].ToString();             //User informations recuperated from cookie
-                    lblRegistrationResult.Text = CustomerEmail + " you are well registered";
+                    AccountBL bl = new AccountBL();
+
+                    if (bl.UpdateIsConfirmed(this.Session["emailRegister"].ToString()) == 1)
+                    {
+                        lblRegistrationResult.Text = " you are well registered";
+                    }
+                    else
+                    {
+                        lblRegistrationResult.Text = "Issue during verification";
+                    }
+
+                    
                 }
                 
 

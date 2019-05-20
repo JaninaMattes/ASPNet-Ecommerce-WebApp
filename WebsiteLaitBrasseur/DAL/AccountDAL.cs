@@ -272,6 +272,35 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return result;
         }
+        
+        public int UpdateIsConfirmed(string email)
+        {
+            int result = 0;
+            string queryString = "UPDATE dbo.Account SET isConfirmed = 1 WHERE email = @email";
+            try
+            {
+                 connection.Open();
+
+               using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@isConfirmed", 1);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    Debug.Print("AccountDAL: /Update Is confirmed/ result : " + result);
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return result;
+        }
+
 
         public int UpdateAll(int accountID, string email, string password, string fname, string lname, 
             string birthdate, string phoneNo, string imgPath)
