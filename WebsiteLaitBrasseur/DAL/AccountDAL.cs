@@ -34,11 +34,12 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns>The id value of the account.</returns>
         public int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate, string phoneNo, string imgPath, int status, int isAdmin)
         {
-            int result;
+            int result=-2;
             //no need to explicitely set id as autoincrement is used
-            string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, dbo.Account.firstName, " +
-                "dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.imgPath, dbo.Account.status, dbo.Account.isAdmin) " +
-                "VALUES('@email', '@password', @isConfirmed, '@firstName', '@lastName', '@birthDate', '@phone', '@imgPath', @status, @isAdmin)";
+
+            string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, dbo.Account.firstName, dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.imgPath, dbo.Account.status, dbo.Account.isAdmin) VALUES('@email', '@password', @isConfirmed, '@firstName', '@lastName', '@birthDate', '@phone', '@imgPath', @status, @isAdmin)";
+// IS functionning : string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, dbo.Account.firstName, dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.imgPath, dbo.Account.status, dbo.Account.isAdmin) VALUES('elclem51@gmail.com', 'moi', 0, 'moi', 'moimoi', '2021-03-21', '+61466427518', '', 0, 1)";
+
             string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM dbo.Account ORDER BY 1 DESC";
             try
             {
@@ -58,14 +59,18 @@ namespace WebsiteLaitBrasseur.DAL
                     cmd.Parameters.AddWithValue("@phone", phoneNo);
                     cmd.Parameters.AddWithValue("@imgPath", imgPath);
                     cmd.Parameters.AddWithValue("@status", status);
-                    cmd.Parameters.AddWithValue("@isAdmin", isAdmin);                    
-                    cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    Debug.Write("AccountDAL / Insert / cmd result : " + result);
                 }
 
                 ///find the last manipulated id due to autoincrement and return it
                 using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
                 {
-                    connection.Open();
+                    if (connection.State == ConnectionState.Closed)
+                    {
+                        connection.Open();
+                    }
                     SqlDataReader reader = command.ExecuteReader();
                     //won't need a while, since it will only retrieve one row
                     reader.Read();
@@ -77,8 +82,9 @@ namespace WebsiteLaitBrasseur.DAL
             }
             catch (Exception e)
             {
-                result = 0;
+                Debug.Write("AccountDAL / Insert / Exception\n");
                 e.GetBaseException();
+                
             }
             finally
             {
@@ -273,6 +279,7 @@ namespace WebsiteLaitBrasseur.DAL
             return result;
         }
         
+
         public int UpdateIsConfirmed(string email)
         {
             int result = 0;
