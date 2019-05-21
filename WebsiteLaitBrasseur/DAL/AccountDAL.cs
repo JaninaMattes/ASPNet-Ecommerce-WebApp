@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -14,6 +15,8 @@ namespace WebsiteLaitBrasseur.DAL
     /// to program against the database and 
     /// open the connection via an SQLConnection object. 
     /// </summary>
+    
+    [DataObject(true)]
     public class AccountDAL
     {
         //Get connection string from web.config file and create sql connection
@@ -32,13 +35,18 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="status"></param>
         /// <param name="isAdmin"></param>
         /// <returns>The id value of the account.</returns>
-        public int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate, string phoneNo, string imgPath, int status, int isAdmin)
+                    
+        [DataObjectMethod(DataObjectMethodType.Insert)]
+        public int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate, 
+            string phoneNo, string imgPath, int status, int isAdmin)
         {
             int result=-2;
             //no need to explicitely set id as autoincrement is used
 
-            string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, dbo.Account.firstName, dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.imgPath, dbo.Account.status, dbo.Account.isAdmin) VALUES('@email', '@password', @isConfirmed, '@firstName', '@lastName', '@birthDate', '@phone', '@imgPath', @status, @isAdmin)";
-// IS functionning : string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, dbo.Account.firstName, dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.imgPath, dbo.Account.status, dbo.Account.isAdmin) VALUES('elclem51@gmail.com', 'moi', 0, 'moi', 'moimoi', '2021-03-21', '+61466427518', '', 0, 1)";
+            string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, " +
+                "dbo.Account.firstName, dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.imgPath, " +
+                "dbo.Account.status, dbo.Account.isAdmin) VALUES(@email, @password, @isConfirmed, @firstName, @lastName, " +
+                "@birthDate, @phone, @imgPath, @status, @isAdmin)";
 
             string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM dbo.Account ORDER BY 1 DESC";
             try
@@ -50,18 +58,19 @@ namespace WebsiteLaitBrasseur.DAL
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@password", fname);
-                    cmd.Parameters.AddWithValue("@isConfirmed", isConfirmed);
-                    cmd.Parameters.AddWithValue("@firstName", fname);
-                    cmd.Parameters.AddWithValue("@lastName", lname);
-                    cmd.Parameters.AddWithValue("@birthDate", birthdate);
-                    cmd.Parameters.AddWithValue("@phone", phoneNo);
-                    cmd.Parameters.AddWithValue("@imgPath", imgPath);
-                    cmd.Parameters.AddWithValue("@status", status);
-                    cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
+                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                    cmd.Parameters.AddWithValue("@password", SqlDbType.VarChar).Value = password;
+                    cmd.Parameters.AddWithValue("@isConfirmed", SqlDbType.Bit).Value = isConfirmed;
+                    cmd.Parameters.AddWithValue("@firstName", SqlDbType.VarChar).Value = fname;
+                    cmd.Parameters.AddWithValue("@lastName", SqlDbType.VarChar).Value = lname;
+                    cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
+                    cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
+                    cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
+                    cmd.Parameters.AddWithValue("@status", SqlDbType.Bit).Value = status;
+                    cmd.Parameters.AddWithValue("@isAdmin", SqlDbType.Bit).Value = isAdmin;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                    Debug.Write("AccountDAL / Insert / cmd result : " + result);
+                    Debug.Print("AccountDAL / Insert / cmd result : " + result);
                 }
 
                 ///find the last manipulated id due to autoincrement and return it
@@ -76,7 +85,7 @@ namespace WebsiteLaitBrasseur.DAL
                     reader.Read();
                     //this is the id of the newly created data field
                     result = Convert.ToInt32(reader["accountID"]);
-                    Debug.Print("AccountDAL: /Insert/ " + result.ToString());
+                    Debug.Print("AccountDAL: /Insert/ " + result);
                 }
                
             }
@@ -100,6 +109,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="email"></param>
         /// <param name="status"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateStatus(string email, int status)
         {
             int result = 0;
@@ -137,6 +148,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="email"></param>
         /// <param name="imgPath"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateUsername(string email, string fName, string lName)
         {
             int result = 0;
@@ -175,6 +188,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="email"></param>
         /// <param name="phoneNo"></param>
         /// <returns></returns>
+        
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdatePhoneNo(string email, string phoneNo)
         {
             int result = 0;
@@ -212,6 +227,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="addressID"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateAddress(string email, int addressID)
         {
             int result = 0;
@@ -249,6 +266,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="email"></param>
         /// <param name="imgPath"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateImg(string email, string imgPath)
         {
             int result = 0;
@@ -278,8 +297,8 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return result;
         }
-        
 
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateIsConfirmed(string email)
         {
             int result = 0;
@@ -308,7 +327,7 @@ namespace WebsiteLaitBrasseur.DAL
             return result;
         }
 
-
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateAll(int accountID, string email, string password, string fname, string lname, 
             string birthdate, string phoneNo, string imgPath)
         {
@@ -355,6 +374,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public AccountDTO FindBy(int id)
         {
             AccountDTO account;
@@ -416,6 +437,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public AccountDTO FindBy(string email)
         {
             AccountDTO account;
@@ -478,6 +501,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="isAdmin"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<AccountDTO> FindAllUserBy(int isAdmin)
         {
             string queryString = "SELECT * FROM dbo.Account WHERE isAdmin = @isAdmin";
@@ -544,6 +569,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// and return the list.
         /// </summary>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<AccountDTO> FindAll()
         {
             string queryString = "SELECT * FROM dbo.Account";
@@ -610,6 +637,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="status"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<AccountDTO> FindByStatus(int status)
         {
             string queryString = "SELECT * FROM dbo.Account WHERE status = @status";
@@ -672,6 +701,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find person in database by name
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public AccountDTO FindByName(string fname, string lname)
         {
             AccountDTO account;
@@ -734,6 +764,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
+        
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public int FindLoginCred(string email, string password)
         {
             int result = 0;
@@ -772,6 +804,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="email"></param>
         /// <returns>int value = 1, if entry found in DB</returns>
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public int FindLoginEmail(string email)
         {
             int result = 0;
@@ -810,6 +844,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public int FindLoginPW(string password)
         {
             int result = 0;
