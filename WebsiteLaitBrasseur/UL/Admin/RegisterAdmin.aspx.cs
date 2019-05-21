@@ -66,7 +66,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
             string confID = this.Session["ConfID"].ToString() ;    //Cookie recuperation
 
-            /*if (confID != null)
+            if (confID != null)
             {
                 //Mail sending procedure
                 
@@ -90,7 +90,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 lblRegResult.Text = "A confirmation email has been sent.";
             }
             else
-                lblRegResult.Text = "There is a problem with your email.";*/
+                lblRegResult.Text = "There is a problem with your email.";
 
         }
     }

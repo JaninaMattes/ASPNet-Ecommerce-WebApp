@@ -77,17 +77,21 @@ namespace WebsiteLaitBrasseur.UL.Admin
         //Canceling of edition of a row
         protected void PostageTable_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
-            //PostageTable.EditIndex = -1;
-            //BindPostages();
-            //lblError.Text = "";
-            //lblInfo.Text = "";
+            PostageTable.EditIndex = -1;
+            BindData();
+            lblError.Text = "";
+            lblInfo.Text = "";
 
         }
 
         //Row Updating
         protected void PostageTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            ////DataTable and DataRow initiallization
+
+            //DataTable and DataRow initiallization
+
+
+
             //DataTable dtPostage = getDataTable();
             //GridViewRow row = PostageTable.Rows[e.RowIndex];
 
@@ -117,14 +121,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
         }
 
 
-
-        protected void DeleteButton_Click(object sender, EventArgs e)
-        {
-        }
-
-        protected void InsertButton_Click(object sender, EventArgs e)
-        {
-        }
 
         protected void CancelInsertButton_Click(object sender, EventArgs e)
         {
@@ -156,6 +152,22 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void PostageTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
+            if (e.CommandArgument.ToString() == "Insert")
+            {
+                TextBox newCompany = PostageTable.FooterRow.FindControl("TextAddCompany") as TextBox;
+                TextBox newType = PostageTable.FooterRow.FindControl("TextAddType") as TextBox;
+                TextBox newDeliveryTime = PostageTable.FooterRow.FindControl("TextAddDeliveryTime") as TextBox;
+                TextBox newCost = PostageTable.FooterRow.FindControl("TextAddCost") as TextBox;
+                TextBox newStatus = PostageTable.FooterRow.FindControl("TextAddStatus") as TextBox;
+
+                bl.Create(newType.Text, Convert.ToInt32(newDeliveryTime.Text), newCompany.Text , Convert.ToDecimal(newCost.Text), Convert.ToInt16(newStatus.Text));
+
+                //DEUBG: un peu de debug sur l'entrée en DB
+
+
+            }
+
+
 
         }
 
