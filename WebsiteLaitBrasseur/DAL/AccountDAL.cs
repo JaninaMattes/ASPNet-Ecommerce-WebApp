@@ -15,7 +15,7 @@ namespace WebsiteLaitBrasseur.DAL
     /// to program against the database and 
     /// open the connection via an SQLConnection object. 
     /// </summary>
-    
+
     [DataObject(true)]
     public class AccountDAL
     {
@@ -35,12 +35,12 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="status"></param>
         /// <param name="isAdmin"></param>
         /// <returns>The id value of the account.</returns>
-                    
+
         [DataObjectMethod(DataObjectMethodType.Insert)]
-        public int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate, 
+        public int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate,
             string phoneNo, string imgPath, int status, int isAdmin)
         {
-            int result=-2;
+            int result = -2;
             //no need to explicitely set id as autoincrement is used
 
             string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, " +
@@ -85,15 +85,15 @@ namespace WebsiteLaitBrasseur.DAL
                     reader.Read();
                     //this is the id of the newly created data field
                     result = Convert.ToInt32(reader["accountID"]);
-                    Debug.Print("AccountDAL: /Insert/ " + result);
+                    Debug.Print("AccountDAL: / ID/ " + result);
                 }
-               
+
             }
             catch (Exception e)
             {
-                Debug.Write("AccountDAL / Insert / Exception\n");
+                Debug.Print("AccountDAL / Insert / Exception\n");
                 e.GetBaseException();
-                
+
             }
             finally
             {
@@ -125,8 +125,9 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@status", status);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@status", SqlDbType.Bit).Value = status;
+                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -164,9 +165,10 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@fName", fName);
-                    cmd.Parameters.AddWithValue("@lName", lName);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@fName", SqlDbType.VarChar).Value = fName;
+                    cmd.Parameters.AddWithValue("@lName", SqlDbType.VarChar).Value = lName;
+                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -188,7 +190,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="email"></param>
         /// <param name="phoneNo"></param>
         /// <returns></returns>
-        
+
         [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdatePhoneNo(string email, string phoneNo)
         {
@@ -204,8 +206,9 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@phoneNo", phoneNo);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
+                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -245,6 +248,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@addressID", addressID);
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -284,6 +288,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@imgPath", imgPath);
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -299,18 +304,19 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int UpdateIsConfirmed(string email)
+        public int UpdateIsConfirmed(string email, int confirmed)
         {
             int result = 0;
-            string queryString = "UPDATE dbo.Account SET isConfirmed = 1 WHERE email = @email";
+            string queryString = "UPDATE dbo.Account SET isConfirmed = @isConfirmed WHERE email = @email";
             try
             {
-                 connection.Open();
+                connection.Open();
 
-               using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@isConfirmed", 1);
+                    cmd.Parameters.AddWithValue("@isConfirmed", confirmed);
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                     Debug.Print("AccountDAL: /Update Is confirmed/ result : " + result);
                 }
@@ -328,7 +334,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int UpdateAll(int accountID, string email, string password, string fname, string lname, 
+        public int UpdateAll(int accountID, string email, string password, string fname, string lname,
             string birthdate, string phoneNo, string imgPath)
         {
             int result = 0;
@@ -344,15 +350,14 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@accountID", accountID);
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@password", password);
-                    cmd.Parameters.AddWithValue("@fname", fname);
-                    cmd.Parameters.AddWithValue("@lname", lname);
-                    cmd.Parameters.AddWithValue("@birthdate", birthdate);
-                    cmd.Parameters.AddWithValue("@phoneNo", phoneNo);
-                    cmd.Parameters.AddWithValue("@imgPath", imgPath);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                    cmd.Parameters.AddWithValue("@password", SqlDbType.VarChar).Value = password;
+                    cmd.Parameters.AddWithValue("@firstName", SqlDbType.VarChar).Value = fname;
+                    cmd.Parameters.AddWithValue("@lastName", SqlDbType.VarChar).Value = lname;
+                    cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
+                    cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
+                    cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -392,25 +397,14 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             account = new AccountDTO();
                             address = new AddressDTO();
-                            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                            address.SetID(Convert.ToInt32(reader["addressID"]));
-                            account.SetAddress(address);
-                            account.SetEmail(reader["email"].ToString());
-                            account.SetPw(reader["password"].ToString());
-                            account.SetFirstName(reader["firstName"].ToString());
-                            account.SetLastName(reader["lastName"].ToString());
-                            account.SetBirthdate(reader["birthDate"].ToString());
-                            account.SetPhoneNo(reader["phone"].ToString());
-                            account.SetImgPath(reader["imgPath"].ToString());
-                            account.SetIsAdmin(Convert.ToInt32(reader["isAdmin"]));
-                            account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
-                            account.SetStatus(Convert.ToInt32(reader["status"]));
+                            account = GenerateAccount(reader, account, address);
                             //return product instance as data object 
                             Debug.Print("AccountDAL: /FindBy(Int)/ " + account.GetID().ToString());
                             return account;
@@ -444,7 +438,7 @@ namespace WebsiteLaitBrasseur.DAL
             AccountDTO account;
             AddressDTO address;
             string queryString = "SELECT * FROM dbo.Account WHERE email = @email";
-          
+
             try
             {
                 if (connection.State == ConnectionState.Closed)
@@ -455,25 +449,14 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             account = new AccountDTO();
                             address = new AddressDTO();
-                            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                            address.SetID(Convert.ToInt32(reader["addressID"]));
-                            account.SetAddress(address);
-                            account.SetEmail(reader["email"].ToString());
-                            account.SetPw(reader["password"].ToString());
-                            account.SetFirstName(reader["firstName"].ToString());
-                            account.SetLastName(reader["lastName"].ToString());
-                            account.SetBirthdate(reader["birthDate"].ToString());
-                            account.SetPhoneNo(reader["phone"].ToString());
-                            account.SetImgPath(reader["imgPath"].ToString());
-                            account.SetIsAdmin(Convert.ToInt32(reader["isAdmin"]));
-                            account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
-                            account.SetStatus(Convert.ToInt32(reader["status"]));
+                            account = GenerateAccount(reader, account, address);
                             //return product instance as data object 
                             Debug.Print("AccountDAL: /FindByMail/ " + account.GetEmail().ToString());
                             connection.Close();
@@ -517,6 +500,7 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -525,22 +509,10 @@ namespace WebsiteLaitBrasseur.DAL
                             {
                                 AccountDTO account = new AccountDTO();
                                 AddressDTO address = new AddressDTO();
-                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                                address.SetID(Convert.ToInt32(reader["addressID"]));
-                                account.SetAddress(address);
-                                account.SetEmail(reader["email"].ToString());
-                                account.SetPw(reader["password"].ToString());
-                                account.SetFirstName(reader["firstName"].ToString());
-                                account.SetLastName(reader["lastName"].ToString());
-                                account.SetBirthdate(reader["birthDate"].ToString());
-                                account.SetPhoneNo(reader["phone"].ToString());
-                                account.SetImgPath(reader["imgPath"].ToString());
-                                account.SetIsAdmin(Convert.ToInt32(reader["isAdmin"]));
-                                account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
-                                account.SetStatus(Convert.ToInt32(reader["status"]));
+                                account = GenerateAccount(reader, account, address);
                                 //return product instance as data object 
                                 Debug.Print("AccountDAL: /FindAllUserBy/ " + account.GetID().ToString());
-                               
+
                                 //add data objects to result-list 
                                 results.Add(account);
                             }
@@ -592,19 +564,7 @@ namespace WebsiteLaitBrasseur.DAL
                             {
                                 AccountDTO account = new AccountDTO();
                                 AddressDTO address = new AddressDTO();
-                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                                address.SetID(Convert.ToInt32(reader["addressID"]));
-                                account.SetAddress(address);
-                                account.SetEmail(reader["email"].ToString());
-                                account.SetPw(reader["password"].ToString());
-                                account.SetFirstName(reader["firstName"].ToString());
-                                account.SetLastName(reader["lastName"].ToString());
-                                account.SetBirthdate(reader["birthDate"].ToString());
-                                account.SetPhoneNo(reader["phone"].ToString());
-                                account.SetImgPath(reader["imgPath"].ToString());
-                                account.SetIsAdmin(Convert.ToInt32(reader["isAdmin"]));
-                                account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
-                                account.SetStatus(Convert.ToInt32(reader["status"]));
+                                account = GenerateAccount(reader, account, address);
                                 //return product instance as data object 
                                 Debug.Print("AccountDAL: /FindAllUserBy/ " + account.GetID().ToString());
 
@@ -653,6 +613,7 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@status", status);
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -661,19 +622,7 @@ namespace WebsiteLaitBrasseur.DAL
                             {
                                 AccountDTO account = new AccountDTO();
                                 AddressDTO address = new AddressDTO();
-                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                                address.SetID(Convert.ToInt32(reader["addressID"]));
-                                account.SetAddress(address);
-                                account.SetEmail(reader["email"].ToString());
-                                account.SetPw(reader["password"].ToString());
-                                account.SetFirstName(reader["firstName"].ToString());
-                                account.SetLastName(reader["lastName"].ToString());
-                                account.SetBirthdate(reader["birthDate"].ToString());
-                                account.SetPhoneNo(reader["phone"].ToString());
-                                account.SetImgPath(reader["imgPath"].ToString());
-                                account.SetIsAdmin(Convert.ToInt32(reader["isAdmin"]));
-                                account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
-                                account.SetStatus(Convert.ToInt32(reader["status"]));
+                                account = GenerateAccount(reader, account, address);
                                 //return product instance as data object 
                                 Debug.Print("AccountDAL: /FindAllByStatus/ " + status + " " + account.GetID().ToString());
 
@@ -719,25 +668,14 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@fname", fname);
                     cmd.Parameters.AddWithValue("@lname", lname);
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             account = new AccountDTO();
                             address = new AddressDTO();
-                            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                            address.SetID(Convert.ToInt32(reader["addressID"]));
-                            account.SetAddress(address);
-                            account.SetEmail(reader["email"].ToString());
-                            account.SetPw(reader["password"].ToString());
-                            account.SetFirstName(reader["firstName"].ToString());
-                            account.SetLastName(reader["lastName"].ToString());
-                            account.SetBirthdate(reader["birthDate"].ToString());
-                            account.SetPhoneNo(reader["phone"].ToString());
-                            account.SetImgPath(reader["imgPath"].ToString());
-                            account.SetIsAdmin(Convert.ToInt32(reader["isAdmin"]));
-                            account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
-                            account.SetStatus(Convert.ToInt32(reader["status"]));
+                            account = GenerateAccount(reader, account, address);
                             //return product instance as data object 
                             Debug.Print("AccountDAL: /FindByName/ " + fname + " " + lname + " " + account.GetID().ToString());
                             return account;
@@ -764,7 +702,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        
+
         [DataObjectMethod(DataObjectMethodType.Select)]
         public int FindLoginCred(string email, string password)
         {
@@ -781,6 +719,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@password", password);
+                    cmd.CommandType = CommandType.Text;
                     result = Convert.ToInt32(cmd.ExecuteScalar()); //is expected to return value 1 if successfull
                     Debug.Print("AccountDAL / FindLoginCred / value returned " + result.ToString());
                 }
@@ -820,6 +759,7 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.CommandType = CommandType.Text;
                     result = Convert.ToInt32(cmd.ExecuteScalar());
                     Debug.Print("AccountDAL / FindLoginEmail / value returned " + result.ToString());
                     connection.Close();
@@ -860,6 +800,7 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@password", password);
+                    cmd.CommandType = CommandType.Text;
                     result = Convert.ToInt32(cmd.ExecuteScalar());
                     Debug.Print("AccountDAL / FindLoginPW / value returned  " + result.ToString());
                     connection.Close();
@@ -877,6 +818,23 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return result;
         }
-        
+
+        private static AccountDTO GenerateAccount(SqlDataReader reader, AccountDTO account, AddressDTO address)
+        {
+            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
+            address.SetID(Convert.ToInt32(reader["addressID"]));
+            account.SetAddress(address);
+            account.SetEmail(reader["email"].ToString());
+            account.SetPw(reader["password"].ToString());
+            account.SetFirstName(reader["firstName"].ToString());
+            account.SetLastName(reader["lastName"].ToString());
+            account.SetBirthdate(reader["birthDate"].ToString());
+            account.SetPhoneNo(reader["phone"].ToString());
+            account.SetImgPath(reader["imgPath"].ToString());
+            account.SetIsAdmin(Convert.ToInt32(reader["isAdmin"]));
+            account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
+            account.SetStatus(Convert.ToInt32(reader["status"]));
+            return account;
+        }
     }
 }
