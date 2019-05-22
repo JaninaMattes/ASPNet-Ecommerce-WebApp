@@ -154,13 +154,29 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             if (e.CommandArgument.ToString() == "Insert")
             {
-                TextBox newCompany = PostageTable.FooterRow.FindControl("TextAddCompany") as TextBox;
-                TextBox newType = PostageTable.FooterRow.FindControl("TextAddType") as TextBox;
-                TextBox newDeliveryTime = PostageTable.FooterRow.FindControl("TextAddDeliveryTime") as TextBox;
-                TextBox newCost = PostageTable.FooterRow.FindControl("TextAddCost") as TextBox;
-                TextBox newStatus = PostageTable.FooterRow.FindControl("TextAddStatus") as TextBox;
+                try
+                {
+                    TextBox newCompany = PostageTable.FooterRow.FindControl("TextAddCompany") as TextBox;
+                    TextBox newType = PostageTable.FooterRow.FindControl("TextAddType") as TextBox;
+                    TextBox newDeliveryTime = PostageTable.FooterRow.FindControl("TextAddDeliveryTime") as TextBox;
+                    TextBox newCost = PostageTable.FooterRow.FindControl("TextAddCost") as TextBox;
+                    TextBox newStatus = PostageTable.FooterRow.FindControl("TextAddStatus") as TextBox;
 
-                bl.Create(newType.Text, Convert.ToInt32(newDeliveryTime.Text), newCompany.Text , Convert.ToDecimal(newCost.Text), Convert.ToInt16(newStatus.Text));
+
+                    bl.Create(newType.Text, Convert.ToInt32(newDeliveryTime.Text), newCompany.Text, Convert.ToDecimal(newCost.Text), Convert.ToInt16(newStatus.Text));
+
+                    PostageTable.ShowFooter = false;
+                    BindData();
+                    lblInfo.Text = "Insert achieved with success";
+                }
+                catch(Exception ex)
+                {
+                    ex.GetBaseException();
+                    lblError.Text = "DataBase error";
+                }
+
+                
+
 
                 //DEUBG: un peu de debug sur l'entrée en DB
 
