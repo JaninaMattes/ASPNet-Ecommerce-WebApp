@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,6 +11,7 @@ using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
 {
+    [DataObject(true)]
     public class InvoiceDAL
     {
         //Get connection string from web.config file and create sql connection
@@ -35,6 +37,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="customerMail"></param>
         /// <param name="email"></param>
         /// <returns>Invoice ID</returns>
+        [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(int accountID, int shippingID, int totalQuantity, decimal totalShippingCost,
             decimal totalProductCost, decimal totalTaxes, decimal totalAmount, DateTime orderDate, DateTime paymentDate, 
             DateTime arrivalDate, DateTime postageDate, int paymentStatus, string customerMail)
@@ -44,8 +47,8 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "INSERT INTO dbo.Invoice(dbo.Invoice.accountID, dbo.Invoice.shippingID, dbo.Invoice.totalQuantity, dbo.Invoice.shippingCost, " +
                 "dbo.Invoice.totalProductCost, dbo.Invoice.totalTax, dbo.Invoice.totalAmount, dbo.Invoice.orderDate, dbo.Invoice.paymentDate, dbo.Invoice.paymentStatus, " +
                 "dbo.Invoice.customerMail, dbo.Invoice.arrivalDate, dbo.Invoice.postageDate) " +
-                "VALUES(@accountID, @shippingID, @totalQuantity, @shippingCost, @totalProductCost, @totalTax, @totalAmount, '@orderDate', '@paymentDate', @paymentStatus " +
-                "'@customerMail', '@arrivalDate', '@postageDate')";
+                "VALUES(@accountID, @shippingID, @totalQuantity, @shippingCost, @totalProductCost, @totalTax, @totalAmount, @orderDate, @paymentDate, @paymentStatus " +
+                "@customerMail, @arrivalDate, @postageDate)";
             string queryAutoIncr = "SELECT TOP(1) dbo.Invoice.invoiceID FROM dbo.Invoice ORDER BY 1 DESC";
             try
             {
@@ -56,19 +59,20 @@ namespace WebsiteLaitBrasseur.DAL
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@accountID", accountID);
-                    cmd.Parameters.AddWithValue("@shippingID", shippingID);
-                    cmd.Parameters.AddWithValue("@totalQuantity", totalQuantity);
-                    cmd.Parameters.AddWithValue("@shippingCost", totalShippingCost);
-                    cmd.Parameters.AddWithValue("@totalProductCost", totalProductCost);
-                    cmd.Parameters.AddWithValue("@totalTax", totalTaxes);
-                    cmd.Parameters.AddWithValue("@totalAmount", totalAmount);
-                    cmd.Parameters.AddWithValue("@orderDate", orderDate);
-                    cmd.Parameters.AddWithValue("@paymentDate", paymentDate);
-                    cmd.Parameters.AddWithValue("@postageDate", postageDate);
-                    cmd.Parameters.AddWithValue("@paymentStatus", paymentStatus);
-                    cmd.Parameters.AddWithValue("@customerMail", customerMail);
-                    cmd.Parameters.AddWithValue("@arrivalDate", arrivalDate);
+                    cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                    cmd.Parameters.AddWithValue("@shippingID", SqlDbType.Int).Value = shippingID;
+                    cmd.Parameters.AddWithValue("@totalQuantity", SqlDbType.Int).Value = totalQuantity;
+                    cmd.Parameters.AddWithValue("@shippingCost", SqlDbType.Decimal).Value = totalShippingCost;
+                    cmd.Parameters.AddWithValue("@totalProductCost", SqlDbType.Decimal).Value = totalProductCost;
+                    cmd.Parameters.AddWithValue("@totalTax", SqlDbType.Decimal).Value = totalTaxes;
+                    cmd.Parameters.AddWithValue("@totalAmount", SqlDbType.Decimal).Value = totalAmount;
+                    cmd.Parameters.AddWithValue("@orderDate", SqlDbType.Date).Value = orderDate;
+                    cmd.Parameters.AddWithValue("@paymentDate", SqlDbType.Date).Value = paymentDate;
+                    cmd.Parameters.AddWithValue("@postageDate", SqlDbType.Date).Value = postageDate;
+                    cmd.Parameters.AddWithValue("@paymentStatus", SqlDbType.Bit).Value = paymentStatus;
+                    cmd.Parameters.AddWithValue("@customerMail", SqlDbType.VarChar).Value = customerMail;
+                    cmd.Parameters.AddWithValue("@arrivalDate", SqlDbType.Date).Value = arrivalDate;
+                    cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
 
@@ -105,6 +109,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="paymentStatus"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int Update(int id, int paymentStatus)
         {
             int result = 0;
@@ -118,8 +123,9 @@ namespace WebsiteLaitBrasseur.DAL
                 //update into database where id = XY 
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@paymentStatus", paymentStatus);
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@paymentStatus", SqlDbType.Bit).Value = paymentStatus;
+                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                     Debug.Print("InvoiceDAL: /Update/ " + result.ToString());
                 }
@@ -136,6 +142,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //update
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateDate(int id, bool arrivalDate)
         {
             int result = 0;
@@ -149,8 +156,9 @@ namespace WebsiteLaitBrasseur.DAL
                 //update into database where id = XY 
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@arrivalDate", arrivalDate);
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@arrivalDate", SqlDbType.Date).Value = arrivalDate;
+                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                     Debug.Print("InvoiceDAL: /UpdateDate/ " + result.ToString());
                 }
@@ -171,6 +179,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public InvoiceDTO FindBy(int id)
         {
             InvoiceDTO invoice;
@@ -188,7 +197,8 @@ namespace WebsiteLaitBrasseur.DAL
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
@@ -196,25 +206,9 @@ namespace WebsiteLaitBrasseur.DAL
                             invoice = new InvoiceDTO();
                             account = new AccountDTO();
                             shipping = new ShippmentDTO();
-
-                            invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
-                            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                            shipping.SetID(Convert.ToInt32(reader["shippingID"]));
-                            invoice.SetCustomer(account);
-                            invoice.SetShippment(shipping);
-                            invoice.SetEmail(reader["customerMail"].ToString());
-                            invoice.SetOrderDate(Convert.ToDateTime(reader["orderDate"]));
-                            invoice.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
-                            invoice.SetArrivalDate(Convert.ToDateTime(reader["arrivaltDate"]));
-                            invoice.SetPostDate(Convert.ToDateTime(reader["postageDate"]));
-                            invoice.SetQuantity(Convert.ToInt32(reader["totalQuantity"]));
-                            invoice.SetShippingCost(Convert.ToDecimal(reader["shippingCost"]));
-                            invoice.SetStatus(Convert.ToInt32(reader["paymentStatus"]));
-                            invoice.SetTax(Convert.ToDecimal(reader["totalTax"]));
-                            invoice.SetTotal(Convert.ToDecimal(reader["totalAmount"]));
-                            
+                            invoice = GenerateInvoice(reader, invoice, account, shipping);
                             //return product instance as data object 
-                            Debug.Print("InvoiceDAL: /FindBy/ " + invoice.ToString());
+                            Debug.Print("InvoiceDAL: /FindByID/ " + invoice.GetID());
                             return invoice;
                         }
                     }
@@ -238,6 +232,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="accountID"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<InvoiceDTO> FindByCustomer(int accountID)
         {
             string queryString = "SELECT * FROM dbo.Invoice WHERE accountID = @accountID";
@@ -254,7 +249,8 @@ namespace WebsiteLaitBrasseur.DAL
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@accountID", accountID);
+                    cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -264,25 +260,9 @@ namespace WebsiteLaitBrasseur.DAL
                                 invoice = new InvoiceDTO();
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
-
-                                invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
-                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                                shipping.SetID(Convert.ToInt32(reader["shippingID"]));
-                                invoice.SetCustomer(account);
-                                invoice.SetShippment(shipping);
-                                invoice.SetEmail(reader["customerMail"].ToString());
-                                invoice.SetOrderDate(Convert.ToDateTime(reader["orderDate"]));
-                                invoice.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
-                                invoice.SetArrivalDate(Convert.ToDateTime(reader["arrivaltDate"]));
-                                invoice.SetPostDate(Convert.ToDateTime(reader["postageDate"]));
-                                invoice.SetQuantity(Convert.ToInt32(reader["totalQuantity"]));
-                                invoice.SetShippingCost(Convert.ToDecimal(reader["shippingCost"]));
-                                invoice.SetStatus(Convert.ToInt32(reader["paymentStatus"]));
-                                invoice.SetTax(Convert.ToDecimal(reader["totalTax"]));
-                                invoice.SetTotal(Convert.ToDecimal(reader["totalAmount"]));
-                                
+                                invoice = GenerateInvoice(reader, invoice, account, shipping);
                                 //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindInvoiceBy/ " + invoice.ToString());
+                                Debug.Print("InvoiceDAL: /FindByCustomer/ " + invoice.GetID());
 
                                 //add data objects to result-list 
                                 results.Add(invoice);
@@ -314,6 +294,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="accountID"></param>
         /// <param name="paymentStatus"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<InvoiceDTO> FindByStatus(int accountID, int paymentStatus)
         {
             string queryString = "SELECT * FROM dbo.Invoice WHERE accountID = @accountID AND paymentStatus = @paymentStatus";
@@ -330,8 +311,8 @@ namespace WebsiteLaitBrasseur.DAL
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@accountID", accountID);
-                    cmd.Parameters.AddWithValue("@paymentStatus", paymentStatus);
+                    cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                    cmd.Parameters.AddWithValue("@paymentStatus", SqlDbType.Bit).Value = paymentStatus;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -341,24 +322,9 @@ namespace WebsiteLaitBrasseur.DAL
                                 invoice = new InvoiceDTO();
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
-
-                                invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
-                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                                shipping.SetID(Convert.ToInt32(reader["shippingID"]));
-                                invoice.SetCustomer(account);
-                                invoice.SetShippment(shipping);
-                                invoice.SetEmail(reader["customerMail"].ToString());
-                                invoice.SetOrderDate(Convert.ToDateTime(reader["orderDate"]));
-                                invoice.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
-                                invoice.SetArrivalDate(Convert.ToDateTime(reader["arrivaltDate"]));
-                                invoice.SetPostDate(Convert.ToDateTime(reader["postageDate"]));
-                                invoice.SetQuantity(Convert.ToInt32(reader["totalQuantity"]));
-                                invoice.SetShippingCost(Convert.ToDecimal(reader["shippingCost"]));
-                                invoice.SetStatus(Convert.ToInt32(reader["paymentStatus"]));
-                                invoice.SetTax(Convert.ToDecimal(reader["totalTax"]));
-                                invoice.SetTotal(Convert.ToDecimal(reader["totalAmount"]));
+                                invoice = GenerateInvoice(reader, invoice, account, shipping);
                                 //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindInvoiceBy/ " + invoice.ToString());
+                                Debug.Print("InvoiceDAL: /FindInvoiceByStatus/ " + invoice.GetID());
 
                                 //add data objects to result-list 
                                 results.Add(invoice);
@@ -384,6 +350,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all invoices per paymentdate
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<InvoiceDTO> FindBy(DateTime paymentDate)
         {
             string queryString = "SELECT * FROM dbo.Invoice WHERE paymentDate = @paymentDate";
@@ -410,25 +377,9 @@ namespace WebsiteLaitBrasseur.DAL
                                 invoice = new InvoiceDTO();
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
-
-                                invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
-                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                                shipping.SetID(Convert.ToInt32(reader["shippingID"]));
-                                invoice.SetCustomer(account);
-                                invoice.SetShippment(shipping);
-                                invoice.SetEmail(reader["customerMail"].ToString());
-                                invoice.SetOrderDate(Convert.ToDateTime(reader["orderDate"]));
-                                invoice.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
-                                invoice.SetArrivalDate(Convert.ToDateTime(reader["arrivaltDate"]));
-                                invoice.SetPostDate(Convert.ToDateTime(reader["postageDate"]));
-                                invoice.SetQuantity(Convert.ToInt32(reader["totalQuantity"]));
-                                invoice.SetShippingCost(Convert.ToDecimal(reader["shippingCost"]));
-                                invoice.SetStatus(Convert.ToInt32(reader["paymentStatus"]));
-                                invoice.SetTax(Convert.ToDecimal(reader["totalTax"]));
-                                invoice.SetTotal(Convert.ToDecimal(reader["totalAmount"]));
+                                invoice = GenerateInvoice(reader, invoice, account, shipping);
                                 //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindInvoiceBy/ " + invoice.ToString());
-
+                                Debug.Print("InvoiceDAL: /FindBy/ " + invoice.GetID());
                                 //add data objects to result-list 
                                 results.Add(invoice);
                             }
@@ -456,6 +407,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// Find all possible invoices in the database
         /// </summary>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<InvoiceDTO> FindAll()
         {
             string queryString = "SELECT * FROM dbo.Invoice";
@@ -481,25 +433,9 @@ namespace WebsiteLaitBrasseur.DAL
                                 invoice = new InvoiceDTO();
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
-
-                                invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
-                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                                shipping.SetID(Convert.ToInt32(reader["shippingID"]));
-                                invoice.SetCustomer(account);
-                                invoice.SetShippment(shipping);
-                                invoice.SetEmail(reader["customerMail"].ToString());
-                                invoice.SetOrderDate(Convert.ToDateTime(reader["orderDate"]));
-                                invoice.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
-                                invoice.SetArrivalDate(Convert.ToDateTime(reader["arrivaltDate"]));
-                                invoice.SetPostDate(Convert.ToDateTime(reader["postageDate"]));
-                                invoice.SetQuantity(Convert.ToInt32(reader["totalQuantity"]));
-                                invoice.SetShippingCost(Convert.ToDecimal(reader["shippingCost"]));
-                                invoice.SetStatus(Convert.ToInt32(reader["paymentStatus"]));
-                                invoice.SetTax(Convert.ToDecimal(reader["totalTax"]));
-                                invoice.SetTotal(Convert.ToDecimal(reader["totalAmount"]));
+                                invoice = GenerateInvoice(reader, invoice, account, shipping);
                                 //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindInvoiceBy/ " + invoice.ToString());
-
+                                Debug.Print("InvoiceDAL: /FindAll/ " + invoice.GetID());
                                 //add data objects to result-list 
                                 results.Add(invoice);
                             }
@@ -529,6 +465,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="paymentStatus"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<InvoiceDTO> FindAllByStatus(int paymentStatus)
         {
             string queryString = "SELECT * FROM dbo.Invoice WHERE paymentStatus = @paymentStatus";
@@ -555,24 +492,9 @@ namespace WebsiteLaitBrasseur.DAL
                                 invoice = new InvoiceDTO();
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
-
-                                invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
-                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                                shipping.SetID(Convert.ToInt32(reader["shippingID"]));
-                                invoice.SetCustomer(account);
-                                invoice.SetShippment(shipping);
-                                invoice.SetEmail(reader["customerMail"].ToString());
-                                invoice.SetOrderDate(Convert.ToDateTime(reader["orderDate"]));
-                                invoice.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
-                                invoice.SetArrivalDate(Convert.ToDateTime(reader["arrivaltDate"]));
-                                invoice.SetPostDate(Convert.ToDateTime(reader["postageDate"]));
-                                invoice.SetQuantity(Convert.ToInt32(reader["totalQuantity"]));
-                                invoice.SetShippingCost(Convert.ToDecimal(reader["shippingCost"]));
-                                invoice.SetStatus(Convert.ToInt32(reader["paymentStatus"]));
-                                invoice.SetTax(Convert.ToDecimal(reader["totalTax"]));
-                                invoice.SetTotal(Convert.ToDecimal(reader["totalAmount"]));
+                                invoice = GenerateInvoice(reader, invoice, account, shipping);
                                 //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindInvoiceBy/ " + invoice.ToString());
+                                Debug.Print("InvoiceDAL: /FindAllBy/ " + invoice.GetID());
 
                                 //add data objects to result-list 
                                 results.Add(invoice);
@@ -602,6 +524,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="accountID"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<InvoiceDTO> FindAllByCustomer(int accountID)
         {
             string queryString = "SELECT * FROM dbo.Invoice WHERE accountID = @accountID";
@@ -627,24 +550,9 @@ namespace WebsiteLaitBrasseur.DAL
                                 invoice = new InvoiceDTO();
                                 account = new AccountDTO();
                                 shipping = new ShippmentDTO();
-
-                                invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
-                                account.SetAccountID(Convert.ToInt32(reader["accountID"]));
-                                shipping.SetID(Convert.ToInt32(reader["shippingID"]));
-                                invoice.SetCustomer(account);
-                                invoice.SetShippment(shipping);
-                                invoice.SetEmail(reader["customerMail"].ToString());
-                                invoice.SetOrderDate(Convert.ToDateTime(reader["orderDate"]));
-                                invoice.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
-                                invoice.SetArrivalDate(Convert.ToDateTime(reader["arrivaltDate"]));
-                                invoice.SetPostDate(Convert.ToDateTime(reader["postageDate"]));
-                                invoice.SetQuantity(Convert.ToInt32(reader["totalQuantity"]));
-                                invoice.SetShippingCost(Convert.ToDecimal(reader["shippingCost"]));
-                                invoice.SetStatus(Convert.ToInt32(reader["paymentStatus"]));
-                                invoice.SetTax(Convert.ToDecimal(reader["totalTax"]));
-                                invoice.SetTotal(Convert.ToDecimal(reader["totalAmount"]));
+                                invoice = GenerateInvoice(reader, invoice, account, shipping);
                                 //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindInvoiceBy/ " + invoice.ToString());
+                                Debug.Print("InvoiceDAL: /FindInvoiceBy/ " + invoice.GetID());
 
                                 //add data objects to result-list 
                                 results.Add(invoice);
@@ -667,6 +575,26 @@ namespace WebsiteLaitBrasseur.DAL
                 connection.Close();
             }
             return null;
+        }
+
+        private static InvoiceDTO GenerateInvoice(SqlDataReader reader, InvoiceDTO invoice, AccountDTO account, ShippmentDTO shipping)
+        {
+            invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
+            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
+            shipping.SetID(Convert.ToInt32(reader["shippingID"]));
+            invoice.SetCustomer(account);
+            invoice.SetShippment(shipping);
+            invoice.SetEmail(reader["customerMail"].ToString());
+            invoice.SetOrderDate(Convert.ToDateTime(reader["orderDate"]));
+            invoice.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
+            invoice.SetArrivalDate(Convert.ToDateTime(reader["arrivaltDate"]));
+            invoice.SetPostDate(Convert.ToDateTime(reader["postageDate"]));
+            invoice.SetQuantity(Convert.ToInt32(reader["totalQuantity"]));
+            invoice.SetShippingCost(Convert.ToDecimal(reader["shippingCost"]));
+            invoice.SetStatus(Convert.ToInt32(reader["paymentStatus"]));
+            invoice.SetTax(Convert.ToDecimal(reader["totalTax"]));
+            invoice.SetTotal(Convert.ToDecimal(reader["totalAmount"]));
+            return invoice;
         }
     }
 }
