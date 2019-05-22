@@ -5,23 +5,128 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class ItemsManagement : System.Web.UI.Page
     {
+        List<ProductDTO> LP = new List<ProductDTO>();
+        List<SizeDTO> LS = new List<SizeDTO>();
+        ProductBL blProd = new ProductBL();
+        SizeBL blSize = new SizeBL();
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {   
+            {
                 //Initialize Data elements (Gridview / DataSource / session variable)
-                BindItems();
+                BindData();
 
-                BindItemsLabel();
+                //BindItemsLabel();
             }
         }
 
+
+        protected void BindData()
+        {
+            LP=blProd.GetAllProducts();
+            Debug.Write("LPget id : " + LP[0].GetId());
+            ItemListTable.DataSource = getDataTable(LP);
+            ItemListTable.DataBind();
+            
+        }
+
+
+        protected DataTable getDataTable(List<ProductDTO> LP)
+        {
+            //DataTable initialization
+            DataTable dtItem = new DataTable();
+
+            //Colmuns declaration
+            dtItem.Columns.Add("ID");
+            dtItem.Columns.Add("Name");
+            dtItem.Columns.Add("Type");
+            dtItem.Columns.Add("Size");
+            dtItem.Columns.Add("Price");
+            dtItem.Columns.Add("Stock");
+            dtItem.Columns.Add("Status");
+
+            for (int i = 0; i < LP.Count; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    LS = LP[i].GetDetails();
+                    DataRow dr = dtItem.NewRow();
+                    dr["ID"] = LP[i].GetId();
+                    dr["Name"] = LP[i].GetName();
+                    dr["Type"] = LP[i].GetProductType();
+                    dr["Size"] = LS[j].GetSize();
+                    dr["Price"] = LS[j].GetPrice();
+                    dr["Stock"] = LP[i].GetStock();
+                    dr["Status"] = LP[i].GetStatus();
+
+                    dtItem.Rows.Add(dr);
+                }
+            }
+            return dtItem;
+        }
+
+        protected void ItemListTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+
+        }
+
+        protected void ItemListTable_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+
+        }
+
+        protected void ItemListTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+
+        }
+
+        protected void ItemListTable_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
+        }
+
+        protected void ItemListTable_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+
+        }
+
+        protected void AddButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
 
         //Bind of beginning label informing about the number items
         protected void BindItemsLabel()
@@ -169,7 +274,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
             //TODO:
             ItemListTable.DataSource = products;  //gridview DataSource creation with Products information
             ItemListTable.DataBind();             //Link gridView and DataSource              
-        }
+        }*/
 
 
 

@@ -177,7 +177,7 @@ namespace WebsiteLaitBrasseur.BL
         public int UpdateIsConfirmed(string email)
         {
             int result = 0;
-            result=DB.UpdateIsConfirmed(email);
+            result=DB.UpdateIsConfirmed(email,1);
             Debug.Print("AccountBL / update is confirmed " + result.ToString());
 
             return result;

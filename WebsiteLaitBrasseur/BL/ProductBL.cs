@@ -31,7 +31,6 @@ namespace WebsiteLaitBrasseur.BL
             }
             catch (Exception e)
             {
-                Debug.Write("Dans productBL");
                 e.GetBaseException();
             }
             return product;

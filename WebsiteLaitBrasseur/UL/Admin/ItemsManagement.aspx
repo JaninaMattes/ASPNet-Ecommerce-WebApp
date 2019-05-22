@@ -37,17 +37,18 @@
                     OnRowUpdating="ItemListTable_RowUpdating"
                     OnRowCommand="ItemListTable_RowCommand">
 
+
                         <Columns>
-                            <asp:BoundField DataField="id" HeaderText="Id Number" ReadOnly="true" />
+                            <asp:BoundField DataField="id" HeaderText="ID" ReadOnly="true" />
 
 
                             <asp:templateField HeaderText="Product Name">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblProductName" runat="server" Text='<%# Bind("ProductName") %>' ></asp:Label>
+                                    <asp:Label ID="lblProductName" runat="server" Text='<%# Bind("Name") %>' ></asp:Label>
                                 </ItemTemplate>
 
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="TextEditProductName" runat="server" Text='<%# Bind("ProductName") %>'></asp:TextBox>
+                                    <asp:TextBox ID="TextEditProductName" runat="server" Text='<%# Bind("Name") %>'></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="ProductEditNameReqField" runat="server" ControlToValidate="TextEditProductName" ErrorMessage="Product Name is required" ValidationGroup="Edit" CssClass="text-danger"></asp:RequiredFieldValidator>
                                 </EditItemTemplate>
                             </asp:templateField>
@@ -55,7 +56,7 @@
 
                            <asp:templateField HeaderText="Product Type">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblProductType" runat="server" Text='<%# Bind("ProductType") %>' ></asp:Label>
+                                    <asp:Label ID="lblProductType" runat="server" Text='<%# Bind("Type") %>' ></asp:Label>
                                 </ItemTemplate>
 
                                 <EditItemTemplate>
@@ -69,11 +70,11 @@
 
                             <asp:templateField HeaderText="Unit">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblUnit" runat="server" Text='<%# Bind("Unit") %>' ></asp:Label>
+                                    <asp:Label ID="lblUnit" runat="server" Text='<%# Bind("Size") %>' ></asp:Label>
                                 </ItemTemplate>
 
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="TextEditUnit" runat="server" text='<%# Bind("Unit") %>'></asp:TextBox>
+                                    <asp:TextBox ID="TextEditUnit" runat="server" text='<%# Bind("Size") %>'></asp:TextBox>
                                     <asp:RequiredFieldValidator ID=UnitReqField runat="server" ControlToValidate="TextEditUnit" ErrorMessage="Unit is required" ValidationGroup="Edit" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                                     <asp:RegularExpressionValidator ID="UnitEditRegValid" runat="server" ControlToValidate="TextEditUnit"  ValidationExpression="[0-9]*" ErrorMessage="Please enter positive integer" ValidationGroup="Edit" CssClass="text-danger"></asp:RegularExpressionValidator><br />
 
@@ -110,7 +111,7 @@
 
                             <asp:templateField HeaderText="Available">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblAvailable" runat="server" Text='<%# Bind("Available") %>' ></asp:Label>
+                                    <asp:Label ID="lblAvailable" runat="server" Text='<%# Bind("Status") %>' ></asp:Label>
                                 </ItemTemplate>
 
                                 <EditItemTemplate>
