@@ -12,7 +12,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class PostagesOptions : System.Web.UI.Page
     {
-        ShippmentBL BL = new ShippmentBL();
+        ShippmentBL bl = new ShippmentBL();
         List<ShippmentDTO> listShippment = new List<ShippmentDTO>();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -55,7 +55,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void BindData()
         {
-            listShippment = BL.GetAllPostServices();
+            listShippment = bl.GetAllPostServices();
             PostageTable.DataSource = getDataTable(listShippment);
             PostageTable.DataBind();
         }
@@ -145,12 +145,17 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     TextBox newCost = PostageTable.FooterRow.FindControl("TextAddCost") as TextBox;
                     TextBox newStatus = PostageTable.FooterRow.FindControl("TextAddStatus") as TextBox;
 
-
-                    bl.Create(newType.Text, Convert.ToInt32(newDeliveryTime.Text), newCompany.Text, Convert.ToDecimal(newCost.Text), Convert.ToInt16(newStatus.Text));
-
-                    PostageTable.ShowFooter = false;
-                    BindData();
-                    lblInfo.Text = "Insert achieved with success";
+                    var result = bl.Create(newType.Text, Convert.ToInt32(newDeliveryTime.Text), newCompany.Text, Convert.ToDecimal(newCost.Text), Convert.ToByte(newStatus.Text));
+                    Debug.Print("Shippment aspx: /Create Entry/ " + result);                    
+                    if (result ==1) {
+                        lblInfo.Text = "Insert achieved with success";
+                        PostageTable.ShowFooter = false;
+                        BindData();
+                    }
+                    else
+                    {
+                        lblError.Text = "Insert data failed.";
+                    }
                 }
                 catch(Exception ex)
                 {

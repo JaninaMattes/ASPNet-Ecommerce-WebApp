@@ -27,6 +27,7 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 result = DB.Insert(type, deliveryTime, company, cost, status);
+                Debug.Print("ShippmentBL: /Create Entry/ " + result);
             }
             catch (Exception e)
             {
@@ -78,7 +79,7 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all availble services.
         /// </summary>
         /// <returns></returns>
-        public List<ShippmentDTO> GetPostServices()
+        public List<ShippmentDTO> GetAvailablePostServices()
         {
             List<ShippmentDTO> result = new List<ShippmentDTO>();
             int status = 0;
