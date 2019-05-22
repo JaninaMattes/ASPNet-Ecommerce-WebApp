@@ -117,7 +117,6 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return result;
         }
-
         /// <summary>
         /// Update the stock of a product.
         /// </summary>

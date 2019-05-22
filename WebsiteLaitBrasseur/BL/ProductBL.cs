@@ -231,6 +231,51 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         /// <summary>
+        /// Update not only product but also its size in the DB
+        /// If a product int the sortiment has changed compeletely.
+        /// Result will be > 1 if all product sizes have been successfully e
+        /// updated into the DB. 
+        /// </summary>
+        /// <param name="details"></param>
+        /// <param name="productID"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="producer"></param>
+        /// <param name="longInfo"></param>
+        /// <param name="shortInfo"></param>
+        /// <param name="imgPath"></param>
+        /// <param name="stock"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public int UpdateAll(List<SizeDTO> details, int productID, string name, string type, string producer, string longInfo, string shortInfo, string imgPath,
+           int stock, int status)
+        {
+            int result = 0;
+            try
+            {
+                result = DB.UpdateAll(productID, name, type, producer, longInfo, shortInfo, imgPath, stock, status);
+                if (result != 0)
+                {
+                    foreach (SizeDTO s in details)
+                    {
+                        result += SB.UpdateSize(s.GetID(), s.GetSize(), s.GetPrice(), productID);
+                    }
+                }
+                else
+                {
+                    Debug.Print("Error, the returned result is " + result);
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+           
+            return result;
+        }
+
+
+        /// <summary>
         /// Update the status of one product.
         /// status = 1 activated
         /// status = 0 deactivated
@@ -264,6 +309,29 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 result = DB.UpdateStock(productID, stock);
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Update only the size in a product
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="details"></param>
+        /// <returns></returns>
+        public int ChangeSize(int productID, List<SizeDTO>details)
+        {
+            int result = 0;
+            try
+            {
+                foreach (SizeDTO size in details)
+                {
+                    result = SB.UpdateSize(size.GetID(), size.GetSize(), size.GetPrice(), productID);
+                }
             }
             catch (Exception e)
             {
