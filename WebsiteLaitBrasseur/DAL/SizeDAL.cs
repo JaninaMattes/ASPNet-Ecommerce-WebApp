@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
 using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
 {
+    [DataObject(true)]
     public class SizeDAL
     {
         //Get connection string from web.config file and create sql connection
@@ -28,6 +28,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="status"></param>
         /// <param name="isAdmin"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(int size, decimal price, int productID)
         {
             int result;
@@ -44,9 +45,10 @@ namespace WebsiteLaitBrasseur.DAL
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@size", size);
-                    cmd.Parameters.AddWithValue("@price", price);
-                    cmd.Parameters.AddWithValue("@productID", productID);
+                    cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
+                    cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
+                    cmd.Parameters.AddWithValue("@productID", SqlDbType.Int).Value = productID;
+                    cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
 
@@ -58,7 +60,7 @@ namespace WebsiteLaitBrasseur.DAL
                     reader.Read();
                     //this is the id of the newly created data field
                     result = Convert.ToInt32(reader["sizeID"]);
-                    Debug.Print("SizeDAL: /Insert/ " + result.ToString());
+                    Debug.Print("SizeDAL: /Insert ID/ " + result.ToString());
                 }
 
             }
@@ -74,6 +76,7 @@ namespace WebsiteLaitBrasseur.DAL
             return result;
         }
 
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateSize(int id, int size, decimal price, int productID)
         {
             int result = 0;
@@ -88,10 +91,11 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Parameters.AddWithValue("@size", size);
-                    cmd.Parameters.AddWithValue("@price", price);
-                    cmd.Parameters.AddWithValue("@productID", productID);
+                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                    cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
+                    cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
+                    cmd.Parameters.AddWithValue("@productID", SqlDbType.Int).Value = productID;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -111,6 +115,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="productID"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public SizeDTO FindByID(int sizeID)
         {
             SizeDTO size;
@@ -133,13 +138,7 @@ namespace WebsiteLaitBrasseur.DAL
                         {
                             size = new SizeDTO();
                             product = new ProductDTO();
-                            size = new SizeDTO();
-                            product = new ProductDTO();
-                            product.SetId(Convert.ToInt32(reader["productID"]));
-                            size.SetProduct(product);
-                            size.SetID(Convert.ToInt32(reader["sizeID"]));
-                            size.SetPrice(Convert.ToDecimal(reader["unitPrice"]));
-                            size.SetSize(Convert.ToInt32(reader["unitSize"]));
+                            size = GenerateDetail(reader, product, size);
                             //return product instance as data object 
                             Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
                             return size;
@@ -165,6 +164,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="productID"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<SizeDTO> FindByProduct(int productID)
         {
             SizeDTO size;
@@ -188,16 +188,12 @@ namespace WebsiteLaitBrasseur.DAL
                         {
                             while (reader.Read())
                             {
-                            size = new SizeDTO();
-                            product = new ProductDTO();
-                            product.SetId(Convert.ToInt32(reader["productID"]));
-                            size.SetProduct(product);
-                            size.SetID(Convert.ToInt32(reader["sizeID"]));
-                            size.SetPrice(Convert.ToDecimal(reader["unitPrice"]));
-                            size.SetSize(Convert.ToInt32(reader["unitSize"]));
-                            //return product instance as data object 
-                            Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
-                            results.Add(size);
+                                size = new SizeDTO();
+                                product = new ProductDTO();
+                                size = GenerateDetail(reader, product, size);
+                                //return product instance as data object 
+                                Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
+                                results.Add(size);
                             }
                             connection.Close();
                             return results;
@@ -224,10 +220,12 @@ namespace WebsiteLaitBrasseur.DAL
         /// Get the price of a product in function of its size.
         /// <param name="productID" , size="UnitSize"></param>
         /// <returns>Price</returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public SizeDTO FindPriceBySize(int productID, int sizeProduct)
         {
-            SizeDTO result = new SizeDTO();
-            string queryString= "SELECT* FROM dbo.Size WHERE unitSize = @unitSize AND productID = @id";
+            SizeDTO size;
+            ProductDTO product;
+            string queryString = "SELECT* FROM dbo.Size WHERE unitSize = @unitSize AND productID = @id";
 
             try
             {
@@ -241,11 +239,15 @@ namespace WebsiteLaitBrasseur.DAL
                     {
                         if (reader.HasRows)
                         {
-                            reader.Read();
-                            result.SetPrice(Decimal.Parse(reader["unitPrice"].ToString()));
-                            Debug.Print("SizeDAL: /FindByProduct/ price : " + result.GetPrice().ToString());   
-                            connection.Close();
-                            return result;
+                            if (reader.Read())
+                            {
+                                size = new SizeDTO();
+                                product = new ProductDTO();
+                                size = GenerateDetail(reader, product, size);
+                                //return product instance as data object 
+                                Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
+                                return size;
+                            }
                         }
                         else
                         {
@@ -260,12 +262,13 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return null;
         }
-    
+
 
         /// <summary>
         /// Find all sizes and their prices available in the DB.
         /// </summary>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<SizeDTO> FindAll()
         {
             SizeDTO size;
@@ -290,13 +293,9 @@ namespace WebsiteLaitBrasseur.DAL
                             {
                                 size = new SizeDTO();
                                 product = new ProductDTO();
-                                product.SetId(Convert.ToInt32(reader["productID"]));
-                                size.SetProduct(product);
-                                size.SetID(Convert.ToInt32(reader["sizeID"]));
-                                size.SetPrice(Convert.ToDecimal(reader["unitPrice"]));
-                                size.SetSize(Convert.ToInt32(reader["unitSize"]));
+                                size = GenerateDetail(reader, product, size);
                                 //return product instance as data object 
-                                Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
+                                Debug.Print("SizeDAL: /FindByAll/ " + size.GetID().ToString());
                                 results.Add(size);
                             }
                             return results;
@@ -317,6 +316,15 @@ namespace WebsiteLaitBrasseur.DAL
                 connection.Close();
             }
             return null;
+        }
+        private static SizeDTO GenerateDetail(SqlDataReader reader, ProductDTO product, SizeDTO size)
+        {
+            product.SetId(Convert.ToInt32(reader["productID"]));
+            size.SetProduct(product);
+            size.SetID(Convert.ToInt32(reader["sizeID"]));
+            size.SetPrice(Convert.ToDecimal(reader["unitPrice"]));
+            size.SetSize(Convert.ToInt32(reader["unitSize"]));
+            return size;
         }
     }
 }
