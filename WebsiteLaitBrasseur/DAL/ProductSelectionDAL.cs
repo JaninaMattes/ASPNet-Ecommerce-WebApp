@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
 using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
 {
+    [DataObject(true)]
     public class ProductSelectionDAL
     {
         //Get connection string from web.config file and create sql connection
@@ -24,6 +23,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="quantity"></param>
         /// <param name="origPrice"></param>
         /// <returns>Int ProductSelection</returns>
+        
+        [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(int invoiceID, int quantity, int origSize, decimal origPrice)
         {
             int result;
@@ -41,10 +42,11 @@ namespace WebsiteLaitBrasseur.DAL
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@invoiceID", invoiceID);
-                    cmd.Parameters.AddWithValue("@quantity", quantity);
-                    cmd.Parameters.AddWithValue("@originalPrice", origPrice);
-                    cmd.Parameters.AddWithValue("@originalSize", origSize);
+                    cmd.Parameters.AddWithValue("@invoiceID", SqlDbType.Int).Value = invoiceID;
+                    cmd.Parameters.AddWithValue("@quantity", SqlDbType.Int).Value = quantity;
+                    cmd.Parameters.AddWithValue("@originalPrice", SqlDbType.Decimal).Value = origPrice;
+                    cmd.Parameters.AddWithValue("@originalSize", SqlDbType.Int).Value = origSize;
+                    cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
 
@@ -57,7 +59,7 @@ namespace WebsiteLaitBrasseur.DAL
                     reader.Read();
                     //this is the id of the newly created data field
                     result = Convert.ToInt32(reader["selectionID"]);
-                    Debug.Print("ProductSelectionDAL: /Insert/ " + result.ToString());
+                    Debug.Print("ProductSelectionDAL: /Insert ID/ " + result.ToString());
                 }
                 return result;
             }
@@ -81,6 +83,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="selectionID"></param>
         /// <param name="productID"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(int selectionID, int productID)
         {
             int result;
@@ -98,6 +101,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@selectionID", selectionID);
                     cmd.Parameters.AddWithValue("@productID", productID);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -125,6 +129,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="selectionID"></param>
         /// <param name="productID"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateProduct(int selectionID, int productID)
         {
             int result = 0;
@@ -141,6 +146,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@productID", productID);
                     cmd.Parameters.AddWithValue("@selectionID", selectionID);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -162,6 +168,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="selectionID"></param>
         /// <param name="quantity"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateQuantity(int selectionID, int quantity)
         {
             int result = 0;
@@ -178,6 +185,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@quantity", quantity);
                     cmd.Parameters.AddWithValue("@selectionID", selectionID);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -201,6 +209,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="selectionID"></param>
         /// <param name="origPrice"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int Update(int selectionID, decimal origPrice)
         {
             int result = 0;
@@ -217,6 +226,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@orirignalPrice", origPrice);
                     cmd.Parameters.AddWithValue("@selectionID", selectionID);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -240,6 +250,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="selectionID"></param>
         /// <param name="origSize"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int Update(int selectionID, int origSize)
         {
             int result = 0;
@@ -256,6 +267,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@orirignalSize", origSize);
                     cmd.Parameters.AddWithValue("@selectionID", selectionID);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -271,6 +283,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         //find all shipping companies available
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductSelectionDTO> FindAll()
         {
             ProductSelectionDTO selection;
@@ -299,14 +312,9 @@ namespace WebsiteLaitBrasseur.DAL
                                 //TODO InvoiceID Logic
                                 product = new ProductDTO();
                                 selection = new ProductSelectionDTO();
-                                product.SetId(Convert.ToInt32(reader["productID"]));
-                                selection.SetID(Convert.ToInt32(reader["selectionID"]));
-                                selection.SetProduct(product);
-                                selection.SetOrigPrice(Convert.ToDecimal(reader["originalPrice"]));
-                                selection.SetOrigSize(Convert.ToInt32(reader["originalSize"]));
-                                selection.SetQuantity(Convert.ToInt32(reader["quantity"]));
+                                selection = GenerateSelection(reader, product, selection);
                                 //return product instance as data object 
-                                Debug.Print("ProductSelectionDAL: /FindAll/ " + selection.GetID().ToString());
+                                Debug.Print("ProductSelectionDAL: /FindAll/ " + selection.GetID());
                                 //add data objects to result-list 
                                 results.Add(selection);
                             }
@@ -329,7 +337,7 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return null;
         }
-
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductSelectionDTO> FindAllPerInvoice(int invoiceID)
         {
             ProductSelectionDTO selection;
@@ -357,14 +365,9 @@ namespace WebsiteLaitBrasseur.DAL
                             {
                                 product = new ProductDTO();
                                 selection = new ProductSelectionDTO();
-                                product.SetId(Convert.ToInt32(reader["productID"]));
-                                selection.SetID(Convert.ToInt32(reader["selectionID"]));
-                                selection.SetProduct(product);
-                                selection.SetOrigPrice(Convert.ToDecimal(reader["originalPrice"]));
-                                selection.SetOrigSize(Convert.ToInt32(reader["originalSize"]));
-                                selection.SetQuantity(Convert.ToInt32(reader["quantity"]));
+                                selection = GenerateSelection(reader, product, selection);
                                 //return product instance as data object 
-                                Debug.Print("ProductSelectionDAL: /FindAllByInvoice/ " + selection.GetID().ToString());
+                                Debug.Print("ProductSelectionDAL: /FindAllByInvoice/ " + selection.GetID());
                                 //add data objects to result-list 
                                 results.Add(selection);
                             }
@@ -386,6 +389,17 @@ namespace WebsiteLaitBrasseur.DAL
                 connection.Close();
             }
             return null;
+        }
+
+        private static ProductSelectionDTO GenerateSelection(SqlDataReader reader, ProductDTO product, ProductSelectionDTO selection)
+        {
+            product.SetId(Convert.ToInt32(reader["productID"]));
+            selection.SetID(Convert.ToInt32(reader["selectionID"]));
+            selection.SetProduct(product);
+            selection.SetOrigPrice(Convert.ToDecimal(reader["originalPrice"]));
+            selection.SetOrigSize(Convert.ToInt32(reader["originalSize"]));
+            selection.SetQuantity(Convert.ToInt32(reader["quantity"]));
+            return selection;
         }
     }
 }

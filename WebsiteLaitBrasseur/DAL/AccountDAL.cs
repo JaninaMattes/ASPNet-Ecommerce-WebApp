@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
 using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
@@ -91,6 +89,7 @@ namespace WebsiteLaitBrasseur.DAL
             }
             catch (Exception e)
             {
+                result = 0;
                 Debug.Print("AccountDAL / Insert / Exception\n");
                 e.GetBaseException();
 
