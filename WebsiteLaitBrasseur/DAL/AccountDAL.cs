@@ -125,8 +125,9 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@status", status);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@status", SqlDbType.Bit).Value = status;
+                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -164,9 +165,10 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@fName", fName);
-                    cmd.Parameters.AddWithValue("@lName", lName);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@fName", SqlDbType.VarChar).Value = fName;
+                    cmd.Parameters.AddWithValue("@lName", SqlDbType.VarChar).Value = lName;
+                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -204,8 +206,9 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@phoneNo", phoneNo);
-                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
+                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -245,6 +248,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@addressID", addressID);
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -284,6 +288,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@imgPath", imgPath);
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -311,6 +316,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@isConfirmed", confirmed);
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                     Debug.Print("AccountDAL: /Update Is confirmed/ result : " + result);
                 }
@@ -351,6 +357,7 @@ namespace WebsiteLaitBrasseur.DAL
                     cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
                     cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
                     cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -390,13 +397,14 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
                         {
                             account = new AccountDTO();
                             address = new AddressDTO();
-
+                            account = GenerateAccount(reader, account, address);
                             //return product instance as data object 
                             Debug.Print("AccountDAL: /FindBy(Int)/ " + account.GetID().ToString());
                             return account;
@@ -441,6 +449,7 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
@@ -491,6 +500,7 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -603,6 +613,7 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@status", status);
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -657,6 +668,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@fname", fname);
                     cmd.Parameters.AddWithValue("@lname", lname);
+                    cmd.CommandType = CommandType.Text;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
@@ -707,6 +719,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@email", email);
                     cmd.Parameters.AddWithValue("@password", password);
+                    cmd.CommandType = CommandType.Text;
                     result = Convert.ToInt32(cmd.ExecuteScalar()); //is expected to return value 1 if successfull
                     Debug.Print("AccountDAL / FindLoginCred / value returned " + result.ToString());
                 }
@@ -746,6 +759,7 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@email", email);
+                    cmd.CommandType = CommandType.Text;
                     result = Convert.ToInt32(cmd.ExecuteScalar());
                     Debug.Print("AccountDAL / FindLoginEmail / value returned " + result.ToString());
                     connection.Close();
@@ -786,6 +800,7 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
                     cmd.Parameters.AddWithValue("@password", password);
+                    cmd.CommandType = CommandType.Text;
                     result = Convert.ToInt32(cmd.ExecuteScalar());
                     Debug.Print("AccountDAL / FindLoginPW / value returned  " + result.ToString());
                     connection.Close();
@@ -819,7 +834,6 @@ namespace WebsiteLaitBrasseur.DAL
             account.SetIsAdmin(Convert.ToInt32(reader["isAdmin"]));
             account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
             account.SetStatus(Convert.ToInt32(reader["status"]));
-
             return account;
         }
     }
