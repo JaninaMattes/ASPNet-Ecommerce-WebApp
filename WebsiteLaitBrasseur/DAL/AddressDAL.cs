@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -10,6 +10,7 @@ using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
 {
+    [DataObject(true)]
     public class AddressDAL
     {
         //Get connection string from web.config file and create sql connection
@@ -24,12 +25,15 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="streetNo"></param>
         /// <param name="addressType"></param>
         /// <returns>Address ID</returns>
+
+        [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(int cityID, string streetName, string streetNo, string addressType)
         {
             int result;
             //no need to explicitely set id as autoincrement is used
-            string queryString = "INSERT INTO dbo.Address(dbo.Address.cityID, dbo.Account.streetName, dbo.Account.streetNo, dbo.Account.addressType)" +
-                "VALUES(@cityID, '@streetName', '@streetNo', '@addressType')";
+            string queryString = "INSERT INTO dbo.Address(dbo.Address.cityID, dbo.Account.streetName, " +
+                "dbo.Account.streetNo, dbo.Account.addressType)" +
+                "VALUES(@cityID, @streetName, @streetNo, @addressType)";
             string queryAutoIncr = "SELECT TOP(1) dbo.Address.addressID FROM dbo.Address ORDER BY 1 DESC";
             try
             {
@@ -40,10 +44,11 @@ namespace WebsiteLaitBrasseur.DAL
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@cityID", cityID);
-                    cmd.Parameters.AddWithValue("@streetName", streetName);
-                    cmd.Parameters.AddWithValue("@streetNo", streetNo);
-                    cmd.Parameters.AddWithValue("@addressType", addressType);
+                    cmd.Parameters.AddWithValue("@cityID", SqlDbType.Int).Value = cityID;
+                    cmd.Parameters.AddWithValue("@streetName", SqlDbType.VarChar).Value = streetName;
+                    cmd.Parameters.AddWithValue("@streetNo", SqlDbType.VarChar).Value = streetNo;
+                    cmd.Parameters.AddWithValue("@addressType", SqlDbType.VarChar).Value = addressType;
+                    cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
 
@@ -56,12 +61,14 @@ namespace WebsiteLaitBrasseur.DAL
                     reader.Read();
                     //this is the id of the newly created data field
                     result = Convert.ToInt32(reader["addressID"]);
+                    Debug.Print("AddressDAL: / ID/ " + result);
                 }
                 return result;
             }
             catch (Exception e)
             {
                 result = 0;
+                Debug.Print("AddressDAL / Insert / Exception\n");
                 e.GetBaseException();
             }
             finally
@@ -80,11 +87,14 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="streetNo"></param>
         /// <param name="addressType"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateAddress(int addressID, int cityID, string streetName, string streetNo, string addressType)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Address SET cityID = @cityID, " +
-                "streetName = @streetName, streetNo = @streetNo, addressType = @addressType WHERE addressID = @addressID";
+                "streetName = @streetName, streetNo = @streetNo, addressType = @addressType " +
+                "WHERE addressID = @addressID";
             try
             {
                 if (connection.State == ConnectionState.Closed)
@@ -95,11 +105,11 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@addressID", addressID);
-                    cmd.Parameters.AddWithValue("@cityID", cityID);
-                    cmd.Parameters.AddWithValue("@streetName", streetName);
-                    cmd.Parameters.AddWithValue("@streetNo", streetNo);
-                    cmd.Parameters.AddWithValue("@addressType", addressType);
+                    cmd.Parameters.AddWithValue("@cityID", SqlDbType.Int).Value = cityID;
+                    cmd.Parameters.AddWithValue("@streetName", SqlDbType.VarChar).Value = streetName;
+                    cmd.Parameters.AddWithValue("@streetNo", SqlDbType.VarChar).Value = streetNo;
+                    cmd.Parameters.AddWithValue("@addressType", SqlDbType.VarChar).Value = addressType;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -119,6 +129,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public AddressDTO FindBy(int id)
         {
             AddressDTO address;
@@ -138,16 +150,10 @@ namespace WebsiteLaitBrasseur.DAL
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
-                        {                            
+                        {
                             address = new AddressDTO();
                             city = new CityDTO();
-                            city.SetId(Convert.ToInt32(reader["cityID"]));
-                            address.SetCity(city);
-                            address.SetID(Convert.ToInt32(reader["addressID"]));
-                            address.SetStreetName(reader["streetName"].ToString());
-                            address.SetStreetName(reader["streetNo"].ToString());
-                            address.SetType(reader["addressType"].ToString());
-
+                            address = address = GenerateAddress(reader, address, city);
                             //return product instance as data object 
                             Debug.Print("AddressDAL: /FindByID/ " + address.ToString());
                             return address;
@@ -173,6 +179,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public AddressDTO FindBy(string type)
         {
             AddressDTO address;
@@ -195,13 +203,7 @@ namespace WebsiteLaitBrasseur.DAL
                         {
                             address = new AddressDTO();
                             city = new CityDTO();
-                            city.SetId(Convert.ToInt32(reader["cityID"]));
-                            address.SetCity(city);
-                            address.SetID(Convert.ToInt32(reader["addressID"]));
-                            address.SetStreetName(reader["streetName"].ToString());
-                            address.SetStreetName(reader["streetNo"].ToString());
-                            address.SetType(reader["addressType"].ToString());
-
+                            address = GenerateAddress(reader, address, city);
                             //return product instance as data object 
                             Debug.Print("AddressDAL: /FindByType/ " + address.ToString());
                             return address;
@@ -219,6 +221,17 @@ namespace WebsiteLaitBrasseur.DAL
                 connection.Close();
             }
             return null;
+        }
+
+        private static AddressDTO GenerateAddress(SqlDataReader reader, AddressDTO address, CityDTO city)
+        {
+            city.SetId(Convert.ToInt32(reader["cityID"]));
+            address.SetCity(city);
+            address.SetID(Convert.ToInt32(reader["addressID"]));
+            address.SetStreetName(reader["streetName"].ToString());
+            address.SetStreetName(reader["streetNo"].ToString());
+            address.SetType(reader["addressType"].ToString());
+            return address;
         }
     }
 }
