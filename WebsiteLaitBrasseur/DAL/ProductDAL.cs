@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
 using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
 {
+    [DataObject(true)]
     public class ProductDAL
     {
         //Get connection string from web.config file and create sql connection
@@ -27,6 +26,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="stock"></param>
         /// <param name="status"></param>
         /// <returns>Int ProductID</returns>
+        [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(string name, string type, string producer, string longInfo, string shortInfo, string imgPath,
             int stock, int status)
         {
@@ -34,7 +34,7 @@ namespace WebsiteLaitBrasseur.DAL
             //no need to explicitely set id as autoincrement is used
             string queryString = "INSERT INTO dbo.Product(dbo.Product.pName, dbo.Product.pType, dbo.Product.producer, " +
                 "dbo.Product.longInfo, dbo.Product.shortInfo, dbo.Product.imgPath, dbo.Product.stock, dbo.Product.pStatus) " +
-                "VALUES('@name', '@type', '@producer', '@longInfo', '@shortInfo', '@imgPath', @stock, @status)";
+                "VALUES(@name, @type, @producer, @longInfo, @shortInfo, @imgPath, @stock, @status)";
             string queryAutoIncr = "SELECT TOP(1) dbo.Product.productID FROM dbo.Product ORDER BY 1 DESC";
             try
             {
@@ -45,14 +45,15 @@ namespace WebsiteLaitBrasseur.DAL
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@mame", name);
-                    cmd.Parameters.AddWithValue("@type", type);
-                    cmd.Parameters.AddWithValue("@producer", producer);
-                    cmd.Parameters.AddWithValue("@longInfo", longInfo);
-                    cmd.Parameters.AddWithValue("@shortInfo", shortInfo);
-                    cmd.Parameters.AddWithValue("@imgPath", imgPath);
-                    cmd.Parameters.AddWithValue("@stock", stock);
-                    cmd.Parameters.AddWithValue("@status", status);
+                    cmd.Parameters.AddWithValue("@mame", SqlDbType.VarChar).Value = name;
+                    cmd.Parameters.AddWithValue("@type", SqlDbType.VarChar).Value = type;
+                    cmd.Parameters.AddWithValue("@producer", SqlDbType.VarChar).Value = producer;
+                    cmd.Parameters.AddWithValue("@longInfo", SqlDbType.VarChar).Value = longInfo;
+                    cmd.Parameters.AddWithValue("@shortInfo", SqlDbType.VarChar).Value = shortInfo;
+                    cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
+                    cmd.Parameters.AddWithValue("@stock", SqlDbType.Int).Value = stock;
+                    cmd.Parameters.AddWithValue("@status", SqlDbType.Bit).Value = status;
+                    cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
                 ///find the last manipulated id due to autoincrement and return it
@@ -63,7 +64,7 @@ namespace WebsiteLaitBrasseur.DAL
                     reader.Read();
                     //this is the id of the newly created data field
                     result = Convert.ToInt32(reader["productID"]);
-                    Debug.Print("ProductDAL: /Insert/ " + result.ToString());
+                    Debug.Print("ProductDAL: /Insert ID/ " + result.ToString());
                 }
                 return result;
             }
@@ -86,6 +87,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="status"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateStatus(int id, int status)
         {
             int result = 0;
@@ -101,6 +103,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@status", status);
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -121,6 +124,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="stock"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateStock(int id, int stock)
         {
             int result = 0;
@@ -136,6 +140,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@stock", stock);
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -156,6 +161,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="imgPath"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateImg(int id, string imgPath)
         {
             int result = 0;
@@ -171,6 +177,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@imgPath", imgPath);
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -191,6 +198,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="producer"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateProducer(uint id, string producer)
         {
             int result = 0;
@@ -207,6 +215,7 @@ namespace WebsiteLaitBrasseur.DAL
                     connection.Open();
                     cmd.Parameters.AddWithValue("@producer", producer);
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -227,6 +236,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateName(int id, string name)
         {
             int result = 0;
@@ -242,6 +252,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -262,6 +273,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="longInfo"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateLongInfo(int id, string longInfo)
         {
             int result = 0;
@@ -277,6 +289,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@longInfo", longInfo);
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -297,6 +310,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="shortInfo"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateShortInfo(int id, string shortInfo)
         {
             int result = 0;
@@ -312,6 +326,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@shortInfo", shortInfo);
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
             }
@@ -338,6 +353,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="stock"></param>
         /// <param name="status"></param>
         /// <returns></returns>        
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateAll(int id, string name, string type, string producer, string longInfo, string shortInfo, string imgPath,
             int stock, int status)
         {
@@ -353,16 +369,16 @@ namespace WebsiteLaitBrasseur.DAL
                 }
                 //update into database where status = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    connection.Open();
-                    cmd.Parameters.AddWithValue("@pNAme", name);
-                    cmd.Parameters.AddWithValue("@pType", type);
-                    cmd.Parameters.AddWithValue("@producer", producer);
-                    cmd.Parameters.AddWithValue("@longInfo", longInfo);
-                    cmd.Parameters.AddWithValue("@shortInfo", shortInfo);
-                    cmd.Parameters.AddWithValue("@imgPath", imgPath);
-                    cmd.Parameters.AddWithValue("@stock", stock);
-                    cmd.Parameters.AddWithValue("@pStatus", status);
+                {       
+                    cmd.Parameters.AddWithValue("@mame", SqlDbType.VarChar).Value = name;
+                    cmd.Parameters.AddWithValue("@type", SqlDbType.VarChar).Value = type;
+                    cmd.Parameters.AddWithValue("@producer", SqlDbType.VarChar).Value = producer;
+                    cmd.Parameters.AddWithValue("@longInfo", SqlDbType.VarChar).Value = longInfo;
+                    cmd.Parameters.AddWithValue("@shortInfo", SqlDbType.VarChar).Value = shortInfo;
+                    cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
+                    cmd.Parameters.AddWithValue("@stock", SqlDbType.Int).Value = stock;
+                    cmd.Parameters.AddWithValue("@status", SqlDbType.Bit).Value = status;
+                    cmd.CommandType = CommandType.Text;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                     Debug.Print("ProductDAL: /UpdateALL/ " + result.ToString());
                 }
@@ -384,6 +400,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public ProductDTO FindBy(int id)
         {
             string queryString = "SELECT * FROM dbo.Product WHERE productID = @id";
@@ -399,26 +416,18 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@id", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
-                    {                        
+                    {
                         if (reader.Read())
                         {
                             product = new ProductDTO();
-                            product.SetId(Convert.ToInt32(reader["productID"]));
-                            product.SetName(reader["pName"].ToString());
-                            product.SetType(reader["pType"].ToString());
-                            product.SetProducer(reader["producer"].ToString());
-                            product.SetInfo(reader["longInfo"].ToString());
-                            product.SetShortInfo(reader["shortInfo"].ToString());
-                            product.SetImgPath(reader["imgPath"].ToString());
-                            product.SetStock((int)reader["stock"]);
-                            product.SetStatus(Int32.Parse(reader["pStatus"].ToString()));   //Cannot be cast as : (int)
-                            //return product instance as data object 
-                            Debug.Print("ProductDAL: /FindByID/ Name : " + product.GetName().ToString());
+                            product = GenerateProduct(reader, product);
+                            //add data objects to result-list 
+                            Debug.Print("ProductDAL: /FindBy/ " + product.GetId());
 
                             return product;
-                        }                         
+                        }
                     }
-                }   
+                }
             }
             catch (Exception e)
             {
@@ -437,6 +446,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductDTO> FindByType(string type)
         {
             //debugging purpose, will later remove
@@ -452,7 +462,7 @@ namespace WebsiteLaitBrasseur.DAL
                 }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {                    
+                {
                     cmd.Parameters.AddWithValue("@type", type);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -461,21 +471,9 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId(Convert.ToInt32(reader["productID"]));
-                                product.SetName(reader["pName"].ToString());
-                                product.SetType(reader["pType"].ToString());
-                                product.SetProducer(reader["producer"].ToString());
-                                product.SetInfo(reader["longInfo"].ToString());
-                                product.SetShortInfo(reader["shortInfo"].ToString());
-                                product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock(Convert.ToInt32(reader["stock"]));
-                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
+                                product = GenerateProduct(reader, product);
                                 //add data objects to result-list 
-                                Debug.Print("ProductDAL: /FindByType/ " + product.GetId().ToString());
-                                for (int i = 0; i < reader.FieldCount; i++)
-                                {
-                                    Console.WriteLine(reader.GetValue(i));
-                                }
+                                Debug.Print("ProductDAL: /FindByType/ " + product.GetId());
                                 results.Add(product);
                             }
                             return results;
@@ -503,6 +501,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductDTO> FindByName(string name)
         {
             List<ProductDTO> results = new List<ProductDTO>();
@@ -525,17 +524,9 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId(Convert.ToInt32(reader["productID"]));
-                                product.SetName(reader["pName"].ToString());
-                                product.SetType(reader["pType"].ToString());
-                                product.SetProducer(reader["producer"].ToString());
-                                product.SetInfo(reader["longInfo"].ToString());
-                                product.SetShortInfo(reader["shortInfo"].ToString());
-                                product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock(Convert.ToInt32(reader["stock"]));
-                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
+                                product = GenerateProduct(reader, product);
                                 //add data objects to result-list 
-                                Debug.Print("ProductDAL: /FindByName/ " + product.GetId().ToString());
+                                Debug.Print("ProductDAL: /FindByName/ " + product.GetId());
                                 results.Add(product);
                             }
                             return results;
@@ -563,6 +554,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="producer"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductDTO> FindByProducer(string producer)
         {
             List<ProductDTO> results = new List<ProductDTO>();
@@ -584,16 +576,9 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId(Convert.ToInt32(reader["productID"]));
-                                product.SetName(reader["pName"].ToString());
-                                product.SetType(reader["pType"].ToString());
-                                product.SetProducer(reader["producer"].ToString());
-                                product.SetInfo(reader["longInfo"].ToString());
-                                product.SetShortInfo(reader["shortInfo"].ToString());
-                                product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock(Convert.ToInt32(reader["stock"]));
-                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
-                                Debug.Print("ProductDAL: /FindByProducer/ " + product.GetId().ToString());
+                                product = GenerateProduct(reader, product);
+                                //add data objects to result-list 
+                                Debug.Print("ProductDAL: /FindByProducer/ " + product.GetId());
                                 //add data objects to result-list 
                                 results.Add(product);
                             }
@@ -625,6 +610,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="pStatus"></param>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductDTO> FindActiveProducts(int pStatus)
         {
             List<ProductDTO> results = new List<ProductDTO>();
@@ -646,16 +632,9 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId(Convert.ToInt32(reader["productID"]));
-                                product.SetName(reader["pName"].ToString());
-                                product.SetType(reader["pType"].ToString());
-                                product.SetProducer(reader["producer"].ToString());
-                                product.SetInfo(reader["longInfo"].ToString());
-                                product.SetShortInfo(reader["shortInfo"].ToString());
-                                product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock(Convert.ToInt32(reader["stock"]));
-                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
-                                Debug.Print("ProductDAL: /FindByStatus/ " + product.GetId().ToString());
+                                product = GenerateProduct(reader, product);
+                                //add data objects to result-list 
+                                Debug.Print("ProductDAL: /FindActiveProd/ " + product.GetId());
                                 //add data objects to result-list 
                                 results.Add(product);
                             }
@@ -679,6 +658,7 @@ namespace WebsiteLaitBrasseur.DAL
             return null;
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductDTO> FindActiveProducts(int pStatus, string type)
         {
             List<ProductDTO> results = new List<ProductDTO>();
@@ -691,7 +671,7 @@ namespace WebsiteLaitBrasseur.DAL
                 }
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {                    
+                {
                     cmd.Parameters.AddWithValue("@pStatus", pStatus);
                     cmd.Parameters.AddWithValue("@pType", type);
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -701,16 +681,9 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId(Convert.ToInt32(reader["productID"]));
-                                product.SetName(reader["pName"].ToString());
-                                product.SetType(reader["pType"].ToString());
-                                product.SetProducer(reader["producer"].ToString());
-                                product.SetInfo(reader["longInfo"].ToString());
-                                product.SetShortInfo(reader["shortInfo"].ToString());
-                                product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock(Convert.ToInt32(reader["stock"]));
-                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
-                                Debug.Print("ProductDAL: /FindByStatus/ " + product.GetId().ToString());
+                                product = GenerateProduct(reader, product);
+                                //add data objects to result-list 
+                                Debug.Print("ProductDAL: /FindBy/ " + product.GetId());
                                 //add data objects to result-list 
                                 results.Add(product);
                             }
@@ -740,8 +713,9 @@ namespace WebsiteLaitBrasseur.DAL
         /// are included.
         /// </summary>
         /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductDTO> FindAll()
-        {            
+        {
             List<ProductDTO> results = new List<ProductDTO>();
             string queryString = "SELECT * FROM dbo.Product";
             try
@@ -753,7 +727,7 @@ namespace WebsiteLaitBrasseur.DAL
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    
+
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)
@@ -761,17 +735,9 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 ProductDTO product = new ProductDTO();
-                                product.SetId(Convert.ToInt32(reader["productID"]));
-                                product.SetName(reader["pName"].ToString());
-                                product.SetType(reader["pType"].ToString());
-                                product.SetProducer(reader["producer"].ToString());
-                                product.SetInfo(reader["longInfo"].ToString());
-                                product.SetShortInfo(reader["shortInfo"].ToString());
-                                product.SetImgPath(reader["imgPath"].ToString());
-                                product.SetStock(Convert.ToInt32(reader["stock"]));
-                                product.SetStatus(Convert.ToInt32(reader["pStatus"]));
+                                product = GenerateProduct(reader, product);
                                 //add data objects to result-list 
-                                Debug.Print("ProductDAL: /FindAll/ " + product.GetId().ToString());
+                                Debug.Print("ProductDAL: /FindAll/ " + product.GetId());
                                 results.Add(product);
                             }
 
@@ -793,6 +759,19 @@ namespace WebsiteLaitBrasseur.DAL
                 connection.Close();
             }
             return null;
+        }
+        private static ProductDTO GenerateProduct(SqlDataReader reader, ProductDTO product)
+        {
+            product.SetId(Convert.ToInt32(reader["productID"]));
+            product.SetName(reader["pName"].ToString());
+            product.SetType(reader["pType"].ToString());
+            product.SetProducer(reader["producer"].ToString());
+            product.SetInfo(reader["longInfo"].ToString());
+            product.SetShortInfo(reader["shortInfo"].ToString());
+            product.SetImgPath(reader["imgPath"].ToString());
+            product.SetStock(Convert.ToInt32(reader["stock"]));
+            product.SetStatus(Convert.ToInt32(reader["pStatus"]));
+            return product;
         }
     }
 }

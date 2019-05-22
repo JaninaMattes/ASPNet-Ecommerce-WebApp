@@ -89,6 +89,7 @@ namespace WebsiteLaitBrasseur.DAL
             }
             catch (Exception e)
             {
+                result = 0;
                 Debug.Print("AccountDAL / Insert / Exception\n");
                 e.GetBaseException();
 
