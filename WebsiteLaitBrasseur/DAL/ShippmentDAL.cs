@@ -160,13 +160,14 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="cost"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public int Update(int id, string type, int deliveryTime, string company, decimal cost, int status)
+        public int UpdateAll(int id, string type, int deliveryTime, string company, decimal cost, int status)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Shippment SET shipType = @type, estimatedTime = @deliveryTime, " +
                 "shipCost = @shipCost, shipCompany = @shipCompany, status = @status WHERE shippingID = @id";
             try
             {
+                Debug.Write("ShippmentDAL / UpdateAll / Avant connection open");    //DEBUG
                 if (connection.State == ConnectionState.Closed)
                 {
                     connection.Open();
@@ -175,6 +176,7 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
+                    Debug.Write("ShippmentDAL / UpdateAll / Before parameter:");//DEBUG
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@type", type);
                     cmd.Parameters.AddWithValue("@deliveryTime", deliveryTime);
@@ -182,10 +184,12 @@ namespace WebsiteLaitBrasseur.DAL
                     cmd.Parameters.AddWithValue("@shipCompany", company);
                     cmd.Parameters.AddWithValue("@status", status);
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    Debug.Write("ShippmentDAL / UpdateAll / result :" + result);
                 }
             }
             catch (Exception e)
             {
+                Debug.Write("ShippmentDAL / UpdateAll / Exception : " );//DEBUG
                 e.GetBaseException();
             }
             finally

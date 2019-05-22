@@ -41,6 +41,9 @@
 
                         <Columns >
 
+                            <asp:BoundField  HeaderText="ID" ReadOnly="true" DataField="ID"  />
+                            
+
                             <asp:TemplateField HeaderText="Company" >
 
                                 <ItemTemplate>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Diagnostics;
 using WebsiteLaitBrasseur.DAL;
 
 namespace WebsiteLaitBrasseur.BL
@@ -53,6 +54,25 @@ namespace WebsiteLaitBrasseur.BL
             }
             return result;
         }
+
+
+        public int UpdateAll(int delivererID, string company, string type, int deliveryTime, decimal cost, int status)
+        {
+            int result = 0;
+            try
+            {
+                result =DB.UpdateAll(delivererID, type, deliveryTime, company, cost, status);
+                Debug.Write("ShippmentBL / UpdateAll / result :" + result);
+            }
+            catch (Exception e)
+            {
+                Debug.Write("ShippmentBL / UpdateAll / Exception : ");//DEBUG
+                e.GetBaseException();
+            }
+
+            return result;
+        }
+
 
         /// <summary>
         /// Find all availble services.

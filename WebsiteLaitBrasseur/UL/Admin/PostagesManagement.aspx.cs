@@ -18,7 +18,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             if (!IsPostBack)
             {
-
                 BindData();
             }
         }
@@ -30,6 +29,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
             DataTable dtPostage = new DataTable();
 
             //Colmuns declaration
+            dtPostage.Columns.Add("ID");
             dtPostage.Columns.Add("Company");
             dtPostage.Columns.Add("Type");
             dtPostage.Columns.Add("DeliveryTime");
@@ -39,6 +39,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
             for (int i = 0; i < LS.Count; i++)
             {
                 DataRow dr = dtPostage.NewRow();
+                dr["ID"] = LS[i].GetID();
                 dr["Company"] = LS[i].GetCompany();
                 dr["Type"] = LS[i].GetShipType();
                 dr["DeliveryTime"] = LS[i].GetDeliveryTime();
@@ -87,37 +88,35 @@ namespace WebsiteLaitBrasseur.UL.Admin
         //Row Updating
         protected void PostageTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            try
+            {
+                //DataTable and DataRow initiallization
+                int ID = Convert.ToInt16(PostageTable.Rows[e.RowIndex].Cells[0].Text);
+                TextBox editCompany = PostageTable.Rows[e.RowIndex].FindControl("TextCompanyName") as TextBox;
+                TextBox editType = PostageTable.Rows[e.RowIndex].FindControl("TextType") as TextBox;
+                TextBox editDeliveryTime = PostageTable.Rows[e.RowIndex].FindControl("TextDeliveryTime") as TextBox;
+                TextBox editCost = PostageTable.Rows[e.RowIndex].FindControl("TextCost") as TextBox;
+                TextBox editStatus = PostageTable.Rows[e.RowIndex].FindControl("TextStatus") as TextBox;
 
-            //DataTable and DataRow initiallization
-
-
-
-            //DataTable dtPostage = getDataTable();
-            //GridViewRow row = PostageTable.Rows[e.RowIndex];
-
-            ////Update the values.
-            //dtPostage.Rows[row.DataItemIndex]["ProviderName"] = ((TextBox)(row.FindControl("TextProviderName"))).Text;
-            //dtPostage.Rows[row.DataItemIndex]["CostPerUnit"] = ((TextBox)(row.FindControl("TextCost"))).Text;
+                bl.UpdateAll(ID, editCompany.Text, editType.Text, Convert.ToInt32(editDeliveryTime.Text), Convert.ToDecimal(editCost.Text), Convert.ToInt16(editStatus.Text));
+                
+            }
+            catch(Exception ex)
+            {
+                Debug.Write("Postages / Exception : \n");//DEBUG
+                ex.GetBaseException();
+            }
 
             ////Reset the edit index.
-            //PostageTable.EditIndex = -1;
-
-            ////Bind data to the GridView control.
-            //PostageTable.DataSource = dtPostage;
-            //PostageTable.DataBind();
-
-
-
-        }
+            PostageTable.EditIndex = -1;
+            BindData();
+       }
 
         //Row Deleting
         protected void PostageTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            ////Index of grid recuperation
-            //int index = Convert.ToInt32(e.RowIndex);
-
-            ////Make the row invisible (Fake suppression)
-            //PostageTable.Rows[index].Visible = false;
+            //Index of grid recuperation
+            int index = Convert.ToInt32(e.RowIndex);
         }
 
 
@@ -132,22 +131,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             PostageTable.ShowFooter = true;
             BindData();
-        //    //DataTable and DataRow initialization
-        //    int i = PostageTable.Rows.Count;
-        //    DataTable dtPostage = getDataTable();
-        //    DataRow newRow = dtPostage.NewRow();
-
-        //    //Informations recuperated from textBox and add to the new Row
-        //    newRow["ProviderID"] = i;
-        //    newRow["ProviderName"] = TextAddProvider.Text;
-        //    newRow["CostPerUnit"] = TextAddCost.Text;
-        //    dtPostage.Rows.Add(newRow);
-
-        //    //Cast the dataTable in the gridview and bind the informations
-        //    PostageTable.DataSource = dtPostage;
-        //    PostageTable.DataBind();
-        //    BindPostageLabel();
-
         }
 
         protected void PostageTable_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -174,17 +157,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     ex.GetBaseException();
                     lblError.Text = "DataBase error";
                 }
-
-                
-
-
-                //DEUBG: un peu de debug sur l'entrée en DB
-
-
             }
-
-
-
         }
 
 
