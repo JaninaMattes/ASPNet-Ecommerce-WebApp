@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,10 +11,12 @@ using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
 {
+    [DataObject(true)]
     public class ShippmentDAL
     {
         //Get connection string from web.config file and create sql connection
         readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+
         /// <summary>
         /// To Insert another Shipping company into the DB
         /// a status = 0 means the company is available
@@ -29,13 +32,15 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="cost"></param>
         /// <param name="status"></param>
         /// <returns></returns>
+        
+        [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(string type, int deliveryTime, string company, decimal cost, int status)
         {
             int result;
             //no need to explicitely set id as autoincrement is used
-            string queryString = "INSERT INTO Shippment(dbo.Shippment.shipType, dbo.Shippment.estimatedTime, dbo.Shippment.shipCompany, " +
-                "dbo.Shippment.shipCost, dbo.Shippment.status) " +
-                "VALUES('@shipType', @deliveryTime, '@shipCompany', @shipCost, @status)";
+            string queryString = "INSERT INTO dbo.Shippment(dbo.Shippment.shipType, dbo.Shippment.estimatedTime, " +
+                "dbo.Shippment.shipCompany, dbo.Shippment.shipCost, dbo.Shippment.status) " +
+                "VALUES(@shipType, @deliveryTime, @shipCompany, @shipCost, @status)";
             //query the last updated ID, which will be the id inserted by the above statement
             string queryAutoincID = "SELECT TOP(1) dbo.Shippment.shippingID FROM dbo.Shippment ORDER BY 1 DESC";
             try
@@ -47,12 +52,13 @@ namespace WebsiteLaitBrasseur.DAL
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@shipType", type);
-                    cmd.Parameters.AddWithValue("@deliveryTime", deliveryTime);
-                    cmd.Parameters.AddWithValue("@shipCompany", company);
-                    cmd.Parameters.AddWithValue("@shipCost", cost);
-                    cmd.Parameters.AddWithValue("@status", status);     
-                    cmd.ExecuteNonQuery(); //returns the number of affected rows in the DB 
+                    cmd.Parameters.AddWithValue("@shipType", SqlDbType.VarChar).Value = type;
+                    cmd.Parameters.AddWithValue("@deliveryTime", SqlDbType.Int).Value = deliveryTime;
+                    cmd.Parameters.AddWithValue("@shipCompany", SqlDbType.VarChar).Value = company;
+                    cmd.Parameters.AddWithValue("@shipCost", SqlDbType.Decimal).Value = cost;
+                    cmd.Parameters.AddWithValue("@status", SqlDbType.Binary).Value = status;     
+                    var value = cmd.ExecuteNonQuery(); //returns the number of affected rows in the DB 
+                    Debug.Print("ShippmentDAL: /Insert/ " + value);
                 }
                 ///find the last manipulated id due to autoincrement and return it
                 using (SqlCommand command = new SqlCommand(queryAutoincID, connection))

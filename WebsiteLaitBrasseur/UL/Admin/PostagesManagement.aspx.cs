@@ -12,13 +12,12 @@ namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class PostagesOptions : System.Web.UI.Page
     {
-        ShippmentBL bl = new ShippmentBL();
+        ShippmentBL BL = new ShippmentBL();
         List<ShippmentDTO> listShippment = new List<ShippmentDTO>();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-
                 BindData();
             }
         }
@@ -54,7 +53,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void BindData()
         {
-            listShippment = bl.GetAllPostServices();
+            listShippment = BL.GetAllPostServices();
             PostageTable.DataSource = getDataTable(listShippment);
             PostageTable.DataBind();
         }
