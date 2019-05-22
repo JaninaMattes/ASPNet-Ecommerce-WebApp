@@ -21,7 +21,7 @@
 
 
             <!-- GridView conatiner-->
-            <div class="offset-md-2 col-md-8" style="font-size:20px">
+            <div class="offset-md-1 col-md-8" style="font-size:20px">
 
                 <!-- GridView with 2 field (CompanyName + CostPerUnit) and button for edition/deletion
                     Field build with this scheme :
@@ -57,8 +57,7 @@
 
                                 <FooterTemplate>
                                     <asp:TextBox id="TextAddCompany" runat="server" Text="CompanyName"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="AddCompanyNameReqField" runat="server" ControlToValidate="TextAddCompany" ValidationGroup="Add" ErrorMessage="Company Name is required" CssClass="text-danger"></asp:RequiredFieldValidator><br />
-
+                                    <asp:RequiredFieldValidator ID="AddCompanyNameReqField" runat="server" ControlToValidate="TextAddCompany" ValidationGroup="add" ErrorMessage="Company Name is required" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                                 </FooterTemplate>
 
                             </asp:TemplateField>
@@ -77,6 +76,8 @@
 
                                 <FooterTemplate>
                                     <asp:TextBox id="TextAddType" runat="server" Text="Type"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="TypeNameReqField" runat="server" ControlToValidate="TextAddType" ValidationGroup="add" ErrorMessage="Type is required" CssClass="text-danger"></asp:RequiredFieldValidator><br />
+
                                 </FooterTemplate>
 
                             </asp:TemplateField>
@@ -96,6 +97,9 @@
 
                                 <FooterTemplate>
                                     <asp:TextBox id="TextAddDeliveryTime" runat="server" Text="DeliveryTime"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="DeliveryTimeReqField" runat="server" ControlToValidate="TextAddDeliveryTime" ValidationGroup="add" ErrorMessage="DeliveryTime is required" CssClass="text-danger"></asp:RequiredFieldValidator><br />
+                                    <asp:RegularExpressionValidator ID="DeliveryTimeRegValid" runat="server" ControlToValidate="TextAddDeliveryTime" ValidationExpression="[0-9]*" ErrorMessage="Please enter a valid number"  ValidationGroup="add" CssClass="text-danger" ></asp:RegularExpressionValidator><br />
+
                                 </FooterTemplate>
 
                             </asp:TemplateField>   
@@ -115,8 +119,8 @@
 
                                 <FooterTemplate>
                                     <asp:TextBox id="TextAddCost" runat="server" Text="Cost"></asp:TextBox>
-                                     <asp:RequiredFieldValidator ID="AddCostReqField" runat="server" ControlToValidate="TextAddCost" ValidationGroup="Add" ErrorMessage="Cost field is required" CssClass="text-danger"></asp:RequiredFieldValidator><br />
-                                     <asp:RegularExpressionValidator ID="AddCostRegValid" runat="server" ControlToValidate="TextAddCost" ValidationExpression="([0-9]*\,)?[0-9]*" ErrorMessage="Please enter a valid number (decimal with coma)"  ValidationGroup="Add" CssClass="text-danger" ></asp:RegularExpressionValidator><br />
+                                     <asp:RequiredFieldValidator ID="AddCostReqField" runat="server" ControlToValidate="TextAddCost" ValidationGroup="add" ErrorMessage="Cost field is required" CssClass="text-danger"></asp:RequiredFieldValidator><br />
+                                     <asp:RegularExpressionValidator ID="AddCostRegValid" runat="server" ControlToValidate="TextAddCost" ValidationExpression="([0-9]*\,)?[0-9]*" ErrorMessage="Please enter a valid number (decimal with coma)"  ValidationGroup="add" CssClass="text-danger" ></asp:RegularExpressionValidator><br />
   
                                 </FooterTemplate>
 
@@ -130,13 +134,16 @@
 
                                 <EditItemTemplate>
                                     <asp:TextBox id="TextStatus" runat="server" Text='<%# Bind("Status") %>'></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="StatusNameReqField" runat="server" ControlToValidate="TextStatus" ValidationGroup="edit" ErrorMessage="Status is required" CssClass="text-danger"></asp:RequiredFieldValidator><br />
+                                    <asp:RequiredFieldValidator ID="StatusNameReqField" runat="server" ControlToValidate="TextStatus"  ValidationGroup="edit" ErrorMessage="Status is required" CssClass="text-danger" ></asp:RequiredFieldValidator><br />
                                     <asp:RegularExpressionValidator ID="StatusRegValid" runat="server" ControlToValidate="TextStatus" ValidationExpression="1|0" ErrorMessage="Please enter a valid number(0 or 1)"  ValidationGroup="edit" CssClass="text-danger" ></asp:RegularExpressionValidator><br />
 
                                 </EditItemTemplate>
                                 
                                 <FooterTemplate>
                                     <asp:TextBox id="TextAddStatus" runat="server" Text="Status"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="StatusNameReqField" runat="server" ControlToValidate="TextAddStatus"  ValidationGroup="add" ErrorMessage="Status is required" CssClass="text-danger" ></asp:RequiredFieldValidator><br />
+                                    <asp:RegularExpressionValidator ID="StatusRegValid" runat="server" ControlToValidate="TextAddStatus" ValidationExpression="1|0" ErrorMessage="Please enter a valid number(0 or 1)"  ValidationGroup="add" CssClass="text-danger" ></asp:RegularExpressionValidator><br />
+
                                 </FooterTemplate>
 
                             </asp:TemplateField>
@@ -152,13 +159,13 @@
 
                                 <EditItemTemplate>
                                     <asp:LinkButton ID="updateButton" runat="server" CommandName="Update" Text="Update" CssClass="btn btn-primary" CausesValidation="true" ValidationGroup="edit"></asp:LinkButton>
-                                    <asp:LinkButton ID="cancelButton" runat="server" CommandName="Cancel" Text="Cancel" CssClass="btn btn-primary" CausesValidation="true" ValidationGroup="edit"></asp:LinkButton>
+                                    <asp:LinkButton ID="cancelButton" runat="server" CommandName="Cancel" Text="Cancel" CssClass="btn btn-danger" CausesValidation="true" ValidationGroup="edit"></asp:LinkButton>
 
                                 </EditItemTemplate>
                                 
                                 <FooterTemplate>
-                                    <asp:LinkButton ID="insertButton" runat="server" CommandArgument="Insert" Text="Insert" CssClass="btn btn-success" CausesValidation="true" ValidationGroup="insert"></asp:LinkButton>
-                                    <asp:Button ID="cancelInsertButton" CausesValidation="true" ValidationGroup="add" runat="server" Text="Cancel" OnClick="CancelInsertButton_Click" CssClass="btn btn-danger"/>
+                                    <asp:LinkButton ID="insertButton" runat="server" CommandArgument="Insert" Text="Insert" CssClass="btn btn-success" CausesValidation="true" ValidationGroup="add"></asp:LinkButton>
+                                    <asp:Button ID="cancelInsertButton" runat="server" Text="Cancel" OnClick="CancelInsertButton_Click" CssClass="btn btn-danger"/>
 
                                 </FooterTemplate>
                             </asp:TemplateField>
@@ -175,7 +182,7 @@
                     <!--Row with TextBox for informations about the new Postage option and "Add" button /Validators below -->
                 <div class="row">
                     <div class="col-md-3">
-                        <asp:Button ID="AddButton" ToolTip="Add Shippment."  runat="server" Text="Add" OnClick="AddButton_Click" CssClass="btn btn-success" CausesValidation="true" ValidationGroup="Add"/>
+                        <asp:Button ID="AddButton" ToolTip="Add Shippment."  runat="server" Text="Add" OnClick="AddButton_Click" CssClass="btn btn-success"/>
                     </div>
                 </div>
 
