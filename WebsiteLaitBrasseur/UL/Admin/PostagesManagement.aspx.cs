@@ -147,7 +147,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
                     var result = bl.Create(newType.Text, Convert.ToInt32(newDeliveryTime.Text), newCompany.Text, Convert.ToDecimal(newCost.Text), Convert.ToByte(newStatus.Text));
                     Debug.Print("Shippment aspx: /Create Entry/ " + result);                    
-                    if (result ==1) {
+                    if (result > 0) {
                         lblInfo.Text = "Insert achieved with success";
                         PostageTable.ShowFooter = false;
                         BindData();

@@ -48,6 +48,7 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 result = DB.Update(delivererID, status);
+                Debug.Print("ShippmentBL: /Change Status/ " + result);
             }
             catch (Exception e)
             {
@@ -63,7 +64,7 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 result =DB.UpdateAll(delivererID, type, deliveryTime, company, cost, status);
-                Debug.Write("ShippmentBL / UpdateAll / result :" + result);
+                Debug.Print("ShippmentBL: /Update All/ " + result);
             }
             catch (Exception e)
             {
@@ -86,6 +87,7 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 result = DB.FindAllBy(status);
+                Debug.Print("ShippmentBL: /Find All Available/ " + result);
             }
             catch (Exception e)
             {
@@ -98,13 +100,14 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all currently suspendet Services.
         /// </summary>
         /// <returns></returns>
-        public List<ShippmentDTO> GetPostService()
+        public List<ShippmentDTO> GetSuspendetPostService()
         {
             List<ShippmentDTO> result = new List<ShippmentDTO>();
             int status = 1;
             try
             {
                 result = DB.FindAllBy(status);
+                Debug.Print("ShippmentBL: /Find All Suspendet/ " + result);
             }
             catch (Exception e)
             {
@@ -123,6 +126,7 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 result = DB.FindAll();
+                Debug.Print("ShippmentBL: /Find All/ " + result);
             }
             catch (Exception e)
             {

@@ -56,7 +56,8 @@ namespace WebsiteLaitBrasseur.DAL
                     cmd.Parameters.AddWithValue("@deliveryTime", SqlDbType.Int).Value = deliveryTime;
                     cmd.Parameters.AddWithValue("@shipCompany", SqlDbType.VarChar).Value = company;
                     cmd.Parameters.AddWithValue("@shipCost", SqlDbType.Decimal).Value = cost;
-                    cmd.Parameters.AddWithValue("@status", SqlDbType.Binary).Value = status;     
+                    cmd.Parameters.AddWithValue("@status", SqlDbType.Binary).Value = status;
+                    cmd.CommandType = CommandType.Text;
                     var value = cmd.ExecuteNonQuery(); //returns the number of affected rows in the DB 
                     Debug.Print("ShippmentDAL: /Insert/ " + value);
                 }
@@ -91,6 +92,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="status"></param>
         /// <returns></returns>
+        
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int Update(int id, int status)
         {
             int result = 0;
@@ -127,6 +130,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <param name="shipCost"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int Update(int id, decimal shipCost)
         {
             int result = 0;
@@ -166,6 +171,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="cost"></param>
         /// <param name="status"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateAll(int id, string type, int deliveryTime, string company, decimal cost, int status)
         {
             int result = 0;
@@ -173,7 +180,6 @@ namespace WebsiteLaitBrasseur.DAL
                 "shipCost = @shipCost, shipCompany = @shipCompany, status = @status WHERE shippingID = @id";
             try
             {
-                Debug.Write("ShippmentDAL / UpdateAll / Avant connection open");    //DEBUG
                 if (connection.State == ConnectionState.Closed)
                 {
                     connection.Open();
@@ -182,20 +188,19 @@ namespace WebsiteLaitBrasseur.DAL
                 //e.g. after three false log in attempts / upaied bills
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    Debug.Write("ShippmentDAL / UpdateAll / Before parameter:");//DEBUG
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Parameters.AddWithValue("@type", type);
-                    cmd.Parameters.AddWithValue("@deliveryTime", deliveryTime);
-                    cmd.Parameters.AddWithValue("@shipCost", cost);
-                    cmd.Parameters.AddWithValue("@shipCompany", company);
-                    cmd.Parameters.AddWithValue("@status", status);
+                   
+                    cmd.Parameters.AddWithValue("@shipType", SqlDbType.VarChar).Value = type;
+                    cmd.Parameters.AddWithValue("@deliveryTime", SqlDbType.Int).Value = deliveryTime;
+                    cmd.Parameters.AddWithValue("@shipCompany", SqlDbType.VarChar).Value = company;
+                    cmd.Parameters.AddWithValue("@shipCost", SqlDbType.Decimal).Value = cost;
+                    cmd.Parameters.AddWithValue("@status", SqlDbType.Binary).Value = status;
                     result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                    Debug.Write("ShippmentDAL / UpdateAll / result :" + result);
+                    Debug.Print("ShippmentDAL / UpdateAll / result :" + result);
                 }
             }
             catch (Exception e)
             {
-                Debug.Write("ShippmentDAL / UpdateAll / Exception : " );//DEBUG
+                Debug.Print("ShippmentDAL / UpdateAll / Exception : " );//DEBUG
                 e.GetBaseException();
             }
             finally
@@ -210,6 +215,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public ShippmentDTO FindBy(int id)
         {
             ShippmentDTO deliverer;
@@ -230,14 +237,9 @@ namespace WebsiteLaitBrasseur.DAL
                         if (reader.Read())
                         {
                             deliverer = new ShippmentDTO();
-                            deliverer.SetID(Convert.ToInt32(reader["shippingID"]));
-                            deliverer.SetCompany(reader["shipCompany"].ToString());
-                            deliverer.SetCost(Convert.ToDecimal(reader["shipCost"]));
-                            deliverer.SetDeliveryTime(Convert.ToInt32(reader["estimatedTime"]));
-                            deliverer.SetStatus(Convert.ToInt32(reader["status"]));
-                            deliverer.SetType(reader["shipType"].ToString());                       
+                            deliverer = deliverer = GenerateDeliverer(reader, deliverer);
                             //return product instance as data object 
-                            Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID().ToString());
+                            Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID());
                             return deliverer;
                         }
                     }
@@ -261,6 +263,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public ShippmentDTO FindBy(string name)
         {
             ShippmentDTO deliverer;
@@ -281,14 +285,9 @@ namespace WebsiteLaitBrasseur.DAL
                         if (reader.Read())
                         {
                             deliverer = new ShippmentDTO();
-                            deliverer.SetID(Convert.ToInt32(reader["shippingID"]));
-                            deliverer.SetCompany(reader["shipCompany"].ToString());
-                            deliverer.SetCost(Convert.ToDecimal(reader["shipCost"]));
-                            deliverer.SetDeliveryTime(Convert.ToInt32(reader["estimatedTime"]));
-                            deliverer.SetStatus(Convert.ToInt32(reader["status"]));
-                            deliverer.SetType(reader["shipType"].ToString());
+                            deliverer = deliverer = GenerateDeliverer(reader, deliverer);
                             //return product instance as data object 
-                            Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID().ToString());
+                            Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID());
                             return deliverer;
                         }
                     }
@@ -313,6 +312,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="status"></param>
         /// <returns>List<ShippmentDTO</returns>
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public List<ShippmentDTO> FindAllBy(int status)
         {
             string queryString = "SELECT * FROM dbo.Shippment WHERE status = @status";
@@ -335,14 +336,9 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 deliverer = new ShippmentDTO();
-                                deliverer.SetID(Convert.ToInt32(reader["shippingID"]));
-                                deliverer.SetCompany(reader["shipCompany"].ToString());
-                                deliverer.SetCost(Convert.ToDecimal(reader["shipCost"]));
-                                deliverer.SetDeliveryTime(Convert.ToInt32(reader["estimatedTime"]));
-                                deliverer.SetStatus(Convert.ToInt32(reader["status"]));
-                                deliverer.SetType(reader["shipType"].ToString());
+                                deliverer = GenerateDeliverer(reader, deliverer);
                                 //return product instance as data object 
-                                Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID().ToString());
+                                Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID());
                                 //add data objects to result-list 
                                 results.Add(deliverer);
                             }
@@ -372,6 +368,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// not dependent if they are avaiable or not.
         /// </summary>
         /// <returns></returns>
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
         public List<ShippmentDTO> FindAll()
         {
             string queryString = "SELECT * FROM dbo.Shippment";
@@ -393,14 +391,9 @@ namespace WebsiteLaitBrasseur.DAL
                             while (reader.Read())
                             {
                                 deliverer = new ShippmentDTO();
-                                deliverer.SetID(Convert.ToInt32(reader["shippingID"]));
-                                deliverer.SetCompany(reader["shipCompany"].ToString());
-                                deliverer.SetCost(Convert.ToDecimal(reader["shipCost"]));
-                                deliverer.SetDeliveryTime(Convert.ToInt32(reader["estimatedTime"]));
-                                deliverer.SetStatus(Convert.ToInt32(reader["status"]));
-                                deliverer.SetType(reader["shipType"].ToString());
+                                deliverer = GenerateDeliverer(reader, deliverer);
                                 //return product instance as data object 
-                                Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID().ToString());
+                                Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID());
                                 //add data objects to result-list 
                                 results.Add(deliverer);
                             }
@@ -422,6 +415,18 @@ namespace WebsiteLaitBrasseur.DAL
                 connection.Close();
             }
             return null;
+        }
+
+        private static ShippmentDTO GenerateDeliverer(SqlDataReader reader, ShippmentDTO deliverer)
+        {
+            deliverer.SetID(Convert.ToInt32(reader["shippingID"]));
+            deliverer.SetCompany(reader["shipCompany"].ToString());
+            deliverer.SetCost(Convert.ToDecimal(reader["shipCost"]));
+            deliverer.SetDeliveryTime(Convert.ToInt32(reader["estimatedTime"]));
+            deliverer.SetStatus(Convert.ToInt32(reader["status"]));
+            deliverer.SetType(reader["shipType"].ToString());
+
+            return deliverer;
         }
     }
 }
