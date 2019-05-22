@@ -41,6 +41,9 @@
 
                         <Columns >
 
+                            <asp:BoundField  HeaderText="ID" ReadOnly="true" DataField="ID"  />
+                            
+
                             <asp:TemplateField HeaderText="Company" >
 
                                 <ItemTemplate>
@@ -148,11 +151,13 @@
                                 </ItemTemplate>
 
                                 <EditItemTemplate>
+                                    <asp:LinkButton ID="updateButton" runat="server" CommandName="Update" Text="Update" CssClass="btn btn-primary" CausesValidation="true" ValidationGroup="edit"></asp:LinkButton>
+                                    <asp:LinkButton ID="cancelButton" runat="server" CommandName="Cancel" Text="Cancel" CssClass="btn btn-primary" CausesValidation="true" ValidationGroup="edit"></asp:LinkButton>
 
                                 </EditItemTemplate>
                                 
                                 <FooterTemplate>
-                                    <asp:Button ID="insertButton" CausesValidation="true" ValidationGroup="add" runat="server" Text="Insert" OnClick="InsertButton_Click" CssClass="btn btn-success"/>
+                                    <asp:LinkButton ID="insertButton" runat="server" CommandArgument="Insert" Text="Insert" CssClass="btn btn-success" CausesValidation="true" ValidationGroup="insert"></asp:LinkButton>
                                     <asp:Button ID="cancelInsertButton" CausesValidation="true" ValidationGroup="add" runat="server" Text="Cancel" OnClick="CancelInsertButton_Click" CssClass="btn btn-danger"/>
 
                                 </FooterTemplate>
