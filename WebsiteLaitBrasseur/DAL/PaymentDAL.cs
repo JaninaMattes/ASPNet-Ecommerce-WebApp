@@ -292,7 +292,7 @@ namespace WebsiteLaitBrasseur.DAL
 
         private static PaymentDTO GeneratePayment(SqlDataReader reader, AccountDTO account, PaymentDTO payment, InvoiceDTO invoice)
         {
-            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
+            account.SetID(Convert.ToInt32(reader["accountID"]));
             invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
             payment.SetCustomer(account);
             payment.SetInvoice(invoice);

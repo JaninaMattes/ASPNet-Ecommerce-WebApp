@@ -1,10 +1,10 @@
 ﻿//------------------------------------------------------------------------------
-// <généré automatiquement>
-//     Ce code a été généré par un outil.
+// <automatisch generiert>
+//     Dieser Code wurde von einem Tool generiert.
 //
-//     Les modifications apportées à ce fichier peuvent provoquer un comportement incorrect et seront perdues si
-//     le code est régénéré.
-// </généré automatiquement>
+//     Änderungen an dieser Datei können fehlerhaftes Verhalten verursachen und gehen verloren, wenn
+//     der Code neu generiert wird.
+// </automatisch generiert>
 //------------------------------------------------------------------------------
 
 namespace WebsiteLaitBrasseur.UL.Customer {
@@ -13,146 +13,155 @@ namespace WebsiteLaitBrasseur.UL.Customer {
     public partial class DetailPage {
         
         /// <summary>
-        /// Contrôle UpdatePanel1.
+        /// UpdatePanel1-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// Contrôle headerTitle.
+        /// headerTitle-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label headerTitle;
         
         /// <summary>
-        /// Contrôle headerSubtitle.
+        /// headerSubtitle-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label headerSubtitle;
         
         /// <summary>
-        /// Contrôle destinationImg.
+        /// destinationImg-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Image destinationImg;
         
         /// <summary>
-        /// Contrôle nameLabel.
+        /// nameLabel-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label nameLabel;
         
         /// <summary>
-        /// Contrôle descriptionLabel.
+        /// descriptionLabel-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label descriptionLabel;
         
         /// <summary>
-        /// Contrôle LabelDetail.
+        /// LabelDetail-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LabelDetail;
         
         /// <summary>
-        /// Contrôle labelProduct.
+        /// labelProduct-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label labelProduct;
         
         /// <summary>
-        /// Contrôle labelProducer.
+        /// labelProducer-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label labelProducer;
         
         /// <summary>
-        /// Contrôle labelPrice.
+        /// labelPrice-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label labelPrice;
         
         /// <summary>
-        /// Contrôle unitDropDownList.
+        /// lowStock-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lowStock;
+        
+        /// <summary>
+        /// unitDropDownList-Steuerelement
+        /// </summary>
+        /// <remarks>
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList unitDropDownList;
         
         /// <summary>
-        /// Contrôle Req_ID.
+        /// Req_ID-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator Req_ID;
         
         /// <summary>
-        /// Contrôle quantityDropDownList.
+        /// quantityDropDownList-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList quantityDropDownList;
         
         /// <summary>
-        /// Contrôle RequiredFieldValidator1.
+        /// RequiredFieldValidator1-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
-        /// Contrôle totalAmount.
+        /// totalAmount-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label totalAmount;
         
         /// <summary>
-        /// Contrôle AddProduct.
+        /// AddProduct-Steuerelement
         /// </summary>
         /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// Automatisch generiertes Feld
+        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button AddProduct;
     }

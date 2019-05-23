@@ -4,15 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class Profile : System.Web.UI.Page
     {
+        AccountBL DB = new AccountBL();
+        string SESSION_VAR; 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
+                SESSION_VAR = HttpContext.Current.Session["Email"].ToString();
                 /*Fill the shopping history table with data from the backend 
                  * and bind these to the datafields*/
                 BindGridList();
@@ -29,15 +33,41 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
+            // suspend the user dont delete
 
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
+            AccountDTO customer = new AccountDTO();
+            int result = 0;
             /*save all input information from values and send it to server*/
             //string myname = Request.Form["first_name_txt"];
             //...firstName = Request.Form["FirstnameTextbox"];
+            //try
+            //{
+            //    customer = DB.GetCustomer(SESSION_VAR);
+            //    customer.SetID(customer.GetID());
+            //    // TODO
+            //    result = DB.UpdateAll();
+            //    //send to DB and update
+            //    if (result > 0)
+            //    {
+            //        //give customer feedback by pop up 
+            //        //--> Updates successfull
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    e.GetBaseException();
+            //}
+
         }
+
+        protected void UpdateButton_Click(object sender, EventArgs e)
+        {
+        }
+
 
         /*Fill the shopping history table with data from the backend 
          * and bind these to the datafields*/

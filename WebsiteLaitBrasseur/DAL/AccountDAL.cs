@@ -820,7 +820,7 @@ namespace WebsiteLaitBrasseur.DAL
 
         private static AccountDTO GenerateAccount(SqlDataReader reader, AccountDTO account, AddressDTO address)
         {
-            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
+            account.SetID(Convert.ToInt32(reader["accountID"]));
             address.SetID(Convert.ToInt32(reader["addressID"]));
             account.SetAddress(address);
             account.SetEmail(reader["email"].ToString());

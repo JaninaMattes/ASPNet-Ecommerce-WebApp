@@ -4,11 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class Default : System.Web.UI.Page
     {
+        AccountBL DB = new AccountBL();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try { 
@@ -17,7 +20,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
                 if (email != null)
                 {
-                    lblWelcome.Text = "Welcome back " + email;
+                    AccountDTO customer = new AccountDTO();
+                    customer = DB.GetCustomer(email);
+                    lblWelcome.Text = "Welcome back " + customer.GetFirstName() + " " + customer.GetLastName();
                 }
             }
             catch

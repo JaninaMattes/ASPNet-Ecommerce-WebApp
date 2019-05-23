@@ -29,7 +29,7 @@ namespace WebsiteLaitBrasseur.BL
             return this._id;
         }
 
-        public void SetAccountID(int id)
+        public void SetID(int id)
         {
             this._id = id;
         }

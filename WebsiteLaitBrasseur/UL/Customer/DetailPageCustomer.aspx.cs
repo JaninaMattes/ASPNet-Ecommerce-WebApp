@@ -27,7 +27,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
                 if (IsPostBack)
                 {
-                    labelPrice.Text = sb.GetPriceBySize(id, Int32.Parse(unitDropDownList.SelectedValue)).ToString();
+                    labelPrice.Text = sb.GetPriceBySize(id, Convert.ToInt32(unitDropDownList.SelectedValue)).ToString();
                     totalAmount.Text = GetTotalAmount(labelPrice.Text , quantityDropDownList.SelectedValue.ToString());
                 }
                 if (!IsPostBack)
@@ -35,7 +35,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     // retrieve a prodcut from our db
                     var product = db.GetProduct(id);
                     var details = sb.GetDetails(product.GetId());
-
+                    
+                    //only display available products to the customer
                     if (product != null && product.GetStatus()==1)
                     {
                         // set up detail page elements
@@ -47,8 +48,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         labelProduct.Text = product.GetProductType();
                         labelProducer.Text = product.GetProducer();
                         for (int i = 0; i < details.Count; i++)  {  unitDropDownList.Items.Add(details[i].GetSize().ToString());  }
-                        labelPrice.Text = sb.GetPriceBySize ( id , Int32.Parse(unitDropDownList.SelectedValue)).ToString();
+                        labelPrice.Text = sb.GetPriceBySize ( id , Convert.ToInt32(unitDropDownList.SelectedValue)).ToString();
                         for (int i = 0; i < product.GetStock(); i++) { quantityDropDownList.Items.Add(i.ToString()); }
+                        if (product.GetStock()<=5) { lowStock.Text = $"Low stock. Only {product.GetStock()} availble"; }
                     }
                     else
                     {
@@ -61,12 +63,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void AddButton_Click(object sender, EventArgs e)
         {
+            //TODO shopping list
         }
 
         private string GetTotalAmount(string priceStr, string QuantityStr)
         {
-            decimal price = Decimal.Parse(priceStr);
-            int quantity = Int32.Parse(QuantityStr);
+            decimal price = Convert.ToDecimal(priceStr);
+            int quantity = Convert.ToInt32(QuantityStr);
             return Convert.ToString((price * quantity));
         }
 

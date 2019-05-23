@@ -580,7 +580,7 @@ namespace WebsiteLaitBrasseur.DAL
         private static InvoiceDTO GenerateInvoice(SqlDataReader reader, InvoiceDTO invoice, AccountDTO account, ShippmentDTO shipping)
         {
             invoice.SetID(Convert.ToInt32(reader["invoiceID"]));
-            account.SetAccountID(Convert.ToInt32(reader["accountID"]));
+            account.SetID(Convert.ToInt32(reader["accountID"]));
             shipping.SetID(Convert.ToInt32(reader["shippingID"]));
             invoice.SetCustomer(account);
             invoice.SetShippment(shipping);

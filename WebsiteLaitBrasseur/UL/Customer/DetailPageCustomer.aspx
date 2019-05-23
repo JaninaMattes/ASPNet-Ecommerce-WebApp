@@ -33,7 +33,8 @@
                     <!--Further product information about Price/ Total Amount / Product Quantity-->
                     <p>Product:</p><p><asp:Label ID="labelProduct" runat="server" Text="" CssClass="text-info"></asp:Label></p><br />
                     <p>Producer:</p><p><asp:Label ID="labelProducer" runat="server" Text="" CssClass="text-info"></asp:Label></p><br />
-                    <p>Price:</p><p class="text-info"><asp:Label ID="labelPrice" runat="server" Text="" CssClass="text-info"></asp:Label> €</p><br/>
+                    <p>Price:</p><p class="text-info"><asp:Label ID="labelPrice" runat="server" Text="" CssClass="text-info"></asp:Label> AUS$</p><br/>
+                    <p></p><p class="text-info"><asp:Label ID="lowStock" runat="server" Text="" CssClass="text-danger"></asp:Label></p><br/>
 
                     <!--Dropdown list with different sizes for the product to be selected-->
                     <p>Unit Size (gr):</p>

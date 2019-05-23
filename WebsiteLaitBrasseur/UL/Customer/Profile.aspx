@@ -13,9 +13,12 @@
             <!--First column : User picture and "Save"/"Delete" button-->
             <div class="col-md-2" >
                 <div class="profile-userpic">
-                    <img class="img-responsive" alt="User Image" src="/UL/Images/customerImg.jpg">
+                    <!--<img class="img-responsive" alt="User Image" src="/UL/Images/customerImg.jpg">-->
+                    <asp:ImageButton ID="ProfilePicture" runat="server" ToolTip="Profile Image" DataImageUrlField="Path" OnClick="UpdateButton_Click"/>
                     <div class="overlay">
                     <p>Change Profile Picture</p><br />
+                        <asp:FileUpload ID="FileUpload1" runat="server" />
+                        <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick = "Upload" />
                     <a href="#" class="icon" title="User Profile">
                         <i class="fa fa-user"></i></a>
                     </div>

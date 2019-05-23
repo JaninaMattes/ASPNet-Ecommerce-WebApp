@@ -232,6 +232,20 @@ namespace WebsiteLaitBrasseur.BL
             return IsCorrect;
         }
 
+        public AccountDTO GetCustomer(string email)
+        {
+            AccountDTO customer = new AccountDTO();
+            try
+            {
+                customer = DB.FindBy(email);
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return customer;
+        }
+
         /// <summary>
         /// Find all Customers in DB.
         /// </summary>
