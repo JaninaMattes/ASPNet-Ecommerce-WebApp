@@ -27,6 +27,7 @@ namespace WebsiteLaitBrasseur.BL
             }
             catch (Exception e)
             {
+                Debug.Write("SizeBL / Exception"); //DEBUG
                 e.GetBaseException();
             }
             return result;

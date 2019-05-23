@@ -34,7 +34,7 @@ namespace WebsiteLaitBrasseur.DAL
             int result;
             //no need to explicitely set id as autoincrement is used
             string queryString = "INSERT INTO dbo.Size(dbo.Size.productID, dbo.Size.unitSize, dbo.Size.unitPrice) " +
-                "VALUES(@size, @price, @productID)";
+                "VALUES(@productID, @size, @price )";
             string queryAutoIncr = "SELECT TOP(1) dbo.Size.sizeID FROM dbo.Size ORDER BY 1 DESC";
             try
             {
@@ -45,9 +45,13 @@ namespace WebsiteLaitBrasseur.DAL
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
+                    Debug.Write("SizeDAL / insert / avant parameter"); //DEBUG
                     cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
+                    Debug.Write("SizeDAL / insert / size : " + size); //DEBUG
                     cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
+                    Debug.Write("SizeDAL / insert / price : " + price); //DEBUG
                     cmd.Parameters.AddWithValue("@productID", SqlDbType.Int).Value = productID;
+                    Debug.Write("SizeDAL / insert / id : " + productID); //DEBUG
                     cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
@@ -67,6 +71,7 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 result = 0;
+                Debug.Write("SizeDAL / Exception"); //DEBUG
                 e.GetBaseException();
             }
             finally

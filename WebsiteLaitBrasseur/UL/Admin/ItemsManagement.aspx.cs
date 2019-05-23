@@ -33,6 +33,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
         protected void BindData()
         {
             LP = blProd.GetAllProducts();
+            Debug.Write("Nombre index" + LP.Count());   //DEBUG
             ItemListTable.DataSource = getDataTable(LP);
             ItemListTable.DataBind();
 
@@ -164,14 +165,20 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 try
                 {
                     TextBox newName = ItemListTable.FooterRow.FindControl("TextAddName") as TextBox;
+                    Debug.Write("Name  :" + newName.Text); //DEBUG
                     DropDownList ddlType = ItemListTable.FooterRow.FindControl("DDLProductAddType") as DropDownList;
+                    Debug.Write("Type: " + ddlType.SelectedValue.ToString()); //DEBUG
                     TextBox newSize = ItemListTable.FooterRow.FindControl("TextAddSize") as TextBox;
+                    Debug.Write("Size : " + newSize.Text); //DEBUG
                     TextBox newPrice = ItemListTable.FooterRow.FindControl("TextAddPrice") as TextBox;
+                    Debug.Write("newPrice : " + newPrice.Text); //DEBUG
                     TextBox newStock = ItemListTable.FooterRow.FindControl("TextAddStock") as TextBox;
+                    Debug.Write("stock : " + newStock.Text); //DEBUG
                     DropDownList ddlStatus = ItemListTable.FooterRow.FindControl("DDLAddStatus") as DropDownList;
+                    Debug.Write("ddlStatus : " + ddlStatus.Text); //DEBUG
 
-                    //Issue : product creation with only name/type/size/price/stock/status
-                    //var result = blProd.CreateProduct(newSize.Text, Convert.ToDecimal(newPrice), ID,) ;
+                    Debug.Write("Avant upadte"); //DEBUG
+                     blProd.CreateProduct(Convert.ToInt32(newSize.Text), Convert.ToDecimal(newPrice.Text) , newName.Text , ddlType.Text , "" , "" , "" ,"" ,  Convert.ToInt32(newStock.Text) , Convert.ToInt16(ddlStatus.Text) ) ;
                     ItemListTable.ShowFooter = false;
                     BindData();
                     lblInfo.CssClass = "text-success";
