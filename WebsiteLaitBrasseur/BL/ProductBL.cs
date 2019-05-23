@@ -16,14 +16,14 @@ namespace WebsiteLaitBrasseur.BL
         private readonly ProductDAL DB = new ProductDAL();
         private readonly SizeDAL SB = new SizeDAL();
 
-        public int CreateProduct(int size, decimal price, int productID, List<SizeDTO>details, string name, string type, string producer, 
+        public int CreateProduct(int size, decimal price, List<SizeDTO>details, string name, string type, string producer, 
             string longInfo, string shortInfo, string imgPath,
             int stock, int status)
         {
             int result = 0;
             try
             {                
-                result = DB.Insert(name, type, producer, longInfo, shortInfo, imgPath, stock, status);
+                //result = DB.Insert(name, type, producer, longInfo, shortInfo, imgPath, stock, status);
                 if (result != 0) {
                     foreach (SizeDTO s in details)
                     {

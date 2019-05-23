@@ -14,6 +14,7 @@ namespace WebsiteLaitBrasseur.DAL
         //Get connection string from web.config file and create sql connection
         readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
         /// <summary>
+        /// In current modification
         /// Insert new product into DB
         /// Returns integer value of ProductID
         /// </summary>
@@ -26,15 +27,15 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="stock"></param>
         /// <param name="status"></param>
         /// <returns>Int ProductID</returns>
+        
         [DataObjectMethod(DataObjectMethodType.Insert)]
-        public int Insert(string name, string type, string producer, string longInfo, string shortInfo, string imgPath,
-            int stock, int status)
+        public int Insert(string name, string type, int stock, int status)
         {
+            //Need to be adapt
             int result;
             //no need to explicitely set id as autoincrement is used
-            string queryString = "INSERT INTO dbo.Product(dbo.Product.pName, dbo.Product.pType, dbo.Product.producer, " +
-                "dbo.Product.longInfo, dbo.Product.shortInfo, dbo.Product.imgPath, dbo.Product.stock, dbo.Product.pStatus) " +
-                "VALUES(@name, @type, @producer, @longInfo, @shortInfo, @imgPath, @stock, @status)";
+            string queryString = "INSERT INTO dbo.Product(dbo.Product.pName, dbo.Product.pType, dbo.Product.stock, dbo.Product.pStatus) " +
+                "VALUES(@name, @type, @stock, @status)";
             string queryAutoIncr = "SELECT TOP(1) dbo.Product.productID FROM dbo.Product ORDER BY 1 DESC";
             try
             {
@@ -47,10 +48,6 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@mame", SqlDbType.VarChar).Value = name;
                     cmd.Parameters.AddWithValue("@type", SqlDbType.VarChar).Value = type;
-                    cmd.Parameters.AddWithValue("@producer", SqlDbType.VarChar).Value = producer;
-                    cmd.Parameters.AddWithValue("@longInfo", SqlDbType.VarChar).Value = longInfo;
-                    cmd.Parameters.AddWithValue("@shortInfo", SqlDbType.VarChar).Value = shortInfo;
-                    cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
                     cmd.Parameters.AddWithValue("@stock", SqlDbType.Int).Value = stock;
                     cmd.Parameters.AddWithValue("@status", SqlDbType.Bit).Value = status;
                     cmd.CommandType = CommandType.Text;

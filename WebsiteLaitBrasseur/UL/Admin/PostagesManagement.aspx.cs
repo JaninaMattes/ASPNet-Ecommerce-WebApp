@@ -68,6 +68,33 @@ namespace WebsiteLaitBrasseur.UL.Admin
         //    //-RowUpdating
         //    //-RowDeleting
 
+
+        protected void CancelInsertButton_Click(object sender, EventArgs e)
+        {
+            PostageTable.ShowFooter = false;
+            BindData();
+        }
+
+
+        protected void AddButton_Click(object sender, EventArgs e)
+        {
+            PostageTable.ShowFooter = true;
+            BindData();
+        }
+
+        //Row Deleting
+        protected void PostageTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            //Index of grid recuperation
+            int index = Convert.ToInt32(e.RowIndex);
+
+            //Fake deletion
+            PostageTable.Rows[index].Visible = false;
+            lblInfo.CssClass = "text-info";
+            lblInfo.Text = "Not real deleting : The row is now invisible";
+            lblError.Text = "";
+        }
+
         ////Row Editing 
         protected void PostageTable_RowEditing(object sender, GridViewEditEventArgs e)
         {
@@ -91,7 +118,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             try
             {
-                //DataTable and DataRow initiallization
                 int ID = Convert.ToInt16(PostageTable.Rows[e.RowIndex].Cells[0].Text);
                 TextBox editCompany = PostageTable.Rows[e.RowIndex].FindControl("TextCompanyName") as TextBox;
                 TextBox editType = PostageTable.Rows[e.RowIndex].FindControl("TextType") as TextBox;
@@ -120,32 +146,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
        }
 
 
-        //Row Deleting
-        protected void PostageTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            //Index of grid recuperation
-            int index = Convert.ToInt32(e.RowIndex);
-
-            //Fake deletion
-            PostageTable.Rows[index].Visible = false;
-            lblInfo.CssClass = "text-info";
-            lblInfo.Text = "Not real deleting : The row is now invisible";
-            lblError.Text = "";
-        }
-
-
-        protected void CancelInsertButton_Click(object sender, EventArgs e)
-        {
-            PostageTable.ShowFooter = false;
-            BindData();
-        }
-        
-
-        protected void AddButton_Click(object sender, EventArgs e)
-        {
-            PostageTable.ShowFooter = true;
-            BindData();
-        }
 
         protected void PostageTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {

@@ -4,19 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
+using System.Data;
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class OverviewPage : System.Web.UI.Page
     {
+        List<ProductDTO> LP = new List<ProductDTO>();
+        List<SizeDTO> LS = new List<SizeDTO>();
+        ProductBL blProd = new ProductBL();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             
             if (!IsPostBack)
             {
-                ProductBL db = new ProductBL();
                 // get id from query string and try to parse
                 var type = Request.QueryString["productType"];
                 if (!string.IsNullOrEmpty(type))
@@ -25,17 +29,10 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     System.Diagnostics.Debug.WriteLine("debugging--"+ type);
                     if (!IsPostBack)
                     {
-                        // retrieve a list of filtered prodcuts from the db
-                        var products = db.GetProducts(type);                                            
-                        if (products != null)
+                        // retrieve a list of filtered prodcuts from the blProd
+                        BindDataByType(type);                                           
+                        if (LP != null)
                         {
-                            for (int i = 0; i < products.Count(); i++)
-                            {
-                                //debugging purpose, will later remove
-                                System.Diagnostics.Debug.WriteLine("debugging ProductID--" + products[i].GetId());
-                            }
-                            ImageRepeater.DataSource = products;
-                            ImageRepeater.DataBind();
                             Subtitle_Warn.Text = "A selection of our best " + type + " products.";
                         }
                         else
@@ -46,12 +43,10 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 }
                 else
                 {
-                    // retrieve a list of all prodcuts from the db
-                    var products = db.GetAllProducts();
-                    if (products != null)
+                    // retrieve a list of all prodcuts from the blProd
+                    BindDataAll();
+                    if (LP != null)
                     {
-                        ImageRepeater.DataSource = products;
-                        ImageRepeater.DataBind();
                         Subtitle_Warn.Text = "A hand selected overview of all seasonal available products.";
                     }
                 }
@@ -60,12 +55,61 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void imgCommand(object sender, CommandEventArgs e)
         {
-            Response.Redirect("/UL/Customer/DetailPage.aspx?id=" + e.CommandArgument);
+            Response.Redirect("/UL/Customer/DetailPageCustomer.aspx?id=" + e.CommandArgument);
         }
 
         protected void ImageRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
 
+        }
+     
+
+        protected void BindDataAll()
+        {
+            LP = blProd.GetAllProducts();
+            ImageRepeater.DataSource = getDataTable();
+            ImageRepeater.DataBind();
+        }
+
+        protected void BindDataByType(string type)
+        {
+            LP = blProd.GetProducts(type);
+            ImageRepeater.DataSource = getDataTable();
+            ImageRepeater.DataBind();
+        }
+
+        protected DataTable getDataTable()
+        {
+            //DataTable initialization
+            DataTable dtProduct = new DataTable();
+
+            //Colmuns declaration
+            dtProduct.Columns.Add("ID");
+            dtProduct.Columns.Add("ImgPath");
+            dtProduct.Columns.Add("Name");
+            dtProduct.Columns.Add("ShortInfo");
+            dtProduct.Columns.Add("Size");
+            dtProduct.Columns.Add("Price");
+            dtProduct.Columns.Add("Status");
+
+            for (int i = 0; i < LP.Count; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    LS = LP[i].GetDetails();
+                    DataRow dr = dtProduct.NewRow();
+                    dr["ID"] = LP[i].GetId();
+                    dr["ImgPath"] = LP[i].GetImgPath();
+                    dr["Name"] = LP[i].GetName();
+                    dr["ShortInfo"] = LP[i].GetShortInfo();
+                    dr["Price"] = LS[j].GetPrice();
+                    dr["Size"] = LS[j].GetSize();
+                    dr["Status"] = LP[i].GetStatus();
+
+                    dtProduct.Rows.Add(dr);
+                }
+            }
+            return dtProduct;
         }
     }
 }

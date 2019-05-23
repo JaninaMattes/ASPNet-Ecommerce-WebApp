@@ -28,6 +28,7 @@
                         TemplateField
                             ItemTemplate
                             EditItemField
+                            FooterTemplate
                 -->
                 <asp:GridView id="PostageTable" runat="server"  
                     GridLines="None" 
@@ -78,7 +79,7 @@
                                     <asp:TextBox id="TextAddType" runat="server" Text="Type"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="TypeNameReqField" runat="server" ControlToValidate="TextAddType" ValidationGroup="add" ErrorMessage="Type is required" CssClass="text-danger"></asp:RequiredFieldValidator><br />
 
-                                </FooterTemplate>
+                               </FooterTemplate>
 
                             </asp:TemplateField>
 
@@ -99,7 +100,6 @@
                                     <asp:TextBox id="TextAddDeliveryTime" runat="server" Text="DeliveryTime"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="DeliveryTimeReqField" runat="server" ControlToValidate="TextAddDeliveryTime" ValidationGroup="add" ErrorMessage="DeliveryTime is required" CssClass="text-danger"></asp:RequiredFieldValidator><br />
                                     <asp:RegularExpressionValidator ID="DeliveryTimeRegValid" runat="server" ControlToValidate="TextAddDeliveryTime" ValidationExpression="[0-9]*" ErrorMessage="Please enter a valid number"  ValidationGroup="add" CssClass="text-danger" ></asp:RegularExpressionValidator><br />
-
                                 </FooterTemplate>
 
                             </asp:TemplateField>   
@@ -180,10 +180,8 @@
 
                 <!--Add a Postage option -->
                     <!--Row with TextBox for informations about the new Postage option and "Add" button /Validators below -->
-                <div class="row">
-                    <div class="col-md-3">
+                <div class=" col-md-3 row">
                         <asp:Button ID="AddButton" ToolTip="Add Shippment."  runat="server" Text="Add" OnClick="AddButton_Click" CssClass="btn btn-success"/>
-                    </div>
                 </div>
 
                 <!--Validators for the new postage option informations -->
