@@ -16,11 +16,14 @@ namespace WebsiteLaitBrasseur.BL
         private readonly ProductDAL DB = new ProductDAL();
         private readonly SizeDAL SB = new SizeDAL();
 
+
         public int CreateProduct(int size, decimal price, string name, string type, string producer, string longInfo, string shortInfo, string imgPath,
+
             int stock, int status)
         {
             int result = 0;
             try
+
             {     
                 //Product part
                 result = DB.Insert(name, type, producer, longInfo, shortInfo, imgPath, stock, status);
@@ -29,6 +32,81 @@ namespace WebsiteLaitBrasseur.BL
                 //Size Part
                 result = SB.Insert(size , price , result);
                 if (result == 0) { Debug.Print("Error, the returned ID is " + result); }
+
+
+            catch (Exception e)
+            {
+                Debug.Print("Exception in ProductBL");
+                e.GetBaseException();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Using this function means that
+        /// later on the fields in the DB need 
+        /// to be explicitly updated.
+        /// </summary>
+        /// <param name="details"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public int CreateProduct(List<SizeDTO> details, string name, string type, int status)
+        {
+            int result = 0;
+            try
+            {
+                //if this function is used, the fields need to be updated later
+                result = DB.Insert(name, type, " ", " ", " ", " ", 0, status);
+                if (result != 0)
+                {
+                    foreach (SizeDTO s in details)
+                    {
+                        SB.Insert(s.GetSize(), s.GetPrice(), result);
+                    }
+                }
+                else
+                {
+                    Debug.Print("Error, the returned ID is " + result);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception in ProductBL");
+                e.GetBaseException();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Using this function means that
+        /// later on the fields in the DB need 
+        /// to be explicitly updated.
+        /// </summary>
+        /// <param name="details"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public int CreateProduct(List<SizeDTO> details, string shortInfo, string longInfo, string producer, string imgPath)
+        {
+            int result = 0;
+            try
+            {
+                //if this function is used, the fields need to be updated later
+                result = DB.Insert(" ", " ", producer, longInfo, shortInfo, imgPath, 0, 0);
+                if (result != 0)
+                {
+                    foreach (SizeDTO s in details)
+                    {
+                        SB.Insert(s.GetSize(), s.GetPrice(), result);
+                    }
+                }
+                else
+                {
+                    Debug.Print("Error, the returned ID is " + result);
+                }
 
             }
             catch (Exception e)
@@ -223,6 +301,68 @@ namespace WebsiteLaitBrasseur.BL
         {
             int result = 0;
             result = DB.UpdateAll(productID, name, type, producer, longInfo, shortInfo, imgPath, stock, status);
+            return result;
+        }
+
+        /// <summary>
+        /// Update only certain information
+        /// the return value should be > 0 if 
+        /// the changes were successfull.
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="details"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public int Update(int productID, List<SizeDTO> details, string name, string type, int status)
+        {
+            ProductDTO product = new ProductDTO();
+            int result = 0;
+            try
+            {                
+                result = DB.Update(productID, name, type, status);
+                product = DB.FindBy(result);
+                    foreach (SizeDTO s in details)
+                {
+                    result = SB.UpdateSize(s.GetID(), s.GetSize(), s.GetPrice(), product.GetId());
+                }                
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }           
+            return result;
+        }
+
+        /// <summary>
+        /// Update only certain information
+        /// the return value should be > 0 if 
+        /// the changes were successfull.
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="details"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public int Update(int productID, List<SizeDTO> details, string shortInfo, string longInfo, string producer, string imgPath)
+        {
+            ProductDTO product = new ProductDTO();
+            int result = 0;
+            try
+            {
+                result = DB.Update(productID, shortInfo, longInfo, producer, imgPath);
+                product = DB.FindBy(result);
+                foreach (SizeDTO s in details)
+                {
+                    result = SB.UpdateSize(s.GetID(), s.GetSize(), s.GetPrice(), product.GetId());
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
             return result;
         }
 
