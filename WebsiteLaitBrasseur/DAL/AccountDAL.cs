@@ -15,7 +15,7 @@ namespace WebsiteLaitBrasseur.DAL
     /// </summary>
 
     [DataObject(true)]
-    public class AccountDAL
+    public class AccountDAL : IAccountDataAccess
     {
         //Get connection string from web.config file and create sql connection
         readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);

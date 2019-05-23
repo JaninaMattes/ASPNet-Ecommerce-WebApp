@@ -12,7 +12,7 @@ using WebsiteLaitBrasseur.BL;
 namespace WebsiteLaitBrasseur.DAL
 {
     [DataObject(true)]
-    public class InvoiceDAL
+    public class InvoiceDAL: IInvoiceDataAccess
     {
         //Get connection string from web.config file and create sql connection
         readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);

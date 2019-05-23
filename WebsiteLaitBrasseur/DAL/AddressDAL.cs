@@ -11,7 +11,7 @@ using WebsiteLaitBrasseur.BL;
 namespace WebsiteLaitBrasseur.DAL
 {
     [DataObject(true)]
-    public class AddressDAL
+    public class AddressDAL: IAddressDataAccess
     {
         //Get connection string from web.config file and create sql connection
         readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);

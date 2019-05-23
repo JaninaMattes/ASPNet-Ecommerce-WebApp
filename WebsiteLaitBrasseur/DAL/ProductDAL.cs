@@ -9,7 +9,7 @@ using WebsiteLaitBrasseur.BL;
 namespace WebsiteLaitBrasseur.DAL
 {
     [DataObject(true)]
-    public class ProductDAL
+    public class ProductDAL: IProductDataAccess
     {
         //Get connection string from web.config file and create sql connection
         readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
@@ -175,7 +175,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="status"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int Update2(int id, string name, string type, int stock, int status)
+        public int Update(int id, string name, string type, int stock, int status)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Product SET pName = @name, pType = @type, stock=@stock, pStatus = @status WHERE productID = @id";

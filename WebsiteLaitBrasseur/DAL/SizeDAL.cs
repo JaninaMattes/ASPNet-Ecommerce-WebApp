@@ -9,7 +9,7 @@ using WebsiteLaitBrasseur.BL;
 namespace WebsiteLaitBrasseur.DAL
 {
     [DataObject(true)]
-    public class SizeDAL
+    public class SizeDAL: ISizeDataAccess
     {
         //Get connection string from web.config file and create sql connection
         readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);

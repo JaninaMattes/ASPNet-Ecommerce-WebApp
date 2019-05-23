@@ -172,6 +172,7 @@
     <Compile Include="BL\ProductSelectionDTO.cs" />
     <Compile Include="BL\ShippmentDTO.cs" />
     <Compile Include="DAL\CityDAL.cs" />
+    <Compile Include="DAL\IAccountDataAccess.cs" />
     <Compile Include="DAL\InvoiceDAL.cs" />
     <Compile Include="DAL\PaymentDAL.cs" />
     <Compile Include="DAL\PayPalDAL.cs" />
