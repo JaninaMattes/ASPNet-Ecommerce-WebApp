@@ -56,7 +56,7 @@
                     </asp:RequiredFieldValidator>
                     </br>
 
-                    <p>Total Amount:</p><p><asp:Label ID="totalAmount" runat="server" Text="" CssClass="text-info"></asp:Label></p><br />
+                    <p>Total Amount:</p><p><asp:Label ID="totalAmount" runat="server" Text="" CssClass="text-info"></asp:Label> AUS$</p><br />
                     <div class ="col-md-6">                                              
                     <!--Button to add products to shopping list-->
                     Add a product to the shopping cart.<br />                   

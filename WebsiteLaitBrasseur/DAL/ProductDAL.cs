@@ -250,6 +250,47 @@ namespace WebsiteLaitBrasseur.DAL
             return result;
         }
 
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        /// 
+        [DataObjectMethod(DataObjectMethodType.Update)]
+        public int UpdateSecondary(int id, string shortInfo, string longInfo, string producer)
+        {
+            int result = 0;
+            string queryString = "UPDATE dbo.Product SET shortInfo = @shortInfo, longInfo = @longInfo, producer = @producer " +
+                "WHERE productID = @id";
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                //update into database where status = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@shortInfo", shortInfo);
+                    cmd.Parameters.AddWithValue("@longInfo", longInfo);
+                    cmd.Parameters.AddWithValue("@producer", producer);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return result;
+        }
+
 
         /// <summary>
         /// Update the stock of a product.
