@@ -20,13 +20,13 @@
         <!--START Product CardView-->
             <div id="cardView" >
             <div id="img-cardview"  >
-                <asp:ImageButton id="img1" runat="server" class="img-fluid justify-content-center"  ToolTip="Select a product" ImageUrl='<%# Eval("imgPath") %>'  OnCommand="imgCommand" CommandArgument='<%# Eval("Id") %>'/>      
+                <asp:ImageButton id="img1" runat="server" class="img-fluid justify-content-center"  ToolTip="Select a product" ImageUrl='<%# Eval("imgPath") %>'   CommandArgument='<%# Eval("ID") %>'  OnCommand="imgCommand"/> 
             </div>
             <div id="container1" class="container clearfix">
             <div class="profile-usertitle">
 				<div id="information1" class="label label-default-large">
-				    <h4><b><asp:Label id="Title" Text="" runat="server" /><%# Eval("ProductName")%></b></h4>
-                    <p><b><asp:Label id="Subtitle" Text="" runat="server" /><%# Eval("ShortDescription")%></b></p>
+				    <h4><b><asp:Label id="Title" Text="" runat="server" /><%# Eval("Name")%></b></h4>
+                    <p><b><asp:Label id="Subtitle" Text="" runat="server" /><%# Eval("ShortInfo")%></b></p>
 			    </div>
                 <div id="card-footer1" class="card-footer">
                     <hr/>
@@ -36,9 +36,9 @@
                             <th><p>Price</p></th>
                             <td><asp:Label id="LabelPrice" Text="" runat="server"/><%# Eval("Price")%> €</td>
                             <th><p>Size</p></th>
-                            <td><asp:Label id="LabelAmount" Text="" runat="server"/><%# Eval("Unit")%> </td>
+                            <td><asp:Label id="LabelSize" Text="" runat="server"/><%# Eval("Size")%> </td>
                             <th><p>Status</p></th>
-                            <td><asp:Label id="LabelAvailable" Text="" runat="server" style="color:aquamarine"/><%# Eval("Available")%></td> 
+                            <td><asp:Label id="LabelAvailable" Text="" runat="server" style="color:aquamarine"/><%# Eval("Status")%></td> 
                         </tr>
                     </table>
                     <!--END Footer CardView-->

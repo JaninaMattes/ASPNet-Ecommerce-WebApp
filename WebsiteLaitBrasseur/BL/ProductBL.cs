@@ -23,7 +23,7 @@ namespace WebsiteLaitBrasseur.BL
             int result = 0;
             try
             {                
-                result = DB.Insert(name, type, producer, longInfo, shortInfo, imgPath, stock, status);
+                //result = DB.Insert(name, type, producer, longInfo, shortInfo, imgPath, stock, status);
                 if (result != 0) {
                     foreach (SizeDTO s in details)
                     {
