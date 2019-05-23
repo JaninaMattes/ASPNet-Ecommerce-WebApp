@@ -81,6 +81,6 @@
          </div>
         
             <div class="col-md-9">
-                <asp:Label ID="Label1" runat="server" CssClass="text-info"></asp:Label>
+                <asp:Label ID="lblRegResult" runat="server" CssClass="text-info"></asp:Label>
             </div>
 </asp:Content>

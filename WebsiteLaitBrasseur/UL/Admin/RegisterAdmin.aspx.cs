@@ -26,12 +26,13 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 var isAdmin = 1;
                 var status = 0; //per default not suspendet user
                 var imgPath = ""; //if there is non
+                lblRegResult.Text = "";
 
-                   var check = bl.CreateAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
+                var check = bl.CreateAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
                    TextLastName.Text.Trim(), TextBirthday.Text.Trim(), TextPhone.Text.Trim(), imgPath, status, isAdmin);
 
                 switch (check)
-                {
+                {                
                     case 0:
                         lblRegResult.CssClass = "text-success";
                         lblRegResult.Text = "Password and email are correct.";
