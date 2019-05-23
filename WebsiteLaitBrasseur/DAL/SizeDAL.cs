@@ -45,13 +45,9 @@ namespace WebsiteLaitBrasseur.DAL
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    Debug.Write("SizeDAL / insert / avant parameter"); //DEBUG
                     cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
-                    Debug.Write("SizeDAL / insert / size : " + size); //DEBUG
                     cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
-                    Debug.Write("SizeDAL / insert / price : " + price); //DEBUG
                     cmd.Parameters.AddWithValue("@productID", SqlDbType.Int).Value = productID;
-                    Debug.Write("SizeDAL / insert / id : " + productID); //DEBUG
                     cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                 }
@@ -114,6 +110,40 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return result;
         }
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
+        public int UpdateSize2(int productID, int size, decimal price)
+        {
+            int result = 0;
+            string queryString = "UPDATE dbo.Size SET unitSize = @size, unitPrice = @price WHERE productID = @id";
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                //update into database where email = XY to status suspendet(false) or enabled(true) 
+                //e.g. after three false log in attempts / upaied bills
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = productID;
+                    cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
+                    cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
+                    cmd.CommandType = CommandType.Text;
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return result;
+        }
+
 
         /// <summary>
         /// Find one specific entrance in the DB

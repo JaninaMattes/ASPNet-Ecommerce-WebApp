@@ -22,10 +22,8 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             if (!IsPostBack)
             {
-                //Initialize Data elements (Gridview / DataSource / session variable)
+                //Initialize Data elements (Gridview / DataSource )
                 BindData();
-
-                //BindItemsLabel();
             }
         }
 
@@ -33,10 +31,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
         protected void BindData()
         {
             LP = blProd.GetAllProducts();
-            Debug.Write("Nombre index" + LP.Count());   //DEBUG
             ItemListTable.DataSource = getDataTable(LP);
             ItemListTable.DataBind();
-
+            lblItemList.Text ="There is " + ItemListTable.Rows.Count + " items in the list.";
+         
         }
 
 
@@ -56,9 +54,9 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
             for (int i = 0; i < LP.Count; i++)
             {
-                for (int j = 0; j < 2; j++)
-                {
-                    LS = LP[i].GetDetails();
+                LS = LP[i].GetDetails();
+                for (int j = 0; j < LS.Count; j++)
+                {                  
                     DataRow dr = dtItem.NewRow();
                     dr["ID"] = LP[i].GetId();
                     dr["Name"] = LP[i].GetName();
@@ -132,14 +130,15 @@ namespace WebsiteLaitBrasseur.UL.Admin
             try
             {
                 int ID = Convert.ToInt16(ItemListTable.Rows[e.RowIndex].Cells[0].Text);
-                TextBox newName = ItemListTable.Rows[e.RowIndex].FindControl("TextName") as TextBox;
+                TextBox newName = ItemListTable.Rows[e.RowIndex].FindControl("TextEditProductName") as TextBox;
                 DropDownList ddlType = ItemListTable.Rows[e.RowIndex].FindControl("DDLProductType") as DropDownList;
-                TextBox newSize = ItemListTable.Rows[e.RowIndex].FindControl("TextSize") as TextBox;
-                TextBox newPrice = ItemListTable.Rows[e.RowIndex].FindControl("TextPrice") as TextBox;
-                TextBox newStock = ItemListTable.Rows[e.RowIndex].FindControl("TextStock") as TextBox;
+                TextBox newSize = ItemListTable.Rows[e.RowIndex].FindControl("TextEditSize") as TextBox;
+                TextBox newPrice = ItemListTable.Rows[e.RowIndex].FindControl("TextEditPrice") as TextBox;
+                TextBox newStock = ItemListTable.Rows[e.RowIndex].FindControl("TextEditStock") as TextBox;
                 DropDownList ddlStatus = ItemListTable.Rows[e.RowIndex].FindControl("DDLStatus") as DropDownList;
 
-                //
+
+                blProd.Update2(ID,Convert.ToInt32(newSize.Text), Convert.ToDecimal(newPrice.Text), newName.Text, ddlType.Text, Convert.ToInt32(newStock.Text), Convert.ToInt16(ddlStatus.Text));
 
                 lblInfo.CssClass = "text-success";
                 lblInfo.Text = "Updated achived with success";
@@ -165,22 +164,15 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 try
                 {
                     TextBox newName = ItemListTable.FooterRow.FindControl("TextAddName") as TextBox;
-                    Debug.Write("Name  :" + newName.Text); //DEBUG
                     DropDownList ddlType = ItemListTable.FooterRow.FindControl("DDLProductAddType") as DropDownList;
-                    Debug.Write("Type: " + ddlType.SelectedValue.ToString()); //DEBUG
                     TextBox newSize = ItemListTable.FooterRow.FindControl("TextAddSize") as TextBox;
-                    Debug.Write("Size : " + newSize.Text); //DEBUG
                     TextBox newPrice = ItemListTable.FooterRow.FindControl("TextAddPrice") as TextBox;
-                    Debug.Write("newPrice : " + newPrice.Text); //DEBUG
                     TextBox newStock = ItemListTable.FooterRow.FindControl("TextAddStock") as TextBox;
-                    Debug.Write("stock : " + newStock.Text); //DEBUG
                     DropDownList ddlStatus = ItemListTable.FooterRow.FindControl("DDLAddStatus") as DropDownList;
-                    Debug.Write("ddlStatus : " + ddlStatus.Text); //DEBUG
 
-                    Debug.Write("Avant upadte"); //DEBUG
-                     blProd.CreateProduct(Convert.ToInt32(newSize.Text), Convert.ToDecimal(newPrice.Text) , newName.Text , ddlType.Text , "" , "" , "" ,"" ,  Convert.ToInt32(newStock.Text) , Convert.ToInt16(ddlStatus.Text) ) ;
-                    ItemListTable.ShowFooter = false;
-                    BindData();
+
+
+                    blProd.CreateProduct2(Convert.ToInt32(newSize.Text), Convert.ToDecimal(newPrice.Text) , newName.Text , ddlType.Text , "" , "" , "" ,"" ,  Convert.ToInt32(newStock.Text) , Convert.ToInt16(ddlStatus.Text) ) ;
                     lblInfo.CssClass = "text-success";
                     lblInfo.Text = "insert achieved with success";
                     lblError.Text = "";
@@ -192,6 +184,8 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     lblError.Text = "DataBase error";
                     lblInfo.Text = "";
                 }
+                ItemListTable.ShowFooter = false;
+                BindData();
             }
         }
     }

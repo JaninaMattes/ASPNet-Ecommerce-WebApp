@@ -94,20 +94,17 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
             for (int i = 0; i < LP.Count; i++)
             {
-                for (int j = 0; j < 2; j++)
-                {
-                    LS = LP[i].GetDetails();
+                LS = LP[i].GetDetails();
                     DataRow dr = dtProduct.NewRow();
                     dr["ID"] = LP[i].GetId();
                     dr["ImgPath"] = LP[i].GetImgPath();
                     dr["Name"] = LP[i].GetName();
                     dr["ShortInfo"] = LP[i].GetShortInfo();
-                    dr["Price"] = LS[j].GetPrice();
-                    dr["Size"] = LS[j].GetSize();
-                    dr["Status"] = LP[i].GetStatus();
-
+                    //dr["Price"] = LS[0].GetPrice();
+                    //dr["Size"] = LS[0].GetSize();
+                    if (LP[i].GetStatus() == 1) { dr["Status"] = "Available"; }
+                    else { dr["Status"] = "Unavailable"; }
                     dtProduct.Rows.Add(dr);
-                }
             }
             return dtProduct;
         }

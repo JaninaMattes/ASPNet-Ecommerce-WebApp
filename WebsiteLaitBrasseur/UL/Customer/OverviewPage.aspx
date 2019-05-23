@@ -33,10 +33,6 @@
                     <!--START Footer CardView-->
                     <table style="width:100%; margin-left: 0px; background-color: white">
                         <tr>
-                            <th><p>Price</p></th>
-                            <td><asp:Label id="LabelPrice" Text="" runat="server"/><%# Eval("Price")%> €</td>
-                            <th><p>Size</p></th>
-                            <td><asp:Label id="LabelSize" Text="" runat="server"/><%# Eval("Size")%> </td>
                             <th><p>Status</p></th>
                             <td><asp:Label id="LabelAvailable" Text="" runat="server" style="color:aquamarine"/><%# Eval("Status")%></td> 
                         </tr>

@@ -14,67 +14,6 @@ namespace WebsiteLaitBrasseur.DAL
         //Get connection string from web.config file and create sql connection
         readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
        
-       /// <summary>
-       /// 
-       /// </summary>
-       /// <param name="name"></param>
-       /// <param name="type"></param>
-       /// <param name="status"></param>
-       /// <returns></returns>
-
-        [DataObjectMethod(DataObjectMethodType.Insert)]
-        public int Insert(string name, string type, string producer, string longInfo, string shortInfo, string imgPath,
-            int stock, int status)
-        { 
-            int result;
-            //no need to explicitely set id as autoincrement is used
-            string queryString = "INSERT INTO dbo.Product(dbo.Product.pName, dbo.Product.pType, dbo.Product.producer, " +
-                "dbo.Product.longInfo, dbo.Product.shortInfo, dbo.Product.imgPath, dbo.Product.stock, dbo.Product.pStatus) " +
-                "VALUES(@name, @type, @producer, @longInfo, @shortInfo, @imgPath, @stock, @status)";
-            string queryAutoIncr = "SELECT TOP(1) dbo.Product.productID FROM dbo.Product ORDER BY 1 DESC";
-            try
-            {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                //insert into database
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@mame", SqlDbType.VarChar).Value = name;
-                    cmd.Parameters.AddWithValue("@type", SqlDbType.VarChar).Value = type;
-                    cmd.Parameters.AddWithValue("@producer", SqlDbType.VarChar).Value = producer;
-                    cmd.Parameters.AddWithValue("@longInfo", SqlDbType.VarChar).Value = longInfo;
-                    cmd.Parameters.AddWithValue("@shortInfo", SqlDbType.VarChar).Value = shortInfo;
-                    cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
-                    cmd.Parameters.AddWithValue("@stock", SqlDbType.Int).Value = stock;
-                    cmd.Parameters.AddWithValue("@status", SqlDbType.Bit).Value = status;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                }
-                ///find the last manipulated id due to autoincrement and return it
-                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
-                {
-                    SqlDataReader reader = command.ExecuteReader();
-                    //won't need a while, since it will only retrieve one row
-                    reader.Read();
-                    //this is the id of the newly created data field
-                    result = Convert.ToInt32(reader["productID"]);
-                    Debug.Print("ProductDAL: /Insert ID/ " + result.ToString());
-                }
-                return result;
-            }
-            catch (Exception e)
-            {
-                result = 0;
-                e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return result;
-        }
 
         /// <summary>
         /// In current modification
@@ -92,7 +31,8 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns>Int ProductID</returns>
         /// 
         [DataObjectMethod(DataObjectMethodType.Insert)]
-        public int Insert(string name, string type, string producer, string longInfo, string shortInfo, string imgPath, int stock, int status)
+        public int Insert(string name, string type, string producer, string longInfo, string shortInfo, string imgPath,
+            int stock, int status)
         { 
             //Need to be adapt
             int result;
@@ -110,7 +50,6 @@ namespace WebsiteLaitBrasseur.DAL
                 //insert into database
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    Debug.Write("SizeDAL / avant parameter"); //DEBUG
                     cmd.Parameters.AddWithValue("@name", SqlDbType.VarChar).Value = name;
                     cmd.Parameters.AddWithValue("@type", SqlDbType.VarChar).Value = type;
                     cmd.Parameters.AddWithValue("@producer", SqlDbType.VarChar).Value = producer;
@@ -146,6 +85,7 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return result;
         }
+
 
         /// <summary>
         /// Change the status of a product from available to unavailable
@@ -207,6 +147,50 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@type", type);
+                    cmd.Parameters.AddWithValue("@status", status);
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.CommandType = CommandType.Text;
+                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return result;
+        }
+
+
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="stock"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Update)]
+        public int Update2(int id, string name, string type, int stock, int status)
+        {
+            int result = 0;
+            string queryString = "UPDATE dbo.Product SET pName = @name, pType = @type, stock=@stock, pStatus = @status WHERE productID = @id";
+            try
+            {
+                if (connection.State == ConnectionState.Closed)
+                {
+                    connection.Open();
+                }
+                //update into database where status = XY
+                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                {
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@type", type);
+                    cmd.Parameters.AddWithValue("@stock", stock);
                     cmd.Parameters.AddWithValue("@status", status);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.CommandType = CommandType.Text;

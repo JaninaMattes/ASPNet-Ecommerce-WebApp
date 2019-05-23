@@ -17,22 +17,50 @@ namespace WebsiteLaitBrasseur.BL
         private readonly SizeDAL SB = new SizeDAL();
 
 
-        public int CreateProduct(int size, decimal price, string name, string type, string producer, string longInfo, string shortInfo, string imgPath,
-
+        public int CreateProduct(int size, decimal price, List<SizeDTO> details, string name, string type, string producer, string longInfo, string shortInfo, string imgPath,
             int stock, int status)
         {
             int result = 0;
             try
 
-            {     
+            {
                 //Product part
                 result = DB.Insert(name, type, producer, longInfo, shortInfo, imgPath, stock, status);
-                if (result == 0) { Debug.Print("Error, the returned ID is " + result); }
+                if (result != 0)
+                {
+                    foreach (SizeDTO s in details)
+                    {
+                        SB.Insert(s.GetSize(), s.GetPrice(), result);
+                    }
+                }
+                else
+                {
+                    Debug.Print("Error, the returned ID is " + result);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception in ProductBL");
+                e.GetBaseException();
+            }
+            return result;
+        }
+
+
+        public int CreateProduct2(int size, decimal price, string name, string type, string producer, string longInfo, string shortInfo, string imgPath, int stock, int status)
+        {
+            int result = 0;
+            try
+
+            {
+                //Product part
+                result = DB.Insert(name, type, producer, longInfo, shortInfo, imgPath, stock, status);
+                if (result == 0) { Debug.Print("Error in product insertion, the returned ID is " + result); }
 
                 //Size Part
-                result = SB.Insert(size , price , result);
-                if (result == 0) { Debug.Print("Error, the returned ID is " + result); }
-
+                result = SB.Insert(size, price, result);
+                if (result == 0) { Debug.Print("Error in size insertion, the returned ID is " + result); }
+            }
 
             catch (Exception e)
             {
@@ -41,6 +69,9 @@ namespace WebsiteLaitBrasseur.BL
             }
             return result;
         }
+
+
+
 
         /// <summary>
         /// Using this function means that
@@ -332,6 +363,62 @@ namespace WebsiteLaitBrasseur.BL
             {
                 e.GetBaseException();
             }           
+            return result;
+        }
+
+        /// <summary>
+        /// Update only certain information
+        /// the return value should be > 0 if 
+        /// the changes were successfull.
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="size"></param>
+        /// <param name="price"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public int Update2(int productID, int size, decimal price, string name, string type, int stock, int status)
+        {
+            ProductDTO product = new ProductDTO();
+            int result = 0;
+            try
+            {
+                result = DB.Update2(productID, name, type,stock, status);
+                SB.UpdateSize2(productID, size, price);
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return result;
+        }
+
+
+
+        /// <summary>
+        /// Update only certain information
+        /// the return value should be > 0 if 
+        /// the changes were successfull.
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public int UpdateItem(int productID, string name, string type, int status)
+        {
+            ProductDTO product = new ProductDTO();
+            int result = 0;
+            try
+            {
+                result = DB.Update(productID, name, type, status);
+                product = DB.FindBy(result);
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
             return result;
         }
 

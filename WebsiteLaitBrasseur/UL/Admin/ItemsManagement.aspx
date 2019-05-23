@@ -68,15 +68,15 @@
 
                                 <EditItemTemplate>
                                     <asp:DropDownList ID="DDLProductType" runat="server"  >
-                                        <asp:ListItem Value="1" Selected="True" Text="Cheese"></asp:ListItem>
-                                        <asp:ListItem Value="2" Text="Beer"></asp:ListItem>
+                                        <asp:ListItem Value="Cheese" Selected="True" Text="Cheese"></asp:ListItem>
+                                        <asp:ListItem Value="Beer" Text="Beer"></asp:ListItem>
                                     </asp:DropDownList>
                                 </EditItemTemplate>
                            
                                 <FooterTemplate>
                                     <asp:DropDownList ID="DDLProductAddType" runat="server"  >
-                                        <asp:ListItem Value="1" Selected="True" Text="Cheese"></asp:ListItem>
-                                        <asp:ListItem Value="2" Text="Beer"></asp:ListItem>
+                                        <asp:ListItem Value="Cheese" Selected="True" Text="Cheese"></asp:ListItem>
+                                        <asp:ListItem Value="Beer" Text="Beer"></asp:ListItem>
                                     </asp:DropDownList>
                                 </FooterTemplate>
                             </asp:templateField>
