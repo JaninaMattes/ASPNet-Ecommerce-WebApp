@@ -15,11 +15,11 @@
 
             <!--Image informations  -->
             <div class="col-md-6">
-                <asp:Image ID="DestinationImg" runat="server" ImageUrl="~/Images/photoIcon.png" ToolTip="Product Image." Width="350" Height="250px"/><br /><br />
+                <asp:Image ID="DestinationImg" runat="server" AlternateText="Format issue" ImageUrl="~/Images/laitBrasseur.jpg" ToolTip="Product Image." Width="350px" Height="250px"/><br /><br />
 
                 <!--TextBox for add a link to the new image + button to upload it -->
                 <asp:TextBox ID="TextImageLink" runat="server" Text="Image link" CssClass="form-control"></asp:TextBox> <br />
-                <asp:Button ID="UploadButton" ToolTip="Update image." runat="server"  Text="Upload Image" CssClass="btn btn-primary" /><br />
+                <asp:Button ID="UploadButton" ToolTip="Update image." runat="server"  Text="Upload Image" OnClick="UploadButton_Click" CssClass="btn btn-primary" /><br />
             </div>
             <br />
             
@@ -47,7 +47,7 @@
                 <label for="TextShortDescription" class="control-label  text-info">Short Description</label><br />
                 <asp:TextBox ID="TextShortDescription" ToolTip="Update desription."  runat="server"  Text="" CssClass="form-control" style="width:400px;height:150px"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="ShortReqField" runat="server" ControlToValidate="TextShortDescription" ErrorMessage="Short description is required" CssClass="text-danger"></asp:RequiredFieldValidator><br /><br/>
-                <asp:Button ID="SaveButton" ToolTip="Save changes."  runat="server" Text="Save changes" CssClass="btn btn-success" /> 
+                <asp:Button ID="SaveButton" ToolTip="Save changes."  runat="server" Text="Save changes" OnClick="SaveButton_Click" CssClass="btn btn-success" /> 
             </div>
             <br />
 

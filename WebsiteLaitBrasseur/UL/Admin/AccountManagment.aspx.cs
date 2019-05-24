@@ -4,96 +4,112 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Diagnostics;
+using WebsiteLaitBrasseur.BL;
+using System.Data;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class AccountManagment : System.Web.UI.Page
     {
+        List<AccountDTO> LAC = new List<AccountDTO>();
+        List<AccountDTO> LAA = new List<AccountDTO>();
+
+
+        AccountBL bl = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                BindUserLabel();
-                BindCustomer();
+                BindDataCustomer();
+                BindDataAdmin();
+
             }
         }
 
         ////Grid methods
-            //Status modification : activate/ suspend
-        protected void UserListTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        protected void UserListTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            int index = Convert.ToInt32(e.RowIndex);
-            GridViewRow row = UserListTable.Rows[index];
-            if (row.Cells[5].Text.ToString() == "False") { row.Cells[5].Text = "True"; }
-            else if (row.Cells[5].Text.ToString() == "True") { row.Cells[5].Text = "False"; }
+            try
+            {
+                int status = 0;
+                if (UserListTable.Rows[e.RowIndex].Cells[6].Text == "Active") { status = 0; }
+                else if (UserListTable.Rows[e.RowIndex].Cells[6].Text == "Suspended") { status = 1; }
+                else { lblError.Text = "Status invalid"; }
+
+                bl.UpdateStatus(UserListTable.Rows[e.RowIndex].Cells[3].Text, status);
+
+                BindDataCustomer();
+            }
+            catch(Exception ex)
+            {
+                ex.GetBaseException();
+            }
+
         }
 
-            //redirection to transanctions history page
+        //redirection to transanctions history page
         protected void UserListTable_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            //Index of grid recuperation
-            int index = Convert.ToInt32(e.NewEditIndex);
-
-            //Row recuperation
-            GridViewRow row = UserListTable.Rows[index];
-
-            //UserID recuperation
-            string userID = row.Cells[0].Text.ToString();
-
-            Response.Redirect("/UL/Admin/Transactions.aspx?custid=" + userID);
+            Response.Redirect("/UL/Admin/Transactions.aspx?custid=" + UserListTable.Rows[e.NewEditIndex].Cells[0].Text.ToString());
         }
 
 
-
-        ////Data creation methods  + postage class
-
-        protected void BindCustomer()
+        protected void BindDataCustomer()
         {
-            UserListTable.DataSource = getCustomer();
+            LAC = bl.GetAllCustomers();
+            UserListTable.DataSource = getDataTable(LAC);
             UserListTable.DataBind();
+            lblUserList.Text = "There is " + UserListTable.Rows.Count + " registered customer";
+            
         }
 
-            //Bind of beginning label informing about the number of customer
-        protected void BindUserLabel()
+        protected void BindDataAdmin()
         {
-            List<Customer> customerLs = getCustomer();
-            if (customerLs.LongCount<Customer>() > 0)
-            {
-                lblUserList.Text = "There is " + customerLs.LongCount<Customer>() + " registered customer";
-            }
+            LAA = bl.GetAllAdmins();
+            AdminListTable.DataSource = getDataTable(LAA);
+            AdminListTable.DataBind();
+            lblAdminList.Text = "There is " + AdminListTable.Rows.Count + " registered Admin";
+
         }
 
-            //Customer list creation
-        protected List<Customer> getCustomer(){
-            List<Customer> customerLs = new List<Customer>();
-            Customer customer = new Customer(11110, "Marcus", "Miller", "Marc.M@gmail.com", "+6194563221",  false);
-            customerLs.Add(customer);
-            customer = new Customer(11111, "Maria", "Doberthy", "MariaDB@gmail.com", "0455236874", false);
-            customerLs.Add(customer);
-            customer = new Customer(11112, "Jean", "Labit", "JLB@outlook.com", "0452456789", false);
-            customerLs.Add(customer);
-            return customerLs;
-        }
 
-            // Customer class + builder
-        public class Customer
+        protected DataTable getDataTable(List<AccountDTO> ListAccount)
         {
-            public int userId { get; set; }
-            public string firstName { get; set; }
-            public string lastName { get; set; }
-            public string email { get; set; }
-            public string phoneNo { get; set; }
-            public bool isSuspended { get; set; }
+            //DataTable initialization
+            DataTable dtUser = new DataTable();
 
-            public Customer(int userId, string firstName, string lastName, string email, string phoneNo, bool isSuspended)
-            {
-                this.userId = userId;
-                this.firstName = firstName;
-                this.lastName = lastName;
-                this.email= email;
-                this.phoneNo = phoneNo;
-                this.isSuspended = isSuspended;
+            //Colmuns declaration
+            dtUser.Columns.Add("ID");
+            dtUser.Columns.Add("Firstname");
+            dtUser.Columns.Add("Lastname");
+            dtUser.Columns.Add("Email");
+            dtUser.Columns.Add("PhoneNo");
+            dtUser.Columns.Add("IsConfirmed");
+            dtUser.Columns.Add("Status");
+
+            for (int i = 0; i < ListAccount.Count; i++)
+            { 
+                DataRow dr = dtUser.NewRow();
+                dr["ID"] = ListAccount[i].GetID();
+                dr["Firstname"] = ListAccount[i].GetFirstName();
+                dr["Lastname"] = ListAccount[i].GetLastName();
+                dr["Email"] = ListAccount[i].GetEmail();
+                dr["PhoneNo"] = ListAccount[i].GetPhoneNo();
+                dr["IsConfirmed"] = ListAccount[i].GetIsConfirmed();
+                if (ListAccount[i].GetStatus() == 1) { dr["Status"] = "Active";}
+                else { dr["Status"] = "Suspended"; }
+                
+
+                dtUser.Rows.Add(dr);
+
             }
+            return dtUser;
+        }
+
+        protected void UserListTable_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+
         }
 
 

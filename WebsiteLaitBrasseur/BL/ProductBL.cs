@@ -384,7 +384,7 @@ namespace WebsiteLaitBrasseur.BL
             int result = 0;
             try
             {
-                result = DB.Update2(productID, name, type,stock, status);
+                result = DB.Update(productID, name, type,stock, status);
                 SB.UpdateSize2(productID, size, price);
             }
             catch (Exception e)
@@ -452,6 +452,56 @@ namespace WebsiteLaitBrasseur.BL
             }
             return result;
         }
+
+
+
+        /// <summary>
+        /// Update only certain information
+        /// the return value should be > 0 if 
+        /// the changes were successfull.
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="shortInfo"></param>
+        /// <param name="longInfo"></param>
+        /// <param name="producer"></param>
+        /// <returns></returns>
+        public int UpdateSecondary(int productID, string shortInfo, string longInfo, string producer)
+        {
+            ProductDTO product = new ProductDTO();
+            int result = 0;
+            try
+            {
+                result = DB.UpdateSecondary(productID, shortInfo, longInfo, producer);
+                product = DB.FindBy(result);
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Update the Image path of one product.
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="ImgPath"></param>
+        /// <returns></returns>
+        public int UpdateImg(int productID, string imgPath)
+        {
+            int result = 0;
+            try
+            {
+                result = DB.UpdateImg(productID, imgPath);
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return result;
+        }
+
+
 
         /// <summary>
         /// Update not only product but also its size in the DB

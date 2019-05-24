@@ -58,7 +58,7 @@ namespace WebsiteLaitBrasseur.BL
                     password = this.HashPassword(password);
                     Debug.Print("AccountBL / Password hashed " + password.ToString());
                     //returns the created Account ID as integer value
-                    DB.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin); //Need Debug
+                    DB.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin); 
                 }                
             }
             catch (Exception e)
