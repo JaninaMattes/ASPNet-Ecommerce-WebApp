@@ -9,33 +9,69 @@
         
     <!--START Header / Label / GridView--> 
         <div id="tableCustomer clearfix" >
+            <asp:Label ID="lblError" runat="server" Text="" CssClass="text-danger"></asp:Label>
             <h3 id="sheader">Manage Customer Accounts</h3>
             <asp:Label id="lblUserList" Text="The customer list is empty." runat="server" />
-            <div class=" offset-md-2 col-md-7">
+            <div class=" offset-md-1 col-md-10">
 
                <!-- GridView with  6 fields / a button for change Suspended Statut / a button for show transaction-->
                 <asp:GridView id="UserListTable" runat="server" 
                     GridLines="none"
                     AutoGenerateColumns="false"
+                    OnRowCommand="UserListTable_RowCommand"
                     OnRowEditing="UserListTable_RowEditing"
-                    OnRowDeleting="UserListTable_RowDeleting"
+                    OnRowUpdating="UserListTable_RowUpdating"
                     class="table table-hover table-striped text-center">
 
                         <Columns>
-                            <asp:BoundField DataField="userId" HeaderText="Id Number" />
-                            <asp:BoundField DataField="firstname" HeaderText="Firstname" /> 
-                            <asp:BoundField DataField="lastname" HeaderText="Lastname" />
-                            <asp:BoundField DataField="email" HeaderText="E-mail" />
-                            <asp:BoundField DataField="phoneNo" HeaderText="PhoneNo" />
-                            <asp:BoundField DataField="isSuspended" HeaderText="Suspended User" />
+                            <asp:BoundField DataField="id" HeaderText="Id Number" />
+                            <asp:BoundField DataField="Firstname" HeaderText="Firstname" /> 
+                            <asp:BoundField DataField="Lastname" HeaderText="Lastname" />
+                            <asp:BoundField DataField="Email" HeaderText="E-mail" />
+                            <asp:BoundField DataField="PhoneNo" HeaderText="PhoneNo" />
+                            <asp:BoundField DataField="IsConfirmed" HeaderText="IsConfirmed" />
+                            <asp:BoundField DataField="Status" HeaderText="Status" />
 
-                            <asp:CommandField ShowEditButton="true" ButtonType="Button"  EditText="Show Transactions" />
-                            <asp:CommandField ShowDeleteButton="true"  ButtonType="Button"   DeleteText="Suspend/Activate" />
+                            <asp:TemplateField >
+                                <ItemTemplate>
+                                    <asp:LinkButton ID="ShowButton" runat="server" CommandName="Edit" Text="Show Transactions" CommandArgument="Show" CssClass="btn btn-primary"></asp:LinkButton>
+                                    <asp:LinkButton ID="ChangeStatusButton" runat="server" CommandName="Update" Text="Suspend / Activate" CommandArgument="Change" CssClass="btn btn-danger" ></asp:LinkButton>
+                                </ItemTemplate>
+                            </asp:TemplateField>
+
                         </Columns>
                     </asp:GridView>
 
-                    <asp:Label ID="lblError" runat="server" Text="" CssClass="text-danger"></asp:Label>
+  
             </div>
+
+            <br /><br />
+            <h3 id="sheaderAdmin">Manage Admin Accounts</h3>
+            <asp:Label id="lblAdminList" Text="The Admin list is empty." runat="server" />
+            <div class=" offset-md-1 col-md-10">
+
+               <!-- GridView with  6 fields / a button for change Suspended Statut / a button for show transaction-->
+                <asp:GridView id="AdminListTable" runat="server" 
+                    GridLines="none"
+                    AutoGenerateColumns="false"
+                    class="table table-hover table-striped text-center">
+
+                        <Columns>
+                            <asp:BoundField DataField="id" HeaderText="Id Number" />
+                            <asp:BoundField DataField="Firstname" HeaderText="Firstname" /> 
+                            <asp:BoundField DataField="Lastname" HeaderText="Lastname" />
+                            <asp:BoundField DataField="Email" HeaderText="E-mail" />
+                            <asp:BoundField DataField="PhoneNo" HeaderText="PhoneNo" />
+                            <asp:BoundField DataField="IsConfirmed" HeaderText="IsConfirmed" />
+                            <asp:BoundField DataField="Status" HeaderText="Status" />
+
+                        </Columns>
+                    </asp:GridView>
+
+            </div>
+
+
+
 
         </div>
     <!--END Container Content-->
