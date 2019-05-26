@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -19,6 +20,14 @@ namespace WebsiteLaitBrasseur.DAL
     {
         //Get connection string from web.config file and create sql connection
         readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+
+        private string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["LaitBrasseurDB"].ConnectionString;
+            }
+        }
         /// <summary>
         /// New User Registration
         /// This function inserts data of the DTO persistantly into the DB
@@ -49,43 +58,38 @@ namespace WebsiteLaitBrasseur.DAL
             string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM dbo.Account ORDER BY 1 DESC";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //insert into database
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
-                    cmd.Parameters.AddWithValue("@password", SqlDbType.VarChar).Value = password;
-                    cmd.Parameters.AddWithValue("@isConfirmed", SqlDbType.Bit).Value = isConfirmed;
-                    cmd.Parameters.AddWithValue("@firstName", SqlDbType.VarChar).Value = fname;
-                    cmd.Parameters.AddWithValue("@lastName", SqlDbType.VarChar).Value = lname;
-                    cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
-                    cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
-                    cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
-                    cmd.Parameters.AddWithValue("@status", SqlDbType.Bit).Value = status;
-                    cmd.Parameters.AddWithValue("@isAdmin", SqlDbType.Bit).Value = isAdmin;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                    Debug.Print("AccountDAL / Insert / cmd result : " + result);
-                }
-
-                ///find the last manipulated id due to autoincrement and return it
-                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
-                {
-                    if (connection.State == ConnectionState.Closed)
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        connection.Open();
+                        cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                        cmd.Parameters.AddWithValue("@password", SqlDbType.VarChar).Value = password;
+                        cmd.Parameters.AddWithValue("@isConfirmed", SqlDbType.Int).Value = isConfirmed;
+                        cmd.Parameters.AddWithValue("@firstName", SqlDbType.VarChar).Value = fname;
+                        cmd.Parameters.AddWithValue("@lastName", SqlDbType.VarChar).Value = lname;
+                        cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
+                        cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
+                        cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.Int).Value = status;
+                        cmd.Parameters.AddWithValue("@isAdmin", SqlDbType.Int).Value = isAdmin;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        var row = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        Debug.Print("AccountDAL / Insert / cmd result : " + row);
                     }
-                    SqlDataReader reader = command.ExecuteReader();
-                    //won't need a while, since it will only retrieve one row
-                    reader.Read();
-                    //this is the id of the newly created data field
-                    result = Convert.ToInt32(reader["accountID"]);
-                    Debug.Print("AccountDAL: / ID/ " + result);
-                }
 
+                    ///find the last manipulated id due to autoincrement and return it
+                    using (SqlCommand command = new SqlCommand(queryAutoIncr, con))
+                    {
+                        SqlDataReader reader = command.ExecuteReader();
+                        //won't need a while, since it will only retrieve one row
+                        reader.Read();
+                        //this is the id of the newly created data field
+                        result = Convert.ToInt32(reader["accountID"]);
+                        Debug.Print("AccountDAL: / ID/ " + result);
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -337,37 +341,73 @@ namespace WebsiteLaitBrasseur.DAL
             string birthdate, string phoneNo, string imgPath)
         {
             int result = 0;
-            string queryString = "UPDATE dbo.Account SET email = @email, password = @, firstName = @fname, lastName = @lname, " +
-                "birthDate = @birthdate, phone = @phoneNo, imgPath = @imgPath, status = @status, isAdmin = @isAdmin WHERE accountID = @accountID";
+            string queryString = "UPDATE dbo.Account SET email = @email, password = @password, " +
+                "firstName = @firstName, lastName = @lastName, " +
+                "birthDate = @birthDate, phone = @phoneNo, imgPath = @imgPath " +
+                "WHERE accountID = @accountID";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
-                    cmd.Parameters.AddWithValue("@password", SqlDbType.VarChar).Value = password;
-                    cmd.Parameters.AddWithValue("@firstName", SqlDbType.VarChar).Value = fname;
-                    cmd.Parameters.AddWithValue("@lastName", SqlDbType.VarChar).Value = lname;
-                    cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
-                    cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
-                    cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                        cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                        cmd.Parameters.AddWithValue("@password", SqlDbType.VarChar).Value = password;
+                        cmd.Parameters.AddWithValue("@firstName", SqlDbType.VarChar).Value = fname;
+                        cmd.Parameters.AddWithValue("@lastName", SqlDbType.VarChar).Value = lname;
+                        cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
+                        cmd.Parameters.AddWithValue("@phoneNo", SqlDbType.VarChar).Value = phoneNo;
+                        cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
-            finally
+            
+            return result;
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Update)]
+        public int Update(int accountID, string email, string fname, string lname,
+            string birthdate, string phoneNo, string imgPath)
+        {
+            int result = 0;
+            string queryString = "UPDATE dbo.Account SET email = @email, " +
+                "firstName = @firstName, lastName = @lastName, " +
+                "birthDate = @birthDate, phone = @phoneNo, imgPath = @imgPath " +
+                "WHERE accountID = @accountID";
+            try
             {
-                connection.Close();
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                        cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                        cmd.Parameters.AddWithValue("@firstName", SqlDbType.VarChar).Value = fname;
+                        cmd.Parameters.AddWithValue("@lastName", SqlDbType.VarChar).Value = lname;
+                        cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
+                        cmd.Parameters.AddWithValue("@phoneNo", SqlDbType.VarChar).Value = phoneNo;
+                        cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
+                }
             }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+
             return result;
         }
 
@@ -380,35 +420,34 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public AccountDTO FindBy(int id)
+        public AccountDTO FindBy(int accountID)
         {
             AccountDTO account;
             AddressDTO address;
-            string queryString = "SELECT * FROM dbo.Account WHERE accountID = @id";
+            string queryString = "SELECT * FROM dbo.Account WHERE accountID = @accountID";
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
                             account = new AccountDTO();
                             address = new AddressDTO();
                             account = GenerateAccount(reader, account, address);
                             //return product instance as data object 
-                            Debug.Print("AccountDAL: /FindBy(Int)/ " + account.GetID().ToString());
+                            Debug.Print("AccountDAL: /FindByID/ " + account.GetID());
+                            connection.Close();
                             return account;
                         }
                     }
+
                 }
             }
             catch (Exception e)
@@ -416,13 +455,8 @@ namespace WebsiteLaitBrasseur.DAL
                 e.GetBaseException();
                 Debug.Print(e.ToString());
             }
-            finally
-            {
-                connection.Close();
-            }
             return null;
         }
-
         /// <summary>
         /// Read operation find a specific user in the database
         /// by selecting his unique email address to indentify the entry.
@@ -440,17 +474,14 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();                    
                         if (reader.Read())
                         {
                             account = new AccountDTO();
@@ -470,10 +501,6 @@ namespace WebsiteLaitBrasseur.DAL
                 e.GetBaseException();
                 Debug.Print(e.ToString());
             }
-            finally
-            {
-                connection.Close();
-            }
             return null;
         }
 
@@ -485,42 +512,32 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<AccountDTO> FindAllUserBy(int isAdmin)
+        public IEnumerable<AccountDTO> FindAllUserBy(int isAdmin)
         {
             string queryString = "SELECT * FROM dbo.Account WHERE isAdmin = @isAdmin";
             List<AccountDTO> results = new List<AccountDTO>();
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@isAdmin", isAdmin);
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        cmd.Parameters.AddWithValue("@isAdmin", SqlDbType.Int).Value = isAdmin;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                AccountDTO account = new AccountDTO();
-                                AddressDTO address = new AddressDTO();
-                                account = GenerateAccount(reader, account, address);
-                                //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindAllUserBy/ " + account.GetID().ToString());
+                            AccountDTO account = new AccountDTO();
+                            AddressDTO address = new AddressDTO();
+                            account = GenerateAccount(reader, account, address);
+                            //return product instance as data object 
+                            Debug.Print("AccountDAL: /FindAllUserBy/ " + account.GetID().ToString());
 
-                                //add data objects to result-list 
-                                results.Add(account);
-                            }
-                            return results;
+                            //add data objects to result-list 
+                            results.Add(account);
                         }
-                        else
-                        {
-                            throw new EmptyRowException();
-                        }
+
                     }
                 }
             }
@@ -528,11 +545,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         /// <summary>
@@ -542,40 +555,30 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<AccountDTO> FindAll()
+        public IEnumerable<AccountDTO> FindAll()
         {
             string queryString = "SELECT * FROM dbo.Account";
             List<AccountDTO> results = new List<AccountDTO>();
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                AccountDTO account = new AccountDTO();
-                                AddressDTO address = new AddressDTO();
-                                account = GenerateAccount(reader, account, address);
-                                //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindAllUserBy/ " + account.GetID().ToString());
+                            AccountDTO account = new AccountDTO();
+                            AddressDTO address = new AddressDTO();
+                            account = GenerateAccount(reader, account, address);
+                            //return product instance as data object 
+                            Debug.Print("AccountDAL: /FindAllUserBy/ " + account.GetID().ToString());
+                            //add data objects to result-list 
+                            results.Add(account);
+                        }
 
-                                //add data objects to result-list 
-                                results.Add(account);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
-                        }
                     }
                 }
             }
@@ -583,11 +586,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         /// <summary>
@@ -598,41 +597,29 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<AccountDTO> FindByStatus(int status)
+        public IEnumerable<AccountDTO> FindByStatus(int status)
         {
             string queryString = "SELECT * FROM dbo.Account WHERE status = @status";
             List<AccountDTO> results = new List<AccountDTO>();
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@status", status);
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.Int).Value = status;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                AccountDTO account = new AccountDTO();
-                                AddressDTO address = new AddressDTO();
-                                account = GenerateAccount(reader, account, address);
-                                //return product instance as data object 
-                                Debug.Print("AccountDAL: /FindAllByStatus/ " + status + " " + account.GetID().ToString());
-
-                                //add data objects to result-list 
-                                results.Add(account);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            AccountDTO account = new AccountDTO();
+                            AddressDTO address = new AddressDTO();
+                            account = GenerateAccount(reader, account, address);
+                            //return product instance as data object 
+                            Debug.Print("AccountDAL: /FindAllUserBy/ " + account.GetID().ToString());
+                            //add data objects to result-list 
+                            results.Add(account);
                         }
                     }
                 }
@@ -641,21 +628,15 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         //find person in database by name
         [DataObjectMethod(DataObjectMethodType.Select)]
         public AccountDTO FindByName(string fname, string lname)
         {
-            AccountDTO account;
-            AddressDTO address;
+            AccountDTO account = new AccountDTO();            
             string queryString = "SELECT * FROM dbo.Account WHERE firstName = @fname AND lastName = @lname";
-
             try
             {
                 if (connection.State == ConnectionState.Closed)
@@ -672,12 +653,11 @@ namespace WebsiteLaitBrasseur.DAL
                     {
                         if (reader.Read())
                         {
-                            account = new AccountDTO();
-                            address = new AddressDTO();
+                            AddressDTO address = new AddressDTO();
                             account = GenerateAccount(reader, account, address);
                             //return product instance as data object 
                             Debug.Print("AccountDAL: /FindByName/ " + fname + " " + lname + " " + account.GetID().ToString());
-                            return account;
+                            
                         }
                     }
                 }
@@ -691,7 +671,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 connection.Close();
             }
-            return null;
+            return account;
         }
 
         /// <summary>
@@ -827,7 +807,7 @@ namespace WebsiteLaitBrasseur.DAL
             account.SetPw(reader["password"].ToString());
             account.SetFirstName(reader["firstName"].ToString());
             account.SetLastName(reader["lastName"].ToString());
-            account.SetBirthdate(reader["birthDate"].ToString());
+            account.SetBirthdate(Convert.ToDateTime(reader["birthDate"]));
             account.SetPhoneNo(reader["phone"].ToString());
             account.SetImgPath(reader["imgPath"].ToString());
             account.SetIsAdmin(Convert.ToInt32(reader["isAdmin"]));

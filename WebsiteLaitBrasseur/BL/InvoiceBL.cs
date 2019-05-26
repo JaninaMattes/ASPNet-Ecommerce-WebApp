@@ -29,50 +29,57 @@ namespace WebsiteLaitBrasseur.BL
             AccountDTO customer = new AccountDTO();
             ShippmentDTO deliverer = new ShippmentDTO();
             int result = 0;
-            customer = new AccountDTO();
-            customer = AB.FindBy(email);
-            if(customer != null)
+            try
             {
-                deliverer = SB.FindBy(shippingID);
-                if (deliverer != null)
-                {                   
-                    //set current time when Invoice is created
-                    DateTime orderDate = DateTime.Now;
-                    DateTime paymentDate;
-                    DateTime arrivalDate = DateTime.Now.AddDays(deliverer.GetDeliveryTime());
-                    DateTime postageDate = DateTime.Now.AddDays(2);
-                    //calculate all other values for the invoice
-                    int totalWeight = CalculateWeight(products);
-                    decimal totalShippingCost = deliverer.GetCost() + (decimal)0.1 * totalWeight;
-                    int totalQuantity = CalculateQuantity(products);
-                    decimal totalProductCost = CalculateProductCost(products);
-                    decimal totalTaxes = CalculateTax(totalProductCost);
-                    decimal totalAmount = totalTaxes + totalProductCost + totalShippingCost;
-
-                    UpdateProductInfo(products);
-
-                    if (paymentStatus == 1)
+                customer = AB.FindBy(email);
+                if (customer != null)
+                {
+                    deliverer = SB.FindBy(shippingID);
+                    if (deliverer != null)
                     {
-                        //if payment has not been directly done
-                        paymentDate = DateTime.Now;
+                        //set current time when Invoice is created
+                        DateTime orderDate = DateTime.Now;
+                        DateTime paymentDate = new DateTime();
+                        DateTime arrivalDate = DateTime.Now.AddDays(deliverer.GetDeliveryTime());
+                        DateTime postageDate = DateTime.Now;
+                        //calculate all other values for the invoice
+                        int totalWeight = CalculateWeight(products);
+                        decimal totalShippingCost = deliverer.GetCost() + (decimal)0.1 * totalWeight;
+                        int totalQuantity = CalculateQuantity(products);
+                        decimal totalProductCost = CalculateProductCost(products);
+                        decimal totalTaxes = CalculateTax(totalProductCost);
+                        decimal totalAmount = totalTaxes + totalProductCost + totalShippingCost;
+
+                        UpdateProductInfo(products);
+
+                        if (paymentStatus == 1)
+                        {
+                            //if payment has not been directly done
+                            paymentDate = DateTime.Now;
+                        }
+                        else
+                        {
+                            //Business Rule: Payment in 30 days
+                            paymentDate = DateTime.Now.AddDays(30);
+                        }
+                        //insert into DB
+                        result = DB.Insert(customer.GetID(), deliverer.GetID(), totalQuantity, totalShippingCost, totalProductCost, totalTaxes,
+                            totalAmount, orderDate.ToString(), paymentDate.ToString(), arrivalDate.ToString(), postageDate.ToString(), paymentStatus, email);
                     }
                     else
                     {
-                        //Business Rule: Payment in 30 days
-                        paymentDate = DateTime.Now.AddDays(30);
+                        throw new EmptyRowException($"The entry for {shippingID} was not found.");
                     }
-                    //insert into DB
-                    result = DB.Insert(customer.GetID(), deliverer.GetID(), totalQuantity, totalShippingCost, totalProductCost, totalTaxes,
-                        totalAmount, orderDate, paymentDate, arrivalDate, postageDate, paymentStatus, email);
                 }
                 else
                 {
-                    throw new EmptyRowException($"The entry for {shippingID} was not found.");
+                    throw new EmptyRowException($"The entry for {email} was not found.");
                 }
-            } else
-            {
-                throw new EmptyRowException($"The entry for {email} was not found.");
             }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }            
             return result;
         }
 
@@ -95,14 +102,14 @@ namespace WebsiteLaitBrasseur.BL
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public List<InvoiceDTO> FindInvoices(string email)
+        public IEnumerable<InvoiceDTO> FindInvoices(string email)
         {
             AccountDTO customer = new AccountDTO();
             customer = AB.FindBy(email);
-            List<InvoiceDTO> result = new List<InvoiceDTO>();
+            IEnumerable<InvoiceDTO> result = new List<InvoiceDTO>();
             if (customer != null)
             {
-                result = DB.FindAllByCustomer(customer.GetID());
+                result = DB.FindByCustomer(customer.GetID());
             }            
             return result;
         }
@@ -111,10 +118,10 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all invoices in the DB
         /// </summary>
         /// <returns></returns>
-        public List<InvoiceDTO> FindInvoices()
+        public IEnumerable<InvoiceDTO> FindInvoices()
         {
-            List<InvoiceDTO> result = new List<InvoiceDTO>();
-            result = DB.FindAll();
+           IEnumerable<InvoiceDTO> result = new List<InvoiceDTO>();
+            result = DB.GetInvoices();
             return result;
         }
 
@@ -126,17 +133,19 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="email"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public List<InvoiceDTO> FindPaied(string email)
+        public IEnumerable<InvoiceDTO> FindPaied(string email)
         {
-            AccountDTO customer = new AccountDTO();
-            customer = AB.FindBy(email);
             int status = 1;
-            List<InvoiceDTO> result = new List<InvoiceDTO>();
+
+            AccountDTO customer = new AccountDTO();
+            IEnumerable<InvoiceDTO> results = new List<InvoiceDTO>();
+
+            customer = AB.FindBy(email);            
             if (customer != null)
             {
-                result = DB.FindByStatus(customer.GetID(), status);
+                results = DB.FindByStatus(customer.GetID(), status);
             }
-            return result;
+            return results;
         }
 
         /// <summary>
@@ -147,12 +156,12 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="email"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public List<InvoiceDTO> FindUnPaied(string email)
+        public IEnumerable<InvoiceDTO> FindUnPaied(string email)
         {
             AccountDTO customer = new AccountDTO();
             customer = AB.FindBy(email);
             int status = 0;
-            List<InvoiceDTO> result = new List<InvoiceDTO>();
+            IEnumerable<InvoiceDTO> result = new List<InvoiceDTO>();
             if (customer != null)
             {
                 result = DB.FindByStatus(customer.GetID(), status);

@@ -14,7 +14,7 @@ namespace WebsiteLaitBrasseur.BL
 {
     public class AccountBL
     {
-        private AccountDAL DB = new AccountDAL();
+        private readonly AccountDAL DB = new AccountDAL();
         private static int count = 0;
 
         /// <summary>
@@ -55,8 +55,8 @@ namespace WebsiteLaitBrasseur.BL
                 if (isCorrect == 0)
                 {
                     //encrypt the password before it is sent to the DB
-                    password = this.HashPassword(password);
-                    Debug.Print("AccountBL / Password hashed " + password.ToString());
+                    //password = this.HashPassword(password);
+                    //Debug.Print("AccountBL / Password hashed " + password.ToString());
                     //returns the created Account ID as integer value
                     DB.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin); 
                 }                
@@ -232,12 +232,37 @@ namespace WebsiteLaitBrasseur.BL
             return IsCorrect;
         }
 
+        public int Update(string mail, string firstName, string lastName,
+            string birthDate, string phoneNo, string imgPath)
+        {
+            int IsCorrect = 0;
+            //TODO isConfirmed
+
+            AccountDTO customer = new AccountDTO();
+            
+            if (IsValidEmail(mail))
+            {
+                customer = DB.FindBy(mail);
+                Debug.Print("AccountBL / UpdateAll value returned " + customer.ToString());
+            }
+            else
+            {   //email is not correct => 2
+                return IsCorrect = 2;
+            }
+            //if update was successfull => 1
+            IsCorrect = DB.Update(customer.GetID(), mail, firstName, lastName, birthDate, phoneNo, imgPath);
+
+            Debug.Print("AccountBL / UpdateAll correction: " + IsCorrect);
+            return IsCorrect;
+        }
+
         public AccountDTO GetCustomer(string email)
         {
             AccountDTO customer = new AccountDTO();
             try
             {
                 customer = DB.FindBy(email);
+                Debug.Print("AccountBL / Customer ID: " + customer.GetID());
             }
             catch (Exception e)
             {
@@ -250,10 +275,10 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all Customers in DB.
         /// </summary>
         /// <returns></returns>
-        public List<AccountDTO> GetAllCustomers()
+        public IEnumerable<AccountDTO> GetAllCustomers()
         {
             int isAdmin = 0;
-            List<AccountDTO> results = new List<AccountDTO>();
+            IEnumerable<AccountDTO> results = new List<AccountDTO>();
             results = DB.FindAllUserBy(isAdmin);
             return results;
         }
@@ -262,10 +287,10 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all Admins in DB.
         /// </summary>
         /// <returns></returns>
-        public List<AccountDTO> GetAllAdmins()
+        public IEnumerable<AccountDTO> GetAllAdmins()
         {
             int isAdmin = 1;
-            List<AccountDTO> results = new List<AccountDTO>();
+            IEnumerable<AccountDTO> results = new List<AccountDTO>();
             results = DB.FindAllUserBy(isAdmin);
             return results;
         }

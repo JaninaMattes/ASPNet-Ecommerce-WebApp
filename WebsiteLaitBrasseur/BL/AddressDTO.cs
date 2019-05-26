@@ -40,7 +40,7 @@ namespace WebsiteLaitBrasseur.BL
             return this._streetNo;
         }
 
-        public void SetStringNo(string streetNo)
+        public void SetStreetNo(string streetNo)
         {
             this._streetNo = streetNo;
         }

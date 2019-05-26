@@ -75,7 +75,7 @@ namespace WebsiteLaitBrasseur.BL
                 {
                     CB.UpdateCity(address.GetCity().GetId(), zipCode, cityName);
                     result = DB.UpdateAddress(address.GetID(), address.GetCity().GetId(), streetName, streetNo, addressType);
-                    Debug.Print("AddressBL: /Insert/ " + result.ToString());
+                    Debug.Print("AddressBL: /Update/ " + result);
                 }                
             }
             else
@@ -91,20 +91,50 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="accountID"></param>
         /// <returns></returns>
         public AddressDTO FindAddress(int accountID)
-        {
-            AddressDTO address = new AddressDTO();
+        {            
             AccountDTO customer = new AccountDTO();
+            AddressDTO address = new AddressDTO();
             customer = AB.FindBy(accountID);
             if (customer != null)
-            {
+            {                
+                CityDTO city = new CityDTO();
                 address = DB.FindBy(customer.GetAddress().GetID());
-                Debug.Print("AddressBL: /FindAddress/ " + address.ToString());
+                city = CB.FindBy(address.GetCity().GetId());
+                address.SetCity(city);
+                Debug.Print("AddressBL: /FindAddress/ " + address.GetID());
+                Debug.Print("AddressBL: /StreetName/ " + address.GetStreetName());
+                Debug.Print("AddressBL: /StreetNo/ " + address.GetStreetNo());
+                Debug.Print("AddressBL: /CityName/ " + address.GetCity().GetCity());
             }
             else
             {
                 throw new EmptyRowException("No result found.");
             }
             
+            return address;
+        }
+
+        public AddressDTO FindAddress(string email)
+        {
+            AddressDTO address = new AddressDTO();
+            AccountDTO customer = new AccountDTO();
+            customer = AB.FindBy(email);
+            if (customer != null)
+            {
+                CityDTO city = new CityDTO();
+                address = DB.FindBy(customer.GetAddress().GetID());
+                city = CB.FindBy(address.GetCity().GetId());
+                address.SetCity(city);
+                Debug.Print("AddressBL: /FindAddress/ " + address.GetID());
+                Debug.Print("AddressBL: /StreetName/ " + address.GetStreetName());
+                Debug.Print("AddressBL: /StreetNo/ " + address.GetStreetNo());
+               // Debug.Print("AddressBL: /CityName/ " + address.GetCity().GetCity());
+            }
+            else
+            {
+                throw new EmptyRowException("No result found.");
+            }
+
             return address;
         }
 

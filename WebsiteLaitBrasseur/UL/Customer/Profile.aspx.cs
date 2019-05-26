@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -16,14 +17,15 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             if (!Page.IsPostBack)
             {
-                SESSION_VAR = HttpContext.Current.Session["Email"].ToString();
+                //SESSION_VAR = HttpContext.Current.Session["Email"].ToString();
+                SESSION_VAR = "janina.mattes@gmail.com";
                 /*Fill the shopping history table with data from the backend 
                  * and bind these to the datafields*/
                 BindGridList();
                 /*Fill the label with accurat item number*/
                 BindTableLabel();
                 /*Fill the user profiel information*/
-                BindProfileTextBox();
+                BindProfileData();
             }
 
             DeleteButton_Click(sender, e);
@@ -34,34 +36,21 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
             // suspend the user dont delete
-
+            int status = 1;
+             DB.UpdateStatus(SESSION_VAR, status);
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
-            AccountDTO customer = new AccountDTO();
-            int result = 0;
-            /*save all input information from values and send it to server*/
-            //string myname = Request.Form["first_name_txt"];
-            //...firstName = Request.Form["FirstnameTextbox"];
-            //try
-            //{
-            //    customer = DB.GetCustomer(SESSION_VAR);
-            //    customer.SetID(customer.GetID());
-            //    // TODO
-            //    result = DB.UpdateAll();
-            //    //send to DB and update
-            //    if (result > 0)
-            //    {
-            //        //give customer feedback by pop up 
-            //        //--> Updates successfull
-            //    }
-            //}
-            //catch (Exception e)
-            //{
-            //    e.GetBaseException();
-            //}
-
+            var email = TextEmail.Text;
+            var fName = TextFirstname.Text;
+            var lName = TextLastname.Text;
+            var birthDate = TextBirthday.Text;
+            var phoneNo = TextPhone.Text;
+            var imgPath = ProfilePicture.ImageUrl;
+            //var password = TextPassword.Text;
+            var result = DB.Update(email,fName, lName,birthDate, phoneNo, imgPath);
+            Debug.Print("Profile aspx: /Save Button / Update " + result);
         }
 
         protected void UpdateButton_Click(object sender, EventArgs e)
@@ -73,155 +62,68 @@ namespace WebsiteLaitBrasseur.UL.Customer
          * and bind these to the datafields*/
         protected void BindGridList()
         {
-            ShoppingTable.DataSource = getShoppingList();
-            ShoppingTable.DataBind();
+            //ShoppingTable.DataSource = GetShoppingList(SESSION_VAR);
+            //ShoppingTable.DataBind();
         }
 
 
         /*Fill the label with accurat item number*/
-        /*Fill the label with accurat item number*/
         protected void BindTableLabel()
         {
-            List<ShoppingListItem> shoppingLs = getShoppingList();
-            if (shoppingLs.LongCount<ShoppingListItem>() > 0)
+            IEnumerable<InvoiceDTO> transactions = GetShoppingList(SESSION_VAR);
+            if (transactions.LongCount<InvoiceDTO>() > 0)
             {
-                tableShoppingHistoryLabel.Text = "Your shopping history has " + shoppingLs.LongCount<ShoppingListItem>() + " items.";
+                tableShoppingHistoryLabel.Text = "Your shopping history has " + transactions.LongCount<InvoiceDTO>() + " items.";
             }
         }
 
 
         /*Fill the label with accurat item number*/
-        protected void BindProfileTextBox()
+        protected void BindProfileData()
         {
+            ProfilePicture.ImageUrl = GetUserData(SESSION_VAR).GetImgPath();
+            /*Textboxes with editable section information*/
+            TextFirstname.Text = GetUserData(SESSION_VAR).GetFirstName();
+            TextLastname.Text = GetUserData(SESSION_VAR).GetLastName();
+            TextPhone.Text = GetUserData(SESSION_VAR).GetPhoneNo();
+            //TextBirthday.Text = Convert.ToDateTime(GetUserData(SESSION_VAR).GetBirthdate()).ToString();
+            TextEmail.Text = GetUserData(SESSION_VAR).GetEmail();
 
             /*Textboxes with editable section information*/
-            TextFirstname.Text = getUserData().firstName;
-            TextLastname.Text = getUserData().lastName;
-            TextPhone.Text = getUserData().phoneNo;
-            TextBirthday.Text = getUserData().birthdate;
-            TextEmail.Text = getLoginData().email;
-
-            /*Textboxes with editable section information*/
-            TextAddress1.Text = getAddressData().streetName;
-            TextCity.Text = getAddressData().cityName;
-            CountryDropDownList.Text = getAddressData().country;
-            TextAddressnumber.Text = getAddressData().streetNo;
-            TextZip.Text = getAddressData().postCode;
+            TextAddress1.Text = GetAddressData(SESSION_VAR).GetStreetName();
+            TextCity.Text = GetAddressData(SESSION_VAR).GetCity().GetCity();
+            CountryDropDownList.Text = GetAddressData(SESSION_VAR).GetCountry();
+            TextAddressnumber.Text = GetAddressData(SESSION_VAR).GetStreetNo();
+            TextZip.Text = GetAddressData(SESSION_VAR).GetCity().GetZip();
+            TextName.Text = GetUserData(SESSION_VAR).GetFirstName() + " " + GetUserData(SESSION_VAR).GetLastName();
         }
 
         /*Dummy data for demonstration purpose*/
-        protected Customer getUserData()
+        protected AccountDTO GetUserData(string email)
         {
-            Customer customer = new Customer(11110, "Marcus", "Miller", "+6194563221", "1992-02-15");
+            AccountDTO customer = new AccountDTO();
+            AccountBL BL = new AccountBL();
+            customer = BL.GetCustomer(email);
             return customer;
         }
-
+        
         /*Dummy data for demonstration purpose*/
-        protected Login getLoginData()
+        protected AddressDTO GetAddressData(string email)
         {
-            Login login = new Login(11111, "marcus.miller@gmail.com", "Xw1234%12");
-            return login;
-        }
-
-        /*Dummy data for demonstration purpose*/
-        protected Address getAddressData()
-        {
-            Address address = new Address(000012, "University Dr.", "130", "Newcastle", "2300", "Australia");
+            AddressBL BL = new AddressBL();
+            AddressDTO address = new AddressDTO();
+            address = BL.FindAddress(email);
             return address;
         }
 
         /*Dummy data for demonstration purpose*/
-        protected List<ShoppingListItem> getShoppingList()
+        protected IEnumerable<InvoiceDTO> GetShoppingList(string email)
         {
-            List<ShoppingListItem> shoppingLs = new List<ShoppingListItem>();
-            ShoppingListItem ls = new ShoppingListItem(1234, 25.00f, "2019-02-01", "2019-02-25", "2019-03-25");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1235, 25.95f, "2019-01-01", "2019-01-30", "paied");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1236, 100.95f, "2018-12-01", "2018-12-30", "paied");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1237, 23.95f, "2018-12-01", "2018-12-30", "paied");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1238, 10.95f, "2018-12-01", "2018-12-25", "paied");
-            ls = new ShoppingListItem(1239, 10.95f, "2018-11-15", "2018-12-22", "paied");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1240, 210.95f, "2018-10-01", "2018-10-15", "paied");
-            shoppingLs.Add(ls);
-
-            shoppingLs.Add(ls);
-            return shoppingLs;
-        }
-
-        /*Dummy data for demo purpose, to fill the aspx fields until database is connected*/
-        public class ShoppingListItem
-        {
-            public int InvoiceNumber { get; set; }
-            public float TotalAmount { get; set; }
-            public string OrderDate { get; set; }
-            public string ArrivalDate { get; set; }
-            public string PaymentDue { get; set; }
-
-            public ShoppingListItem(int id, float totalAmount, string orderDate, string arrivalDate, string payDue)
-            {
-                this.InvoiceNumber = id;
-                this.TotalAmount = totalAmount;
-                this.OrderDate = orderDate;
-                this.ArrivalDate = arrivalDate;
-                this.PaymentDue = payDue;
-            }
-        }
-
-        public class Customer
-        {
-            public int userId { get; set; }
-            public string firstName { get; set; }
-            public string lastName { get; set; }
-            public string phoneNo { get; set; }
-            public string birthdate { get; set; }
-
-            public Customer(int userId, string firstName, string lastName, string phoneNo, string birthdate)
-            {
-                this.userId = userId;
-                this.firstName = firstName;
-                this.lastName = lastName;
-                this.phoneNo = phoneNo;
-                this.birthdate = birthdate;
-            }
-        }
-
-        public class Address
-        {
-            public int addressId { get; set; }
-            public string streetName { get; set; }
-            public string streetNo { get; set; }
-            public string cityName { get; set; }
-            public string postCode { get; set; }
-            public string country { get; set; }
-
-            public Address(int addressId, string streetName, string streetNo, string cityName, string postCode, string country)
-            {
-                this.addressId = addressId;
-                this.streetName = streetName;
-                this.streetNo = streetNo;
-                this.cityName = cityName;
-                this.postCode = postCode;
-                this.country = country;
-            }
-        }
-
-        public class Login
-        {
-            public int loginId { get; set; }
-            public string email { get; set; }
-            public string password { get; set; }
-
-            public Login(int loginId, string email, string password)
-            {
-                this.loginId = loginId;
-                this.email = email;
-                this.password = password;
-            }
-        }
-
+            //ProductSelectionBL BL = new ProductSelectionBL();
+            InvoiceBL BL = new InvoiceBL();
+            IEnumerable<InvoiceDTO> transactions = new List<InvoiceDTO>();
+            transactions = BL.FindInvoices(email);
+            return transactions;
+        }      
     }
 }

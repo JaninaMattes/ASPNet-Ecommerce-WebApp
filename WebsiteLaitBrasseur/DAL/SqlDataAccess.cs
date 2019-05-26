@@ -25,7 +25,15 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     if (_connectionString == string.Empty)
                     {
-                        _connectionString = ConfigurationManager.ConnectionStrings[CONNECTION_STRING_NAME].ConnectionString;
+                        try
+                        {
+                            _connectionString = ConfigurationManager.ConnectionStrings[CONNECTION_STRING_NAME].ConnectionString;
+                        }
+                        catch (ConfigurationErrorsException e)
+                        {
+                            e.GetBaseException();
+                        }
+                       
                     }
                     return _connectionString;
                 }

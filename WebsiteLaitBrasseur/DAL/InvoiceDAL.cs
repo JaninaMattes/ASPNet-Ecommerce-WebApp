@@ -15,7 +15,13 @@ namespace WebsiteLaitBrasseur.DAL
     public class InvoiceDAL: IInvoiceDataAccess
     {
         //Get connection string from web.config file and create sql connection
-        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        private string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["LaitBrasseurDB"].ConnectionString;
+            }
+        }
 
         /// <summary>
         /// Insert a new Invoice into the DB
@@ -37,66 +43,62 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="customerMail"></param>
         /// <param name="email"></param>
         /// <returns>Invoice ID</returns>
+
         [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(int accountID, int shippingID, int totalQuantity, decimal totalShippingCost,
-            decimal totalProductCost, decimal totalTaxes, decimal totalAmount, DateTime orderDate, DateTime paymentDate, 
-            DateTime arrivalDate, DateTime postageDate, int paymentStatus, string customerMail)
+            decimal totalProductCost, decimal totalTaxes, decimal totalAmount, string orderDate, string paymentDate, 
+            string arrivalDate, string postageDate, int paymentStatus, string customerMail)
         {
             int result;
             //no need to explicitely set id as autoincrement is used
             string queryString = "INSERT INTO dbo.Invoice(dbo.Invoice.accountID, dbo.Invoice.shippingID, dbo.Invoice.totalQuantity, dbo.Invoice.shippingCost, " +
                 "dbo.Invoice.totalProductCost, dbo.Invoice.totalTax, dbo.Invoice.totalAmount, dbo.Invoice.orderDate, dbo.Invoice.paymentDate, dbo.Invoice.paymentStatus, " +
                 "dbo.Invoice.customerMail, dbo.Invoice.arrivalDate, dbo.Invoice.postageDate) " +
-                "VALUES(@accountID, @shippingID, @totalQuantity, @shippingCost, @totalProductCost, @totalTax, @totalAmount, @orderDate, @paymentDate, @paymentStatus " +
+                "VALUES(@accountID, @shippingID, @totalQuantity, @shippingCost, @totalProductCost, @totalTax, @totalAmount, @orderDate, @paymentDate, @paymentStatus, " +
                 "@customerMail, @arrivalDate, @postageDate)";
             string queryAutoIncr = "SELECT TOP(1) dbo.Invoice.invoiceID FROM dbo.Invoice ORDER BY 1 DESC";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@accountID", SqlDbType.Decimal).Value = accountID;
+                        cmd.Parameters.AddWithValue("@shippingID", SqlDbType.Decimal).Value = shippingID;
+                        cmd.Parameters.AddWithValue("@totalQuantity", SqlDbType.Int).Value = totalQuantity;
+                        cmd.Parameters.AddWithValue("@shippingCost", SqlDbType.Decimal).Value = totalShippingCost;
+                        cmd.Parameters.AddWithValue("@totalProductCost", SqlDbType.Decimal).Value = totalProductCost;
+                        cmd.Parameters.AddWithValue("@totalTax", SqlDbType.Decimal).Value = totalTaxes;
+                        cmd.Parameters.AddWithValue("@totalAmount", SqlDbType.Decimal).Value = totalAmount;
+                        cmd.Parameters.AddWithValue("@orderDate", SqlDbType.Date).Value = orderDate;
+                        cmd.Parameters.AddWithValue("@paymentDate", SqlDbType.Date).Value = paymentDate;
+                        cmd.Parameters.AddWithValue("@paymentStatus", SqlDbType.Int).Value = paymentStatus;
+                        cmd.Parameters.AddWithValue("@customerMail", SqlDbType.VarChar).Value = customerMail;
+                        cmd.Parameters.AddWithValue("@arrivalDate", SqlDbType.Date).Value = arrivalDate;
+                        cmd.Parameters.AddWithValue("@postageDate", SqlDbType.Date).Value = postageDate;               
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        var row = cmd.ExecuteNonQuery(); //returns amount of effected rows if successfull
+                        Debug.Print("InvoiceDAL: /Insert/ " + row);
+                    }
+                
+                    using (SqlCommand cmd = new SqlCommand(queryAutoIncr, con))
+                    {
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        //won't need a while, since it will only retrieve one row
+                        reader.Read();
+                        //this is the id of the newly created data field
+                        result = Convert.ToInt32(reader["invoiceID"]);
+                        Debug.Print("InvoiceDAL: /Insert/ " + result);
+                    }
                 }
-                //insert into database
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
-                    cmd.Parameters.AddWithValue("@shippingID", SqlDbType.Int).Value = shippingID;
-                    cmd.Parameters.AddWithValue("@totalQuantity", SqlDbType.Int).Value = totalQuantity;
-                    cmd.Parameters.AddWithValue("@shippingCost", SqlDbType.Decimal).Value = totalShippingCost;
-                    cmd.Parameters.AddWithValue("@totalProductCost", SqlDbType.Decimal).Value = totalProductCost;
-                    cmd.Parameters.AddWithValue("@totalTax", SqlDbType.Decimal).Value = totalTaxes;
-                    cmd.Parameters.AddWithValue("@totalAmount", SqlDbType.Decimal).Value = totalAmount;
-                    cmd.Parameters.AddWithValue("@orderDate", SqlDbType.Date).Value = orderDate;
-                    cmd.Parameters.AddWithValue("@paymentDate", SqlDbType.Date).Value = paymentDate;
-                    cmd.Parameters.AddWithValue("@postageDate", SqlDbType.Date).Value = postageDate;
-                    cmd.Parameters.AddWithValue("@paymentStatus", SqlDbType.Bit).Value = paymentStatus;
-                    cmd.Parameters.AddWithValue("@customerMail", SqlDbType.VarChar).Value = customerMail;
-                    cmd.Parameters.AddWithValue("@arrivalDate", SqlDbType.Date).Value = arrivalDate;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                }
-
-                ///find the last manipulated id due to autoincrement and return it
-                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
-                {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    //won't need a while, since it will only retrieve one row
-                    reader.Read();
-                    //this is the id of the newly created data field
-                    result = (Int32)reader["invoiceID"];
-                    Debug.Print("InvoiceDAL: /Insert/ " + result.ToString());
-                }
-                return result;
             }
             catch (Exception e)
             {
                 result = 0;
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -116,60 +118,50 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Invoice SET paymentStatus = @paymentStatus WHERE invoiceID = @id";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY 
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@paymentStatus", SqlDbType.Bit).Value = paymentStatus;
-                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                    Debug.Print("InvoiceDAL: /Update/ " + result.ToString());
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@paymentStatus", SqlDbType.Int).Value = paymentStatus;
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        Debug.Print("InvoiceDAL: /Update/ " + result.ToString());
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
 
         //update
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int UpdateDate(int id, bool arrivalDate)
+        public int UpdateDate(int id, string arrivalDate)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Invoice SET arrivalDate = @arrivalDate WHERE invoiceID = @id";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY 
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@arrivalDate", SqlDbType.Date).Value = arrivalDate;
-                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                    Debug.Print("InvoiceDAL: /UpdateDate/ " + result.ToString());
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@arrivalDate", SqlDbType.Date).Value = arrivalDate;
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        Debug.Print("InvoiceDAL: /UpdateDate/ " + result.ToString());
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -180,50 +172,37 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="id"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public InvoiceDTO FindBy(int id)
+        public InvoiceDTO GetInvoiceBy(int id)
         {
-            InvoiceDTO invoice;
-            AccountDTO account;
-            ShippmentDTO shipping;
-
             string queryString = "SELECT * FROM dbo.Invoice WHERE invoiceID = @id";
+            InvoiceDTO invoice = new InvoiceDTO();
 
-            try
-            {
-                if (connection.State == ConnectionState.Closed)
+            try {
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("invoiceID", SqlDbType.Int).Value = id;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
-                        {
-                            invoice = new InvoiceDTO();
-                            account = new AccountDTO();
-                            shipping = new ShippmentDTO();
+                        {                            
+                            AccountDTO account = new AccountDTO();
+                            ShippmentDTO shipping = new ShippmentDTO();
                             invoice = GenerateInvoice(reader, invoice, account, shipping);
                             //return product instance as data object 
                             Debug.Print("InvoiceDAL: /FindByID/ " + invoice.GetID());
-                            return invoice;
                         }
                     }
                 }
-            }
+            }         
+            
             catch (Exception e)
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return invoice;
         }
 
         /// <summary>
@@ -233,7 +212,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="accountID"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<InvoiceDTO> FindByCustomer(int accountID)
+        public IEnumerable<InvoiceDTO> FindByCustomer(int accountID)
         {
             string queryString = "SELECT * FROM dbo.Invoice WHERE accountID = @accountID";
             List<InvoiceDTO> results = new List<InvoiceDTO>();
@@ -242,36 +221,24 @@ namespace WebsiteLaitBrasseur.DAL
             ShippmentDTO shipping;
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                invoice = new InvoiceDTO();
-                                account = new AccountDTO();
-                                shipping = new ShippmentDTO();
-                                invoice = GenerateInvoice(reader, invoice, account, shipping);
-                                //return product instance as data object 
-                                Debug.Print("InvoiceDAL: /FindByCustomer/ " + invoice.GetID());
+                        cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
 
-                                //add data objects to result-list 
-                                results.Add(invoice);
-                            }
-                            return results;
-                        }
-                        else
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            throw new EmptyRowException();
+                            invoice = new InvoiceDTO();
+                            account = new AccountDTO();
+                            shipping = new ShippmentDTO();
+                            invoice = GenerateInvoice(reader, invoice, account, shipping);
+                            Debug.Print("InvoiceDAL: /FindByCustomer/ " + invoice.GetID());
+                            //add data objects to result-list 
+                            results.Add(invoice);
                         }
                     }
                 }
@@ -280,11 +247,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         /// <summary>
@@ -295,7 +258,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="paymentStatus"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<InvoiceDTO> FindByStatus(int accountID, int paymentStatus)
+        public IEnumerable<InvoiceDTO> FindByStatus(int accountID, int paymentStatus)
         {
             string queryString = "SELECT * FROM dbo.Invoice WHERE accountID = @accountID AND paymentStatus = @paymentStatus";
             List<InvoiceDTO> results = new List<InvoiceDTO>();
@@ -304,54 +267,40 @@ namespace WebsiteLaitBrasseur.DAL
             ShippmentDTO shipping;
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
-                    cmd.Parameters.AddWithValue("@paymentStatus", SqlDbType.Bit).Value = paymentStatus;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                invoice = new InvoiceDTO();
-                                account = new AccountDTO();
-                                shipping = new ShippmentDTO();
-                                invoice = GenerateInvoice(reader, invoice, account, shipping);
-                                //return product instance as data object 
-                                Debug.Print("InvoiceDAL: /FindInvoiceByStatus/ " + invoice.GetID());
+                        cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                        cmd.Parameters.AddWithValue("@paymentStatus", SqlDbType.Int).Value = paymentStatus;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
 
-                                //add data objects to result-list 
-                                results.Add(invoice);
-                            }
-                            return results;
-                        }
-                        else
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            throw new EmptyRowException();
+                            invoice = new InvoiceDTO();
+                            account = new AccountDTO();
+                            shipping = new ShippmentDTO();
+                            invoice = GenerateInvoice(reader, invoice, account, shipping);
+                            Debug.Print("InvoiceDAL: /FindInvoiceByStatus/ " + invoice.GetID());
+                            //add data objects to result-list 
+                            results.Add(invoice);
                         }
                     }
                 }
+                
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         //find all invoices per paymentdate
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<InvoiceDTO> FindBy(DateTime paymentDate)
+        public IEnumerable<InvoiceDTO> GetInvoicesBy(string paymentDate)
         {
             string queryString = "SELECT * FROM dbo.Invoice WHERE paymentDate = @paymentDate";
             List<InvoiceDTO> results = new List<InvoiceDTO>();
@@ -360,34 +309,24 @@ namespace WebsiteLaitBrasseur.DAL
             ShippmentDTO shipping;
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@paymentDate", paymentDate);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        cmd.Parameters.AddWithValue("@paymentDate", SqlDbType.Date).Value = paymentDate;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                invoice = new InvoiceDTO();
-                                account = new AccountDTO();
-                                shipping = new ShippmentDTO();
-                                invoice = GenerateInvoice(reader, invoice, account, shipping);
-                                //return product instance as data object 
-                                Debug.Print("InvoiceDAL: /FindBy/ " + invoice.GetID());
-                                //add data objects to result-list 
-                                results.Add(invoice);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            invoice = new InvoiceDTO();
+                            account = new AccountDTO();
+                            shipping = new ShippmentDTO();
+                            invoice = GenerateInvoice(reader, invoice, account, shipping);
+                            Debug.Print("InvoiceDAL: /FindBy/ " + invoice.GetID());
+                            //add data objects to result-list 
+                            results.Add(invoice);                           
                         }
                     }
                 }
@@ -396,11 +335,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         /// <summary>
@@ -408,7 +343,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<InvoiceDTO> FindAll()
+        public IEnumerable<InvoiceDTO> GetInvoices()
         {
             string queryString = "SELECT * FROM dbo.Invoice";
             List<InvoiceDTO> results = new List<InvoiceDTO>();
@@ -417,34 +352,22 @@ namespace WebsiteLaitBrasseur.DAL
             ShippmentDTO shipping;
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                invoice = new InvoiceDTO();
-                                account = new AccountDTO();
-                                shipping = new ShippmentDTO();
-                                invoice = GenerateInvoice(reader, invoice, account, shipping);
-                                //return product instance as data object 
-                                Debug.Print("InvoiceDAL: /FindAll/ " + invoice.GetID());
-                                //add data objects to result-list 
-                                results.Add(invoice);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
-                        }
+                            invoice = new InvoiceDTO();
+                            account = new AccountDTO();
+                            shipping = new ShippmentDTO();
+                            invoice = GenerateInvoice(reader, invoice, account, shipping);
+                            Debug.Print("InvoiceDAL: /FindAll/ " + invoice.GetID());
+                            //add data objects to result-list 
+                            results.Add(invoice);                            
+                        }                        
                     }
                 }
             }
@@ -452,11 +375,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         /// <summary>
@@ -466,7 +385,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="paymentStatus"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<InvoiceDTO> FindAllByStatus(int paymentStatus)
+        public IEnumerable<InvoiceDTO> FindAllByStatus(int paymentStatus)
         {
             string queryString = "SELECT * FROM dbo.Invoice WHERE paymentStatus = @paymentStatus";
             List<InvoiceDTO> results = new List<InvoiceDTO>();
@@ -475,35 +394,22 @@ namespace WebsiteLaitBrasseur.DAL
             ShippmentDTO shipping;
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@paymentStatus", paymentStatus);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        cmd.Parameters.AddWithValue("@paymentStatus", paymentStatus);
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                invoice = new InvoiceDTO();
-                                account = new AccountDTO();
-                                shipping = new ShippmentDTO();
-                                invoice = GenerateInvoice(reader, invoice, account, shipping);
-                                //return product instance as data object 
-                                Debug.Print("InvoiceDAL: /FindAllBy/ " + invoice.GetID());
-
-                                //add data objects to result-list 
-                                results.Add(invoice);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            invoice = new InvoiceDTO();
+                            account = new AccountDTO();
+                            shipping = new ShippmentDTO();
+                            invoice = GenerateInvoice(reader, invoice, account, shipping);
+                            Debug.Print("InvoiceDAL: /FindAllBy/ " + invoice.GetID());
+                            //add data objects to result-list 
+                            results.Add(invoice);
                         }
                     }
                 }
@@ -512,11 +418,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         /// <summary>
@@ -525,7 +427,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="accountID"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<InvoiceDTO> FindAllByCustomer(int accountID)
+        public IEnumerable<InvoiceDTO> FindAllByCustomer(int accountID)
         {
             string queryString = "SELECT * FROM dbo.Invoice WHERE accountID = @accountID";
             List<InvoiceDTO> results = new List<InvoiceDTO>();
@@ -534,34 +436,23 @@ namespace WebsiteLaitBrasseur.DAL
             ShippmentDTO shipping;
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@accountID", accountID);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        cmd.Parameters.AddWithValue("@accountID", accountID);
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                invoice = new InvoiceDTO();
-                                account = new AccountDTO();
-                                shipping = new ShippmentDTO();
-                                invoice = GenerateInvoice(reader, invoice, account, shipping);
-                                //return product instance as data object 
-                                Debug.Print("InvoiceDAL: /FindInvoiceBy/ " + invoice.GetID());
-
-                                //add data objects to result-list 
-                                results.Add(invoice);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            invoice = new InvoiceDTO();
+                            account = new AccountDTO();
+                            shipping = new ShippmentDTO();
+                            invoice = GenerateInvoice(reader, invoice, account, shipping);
+                            //return product instance as data object 
+                            Debug.Print("InvoiceDAL: /FindInvoiceBy/ " + invoice.GetID());
+                            //add data objects to result-list 
+                            results.Add(invoice);
                         }
                     }
                 }
@@ -570,11 +461,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         private static InvoiceDTO GenerateInvoice(SqlDataReader reader, InvoiceDTO invoice, AccountDTO account, ShippmentDTO shipping)
@@ -584,16 +471,18 @@ namespace WebsiteLaitBrasseur.DAL
             shipping.SetID(Convert.ToInt32(reader["shippingID"]));
             invoice.SetCustomer(account);
             invoice.SetShippment(shipping);
-            invoice.SetEmail(reader["customerMail"].ToString());
-            invoice.SetOrderDate(Convert.ToDateTime(reader["orderDate"]));
-            invoice.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
-            invoice.SetArrivalDate(Convert.ToDateTime(reader["arrivaltDate"]));
-            invoice.SetPostDate(Convert.ToDateTime(reader["postageDate"]));
             invoice.SetQuantity(Convert.ToInt32(reader["totalQuantity"]));
             invoice.SetShippingCost(Convert.ToDecimal(reader["shippingCost"]));
-            invoice.SetStatus(Convert.ToInt32(reader["paymentStatus"]));
+            invoice.SetTotal(Convert.ToDecimal(reader["totalProductCost"]));
             invoice.SetTax(Convert.ToDecimal(reader["totalTax"]));
-            invoice.SetTotal(Convert.ToDecimal(reader["totalAmount"]));
+            invoice.SetTotal(Convert.ToDecimal(reader["totalAmount"]));          
+            invoice.SetOrderDate(Convert.ToDateTime(reader["orderDate"]));
+            invoice.SetPaymentDate(Convert.ToDateTime(reader["paymentDate"]));
+            invoice.SetStatus(Convert.ToInt32(reader["paymentStatus"]));
+            invoice.SetEmail(reader["customerMail"].ToString());
+            invoice.SetArrivalDate(Convert.ToDateTime(reader["arrivalDate"]));
+            invoice.SetPostDate(Convert.ToDateTime(reader["postageDate"]));
+            Debug.Print("InvoiceDAL: Invoice ID " + invoice.GetID());
             return invoice;
         }
     }

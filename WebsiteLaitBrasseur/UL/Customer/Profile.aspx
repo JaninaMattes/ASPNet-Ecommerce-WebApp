@@ -14,14 +14,7 @@
             <div class="col-md-2" >
                 <div class="profile-userpic">
                     <!--<img class="img-responsive" alt="User Image" src="/UL/Images/customerImg.jpg">-->
-                    <asp:ImageButton ID="ProfilePicture" runat="server" ToolTip="Profile Image" DataImageUrlField="Path" OnClick="UpdateButton_Click"/>
-                    <div class="overlay">
-                    <p>Change Profile Picture</p><br />
-                        <asp:FileUpload ID="FileUpload1" runat="server" />
-                        <asp:Button ID="btnUpload" runat="server" Text="Upload" OnClick = "Upload" />
-                    <a href="#" class="icon" title="User Profile">
-                        <i class="fa fa-user"></i></a>
-                    </div>
+                    <asp:ImageButton ID="ProfilePicture" runat="server" ToolTip="Profile Image" DataImageUrlField="Path" OnClick="UpdateButton_Click"/>                    
 		        </div>
                 <div class="text-center">
                     <br /><br /><br />
@@ -180,19 +173,19 @@
                         <asp:GridView id="ShoppingTable" runat="server"
                             class="table table-hover table-striped text-center"
                             GridLines="None"
+                            emptydatatext="No data available." 
                             AutoGenerateColumns="false">
                                 <Columns>
-                                    <asp:BoundField DataField="InvoiceNumber" HeaderText="Invoice Number" />
-                                    <asp:BoundField DataField="TotalAmount" HeaderText="Total Amount(€)" />
-                                    <asp:BoundField DataField="OrderDate" HeaderText="Order Date" />
-                                    <asp:BoundField DataField="ArrivalDate" HeaderText="Arrival Date" />
-                                    <asp:BoundField DataField="PaymentDue" HeaderText="Payment Due" />
+                                    <asp:BoundField DataField="invoiceID" HeaderText="Invoice Number" />
+                                    <asp:BoundField DataField="totalQuantity" HeaderText="Total Products" />
+                                    <asp:BoundField DataField="totalAmount" HeaderText="Total Amount(AUS$)" />
+                                    <asp:BoundField DataField="orderDate" HeaderText="Order Date" />
+                                    <asp:BoundField DataField="arrivalDate" HeaderText="Arrival Date" />
+                                    <asp:BoundField DataField="paymentStatus" HeaderText="Payment Status" />
                                 </Columns>
                             </asp:GridView>
                 </div>
             </div>
-
-
         </div>
     </div>
 

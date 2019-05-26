@@ -146,7 +146,7 @@ namespace WebsiteLaitBrasseur.DAL
                 //find entry in database where id = XY
                 using (SqlCommand cmd = new SqlCommand(queryString, connection))
                 {
-                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.Read())
@@ -155,7 +155,7 @@ namespace WebsiteLaitBrasseur.DAL
                             city = new CityDTO();
                             address = address = GenerateAddress(reader, address, city);
                             //return product instance as data object 
-                            Debug.Print("AddressDAL: /FindByID/ " + address.ToString());
+                            Debug.Print("AddressDAL: /FindByID/ " + address.GetID());
                             return address;
                         }
                     }
@@ -229,7 +229,7 @@ namespace WebsiteLaitBrasseur.DAL
             address.SetCity(city);
             address.SetID(Convert.ToInt32(reader["addressID"]));
             address.SetStreetName(reader["streetName"].ToString());
-            address.SetStreetName(reader["streetNo"].ToString());
+            address.SetStreetNo(reader["streetNo"].ToString());
             address.SetType(reader["addressType"].ToString());
             return address;
         }
