@@ -10,7 +10,7 @@ using WebsiteLaitBrasseur.BL;
 namespace WebsiteLaitBrasseur.DAL
 {
     [DataObject(true)]
-    public class CityDAL 
+    public class CityDAL : ICityDataAccess
     {
         //Get connection string from web.config file and create sql connection
         private string ConnectionString
@@ -127,9 +127,7 @@ namespace WebsiteLaitBrasseur.DAL
                             return city;
                         }
                     }
-
-                }
-               
+                }               
             }
             catch (Exception e)
             {
@@ -172,8 +170,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
-            }
-            
+            }            
             return city;
         }
 

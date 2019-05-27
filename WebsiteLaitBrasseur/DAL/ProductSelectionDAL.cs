@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -12,7 +13,13 @@ namespace WebsiteLaitBrasseur.DAL
     public class ProductSelectionDAL
     {
         //Get connection string from web.config file and create sql connection
-        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        private string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["LaitBrasseurDB"].ConnectionString;
+            }
+        }
 
         /// <summary>
         /// Insert a new ProductSelection Object to 
@@ -23,54 +30,52 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="quantity"></param>
         /// <param name="origPrice"></param>
         /// <returns>Int ProductSelection</returns>
-        
+
         [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(int invoiceID, int quantity, int origSize, decimal origPrice)
         {
-            int result;
+            int result = 0;
             //no need to explicitely set id as autoincrement is used
             string queryString = "INSERT INTO dbo.ProductSelection(dbo.ProductSelection.invoiceID, dbo.ProductSelection.quantity, " +
-                "dbo.ProductSelection.originalSize, dbo.ProductSelection.originalPrice)" +
+                "dbo.ProductSelection.originalSize, dbo.ProductSelection.originalPrice) " +
                 "VALUES(@invoiceID, @quantity, @originalSize, @originalPrice)";
             string queryAutoIncr = "SELECT TOP(1) dbo.ProductSelection.selectionID FROM dbo.ProductSelection ORDER BY 1 DESC";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //insert into database
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@invoiceID", SqlDbType.Int).Value = invoiceID;
-                    cmd.Parameters.AddWithValue("@quantity", SqlDbType.Int).Value = quantity;
-                    cmd.Parameters.AddWithValue("@originalPrice", SqlDbType.Decimal).Value = origPrice;
-                    cmd.Parameters.AddWithValue("@originalSize", SqlDbType.Int).Value = origSize;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@invoiceID", SqlDbType.Int).Value = invoiceID;
+                        cmd.Parameters.AddWithValue("@quantity", SqlDbType.Int).Value = quantity;
+                        cmd.Parameters.AddWithValue("@originalPrice", SqlDbType.Decimal).Value = origPrice;
+                        cmd.Parameters.AddWithValue("@originalSize", SqlDbType.Int).Value = origSize;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
 
-                ///find the last manipulated id due to autoincrement and return it
-                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    //won't need a while, since it will only retrieve one row
-                    reader.Read();
-                    //this is the id of the newly created data field
-                    result = Convert.ToInt32(reader["selectionID"]);
-                    Debug.Print("ProductSelectionDAL: /Insert ID/ " + result.ToString());
+                    using (SqlCommand cmd = new SqlCommand(queryAutoIncr, con))
+                    {
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        //won't need a while, since it will only retrieve one row
+                        reader.Read();
+                        //this is the id of the newly created data field
+                        result = Convert.ToInt32(reader["selectionID"]);
+                        Debug.Print("ProductSelectionDAL: /Insert ID/ " + result.ToString());
+                    }
                 }
                 return result;
             }
             catch (Exception e)
             {
-                result = 0;
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -88,31 +93,28 @@ namespace WebsiteLaitBrasseur.DAL
         {
             int result;
             //no need to explicitely set id as autoincrement is used
-            string queryString = "INSERT INTO dbo.Product_ProdSelection(dbo.Product_ProdSelection.productID, dbo.Product_ProdSelection.selectionID)" +
+            string queryString = "INSERT INTO dbo.Product_ProdSelection(dbo.Product_ProdSelection.productID, " +
+                "dbo.Product_ProdSelection.selectionID) " +
                 "VALUES(@selectionID, @productID)";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //insert into database
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@selectionID", selectionID);
-                    cmd.Parameters.AddWithValue("@productID", productID);
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@selectionID", selectionID);
+                        cmd.Parameters.AddWithValue("@productID", productID);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 result = 0;
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -133,30 +135,27 @@ namespace WebsiteLaitBrasseur.DAL
         public int UpdateProduct(int selectionID, int productID)
         {
             int result = 0;
-            string queryString = "UPDATE dbo.Product_ProdSelection SET productID = @productID WHERE selectionID = @selectionID";
+            string queryString = "UPDATE dbo.Product_ProdSelection SET productID = @productID " +
+                "WHERE selectionID = @selectionID";
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY 
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@productID", productID);
-                    cmd.Parameters.AddWithValue("@selectionID", selectionID);
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@productID", productID);
+                        cmd.Parameters.AddWithValue("@selectionID", selectionID);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -176,26 +175,22 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY 
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@quantity", quantity);
-                    cmd.Parameters.AddWithValue("@selectionID", selectionID);
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@quantity", quantity);
+                        cmd.Parameters.AddWithValue("@selectionID", selectionID);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -217,26 +212,22 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY 
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@orirignalPrice", origPrice);
-                    cmd.Parameters.AddWithValue("@selectionID", selectionID);
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@orirignalPrice", origPrice);
+                        cmd.Parameters.AddWithValue("@selectionID", selectionID);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -258,26 +249,24 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY 
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@orirignalSize", origSize);
-                    cmd.Parameters.AddWithValue("@selectionID", selectionID);
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                }
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        {
+                            cmd.Parameters.AddWithValue("@orirignalSize", origSize);
+                            cmd.Parameters.AddWithValue("@selectionID", selectionID);
+                            cmd.CommandType = CommandType.Text;
+                            con.Open();
+                            result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        }
+                    }
+                }  
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -296,33 +285,23 @@ namespace WebsiteLaitBrasseur.DAL
                 "INNER JOIN dbo.ProductSelection ON dbo.Product_ProdSelection.selectionID = dbo.ProductSelection.selectionID";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                //TODO InvoiceID Logic
-                                product = new ProductDTO();
-                                selection = new ProductSelectionDTO();
-                                selection = GenerateSelection(reader, product, selection);
-                                //return product instance as data object 
-                                Debug.Print("ProductSelectionDAL: /FindAll/ " + selection.GetID());
-                                //add data objects to result-list 
-                                results.Add(selection);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            //TODO InvoiceID Logic
+                            product = new ProductDTO();
+                            selection = new ProductSelectionDTO();
+                            selection = GenerateSelection(reader, product, selection);
+                            //return product instance as data object 
+                            Debug.Print("ProductSelectionDAL: /FindAll/ " + selection.GetID());
+                            //add data objects to result-list 
+                            results.Add(selection);
                         }
                     }
                 }
@@ -331,11 +310,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductSelectionDTO> FindAllPerInvoice(int invoiceID)
@@ -349,33 +324,24 @@ namespace WebsiteLaitBrasseur.DAL
                 "dbo.ProductSelection.originalPrice FROM dbo.ProductSelection " +
                 "INNER JOIN dbo.Product_ProdSelection ON dbo.ProductSelection.invoiceID =" + invoiceID;
             try
-            {
-                if (connection.State == ConnectionState.Closed)
+            { 
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                product = new ProductDTO();
-                                selection = new ProductSelectionDTO();
-                                selection = GenerateSelection(reader, product, selection);
-                                //return product instance as data object 
-                                Debug.Print("ProductSelectionDAL: /FindAllByInvoice/ " + selection.GetID());
-                                //add data objects to result-list 
-                                results.Add(selection);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            product = new ProductDTO();
+                            selection = new ProductSelectionDTO();
+                            selection = GenerateSelection(reader, product, selection);
+                            //return product instance as data object 
+                            Debug.Print("ProductSelectionDAL: /FindAllByInvoice/ " + selection.GetID());
+                            //add data objects to result-list 
+                            results.Add(selection);
                         }
                     }
                 }
@@ -384,11 +350,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         private static ProductSelectionDTO GenerateSelection(SqlDataReader reader, ProductDTO product, ProductSelectionDTO selection)

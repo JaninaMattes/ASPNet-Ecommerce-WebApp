@@ -30,7 +30,9 @@ namespace LaitBrasseur.Test
         [TestMethod]
         public void CreateInvoice()
         {
-            var id = DB.Insert(accountID, shippID, quantity, sCost, pCost, tax, total, orderDate, payDate, arrivalDate, postDate, status, mail);
+            var id = DB.Insert(accountID, shippID, quantity, sCost, pCost, tax, total, 
+                Convert.ToString(orderDate), Convert.ToString(payDate), Convert.ToString(arrivalDate), 
+                Convert.ToString(postDate), status, mail);
             var result = DB.GetInvoiceBy(id);
             Assert.AreEqual(ExpectedInt, id);
             Assert.AreEqual(Expected, result.GetEmail());

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebsiteLaitBrasseur.DAL
 {
-    interface CityDataAccess
+    interface ICityDataAccess
     {
         int Insert(string zipCode, string cityName);
         int UpdateCity(int cityID, string zipCode, string cityName);

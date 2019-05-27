@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -12,7 +13,13 @@ namespace WebsiteLaitBrasseur.DAL
     public class PaymentDAL
     {
         //Get connection string from web.config file and create sql connection
-        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        private string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["LaitBrasseurDB"].ConnectionString;
+            }
+        }
 
         /// <summary>
         /// This function inserts a new payment object persistent into the DB
@@ -26,37 +33,41 @@ namespace WebsiteLaitBrasseur.DAL
         [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(decimal totalAmount, DateTime paymentDate, int accountID, int invoiceID)
         {
-            int result;
+            int result = 0;
             //no need to explicitely set id as autoincrement is used
             string queryString = "INSERT INTO dbo.Payment(dbo.Payment.invoiceID, dbo.Payment.accountID, dbo.Payment.amount, dbo.Payment.paymentDate) " +
                 "VALUES(@invoiceID, @accountID, @amount, @paymentDate)";
             string queryAutoIncr = "SELECT TOP(1) dbo.Payment.paymentID FROM dbo.Payment ORDER BY 1 DESC";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //insert into database
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@invoiceID", SqlDbType.Int).Value = invoiceID;
-                    cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
-                    cmd.Parameters.AddWithValue("@amount", SqlDbType.Int).Value = totalAmount;
-                    cmd.Parameters.AddWithValue("@paymentDate", SqlDbType.Date).Value = paymentDate;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@invoiceID", SqlDbType.Int).Value = invoiceID;
+                        cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                        cmd.Parameters.AddWithValue("@amount", SqlDbType.Int).Value = totalAmount;
+                        cmd.Parameters.AddWithValue("@paymentDate", SqlDbType.Date).Value = paymentDate;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
 
-                ///find the last manipulated id due to autoincrement and return it
-                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    SqlDataReader reader = command.ExecuteReader();
-                    //won't need a while, since it will only retrieve one row
-                    reader.Read();
-                    //this is the id of the newly created data field
-                    result = Convert.ToInt32(reader["paymentID"]);
-                    Debug.Print("PaymentDAL: /Insert ID/ " + result);
+                    using (SqlCommand cmd = new SqlCommand(queryAutoIncr, con))
+                    {
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        //won't need a while, since it will only retrieve one row
+                        reader.Read();
+                        //this is the id of the newly created data field
+                        result = Convert.ToInt32(reader["paymentID"]);
+                        Debug.Print("PaymentDAL: /Insert ID/ " + result);
+                    }
                 }
                 return result;
             }
@@ -64,10 +75,6 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 result = 0;
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -84,21 +91,19 @@ namespace WebsiteLaitBrasseur.DAL
             PaymentDTO payment;
             AccountDTO account;
             InvoiceDTO invoice;
-            string queryString = "SELECT * FROM dbo.Payment WHERE paymentID=@id";
+            string queryString = "SELECT * FROM dbo.Payment WHERE paymentID = @id";
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
                             account = new AccountDTO();
@@ -116,10 +121,6 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
-            }
-            finally
-            {
-                connection.Close();
             }
             return null;
         }
@@ -139,17 +140,15 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@paymentDate", paymentDate);
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@paymentDate", paymentDate);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
                             account = new AccountDTO();
@@ -168,10 +167,6 @@ namespace WebsiteLaitBrasseur.DAL
                 e.GetBaseException();
                 Debug.Print(e.ToString());
             }
-            finally
-            {
-                connection.Close();
-            }
             return null;
         }
 
@@ -183,42 +178,33 @@ namespace WebsiteLaitBrasseur.DAL
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<PaymentDTO> FindByCustomer(int accountID)
         {
-            string queryString = "SELECT * FROM dbo.Payment WHERE accountID=@accountID";
+            string queryString = "SELECT * FROM dbo.Payment WHERE accountID = @accountID";
             List<PaymentDTO> results = new List<PaymentDTO>();
             PaymentDTO payment;
             AccountDTO account;
             InvoiceDTO invoice;
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@accountID", accountID);
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                account = new AccountDTO();
-                                invoice = new InvoiceDTO();
-                                payment = new PaymentDTO();
-                                payment = GeneratePayment(reader, account, payment, invoice);
-                                //return product instance as data object 
-                                Debug.Print("PaymentDAL: /FindByCustomer/ " + payment.GetId());
+                            account = new AccountDTO();
+                            invoice = new InvoiceDTO();
+                            payment = new PaymentDTO();
+                            payment = GeneratePayment(reader, account, payment, invoice);
+                            //return product instance as data object 
+                            Debug.Print("PaymentDAL: /FindByCustomer/ " + payment.GetId());
 
-                                //add data objects to result-list 
-                                results.Add(payment);
-                            }
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            //add data objects to result-list 
+                            results.Add(payment);
                         }
                     }
                 }
@@ -226,10 +212,6 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return results;
         }
@@ -248,33 +230,24 @@ namespace WebsiteLaitBrasseur.DAL
             InvoiceDTO invoice;
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                account = new AccountDTO();
-                                invoice = new InvoiceDTO();
-                                payment = new PaymentDTO();
-                                payment = GeneratePayment(reader, account, payment, invoice);
-                                //return product instance as data object 
-                                Debug.Print("PaymentDAL: /FindByAll/ " + payment.GetId());
+                            account = new AccountDTO();
+                            invoice = new InvoiceDTO();
+                            payment = new PaymentDTO();
+                            payment = GeneratePayment(reader, account, payment, invoice);
+                            //return product instance as data object 
+                            Debug.Print("PaymentDAL: /FindByAll/ " + payment.GetId());
 
-                                //add data objects to result-list 
-                                results.Add(payment);
-                            }
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            //add data objects to result-list 
+                            results.Add(payment);
                         }
                     }
                 }
@@ -282,10 +255,6 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return results;
         }

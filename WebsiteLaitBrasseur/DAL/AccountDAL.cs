@@ -26,6 +26,7 @@ namespace WebsiteLaitBrasseur.DAL
                 return ConfigurationManager.ConnectionStrings["LaitBrasseurDB"].ConnectionString;
             }
         }
+
         /// <summary>
         /// New User Registration
         /// This function inserts data of the DTO persistantly into the DB
@@ -45,7 +46,7 @@ namespace WebsiteLaitBrasseur.DAL
         public int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate,
             string phoneNo, string imgPath, int status, int isAdmin)
         {
-            int result = -2;
+            int result = 0;
             //no need to explicitely set id as autoincrement is used
 
             string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, " +
@@ -81,10 +82,10 @@ namespace WebsiteLaitBrasseur.DAL
                 using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
                     ///find the last manipulated id due to autoincrement and return it
-                    using (SqlCommand command = new SqlCommand(queryAutoIncr, con))
+                    using (SqlCommand comd = new SqlCommand(queryAutoIncr, con))
                     {
                         con.Open();
-                        SqlDataReader reader = command.ExecuteReader();
+                        SqlDataReader reader = comd.ExecuteReader();
                         //won't need a while, since it will only retrieve one row
                         reader.Read();
                         //this is the id of the newly created data field
@@ -95,7 +96,6 @@ namespace WebsiteLaitBrasseur.DAL
             }
             catch (Exception e)
             {
-                result = 0;
                 Debug.Print("AccountDAL / Insert / Exception\n");
                 e.GetBaseException();
             }            
@@ -170,8 +170,7 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-           
+            }           
             return result;
         }
 
