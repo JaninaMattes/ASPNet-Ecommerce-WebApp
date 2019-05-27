@@ -83,7 +83,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             if(GetUserData(SESSION_VAR).GetImgPath().Equals(" "))
             {
-                ProfilePicture.ImageUrl = "~/UL/Images/defaultImg";
+                ProfilePicture.ImageUrl = "~/UL/Images/defaultImg.jpg";
             }
             ProfilePicture.ImageUrl = GetUserData(SESSION_VAR).GetImgPath();
             /*Textboxes with editable section information*/
