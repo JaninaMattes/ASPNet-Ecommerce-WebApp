@@ -81,6 +81,10 @@ namespace WebsiteLaitBrasseur.UL.Customer
         /*Fill the label with accurat item number*/
         protected void BindProfileData()
         {
+            if(GetUserData(SESSION_VAR).GetImgPath().Equals(" "))
+            {
+                ProfilePicture.ImageUrl = "~/UL/Images/defaultImg";
+            }
             ProfilePicture.ImageUrl = GetUserData(SESSION_VAR).GetImgPath();
             /*Textboxes with editable section information*/
             TextFirstname.Text = GetUserData(SESSION_VAR).GetFirstName();
