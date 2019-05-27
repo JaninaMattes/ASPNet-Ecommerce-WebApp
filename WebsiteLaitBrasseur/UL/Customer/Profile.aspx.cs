@@ -17,8 +17,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             if (!Page.IsPostBack)
             {
-                //SESSION_VAR = HttpContext.Current.Session["Email"].ToString();
-                SESSION_VAR = "janina.mattes@gmail.com";
+                SESSION_VAR = HttpContext.Current.Session["Email"].ToString();
+                //SESSION_VAR = "janina.mattes@gmail.com";
                 /*Fill the shopping history table with data from the backend 
                  * and bind these to the datafields*/
                 BindGridList();
@@ -35,8 +35,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-            // suspend the user dont delete
-            int status = 1;
+             // suspend the user dont delete
+             int status = 1;
              DB.UpdateStatus(SESSION_VAR, status);
         }
 
@@ -88,14 +88,26 @@ namespace WebsiteLaitBrasseur.UL.Customer
             TextPhone.Text = GetUserData(SESSION_VAR).GetPhoneNo();
             //TextBirthday.Text = Convert.ToDateTime(GetUserData(SESSION_VAR).GetBirthdate()).ToString();
             TextEmail.Text = GetUserData(SESSION_VAR).GetEmail();
+            TextName.Text = GetUserData(SESSION_VAR).GetFirstName() + " " + GetUserData(SESSION_VAR).GetLastName();
 
             /*Textboxes with editable section information*/
-            TextAddress1.Text = GetAddressData(SESSION_VAR).GetStreetName();
-            TextCity.Text = GetAddressData(SESSION_VAR).GetCity().GetCity();
-            CountryDropDownList.Text = GetAddressData(SESSION_VAR).GetCountry();
-            TextAddressnumber.Text = GetAddressData(SESSION_VAR).GetStreetNo();
-            TextZip.Text = GetAddressData(SESSION_VAR).GetCity().GetZip();
-            TextName.Text = GetUserData(SESSION_VAR).GetFirstName() + " " + GetUserData(SESSION_VAR).GetLastName();
+            if (GetAddressData(SESSION_VAR) != null)
+            {
+                TextAddress1.Text = GetAddressData(SESSION_VAR).GetStreetName();
+                TextCity.Text = GetAddressData(SESSION_VAR).GetCity().GetCity();
+                CountryDropDownList.Text = GetAddressData(SESSION_VAR).GetCountry();
+                TextAddressnumber.Text = GetAddressData(SESSION_VAR).GetStreetNo();
+                TextZip.Text = GetAddressData(SESSION_VAR).GetCity().GetZip();
+            }
+            else
+            {
+                TextAddress1.Text = "Please add street";
+                TextCity.Text = "Please add city";
+                CountryDropDownList.Text = " ";
+                TextAddressnumber.Text = "Please add number";
+                TextZip.Text = "Please add post code";
+            }           
+           
         }
 
         /*Dummy data for demonstration purpose*/

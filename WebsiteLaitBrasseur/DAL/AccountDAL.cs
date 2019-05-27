@@ -19,8 +19,6 @@ namespace WebsiteLaitBrasseur.DAL
     public class AccountDAL : IAccountDataAccess
     {
         //Get connection string from web.config file and create sql connection
-        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
-
         private string ConnectionString
         {
             get
@@ -78,10 +76,14 @@ namespace WebsiteLaitBrasseur.DAL
                         var row = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                         Debug.Print("AccountDAL / Insert / cmd result : " + row);
                     }
+                }
 
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
                     ///find the last manipulated id due to autoincrement and return it
                     using (SqlCommand command = new SqlCommand(queryAutoIncr, con))
                     {
+                        con.Open();
                         SqlDataReader reader = command.ExecuteReader();
                         //won't need a while, since it will only retrieve one row
                         reader.Read();
@@ -96,12 +98,7 @@ namespace WebsiteLaitBrasseur.DAL
                 result = 0;
                 Debug.Print("AccountDAL / Insert / Exception\n");
                 e.GetBaseException();
-
-            }
-            finally
-            {
-                connection.Close();
-            }
+            }            
             return result;
         }
 
@@ -120,27 +117,22 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Account SET status = @status WHERE email = @email";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where email = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@status", SqlDbType.Bit).Value = status;
-                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.Int).Value = status;
+                        cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -160,29 +152,26 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Account SET firstName = @fName, lastName = @lName WHERE email = @email";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@fName", SqlDbType.VarChar).Value = fName;
-                    cmd.Parameters.AddWithValue("@lName", SqlDbType.VarChar).Value = lName;
-                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+
+                        cmd.Parameters.AddWithValue("@fName", SqlDbType.VarChar).Value = fName;
+                        cmd.Parameters.AddWithValue("@lName", SqlDbType.VarChar).Value = lName;
+                        cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
+           
             return result;
         }
 
@@ -201,28 +190,24 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Account SET phone = @phoneNo WHERE email = @email";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where email = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
-                    cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
+                        cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
+           
             return result;
         }
 
@@ -241,28 +226,23 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Account SET addressID = @addressID WHERE email = @email";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@addressID", addressID);
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@addressID", addressID);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
-            }
+            }           
             return result;
         }
 
@@ -281,27 +261,21 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Account SET imgPath = @imgPath WHERE email = @email";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@imgPath", imgPath);
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@imgPath", imgPath);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.CommandType = CommandType.Text;
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -313,26 +287,24 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Account SET isConfirmed = @isConfirmed WHERE email = @email";
             try
             {
-                connection.Open();
-
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@isConfirmed", confirmed);
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                    Debug.Print("AccountDAL: /Update Is confirmed/ result : " + result);
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@isConfirmed", confirmed);
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        Debug.Print("AccountDAL: /Update Is confirmed/ result : " + result);
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-
             return result;
         }
 
@@ -422,7 +394,7 @@ namespace WebsiteLaitBrasseur.DAL
         [DataObjectMethod(DataObjectMethodType.Select)]
         public AccountDTO FindBy(int accountID)
         {
-            AccountDTO account;
+            AccountDTO account = new AccountDTO();
             AddressDTO address;
             string queryString = "SELECT * FROM dbo.Account WHERE accountID = @accountID";
 
@@ -438,16 +410,13 @@ namespace WebsiteLaitBrasseur.DAL
                         SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
-                            account = new AccountDTO();
                             address = new AddressDTO();
                             account = GenerateAccount(reader, account, address);
                             //return product instance as data object 
                             Debug.Print("AccountDAL: /FindByID/ " + account.GetID());
-                            connection.Close();
-                            return account;
+                            
                         }
                     }
-
                 }
             }
             catch (Exception e)
@@ -455,7 +424,7 @@ namespace WebsiteLaitBrasseur.DAL
                 e.GetBaseException();
                 Debug.Print(e.ToString());
             }
-            return null;
+            return account;
         }
         /// <summary>
         /// Read operation find a specific user in the database
@@ -468,7 +437,7 @@ namespace WebsiteLaitBrasseur.DAL
         [DataObjectMethod(DataObjectMethodType.Select)]
         public AccountDTO FindBy(string email)
         {
-            AccountDTO account;
+            AccountDTO account; 
             AddressDTO address;
             string queryString = "SELECT * FROM dbo.Account WHERE email = @email";
 
@@ -478,7 +447,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
                         cmd.CommandType = CommandType.Text;
                         con.Open();
                         SqlDataReader reader = cmd.ExecuteReader();                    
@@ -489,7 +458,6 @@ namespace WebsiteLaitBrasseur.DAL
                             account = GenerateAccount(reader, account, address);
                             //return product instance as data object 
                             Debug.Print("AccountDAL: /FindByMail/ " + account.GetEmail().ToString());
-                            connection.Close();
                             return account;
                         }
                     }
@@ -533,7 +501,6 @@ namespace WebsiteLaitBrasseur.DAL
                             account = GenerateAccount(reader, account, address);
                             //return product instance as data object 
                             Debug.Print("AccountDAL: /FindAllUserBy/ " + account.GetID().ToString());
-
                             //add data objects to result-list 
                             results.Add(account);
                         }
@@ -639,26 +606,23 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "SELECT * FROM dbo.Account WHERE firstName = @fname AND lastName = @lname";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@fname", fname);
-                    cmd.Parameters.AddWithValue("@lname", lname);
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@fname", fname);
+                        cmd.Parameters.AddWithValue("@lname", lname);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
                             AddressDTO address = new AddressDTO();
                             account = GenerateAccount(reader, account, address);
                             //return product instance as data object 
-                            Debug.Print("AccountDAL: /FindByName/ " + fname + " " + lname + " " + account.GetID().ToString());
-                            
-                        }
+                            Debug.Print("AccountDAL: /FindByName/ " + fname + " " + lname + " " + account.GetID());
+                        }                    
                     }
                 }
             }
@@ -666,10 +630,6 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
-            }
-            finally
-            {
-                connection.Close();
             }
             return account;
         }
@@ -690,17 +650,18 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@password", password);
-                    cmd.CommandType = CommandType.Text;
-                    result = Convert.ToInt32(cmd.ExecuteScalar()); //is expected to return value 1 if successfull
-                    Debug.Print("AccountDAL / FindLoginCred / value returned " + result.ToString());
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.Parameters.AddWithValue("@password", password);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = Convert.ToInt32(cmd.ExecuteScalar()); //is expected to return value 1 if successfull
+                        Debug.Print("AccountDAL / FindLoginCred / value returned " + result);
+                    }
                 }
             }
             catch (Exception e)
@@ -708,10 +669,6 @@ namespace WebsiteLaitBrasseur.DAL
                 e.ToString();
                 e.GetBaseException();
                 Debug.Print(e.ToString());
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -731,17 +688,17 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.CommandType = CommandType.Text;
-                    result = Convert.ToInt32(cmd.ExecuteScalar());
-                    Debug.Print("AccountDAL / FindLoginEmail / value returned " + result.ToString());
-                    connection.Close();
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@email", email);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = Convert.ToInt32(cmd.ExecuteScalar());
+                        Debug.Print("AccountDAL / FindLoginEmail / value returned " + result);
+                    }
                 }
             }
             catch (Exception e)
@@ -749,10 +706,6 @@ namespace WebsiteLaitBrasseur.DAL
                 e.ToString();
                 e.GetBaseException();
                 Debug.Print(e.ToString());
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -772,17 +725,17 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@password", password);
-                    cmd.CommandType = CommandType.Text;
-                    result = Convert.ToInt32(cmd.ExecuteScalar());
-                    Debug.Print("AccountDAL / FindLoginPW / value returned  " + result.ToString());
-                    connection.Close();
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@password", password);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = Convert.ToInt32(cmd.ExecuteScalar());
+                        Debug.Print("AccountDAL / FindLoginPW / value returned  " + result);
+                    }
                 }
             }
             catch (Exception e)
@@ -791,18 +744,18 @@ namespace WebsiteLaitBrasseur.DAL
                 e.GetBaseException();
                 Debug.Print(e.ToString());
             }
-            finally
-            {
-                connection.Close();
-            }
             return result;
         }
 
         private static AccountDTO GenerateAccount(SqlDataReader reader, AccountDTO account, AddressDTO address)
         {
+            if(reader["addressID"] != DBNull.Value)
+            {               
+                address.SetID(Convert.ToInt32(reader["addressID"]));
+                Debug.Print("AccountDAL / GenerateAccount: " + address.GetID());
+                account.SetAddress(address);
+            }
             account.SetID(Convert.ToInt32(reader["accountID"]));
-            address.SetID(Convert.ToInt32(reader["addressID"]));
-            account.SetAddress(address);
             account.SetEmail(reader["email"].ToString());
             account.SetPw(reader["password"].ToString());
             account.SetFirstName(reader["firstName"].ToString());

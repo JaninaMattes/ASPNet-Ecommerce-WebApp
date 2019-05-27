@@ -118,24 +118,38 @@ namespace WebsiteLaitBrasseur.BL
         {
             AddressDTO address = new AddressDTO();
             AccountDTO customer = new AccountDTO();
-            customer = AB.FindBy(email);
-            if (customer != null)
+            try
             {
-                CityDTO city = new CityDTO();
-                address = DB.FindBy(customer.GetAddress().GetID());
-                city = CB.FindBy(address.GetCity().GetId());
-                address.SetCity(city);
-                Debug.Print("AddressBL: /FindAddress/ " + address.GetID());
-                Debug.Print("AddressBL: /StreetName/ " + address.GetStreetName());
-                Debug.Print("AddressBL: /StreetNo/ " + address.GetStreetNo());
-               // Debug.Print("AddressBL: /CityName/ " + address.GetCity().GetCity());
+                customer = AB.FindBy(email);
+                if (customer != null)
+                {
+                    CityDTO city = new CityDTO();
+                    address = DB.FindBy(customer.GetAddress().GetID());
+                    if (address != null)
+                    {
+                        city = CB.FindBy(address.GetCity().GetId());
+                        address.SetCity(city);
+                        Debug.Print("AddressBL: /FindAddress/ " + address.GetID());
+                        Debug.Print("AddressBL: /StreetName/ " + address.GetStreetName());
+                        Debug.Print("AddressBL: /StreetNo/ " + address.GetStreetNo());
+                        // Debug.Print("AddressBL: /CityName/ " + address.GetCity().GetCity());
+                        return address;
+                    }
+                    else
+                    {
+                        throw new EmptyRowException("No result found.");
+                    }
+                }
+                else
+                {
+                    throw new EmptyRowException("No result found.");
+                }
             }
-            else
+            catch (Exception e)
             {
-                throw new EmptyRowException("No result found.");
-            }
-
-            return address;
+                e.GetBaseException();
+            }         
+            return null;
         }
 
         /// <summary>

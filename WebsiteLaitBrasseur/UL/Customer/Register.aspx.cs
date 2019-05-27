@@ -23,22 +23,22 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             if (IsValid)
             {
-                var isAdmin = 0;
+                var isAdmin = 0; //customer 
                 var status = 0; //per default not suspendet user
-                var imgPath = ""; //if there is non
-                lblRegResult.Text = "";
+                var imgPath = " "; //as there is no profile img
+                lblRegResult.Text = " ";
 
                 var check = bl.CreateAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
                    TextLastName.Text.Trim(), TextBirthday.Text.Trim(), TextPhone.Text.Trim(), imgPath, status, isAdmin);
+                Debug.Write("Register User / Check Value : " + check);
 
                 switch (check)
                 {
                     case 0:
                         lblRegResult.CssClass = "text-success";
                         lblRegResult.Text = "Password and email are correct.";
-
                         MailSender();
-                        Session["emailRegister"] = TextEmail.Text.Trim();
+                        Session["emailRegister"] = TextEmail.Text.Trim(); //TODO
                         break;
                     case 1:
                         lblRegResult.Text = "The email format is wrong.";
@@ -46,11 +46,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     case 2:
                         lblRegResult.Text = "The password format does not meet the requirements."; //TODO explain requirements
                         break;
+                    case 3:
+                        lblRegResult.Text = "The email is already taken."; //TODO explain requirements
+                        break;
                     default:
                         break;
-                }
-                Debug.Write("Check Value : " + check);
-
+                }                
             }
         }
 
@@ -62,8 +63,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
         private void MailSender()
         {
             //variable session creation
-            Random aleatoire = new Random();
-            Session["ConfID"] = aleatoire.Next();
+            Random random = new Random();
+            Session["ConfID"] = random.Next();
 
             string confID = this.Session["ConfID"].ToString();    //Cookie recuperation
 
@@ -92,7 +93,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
             else
                 lblRegResult.Text = "There is a problem with your email.";
-
         }
     }
 }

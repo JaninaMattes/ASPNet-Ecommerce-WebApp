@@ -38,13 +38,14 @@ namespace WebsiteLaitBrasseur.BL
                 int isConfirmed = 0;
                 //check if format of email is correct && it doesnt already exist in DB 
                 //else return = 1
-                if (IsValidEmail(email) && (DB.FindLoginEmail(email) != 1))
+                if (DB.FindLoginEmail(email) == 1)
                 {
-                //check if the email address is an existing mail
-                    if (IsEmailValid(email) == false)
-                    {
-                        return isCorrect = 1; //is not correct
-                    }
+                    //check if the email address is an existing mail
+                    return isCorrect = 3; //is not correct & exists already
+                }
+                if (!IsEmailValid(email))
+                {                   
+                    return isCorrect = 1; //is not correct
                 }
                 //check if format of password is correct else return = 2
                 if (!IsValidPassword(password))
@@ -96,29 +97,28 @@ namespace WebsiteLaitBrasseur.BL
             }
             try
             {
+                if (isUserSuspendet(email) == true)
+                {
+                    // 4 = user is suspendet
+                    return isCorrect = 4;
+                }
                 if (DB.FindLoginEmail(email) != 1)
                 {
                     // 3 = email is not correct
                     return isCorrect = 3; 
                 }
-                if (DB.FindLoginPW(hashPW) != 1)
+                if (DB.FindLoginPW(hashPW) == 0)
                 {
                     // 2 = password is not correct
                     return isCorrect = 2; 
-                }
-                if (isUserSuspendet(email) == true)
-                {
-                    // 4 = user is suspendet
-                    return isCorrect = 4; 
-                }
+                }                
                 else
                 {
                     //check if login is correct AND user already exists in database
                     // 1 = user exists in DB and email and PW are correct
-                    isCorrect = DB.FindLoginCred(email, hashPW);
+                    isCorrect = DB.FindLoginCred(email, hashPW); // 1 = user and password are in DB
                     Debug.Print("AccountBL / value returned " + isCorrect.ToString());
                 }
-
                 //count the login attempts
                 count++;
             }
