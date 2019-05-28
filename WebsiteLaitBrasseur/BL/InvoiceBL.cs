@@ -115,6 +115,23 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         /// <summary>
+        /// Find all invoices of one Customer.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public IEnumerable<InvoiceDTO> FindInvoices(int id)
+        {
+            AccountDTO customer = new AccountDTO();
+            customer = AB.FindBy(id);
+            IEnumerable<InvoiceDTO> result = new List<InvoiceDTO>();
+            if (customer != null)
+            {
+                result = DB.FindByCustomer(customer.GetID());
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Find all invoices in the DB
         /// </summary>
         /// <returns></returns>

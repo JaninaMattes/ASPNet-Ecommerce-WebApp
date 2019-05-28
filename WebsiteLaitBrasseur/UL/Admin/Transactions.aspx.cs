@@ -1,74 +1,72 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class Transactions : System.Web.UI.Page
     {
+        InvoiceBL BL = new InvoiceBL();
         protected void Page_Load(object sender, EventArgs e)
         {
             // get id from query string and try to parse
-            var custID = Request.QueryString["custID"];
-            int customerID;
-
-            if (!string.IsNullOrEmpty(custID) && int.TryParse(custID, out customerID))
+            int custID = Convert.ToInt32(Request.QueryString["custID"]);
+          
+            if (!string.IsNullOrEmpty(custID.ToString()) && int.TryParse(custID.ToString(), out custID))
             {
-                if (customerID == 11110) //Display Marcus' shopping history
-                {
-                    BindTableLabel();
-                    BindGridList();
-                }
+                    BindTableLabel(custID);
+                    BindGridList(custID);
             }
         }
 
         //Shopping history generation (Same in /Account/Profile.aspx)
-        protected void BindGridList()
+        protected void BindGridList(int id)
         {
-            ShoppingTable.DataSource = getShoppingList();
+            ShoppingTable.DataSource = getShoppingList(id);
             ShoppingTable.DataBind();
         }
 
 
-        protected void BindTableLabel()
+        protected void BindTableLabel(int id)
         {
-            List<ShoppingListItem> shoppingLs = getShoppingList();
-            if (shoppingLs.LongCount<ShoppingListItem>() > 0)
+            IEnumerable<InvoiceDTO> invoices = getShoppingList(id);
+            //TODO 
+
+
+            if (invoices.Count() > 0)
             {
-                tableShoppingHistoryLabel.Text = "Your shopping history has " + shoppingLs.LongCount<ShoppingListItem>();
+                tableShoppingHistoryLabel.Text = $"Your shopping history has {invoices.Count()} items.";
+            }
+            else
+            {
+                tableShoppingHistoryLabel.Text = $"Your shoppinglist is empty.";
             }
         }
 
-        protected List<ShoppingListItem> getShoppingList()
+        protected IEnumerable<InvoiceDTO> getShoppingList(int accountID)
         {
-            List<ShoppingListItem> shoppingLs = new List<ShoppingListItem>();
-            ShoppingListItem ls = new ShoppingListItem(1234, 25.00f, "2019-02-01", "2019-02-25");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1235, 25.00f, "2019-01-01", "2019-01-30");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1236, 100.00f, "2018-12-01", "2018-12-30");
-            shoppingLs.Add(ls);
-            return shoppingLs;
-        }
-
-
-        public class ShoppingListItem
-        {
-            public int invoiceNumber { get; set; }
-            public float totalAmount { get; set; }
-            public string orderDate { get; set; }
-            public string arrivalDate { get; set; }
-
-            public ShoppingListItem(int id, float totalAmount, string orderDate, string arrivalDate)
+            IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
+            try
             {
-                this.invoiceNumber = id;
-                this.totalAmount = totalAmount;
-                this.orderDate = orderDate;
-                this.arrivalDate = arrivalDate;
+                invoices = BL.FindInvoices(accountID);
+                if(invoices != null)
+                {
+                    foreach (InvoiceDTO i in invoices)
+                    {
+                        Debug.Print($"Transactions: / GetShoppingList / {i.GetID()}"); //Debugging 
+                    }
+                }               
             }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }            
+            return invoices;
         }
     }
 }
