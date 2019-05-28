@@ -39,6 +39,7 @@ namespace WebsiteLaitBrasseur.DAL
                 }
             }
 
+
         /// <summary>
         /// Brings a SqlCommand object to be able to add some parameters in it. 
         /// After send this to Execute method.

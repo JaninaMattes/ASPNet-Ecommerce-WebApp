@@ -49,7 +49,7 @@ namespace WebsiteLaitBrasseur.DAL
             decimal totalProductCost, decimal totalTaxes, decimal totalAmount, string orderDate, string paymentDate, 
             string arrivalDate, string postageDate, int paymentStatus, string customerMail)
         {
-            int result;
+            int result = 0;
             //no need to explicitely set id as autoincrement is used
             string queryString = "INSERT INTO dbo.Invoice(dbo.Invoice.accountID, dbo.Invoice.shippingID, dbo.Invoice.totalQuantity, dbo.Invoice.shippingCost, " +
                 "dbo.Invoice.totalProductCost, dbo.Invoice.totalTax, dbo.Invoice.totalAmount, dbo.Invoice.orderDate, dbo.Invoice.paymentDate, dbo.Invoice.paymentStatus, " +

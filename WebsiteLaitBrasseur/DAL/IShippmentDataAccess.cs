@@ -8,13 +8,13 @@ namespace WebsiteLaitBrasseur.DAL
 {
     interface IShippmentDataAccess
     {
-        int Insert(string type, int deliveryTime, string company, decimal cost, int status);
-        int Update(int id, int status);
+        int Insert(string type, int deliveryTime, string company, decimal cost, Byte status);
+        int Update(int id, Byte status);
         int Update(int id, decimal shipCost);
-        int UpdateAll(int id, string type, int deliveryTime, string company, decimal cost, int status);
+        int UpdateAll(int id, string type, int deliveryTime, string company, decimal cost, Byte status);
         BL.ShippmentDTO FindBy(int id);
         BL.ShippmentDTO FindBy(string name);
-        List<BL.ShippmentDTO> FindAllBy(int status);
-        List<BL.ShippmentDTO> FindAll();
+        IEnumerable<BL.ShippmentDTO> FindAllBy(Byte status);
+        IEnumerable<BL.ShippmentDTO> FindAll();
     }
 }

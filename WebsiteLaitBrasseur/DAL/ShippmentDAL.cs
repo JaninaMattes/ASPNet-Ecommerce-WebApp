@@ -38,7 +38,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Insert)]
-        public int Insert(string type, int deliveryTime, string company, decimal cost, int status)
+        public int Insert(string type, int deliveryTime, string company, decimal cost, Byte status)
         {
             int result;
             //no need to explicitely set id as autoincrement is used
@@ -58,7 +58,7 @@ namespace WebsiteLaitBrasseur.DAL
                         cmd.Parameters.AddWithValue("@deliveryTime", SqlDbType.Int).Value = deliveryTime;
                         cmd.Parameters.AddWithValue("@shipCompany", SqlDbType.VarChar).Value = company;
                         cmd.Parameters.AddWithValue("@shipCost", SqlDbType.Decimal).Value = cost;
-                        cmd.Parameters.AddWithValue("@status", SqlDbType.Binary).Value = status;
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.TinyInt).Value = status;
                         cmd.CommandType = CommandType.Text;
                         con.Open();
                         var value = cmd.ExecuteNonQuery(); //returns the number of affected rows in the DB 
@@ -98,7 +98,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
         
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int Update(int id, int status)
+        public int Update(int id, Byte status)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Shippment SET status = @status WHERE shippingID = @id";
@@ -109,8 +109,8 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
-                        cmd.Parameters.AddWithValue("@status", status);
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.TinyInt).Value = status;
                         con.Open();
                         result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                     }
@@ -142,7 +142,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
                         cmd.Parameters.AddWithValue("@shipCost", shipCost);
                         con.Open();
                         result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
@@ -167,7 +167,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int UpdateAll(int id, string type, int deliveryTime, string company, decimal cost, int status)
+        public int UpdateAll(int id, string type, int deliveryTime, string company, decimal cost, Byte status)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Shippment SET shipType = @type, estimatedTime = @deliveryTime, " +
@@ -179,11 +179,12 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@shipType", SqlDbType.VarChar).Value = type;
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                        cmd.Parameters.AddWithValue("@type", SqlDbType.VarChar).Value = type;
                         cmd.Parameters.AddWithValue("@deliveryTime", SqlDbType.Int).Value = deliveryTime;
                         cmd.Parameters.AddWithValue("@shipCompany", SqlDbType.VarChar).Value = company;
                         cmd.Parameters.AddWithValue("@shipCost", SqlDbType.Decimal).Value = cost;
-                        cmd.Parameters.AddWithValue("@status", SqlDbType.Binary).Value = status;
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.TinyInt).Value = status;
                         con.Open();
                         result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                         Debug.Print("ShippmentDAL / UpdateAll / result :" + result);
@@ -290,7 +291,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns>List<ShippmentDTO</returns>
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public List<ShippmentDTO> FindAllBy(int status)
+        public IEnumerable<ShippmentDTO> FindAllBy(Byte status)
         {
             string queryString = "SELECT * FROM dbo.Shippment WHERE status = @status";
             List<ShippmentDTO> results = new List<ShippmentDTO>();
@@ -331,7 +332,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public List<ShippmentDTO> FindAll()
+        public IEnumerable<ShippmentDTO> FindAll()
         {
             string queryString = "SELECT * FROM dbo.Shippment";
             List<ShippmentDTO> results = new List<ShippmentDTO>();
@@ -351,6 +352,7 @@ namespace WebsiteLaitBrasseur.DAL
                             deliverer = GenerateDeliverer(reader, deliverer);
                             //return product instance as data object 
                             Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID());
+                            Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetCompany());
                             //add data objects to result-list 
                             results.Add(deliverer);
                         }
@@ -361,7 +363,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            return null;
+            return results;
         }
 
         private static ShippmentDTO GenerateDeliverer(SqlDataReader reader, ShippmentDTO deliverer)

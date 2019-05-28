@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Configuration;
+using System.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebsiteLaitBrasseur.BL;
 using WebsiteLaitBrasseur.DAL;
+
 
 namespace LaitBrasseurUnitTest
 {
@@ -20,9 +24,29 @@ namespace LaitBrasseurUnitTest
         private const int isAdmin = 0;
 
         private const int ExpectedID = 1;
+        private const int ExpectedVal = 1;
         private const string ExpectedEmail = "miriam.miller@gmail.com";
 
         AccountDAL DB = new AccountDAL();
+
+        private string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["LaitBrasseurDB"].ConnectionString;
+            }
+        }
+
+        [TestMethod]
+        public void TestConnection(string connectionString)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                Console.WriteLine("ServerVersion: {0}", connection.ServerVersion);
+                Console.WriteLine("State: {0}", connection.State);
+            }
+        }
 
         [TestMethod]
         public void CreateAccount()
@@ -36,6 +60,20 @@ namespace LaitBrasseurUnitTest
         {
             var account = DB.FindBy(id);
             Assert.AreEqual(ExpectedEmail, account.GetEmail());
+        }
+
+        [TestMethod]
+        public void GetAccounts()
+        {
+            var account = DB.FindAll();
+            Assert.IsNotNull(account);
+        }
+
+        [TestMethod]
+        public void UpdateAccount()
+        {
+            var row = DB.Update(id, email, fname, lname, birthdate, phoneNo, imgPath);
+            Assert.AreEqual(ExpectedVal, row);
         }
     }
 }
