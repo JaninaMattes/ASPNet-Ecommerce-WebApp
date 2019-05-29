@@ -56,6 +56,7 @@ namespace WebsiteLaitBrasseur.BL
                 if (isCorrect == 0)
                 {
                     //encrypt the password before it is sent to the DB
+                    //encrypt the password before it is sent to the DB
                     //password = this.HashPassword(password);
                     //Debug.Print("AccountBL / Password hashed " + password.ToString());
                     //returns the created Account ID as integer value
@@ -91,14 +92,14 @@ namespace WebsiteLaitBrasseur.BL
             if(count == 3)
             {
                 //TODO suspend user after three wrong log in attempts
-                5 = suspend the user
+                //5 = suspend the user;
                 // isCorrect = 5;
                 //Call timer
                 StartTimer();
             }
             try
             {
-                if (isUserSuspendet(email) == true)
+                if (IsUserSuspendet(email))
                 {
                     // 4 = user is suspendet
                     return isCorrect = 4;
@@ -326,17 +327,17 @@ namespace WebsiteLaitBrasseur.BL
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        private bool isUserSuspendet(string email)
+        private bool IsUserSuspendet(string email)
         {
             AccountDTO customer = new AccountDTO();
             customer = DB.FindBy(email);
             int status = customer.GetStatus();
             Debug.Print("AccountBL: /isUserSuspendet/status " + customer.GetStatus());
-            if (customer != null && status != 1)
+            if (customer != null && status == 0)
             {
                 return false;       //isSuspended=0 ;false
             }
-            else if (customer != null && status != 0)
+            else if (customer != null && status == 1)
             {
                 return true;   //isSuspended=1 ;true
             }

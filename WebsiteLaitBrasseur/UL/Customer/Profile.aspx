@@ -176,12 +176,13 @@
                             emptydatatext="No data available." 
                             AutoGenerateColumns="false">
                                 <Columns>
-                                    <asp:BoundField DataField="invoiceID" HeaderText="Invoice Number" />
-                                    <asp:BoundField DataField="totalQuantity" HeaderText="Total Products" />
-                                    <asp:BoundField DataField="totalAmount" HeaderText="Total Amount(AUS$)" />
-                                    <asp:BoundField DataField="orderDate" HeaderText="Order Date" />
-                                    <asp:BoundField DataField="arrivalDate" HeaderText="Arrival Date" />
-                                    <asp:BoundField DataField="paymentStatus" HeaderText="Payment Status" />
+                                    <asp:BoundField DataField="InvoiceNumber" HeaderText="Invoice Number" />
+                                    <asp:BoundField DataField="Quantity" HeaderText="Quantity" />
+                                    <asp:BoundField DataField="TotalAmount" HeaderText="Total Amount(€)" />
+                                    <asp:BoundField DataField="OrderDate" HeaderText="Order Date" />
+                                    <asp:BoundField DataField="ArrivalDate" HeaderText="Arrival Date" />
+                                    <asp:BoundField DataField="PaymentDate" HeaderText="Payment Date" />
+                                    <asp:BoundField DataField="PaymentStatus" HeaderText="Payment Status" />
                                 </Columns>
                             </asp:GridView>
                 </div>

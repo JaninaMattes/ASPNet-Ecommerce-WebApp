@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
     public partial class Profile : System.Web.UI.Page
     {
         AccountBL DB = new AccountBL();
+        InvoiceBL BL = new InvoiceBL();
+
         string SESSION_VAR; 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -26,6 +29,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 BindTableLabel();
                 /*Fill the user profiel information*/
                 BindProfileData();
+                //Shopping history
+                BindDataInvoices();
             }
 
             DeleteButton_Click(sender, e);
@@ -112,6 +117,72 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 TextZip.Text = "Please add post code";
             }           
            
+        }
+
+
+        protected DataTable GetDataTable(IEnumerable<InvoiceDTO> invoices)
+        {
+            //DataTable initialization
+            DataTable dtInvoice = new DataTable();
+
+            //Colmuns declaration
+            dtInvoice.Columns.Add("InvoiceNumber");
+            dtInvoice.Columns.Add("Quantity");
+            dtInvoice.Columns.Add("TotalAmount");
+            dtInvoice.Columns.Add("OrderDate");
+            dtInvoice.Columns.Add("ArrivalDate");
+            dtInvoice.Columns.Add("PaymentStatus");
+            dtInvoice.Columns.Add("PaymentDate");
+
+            foreach (InvoiceDTO invoice in invoices)
+            {
+                DataRow dr = dtInvoice.NewRow();
+                dr["InvoiceNumber"] = invoice.GetID();
+                dr["Quantity"] = invoice.GetQuantity();
+                dr["TotalAmount"] = invoice.GetTotal();
+                dr["OrderDate"] = invoice.GetOrderDate();
+                dr["ArrivalDate"] = invoice.GetArrivalDate();
+                dr["PaymentDate"] = invoice.GetPaymentDate();
+                if (invoice.GetStatus() == 1)
+                {
+                    dr["PaymentStatus"] = "Paied";
+                }
+                else
+                {
+                    dr["PaymentStatus"] = "Open";
+                }
+
+                dtInvoice.Rows.Add(dr);
+
+            }
+            return dtInvoice;
+        }
+
+        protected void BindDataInvoices()
+        {
+            try
+            {
+                IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
+                invoices = BL.FindInvoices(SESSION_VAR);
+                AccountDTO customer = new AccountDTO();
+                customer = DB.GetCustomer(SESSION_VAR);
+                ShoppingTable.DataSource = GetDataTable(invoices);
+                ShoppingTable.DataBind();
+
+                if (invoices.Count() > 0)
+                {
+                    tableShoppingHistoryLabel.Text = $"The transactionlist of {customer.GetFirstName()} " +
+                        $"{customer.GetLastName()} has {invoices.Count()} items.";
+                }
+                else
+                {
+                    tableShoppingHistoryLabel.Text = $"The transactionlist is empty.";
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
         }
 
         /*Dummy data for demonstration purpose*/
