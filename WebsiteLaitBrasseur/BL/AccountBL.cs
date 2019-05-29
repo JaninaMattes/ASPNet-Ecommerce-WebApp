@@ -90,8 +90,9 @@ namespace WebsiteLaitBrasseur.BL
             string hashPW = password; //= HashPassword(password);
             if(count == 3)
             {
-                // 5 = suspend the user
-                isCorrect = 5;
+                //TODO suspend user after three wrong log in attempts
+                5 = suspend the user
+                // isCorrect = 5;
                 //Call timer
                 StartTimer();
             }
@@ -120,7 +121,7 @@ namespace WebsiteLaitBrasseur.BL
                     Debug.Print("AccountBL / value returned " + isCorrect.ToString());
                 }
                 //count the login attempts
-                count++;
+                //count++;
             }
             catch (Exception e)
             {
