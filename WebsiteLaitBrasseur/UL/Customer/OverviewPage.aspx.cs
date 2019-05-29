@@ -12,9 +12,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class OverviewPage : System.Web.UI.Page
     {
-        List<ProductDTO> LP = new List<ProductDTO>();
-        List<SizeDTO> LS = new List<SizeDTO>();
-        ProductBL blProd = new ProductBL();
+        IEnumerable<ProductDTO> productList = new List<ProductDTO>();
+        List<SizeDTO> sizeList = new List<SizeDTO>();
+        ProductBL BL = new ProductBL();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,7 +31,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     {
                         // retrieve a list of filtered prodcuts from the blProd
                         BindDataByType(type);                                           
-                        if (LP != null)
+                        if (productList != null)
                         {
                             Subtitle_Warn.Text = "A selection of our best " + type + " products.";
                         }
@@ -45,7 +45,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 {
                     // retrieve a list of all prodcuts from the blProd
                     BindDataAll();
-                    if (LP != null)
+                    if (productList != null)
                     {
                         Subtitle_Warn.Text = "A hand selected overview of all seasonal available products.";
                     }
@@ -66,14 +66,21 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void BindDataAll()
         {
-            LP = blProd.GetAllProducts();
-            ImageRepeater.DataSource = getDataTable();
-            ImageRepeater.DataBind();
+            try
+            {
+                productList = BL.GetAllProducts();
+                ImageRepeater.DataSource = getDataTable();
+                ImageRepeater.DataBind();
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }           
         }
 
         protected void BindDataByType(string type)
         {
-            LP = blProd.GetProducts(type);
+            productList = BL.GetProducts(type);
             ImageRepeater.DataSource = getDataTable();
             ImageRepeater.DataBind();
         }
@@ -92,18 +99,18 @@ namespace WebsiteLaitBrasseur.UL.Customer
             dtProduct.Columns.Add("Price");
             dtProduct.Columns.Add("Status");
 
-            for (int i = 0; i < LP.Count; i++)
+           foreach(ProductDTO p in productList)
             {
-                LS = LP[i].GetDetails();
+                sizeList = p.GetDetails();
                     DataRow dr = dtProduct.NewRow();
-                    dr["ID"] = LP[i].GetId();
-                    dr["ImgPath"] = LP[i].GetImgPath();
-                    dr["Name"] = LP[i].GetName();
-                    dr["ShortInfo"] = LP[i].GetShortInfo();
-                    //dr["Price"] = LS[0].GetPrice();
-                    //dr["Size"] = LS[0].GetSize();
-                    if (LP[i].GetStatus() == 1) { dr["Status"] = "Available"; }
-                    else { dr["Status"] = "Unavailable"; }
+                    dr["ID"] = p.GetId();
+                    dr["ImgPath"] = p.GetImgPath();
+                    dr["Name"] = p.GetName();
+                    dr["ShortInfo"] = p.GetShortInfo();
+                    //dr["Price"] = p.GetPrice();
+                    //dr["Size"] = p.GetSize();
+                    if (p.GetStatus() == 1) { dr["Status"] = "Available"; }
+                    else { dr["Status"] = "Out of Stock"; }
                     dtProduct.Rows.Add(dr);
             }
             return dtProduct;

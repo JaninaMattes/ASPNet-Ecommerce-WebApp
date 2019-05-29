@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -12,7 +13,13 @@ namespace WebsiteLaitBrasseur.DAL
     public class SizeDAL: ISizeDataAccess
     {
         //Get connection string from web.config file and create sql connection
-        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        private string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["LaitBrasseurDB"].ConnectionString;
+            }
+        }
 
         /// <summary>
         /// Insert new value into DB
@@ -38,29 +45,33 @@ namespace WebsiteLaitBrasseur.DAL
             string queryAutoIncr = "SELECT TOP(1) dbo.Size.sizeID FROM dbo.Size ORDER BY 1 DESC";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //insert into database
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
-                    cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
-                    cmd.Parameters.AddWithValue("@productID", SqlDbType.Int).Value = productID;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
+                        cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
+                        cmd.Parameters.AddWithValue("@productID", SqlDbType.Int).Value = productID;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
 
-                ///find the last manipulated id due to autoincrement and return it
-                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    SqlDataReader reader = command.ExecuteReader();
-                    //won't need a while, since it will only retrieve one row
-                    reader.Read();
-                    //this is the id of the newly created data field
-                    result = Convert.ToInt32(reader["sizeID"]);
-                    Debug.Print("SizeDAL: /Insert ID/ " + result.ToString());
+                    ///find the last manipulated id due to autoincrement and return it
+                    using (SqlCommand cmd = new SqlCommand(queryAutoIncr, con))
+                    {
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        //won't need a while, since it will only retrieve one row
+                        reader.Read();
+                        //this is the id of the newly created data field
+                        result = Convert.ToInt32(reader["sizeID"]);
+                        Debug.Print("SizeDAL: /Insert ID/ " + result.ToString());
+                    }
                 }
 
             }
@@ -69,10 +80,6 @@ namespace WebsiteLaitBrasseur.DAL
                 result = 0;
                 Debug.Write("SizeDAL / Exception"); //DEBUG
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -84,29 +91,24 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Size SET unitSize = @size, unitPrice = @price, productID = @productID WHERE sizeID = @id";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where email = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
-                    cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
-                    cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
-                    cmd.Parameters.AddWithValue("@productID", SqlDbType.Int).Value = productID;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                        cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
+                        cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
+                        cmd.Parameters.AddWithValue("@productID", SqlDbType.Int).Value = productID;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -118,28 +120,23 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Size SET unitSize = @size, unitPrice = @price WHERE productID = @id";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where email = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = productID;
-                    cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
-                    cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = productID;
+                        cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
+                        cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -159,16 +156,14 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@sizeID", sizeID);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@sizeID", SqlDbType.Int).Value = sizeID;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
                             size = new SizeDTO();
@@ -186,10 +181,6 @@ namespace WebsiteLaitBrasseur.DAL
                 e.GetBaseException();
                 Debug.Print(e.ToString());
             }
-            finally
-            {
-                connection.Close();
-            }
             return null;
         }
 
@@ -200,7 +191,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="productID"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<SizeDTO> FindByProduct(int productID)
+        public IEnumerable<SizeDTO> FindByProduct(int productID)
         {
             SizeDTO size;
             ProductDTO product;
@@ -209,33 +200,22 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", productID);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = productID;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                size = new SizeDTO();
-                                product = new ProductDTO();
-                                size = GenerateDetail(reader, product, size);
-                                //return product instance as data object 
-                                Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
-                                results.Add(size);
-                            }
-                            connection.Close();
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            size = new SizeDTO();
+                            product = new ProductDTO();
+                            size = GenerateDetail(reader, product, size);
+                            //return product instance as data object 
+                            Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
+                            results.Add(size);
                         }
                     }
                 }
@@ -244,11 +224,47 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
+            return results;
+        }
+
+        /// <summary>
+        /// Find all sizes and their prices available in the DB.
+        /// </summary>
+        /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public IEnumerable<SizeDTO> FindAll()
+        {
+            SizeDTO size;
+            ProductDTO product;
+            List<SizeDTO> results = new List<SizeDTO>();
+            string queryString = "SELECT * FROM dbo.Size";
+
+            try
             {
-                connection.Close();
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            size = new SizeDTO();
+                            product = new ProductDTO();
+                            size = GenerateDetail(reader, product, size);
+                            //return product instance as data object 
+                            Debug.Print("SizeDAL: /FindByAll/ " + size.GetID().ToString());
+                            results.Add(size);
+                        }                            
+                    }
+                }
             }
-            return null;
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return results;
         }
 
         /// <summary>
@@ -260,34 +276,28 @@ namespace WebsiteLaitBrasseur.DAL
         {
             SizeDTO size;
             ProductDTO product;
-            string queryString = "SELECT* FROM dbo.Size WHERE unitSize = @unitSize AND productID = @id";
+            string queryString = "SELECT * FROM dbo.Size WHERE unitSize = @unitSize AND productID = @id";
 
             try
             {
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                    cmd.Parameters.AddWithValue("@unitSize", sizeProduct);
-                    cmd.Parameters.AddWithValue("@id", productID);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        cmd.Parameters.AddWithValue("@unitSize", SqlDbType.Decimal).Value = sizeProduct;
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = productID;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.Read())
                         {
-                            if (reader.Read())
-                            {
-                                size = new SizeDTO();
-                                product = new ProductDTO();
-                                size = GenerateDetail(reader, product, size);
-                                //return product instance as data object 
-                                Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
-                                return size;
-                            }
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
-                        }
+                            size = new SizeDTO();
+                            product = new ProductDTO();
+                            size = GenerateDetail(reader, product, size);
+                            //return product instance as data object 
+                            Debug.Print("SizeDAL: /FindByProduct/ " + size.GetID().ToString());
+                            return size;
+                        }                      
                     }
                 }
             }
@@ -298,60 +308,6 @@ namespace WebsiteLaitBrasseur.DAL
             return null;
         }
 
-
-        /// <summary>
-        /// Find all sizes and their prices available in the DB.
-        /// </summary>
-        /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<SizeDTO> FindAll()
-        {
-            SizeDTO size;
-            ProductDTO product;
-            List<SizeDTO> results = new List<SizeDTO>();
-            string queryString = "SELECT * FROM dbo.Size";
-
-            try
-            {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        if (reader.HasRows)
-                        {
-                            while (reader.Read())
-                            {
-                                size = new SizeDTO();
-                                product = new ProductDTO();
-                                size = GenerateDetail(reader, product, size);
-                                //return product instance as data object 
-                                Debug.Print("SizeDAL: /FindByAll/ " + size.GetID().ToString());
-                                results.Add(size);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
-        }
         private static SizeDTO GenerateDetail(SqlDataReader reader, ProductDTO product, SizeDTO size)
         {
             product.SetId(Convert.ToInt32(reader["productID"]));

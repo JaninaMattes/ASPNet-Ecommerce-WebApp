@@ -35,7 +35,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     // retrieve a prodcut from our db
                     var product = db.GetProduct(id);
                     var details = sb.GetDetails(product.GetId());
-                    
+                    List<SizeDTO> productDetails = details.ToList();
+
                     //only display available products to the customer
                     if (product != null && product.GetStatus()==1)
                     {
@@ -47,7 +48,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         nameLabel.Text = product.GetName();
                         labelProduct.Text = product.GetProductType();
                         labelProducer.Text = product.GetProducer();
-                        for (int i = 0; i < details.Count; i++)  {  unitDropDownList.Items.Add(details[i].GetSize().ToString());  }
+                        for (int i = 0; i < productDetails.Count; i++)  {  unitDropDownList.Items.Add(productDetails[i].GetSize().ToString());  }
                         labelPrice.Text = sb.GetPriceBySize ( id , Convert.ToInt32(unitDropDownList.SelectedValue)).ToString();
                         for (int i = 0; i < product.GetStock(); i++) { quantityDropDownList.Items.Add(i.ToString()); }
                         if (product.GetStock()<=5) { lowStock.Text = $"Low stock. Only {product.GetStock()} availble"; }

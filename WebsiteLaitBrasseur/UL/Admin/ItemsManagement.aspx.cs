@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
@@ -12,10 +10,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class ItemsManagement : System.Web.UI.Page
     {
-        List<ProductDTO> LP = new List<ProductDTO>();
-        List<SizeDTO> LS = new List<SizeDTO>();
-        ProductBL blProd = new ProductBL();
-        SizeBL blSize = new SizeBL();
+        IEnumerable<ProductDTO> productList = new List<ProductDTO>();
+        IEnumerable<SizeDTO> sizeList = new List<SizeDTO>();
+        ProductBL BL = new ProductBL();
+        SizeBL SBL = new SizeBL();
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,15 +28,16 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void BindData()
         {
-            LP = blProd.GetAllProducts();
-            ItemListTable.DataSource = getDataTable(LP);
+            productList = BL.GetAllProducts();
+            List<ProductDTO> asList = productList.ToList();
+            ItemListTable.DataSource = getDataTable(asList);
             ItemListTable.DataBind();
             lblItemList.Text ="There is " + ItemListTable.Rows.Count + " items in the list.";
          
         }
 
 
-        protected DataTable getDataTable(List<ProductDTO> LP)
+        protected DataTable getDataTable(List<ProductDTO> productList)
         {
             //DataTable initialization
             DataTable dtItem = new DataTable();
@@ -52,23 +51,25 @@ namespace WebsiteLaitBrasseur.UL.Admin
             dtItem.Columns.Add("Stock");
             dtItem.Columns.Add("Status");
 
-            for (int i = 0; i < LP.Count; i++)
+            foreach (ProductDTO p in productList)
             {
-                LS = LP[i].GetDetails();
-                for (int j = 0; j < LS.Count; j++)
-                {                  
+                sizeList = p.GetDetails();
+                List<SizeDTO> asList = sizeList.ToList();
+
+                for (int i = 0;  i < asList.Count(); i++)
+                {
                     DataRow dr = dtItem.NewRow();
-                    dr["ID"] = LP[i].GetId();
-                    dr["Name"] = LP[i].GetName();
-                    dr["Type"] = LP[i].GetProductType();
-                    dr["Size"] = LS[j].GetSize();
-                    dr["Price"] = LS[j].GetPrice();
-                    dr["Stock"] = LP[i].GetStock();
-                    dr["Status"] = LP[i].GetStatus();
+                    dr["ID"] = p.GetId();
+                    dr["Name"] = p.GetName();
+                    dr["Type"] = p.GetProductType();
+                    dr["Size"] = asList[i].GetSize();
+                    dr["Price"] = asList[i].GetPrice();
+                    dr["Stock"] = p.GetStock();
+                    dr["Status"] = p.GetStatus();
 
                     dtItem.Rows.Add(dr);
                 }
-            }
+            }            
             return dtItem;
         }
 
@@ -137,8 +138,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 TextBox newStock = ItemListTable.Rows[e.RowIndex].FindControl("TextEditStock") as TextBox;
                 DropDownList ddlStatus = ItemListTable.Rows[e.RowIndex].FindControl("DDLStatus") as DropDownList;
 
-
-                blProd.Update2(ID,Convert.ToInt32(newSize.Text), Convert.ToDecimal(newPrice.Text), newName.Text, ddlType.Text, Convert.ToInt32(newStock.Text), Convert.ToInt16(ddlStatus.Text));
+                BL.Update2(ID,Convert.ToInt32(newSize.Text), Convert.ToDecimal(newPrice.Text), newName.Text, ddlType.Text, Convert.ToInt32(newStock.Text), Convert.ToInt16(ddlStatus.Text));
 
                 lblInfo.CssClass = "text-success";
                 lblInfo.Text = "Updated achived with success";
@@ -170,13 +170,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     TextBox newStock = ItemListTable.FooterRow.FindControl("TextAddStock") as TextBox;
                     DropDownList ddlStatus = ItemListTable.FooterRow.FindControl("DDLAddStatus") as DropDownList;
 
-
-
-                    blProd.CreateProduct2(Convert.ToInt32(newSize.Text), Convert.ToDecimal(newPrice.Text) , newName.Text , ddlType.Text , "" , "" , "" ,"" ,  Convert.ToInt32(newStock.Text) , Convert.ToInt16(ddlStatus.Text) ) ;
+                    BL.CreateProduct2(Convert.ToInt32(newSize.Text), Convert.ToDecimal(newPrice.Text) , newName.Text , ddlType.Text , "" , "" , "" ,"" ,  Convert.ToInt32(newStock.Text) , Convert.ToInt16(ddlStatus.Text) ) ;
                     lblInfo.CssClass = "text-success";
                     lblInfo.Text = "insert achieved with success";
                     lblError.Text = "";
-
                 }
                 catch (Exception ex)
                 {

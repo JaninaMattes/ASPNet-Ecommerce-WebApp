@@ -13,6 +13,7 @@ namespace WebsiteLaitBrasseur.BL
         private string _email = "";
         private string _password = "";
         private int _isConfirmed = 0;
+        private int _confirmID = 0;
         private string _firstName = "";
         private string _lastName = "";
         private DateTime _birthDate;
@@ -61,6 +62,16 @@ namespace WebsiteLaitBrasseur.BL
         public void SetIsConfirmed(int isConf)
         {
             this._isConfirmed = isConf;
+        }
+
+        public int GetConfirmationID()
+        {
+            return this._confirmID;
+        }
+
+        public void SetConfirmationID(int id)
+        {
+            this._confirmID = id;
         }
 
         public string GetFirstName()
@@ -183,12 +194,13 @@ namespace WebsiteLaitBrasseur.BL
             _address = address;
         }
 
-        public AccountDTO(byte id, string email, int isConfirmed, string firstName, string lastName, 
+        public AccountDTO(byte id, string email, int isConfirmed, int confirmID, string firstName, string lastName, 
             DateTime birthDate, string phoneNo, string imgPath, int status, int isAdmin, List<InvoiceDTO> invoiceList, AddressDTO address)
         {
             _id = id;
             _email = email;
             _isConfirmed = isConfirmed;
+            _confirmID = confirmID;
             _firstName = firstName;
             _lastName = lastName;
             _birthDate = birthDate;

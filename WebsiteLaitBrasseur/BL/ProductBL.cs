@@ -151,12 +151,13 @@ namespace WebsiteLaitBrasseur.BL
         public ProductDTO GetProduct(int id)
         {
             ProductDTO product = new ProductDTO();
-            List<SizeDTO> list = new List<SizeDTO>();
+            IEnumerable<SizeDTO> enumerable = new List<SizeDTO>();
             try
             {
                 product = DB.FindBy(id);
-                list = SB.FindByProduct(id);
-                product.SetDetails(list);
+                enumerable = SB.FindByProduct(id);
+                List<SizeDTO> asList = enumerable.ToList();
+                product.SetDetails(asList);
                 
                 //TODO: if product is suspendet status = 1 
                 //needs to be greyed out or not visible to customer
@@ -175,26 +176,19 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns></returns>
         public List<ProductDTO> GetProducts(string type)
         {
+            IEnumerable<ProductDTO> productList = new List<ProductDTO>();
             List<ProductDTO> results = new List<ProductDTO>();
-            List<SizeDTO> list = new List<SizeDTO>();
+            IEnumerable<SizeDTO> list = new List<SizeDTO>();
             try
             {
-                results = DB.FindByType(type);                
-                foreach (ProductDTO p in results)
-                {
-                    //debugging purpose, will later remove
-                    System.Diagnostics.Debug.WriteLine("debugging--" + p);
-                }
-                
-                //TODO: if product is suspendet status = 0 
-                //needs to be greyed out or not visible to customer
-                for (int i = 0; i < results.Count(); i++)
-                {
-                    list = SB.FindByProduct(results[i].GetId());
-                    results[i].SetDetails(list);
-                    //debugging purpose, will later remove
-                    System.Diagnostics.Debug.WriteLine("ProductBL / products found / " + results[i].GetId());
-                    results[i] = results[i];
+                productList = DB.FindByType(type);  
+                foreach (ProductDTO p in productList)
+                { 
+                    list = SB.FindByProduct(p.GetId());
+                    List<SizeDTO> asList = list.ToList();
+                    p.SetDetails(asList);
+                    Debug.WriteLine("ProductBL / products found / " + p.GetId());
+                    results.Add(p);
                 }
             }
             catch (Exception e)
@@ -208,20 +202,21 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all active products in the system.
         /// </summary>
         /// <returns></returns>
-        public List<ProductDTO> GetAllActiveProducts()
+        public IEnumerable<ProductDTO> GetAllActiveProducts()
         {
             List<ProductDTO> results = new List<ProductDTO>();
-            List<SizeDTO> list = new List<SizeDTO>();
+            IEnumerable<SizeDTO> enumerable = new List<SizeDTO>();
             int status = 1;
             try
             {
                 results = DB.FindActiveProducts(status);
-                for (int i = 0; i < results.Count(); i++)
+                foreach(ProductDTO p in results)
                 {
-                    list = SB.FindByProduct(results[i].GetId());
-                    results[i].SetDetails(list);
+                    enumerable = SB.FindByProduct(p.GetId());
+                    List<SizeDTO> asList = enumerable.ToList();
+                    p.SetDetails(asList);
                     //debugging purpose, will later remove
-                    System.Diagnostics.Debug.WriteLine("ProductBL / products found / " + results[i].GetId());
+                    Debug.WriteLine("ProductBL / products found / " + p.GetId());
                 }
             }
             catch (Exception e)
@@ -239,18 +234,20 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns></returns>
         public List<ProductDTO> GetAllActiveProducts(string type)
         {
+            IEnumerable<ProductDTO> productList = new List<ProductDTO>();
             List<ProductDTO> results = new List<ProductDTO>();
-            List<SizeDTO> list = new List<SizeDTO>();
+            IEnumerable<SizeDTO> list = new List<SizeDTO>();
             int status = 1;
             try
             {
                 results = DB.FindActiveProducts(status, type);
-                for (int i = 0; i < results.Count(); i++)
+                foreach (ProductDTO p in productList)
                 {
-                    list = SB.FindByProduct(results[i].GetId());
-                    results[i].SetDetails(list);
-                    //debugging purpose, will later remove
-                    System.Diagnostics.Debug.WriteLine("ProductBL / products found / " + results[i].GetId());
+                    list = SB.FindByProduct(p.GetId());
+                    List<SizeDTO> asList = list.ToList();
+                    p.SetDetails(asList);
+                    Debug.WriteLine("ProductBL / products found / " + p.GetId());
+                    results.Add(p);
                 }
             }
             catch (Exception e)
@@ -264,20 +261,20 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all inactive products in the system.
         /// </summary>
         /// <returns></returns>
-        public List<ProductDTO> GetAllInactiveProducts()
+        public IEnumerable<ProductDTO> GetAllInactiveProducts()
         {
             List<ProductDTO> results = new List<ProductDTO>();
-            List<SizeDTO> list = new List<SizeDTO>();
+            IEnumerable<SizeDTO> enumerable = new List<SizeDTO>();
             int status = 0;
             try
             {
                 results = DB.FindActiveProducts(status);
-                for (int i = 0; i < results.Count(); i++)
+                foreach(ProductDTO p in results)
                 {
-                    list = SB.FindByProduct(results[i].GetId());
-                    results[i].SetDetails(list);
-                    //debugging purpose, will later remove
-                    System.Diagnostics.Debug.WriteLine("ProductBL / products found / " + results[i].GetId());
+                    enumerable = SB.FindByProduct(p.GetId());
+                    List<SizeDTO> asList = enumerable.ToList();
+                    p.SetDetails(asList);
+                    Debug.WriteLine("ProductBL / Product: / " + p.GetId());
                 }
             }
             catch (Exception e)
@@ -291,20 +288,21 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all products in the DB.
         /// </summary>
         /// <returns></returns>
-        public List<ProductDTO> GetAllProducts()
+        public IEnumerable<ProductDTO> GetAllProducts()
         {
-            List<ProductDTO> results = new List<ProductDTO>();
-            List<SizeDTO> list = new List<SizeDTO>();
+            IEnumerable<ProductDTO> results = new List<ProductDTO>();
+            IEnumerable<SizeDTO> enumerable = new List<SizeDTO>();
 
             try
             {
                 results = DB.FindAll();
-                for (int i = 0; i < results.Count(); i++)
+                foreach(ProductDTO p in results)
                 {
-                    list = SB.FindByProduct(results[i].GetId());
-                    results[i].SetDetails(list);
+                    enumerable = SB.FindByProduct(p.GetId());
+                    List<SizeDTO> list = enumerable.ToList();
+                    p.SetDetails(list);
                     //debugging purpose, will later remove
-                    System.Diagnostics.Debug.WriteLine("ProductBL / products found / " + results[i].GetId());
+                    Debug.WriteLine("ProductBL / Size / " + p.GetId());
                 }
             }
             catch (Exception e)

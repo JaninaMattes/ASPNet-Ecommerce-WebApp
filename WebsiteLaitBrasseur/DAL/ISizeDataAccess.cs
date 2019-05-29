@@ -12,8 +12,7 @@ namespace WebsiteLaitBrasseur.DAL
         int UpdateSize(int id, int size, decimal price, int productID);
         int UpdateSize2(int productID, int size, decimal price);
         BL.SizeDTO FindByID(int sizeID);
-        List<BL.SizeDTO> FindByProduct(int productID);
-        BL.SizeDTO FindPriceBySize(int productID, int sizeProduct);
-        List<BL.SizeDTO> FindAll();
+        IEnumerable<BL.SizeDTO> FindByProduct(int productID);
+        IEnumerable<BL.SizeDTO> FindAll();
     }
 }
