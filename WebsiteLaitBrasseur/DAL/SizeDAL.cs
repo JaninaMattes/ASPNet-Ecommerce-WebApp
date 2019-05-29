@@ -191,7 +191,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="productID"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public IEnumerable<SizeDTO> FindByProduct(int productID)
+        public List<SizeDTO> FindByProduct(int productID)
         {
             SizeDTO size;
             ProductDTO product;
@@ -232,7 +232,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public IEnumerable<SizeDTO> FindAll()
+        public List<SizeDTO> FindAll()
         {
             SizeDTO size;
             ProductDTO product;

@@ -580,6 +580,7 @@ namespace WebsiteLaitBrasseur.DAL
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
                         cmd.Parameters.AddWithValue("@type", type);
+                        con.Open();
                         SqlDataReader reader = cmd.ExecuteReader();
                          while (reader.Read())
                          {
@@ -597,7 +598,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            return null;
+            return results;
         }
 
         /// <summary>
