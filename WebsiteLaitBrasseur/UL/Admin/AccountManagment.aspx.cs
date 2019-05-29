@@ -19,7 +19,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
             {
                 BindDataCustomer();
                 BindDataAdmin();
-
             }
         }
 
@@ -51,22 +50,34 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void BindDataCustomer()
         {
-            var customers = BL.GetAllCustomers();
-            UserListTable.DataSource = GetDataTable(customers);
-            UserListTable.DataBind();
-            lblUserList.Text = "There is " + UserListTable.Rows.Count + " registered customer";
-            
+            try
+            {
+                var customers = BL.GetAllCustomers();
+                UserListTable.DataSource = GetDataTable(customers);
+                UserListTable.DataBind();
+                lblUserList.Text = "There is " + UserListTable.Rows.Count + " registered customer";
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+           
         }
 
         protected void BindDataAdmin()
         {
-            var admins = BL.GetAllAdmins();
-            AdminListTable.DataSource = GetDataTable(admins);
-            AdminListTable.DataBind();
-            lblAdminList.Text = "There is " + AdminListTable.Rows.Count + " registered admin";
-
+            try
+            {
+                var admins = BL.GetAllAdmins();
+                AdminListTable.DataSource = GetDataTable(admins);
+                AdminListTable.DataBind();
+                lblAdminList.Text = "There is " + AdminListTable.Rows.Count + " registered admin";
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
         }
-
 
         protected DataTable GetDataTable(IEnumerable<AccountDTO> ListAccount)
         {

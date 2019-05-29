@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class LogoutAdmin : System.Web.UI.Page
     {
+        AccountBL BL = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -17,8 +19,9 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 string email = this.Session["email"].ToString();    
                 if (email != null)
                 {
-                    lblGoodBye.Text = "Good bye " + email;
-
+                    AccountDTO account = new AccountDTO();
+                    account = BL.GetCustomer(email); 
+                    lblGoodBye.Text = $"Good Bye {account.GetFirstName()} {account.GetLastName()}";
                     //Session variable removing
                     this.Session.Clear();
                 }

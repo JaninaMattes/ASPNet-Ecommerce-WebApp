@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -12,61 +13,90 @@ namespace WebsiteLaitBrasseur.UL.Admin
     public partial class Transactions : System.Web.UI.Page
     {
         InvoiceBL BL = new InvoiceBL();
+        AccountBL AL = new AccountBL();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            // get id from query string and try to parse
+            // TODO: get id from query string and try to parse
             int custID = Convert.ToInt32(Request.QueryString["custID"]);
           
             if (!string.IsNullOrEmpty(custID.ToString()) && int.TryParse(custID.ToString(), out custID))
             {
-                    BindTableLabel(custID);
-                    BindGridList(custID);
+                BindDataInvoices(custID);
             }
         }
 
-        //Shopping history generation (Same in /Account/Profile.aspx)
-        protected void BindGridList(int id)
+        //protected void InvoiceListTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        //{
+        //}
+
+        //protected void InvoiceListTable_RowEditing(object sender, GridViewEditEventArgs e)
+        //{
+        //}
+        
+        protected DataTable GetDataTable(IEnumerable<InvoiceDTO> invoices)
         {
-            ShoppingTable.DataSource = getShoppingList(id);
-            ShoppingTable.DataBind();
-        }
+            //DataTable initialization
+            DataTable dtInvoice = new DataTable();
 
+            //Colmuns declaration
+            dtInvoice.Columns.Add("InvoiceNumber");
+            dtInvoice.Columns.Add("Quantity");
+            dtInvoice.Columns.Add("TotalAmount");
+            dtInvoice.Columns.Add("OrderDate");
+            dtInvoice.Columns.Add("ArrivalDate");
+            dtInvoice.Columns.Add("PaymentStatus");
+            dtInvoice.Columns.Add("PaymentDate");
 
-        protected void BindTableLabel(int id)
-        {
-            IEnumerable<InvoiceDTO> invoices = getShoppingList(id);
-            //TODO 
-
-
-            if (invoices.Count() > 0)
+            foreach (InvoiceDTO invoice in invoices)
             {
-                tableShoppingHistoryLabel.Text = $"Your shopping history has {invoices.Count()} items.";
+                DataRow dr = dtInvoice.NewRow();
+                dr["InvoiceNumber"] = invoice.GetID();
+                dr["Quantity"] = invoice.GetQuantity();
+                dr["TotalAmount"] = invoice.GetTotal();
+                dr["OrderDate"] = invoice.GetOrderDate();
+                dr["ArrivalDate"] = invoice.GetArrivalDate();
+                dr["PaymentDate"] = invoice.GetPaymentDate();
+                if (invoice.GetStatus() == 1)
+                {
+                    dr["PaymentStatus"] = "Paied";
+                }
+                else
+                {
+                    dr["PaymentStatus"] = "Open";
+                }
+
+                dtInvoice.Rows.Add(dr);
+
             }
-            else
-            {
-                tableShoppingHistoryLabel.Text = $"Your shoppinglist is empty.";
-            }
+            return dtInvoice;
         }
 
-        protected IEnumerable<InvoiceDTO> getShoppingList(int accountID)
-        {
-            IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
+        protected void BindDataInvoices(int accountID)
+        {            
             try
             {
+                IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
                 invoices = BL.FindInvoices(accountID);
-                if(invoices != null)
+                AccountDTO customer = new AccountDTO();
+                customer = AL.GetCustomer(accountID);
+                ShoppingTable.DataSource = GetDataTable(invoices);
+                ShoppingTable.DataBind();
+
+                if (invoices.Count() > 0)
                 {
-                    foreach (InvoiceDTO i in invoices)
-                    {
-                        Debug.Print($"Transactions: / GetShoppingList / {i.GetID()}"); //Debugging 
-                    }
-                }               
+                    tableShoppingHistoryLabel.Text = $"The transactionlist of {customer.GetFirstName()} " +
+                        $"{customer.GetLastName()} has {invoices.Count()} items.";
+                }
+                else
+                {
+                    tableShoppingHistoryLabel.Text = $"The transactionlist is empty.";
+                }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
             }            
-            return invoices;
         }
     }
 }

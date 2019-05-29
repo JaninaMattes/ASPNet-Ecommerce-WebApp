@@ -256,12 +256,37 @@ namespace WebsiteLaitBrasseur.BL
             return IsCorrect;
         }
 
+        /// <summary>
+        /// Find single customer in DB
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public AccountDTO GetCustomer(string email)
         {
             AccountDTO customer = new AccountDTO();
             try
             {
                 customer = DB.FindBy(email);
+                Debug.Print("AccountBL / Customer ID: " + customer.GetID());
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return customer;
+        }
+
+        /// <summary>
+        /// Find single customer in DB
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public AccountDTO GetCustomer(int id)
+        {
+            AccountDTO customer = new AccountDTO();
+            try
+            {
+                customer = DB.FindBy(id);
                 Debug.Print("AccountBL / Customer ID: " + customer.GetID());
             }
             catch (Exception e)
