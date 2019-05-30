@@ -17,9 +17,12 @@
                         <asp:GridView id="ShoppingTable" runat="server" class="table table-hover table-striped text-center" GridLines="None" AutoGenerateColumns="false">
                                 <Columns>
                                     <asp:BoundField DataField="InvoiceNumber" HeaderText="Invoice Number" />
+                                    <asp:BoundField DataField="Quantity" HeaderText="Quantity" />
                                     <asp:BoundField DataField="TotalAmount" HeaderText="Total Amount(€)" />
                                     <asp:BoundField DataField="OrderDate" HeaderText="Order Date" />
                                     <asp:BoundField DataField="ArrivalDate" HeaderText="Arrival Date" />
+                                    <asp:BoundField DataField="PaymentDate" HeaderText="Payment Date" />
+                                    <asp:BoundField DataField="PaymentStatus" HeaderText="Payment Status" />
                                 </Columns>
                             </asp:GridView>
                 </div>

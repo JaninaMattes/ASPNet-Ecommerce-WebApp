@@ -12,18 +12,13 @@ namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class AccountManagment : System.Web.UI.Page
     {
-        List<AccountDTO> LAC = new List<AccountDTO>();
-        List<AccountDTO> LAA = new List<AccountDTO>();
-
-
-        AccountBL bl = new AccountBL();
+        readonly AccountBL BL = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 BindDataCustomer();
                 BindDataAdmin();
-
             }
         }
 
@@ -36,9 +31,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 if (UserListTable.Rows[e.RowIndex].Cells[6].Text == "Active") { status = 0; }
                 else if (UserListTable.Rows[e.RowIndex].Cells[6].Text == "Suspended") { status = 1; }
                 else { lblError.Text = "Status invalid"; }
-
-                bl.UpdateStatus(UserListTable.Rows[e.RowIndex].Cells[3].Text, status);
-
+                BL.UpdateStatus(UserListTable.Rows[e.RowIndex].Cells[3].Text, status);
                 BindDataCustomer();
             }
             catch(Exception ex)
@@ -57,24 +50,36 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void BindDataCustomer()
         {
-            LAC = bl.GetAllCustomers();
-            UserListTable.DataSource = getDataTable(LAC);
-            UserListTable.DataBind();
-            lblUserList.Text = "There is " + UserListTable.Rows.Count + " registered customer";
-            
+            try
+            {
+                var customers = BL.GetAllCustomers();
+                UserListTable.DataSource = GetDataTable(customers);
+                UserListTable.DataBind();
+                lblUserList.Text = "There is " + UserListTable.Rows.Count + " registered customer";
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+           
         }
 
         protected void BindDataAdmin()
         {
-            LAA = bl.GetAllAdmins();
-            AdminListTable.DataSource = getDataTable(LAA);
-            AdminListTable.DataBind();
-            lblAdminList.Text = "There is " + AdminListTable.Rows.Count + " registered Admin";
-
+            try
+            {
+                var admins = BL.GetAllAdmins();
+                AdminListTable.DataSource = GetDataTable(admins);
+                AdminListTable.DataBind();
+                lblAdminList.Text = "There is " + AdminListTable.Rows.Count + " registered admin";
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
         }
 
-
-        protected DataTable getDataTable(List<AccountDTO> ListAccount)
+        protected DataTable GetDataTable(IEnumerable<AccountDTO> ListAccount)
         {
             //DataTable initialization
             DataTable dtUser = new DataTable();
@@ -88,18 +93,17 @@ namespace WebsiteLaitBrasseur.UL.Admin
             dtUser.Columns.Add("IsConfirmed");
             dtUser.Columns.Add("Status");
 
-            for (int i = 0; i < ListAccount.Count; i++)
+            foreach (AccountDTO customer in ListAccount)
             { 
                 DataRow dr = dtUser.NewRow();
-                dr["ID"] = ListAccount[i].GetID();
-                dr["Firstname"] = ListAccount[i].GetFirstName();
-                dr["Lastname"] = ListAccount[i].GetLastName();
-                dr["Email"] = ListAccount[i].GetEmail();
-                dr["PhoneNo"] = ListAccount[i].GetPhoneNo();
-                dr["IsConfirmed"] = ListAccount[i].GetIsConfirmed();
-                if (ListAccount[i].GetStatus() == 1) { dr["Status"] = "Active";}
-                else { dr["Status"] = "Suspended"; }
-                
+                dr["ID"] = customer.GetID();
+                dr["Firstname"] = customer.GetFirstName();
+                dr["Lastname"] = customer.GetLastName();
+                dr["Email"] = customer.GetEmail();
+                dr["PhoneNo"] = customer.GetPhoneNo();
+                dr["IsConfirmed"] = customer.GetIsConfirmed();
+                if (customer.GetStatus() == 1) { dr["Status"] = "Active";}
+                else { dr["Status"] = "Suspended"; }               
 
                 dtUser.Rows.Add(dr);
 

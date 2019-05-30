@@ -16,21 +16,20 @@ namespace WebsiteLaitBrasseur.UL.Admin
         InvoiceBL blInv = new InvoiceBL();
         AccountBL blCustomer = new AccountBL();
 
+        InvoiceBL BL = new InvoiceBL();
+        AccountBL AL = new AccountBL();
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            // get id from query string and try to parse
-            var custID = Request.QueryString["custID"];
-            int customerID;
-
-            if (!string.IsNullOrEmpty(custID) && int.TryParse(custID, out customerID))
+            // TODO: get id from query string and try to parse
+            int custID = Convert.ToInt32(Request.QueryString["custID"]);
+          
+            if (!string.IsNullOrEmpty(custID.ToString()) && int.TryParse(custID.ToString(), out custID))
             {
-                if (customerID == 11110) //Display Marcus' shopping history
-                {
-                    BindTableLabel();
-                    BindGridList();
-                }
+                BindDataInvoices(custID);
             }
         }
+
 
         protected void BindData()
         {
@@ -38,57 +37,71 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         }
 
-        protected DataTable getDataTable()
-        {
-            DataTable dtShopList = new DataTable();
-
-            return dtShopList;
-        }
-
         //Shopping history generation (Same in /Account/Profile.aspx)
-        protected void BindGridList()
-        {
-            ShoppingTable.DataSource = getShoppingList();
-            ShoppingTable.DataBind();
-        }
 
-
-        protected void BindTableLabel()
+        protected DataTable GetDataTable(IEnumerable<InvoiceDTO> invoices)
         {
-            List<ShoppingListItem> shoppingLs = getShoppingList();
-            if (shoppingLs.LongCount<ShoppingListItem>() > 0)
+            //DataTable initialization
+            DataTable dtInvoice = new DataTable();
+
+            //Colmuns declaration
+            dtInvoice.Columns.Add("InvoiceNumber");
+            dtInvoice.Columns.Add("Quantity");
+            dtInvoice.Columns.Add("TotalAmount");
+            dtInvoice.Columns.Add("OrderDate");
+            dtInvoice.Columns.Add("ArrivalDate");
+            dtInvoice.Columns.Add("PaymentStatus");
+            dtInvoice.Columns.Add("PaymentDate");
+
+            foreach (InvoiceDTO invoice in invoices)
             {
-                tableShoppingHistoryLabel.Text = "Your shopping history has " + shoppingLs.LongCount<ShoppingListItem>();
+                DataRow dr = dtInvoice.NewRow();
+                dr["InvoiceNumber"] = invoice.GetID();
+                dr["Quantity"] = invoice.GetQuantity();
+                dr["TotalAmount"] = invoice.GetTotal();
+                dr["OrderDate"] = invoice.GetOrderDate();
+                dr["ArrivalDate"] = invoice.GetArrivalDate();
+                dr["PaymentDate"] = invoice.GetPaymentDate();
+                if (invoice.GetStatus() == 1)
+                {
+                    dr["PaymentStatus"] = "Paied";
+                }
+                else
+                {
+                    dr["PaymentStatus"] = "Open";
+                }
+
+                dtInvoice.Rows.Add(dr);
+
             }
+            return dtInvoice;
         }
 
-        protected List<ShoppingListItem> getShoppingList()
-        {
-            List<ShoppingListItem> shoppingLs = new List<ShoppingListItem>();
-            ShoppingListItem ls = new ShoppingListItem(1234, 25.00f, "2019-02-01", "2019-02-25");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1235, 25.00f, "2019-01-01", "2019-01-30");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1236, 100.00f, "2018-12-01", "2018-12-30");
-            shoppingLs.Add(ls);
-            return shoppingLs;
-        }
-
-
-        public class ShoppingListItem
-        {
-            public int invoiceNumber { get; set; }
-            public float totalAmount { get; set; }
-            public string orderDate { get; set; }
-            public string arrivalDate { get; set; }
-
-            public ShoppingListItem(int id, float totalAmount, string orderDate, string arrivalDate)
+        protected void BindDataInvoices(int accountID)
+        {            
+            try
             {
-                this.invoiceNumber = id;
-                this.totalAmount = totalAmount;
-                this.orderDate = orderDate;
-                this.arrivalDate = arrivalDate;
+                IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
+                invoices = BL.FindInvoices(accountID);
+                AccountDTO customer = new AccountDTO();
+                customer = AL.GetCustomer(accountID);
+                ShoppingTable.DataSource = GetDataTable(invoices);
+                ShoppingTable.DataBind();
+
+                if (invoices.Count() > 0)
+                {
+                    tableShoppingHistoryLabel.Text = $"The transactionlist of {customer.GetFirstName()} " +
+                        $"{customer.GetLastName()} has {invoices.Count()} items.";
+                }
+                else
+                {
+                    tableShoppingHistoryLabel.Text = $"The transactionlist is empty.";
+                }
             }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }            
         }
     }
 }

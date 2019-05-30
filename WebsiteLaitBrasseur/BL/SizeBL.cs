@@ -41,9 +41,9 @@ namespace WebsiteLaitBrasseur.BL
         /// </summary>
         /// <param name="productID"></param>
         /// <returns></returns>
-        public List<SizeDTO> GetDetails(int productID)
+        public IEnumerable<SizeDTO> GetDetails(int productID)
         {
-            List<SizeDTO> results = new List<SizeDTO>();
+            IEnumerable<SizeDTO> results = new List<SizeDTO>();
             try
             {
                 results = DB.FindByProduct(productID);
@@ -66,12 +66,12 @@ namespace WebsiteLaitBrasseur.BL
             {
                 product = DB.FindPriceBySize(id, size);
 
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 e.GetBaseException();
             }
             return product.GetPrice();
         }
-
     }
 }

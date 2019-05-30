@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
 using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.DAL
 {
     [DataObject(true)]
-    public class AddressDAL: IAddressDataAccess
+    public class AddressDAL : IAddressDataAccess
     {
         //Get connection string from web.config file and create sql connection
-        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        private string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["LaitBrasseurDB"].ConnectionString;
+            }
+        }
 
         /// <summary>
         /// This function inserts the values and returns the ID of the newly 
@@ -29,7 +34,7 @@ namespace WebsiteLaitBrasseur.DAL
         [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(int cityID, string streetName, string streetNo, string addressType)
         {
-            int result;
+            int result = 0;
             //no need to explicitely set id as autoincrement is used
             string queryString = "INSERT INTO dbo.Address(dbo.Address.cityID, dbo.Account.streetName, " +
                 "dbo.Account.streetNo, dbo.Account.addressType)" +
@@ -37,43 +42,43 @@ namespace WebsiteLaitBrasseur.DAL
             string queryAutoIncr = "SELECT TOP(1) dbo.Address.addressID FROM dbo.Address ORDER BY 1 DESC";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //insert into database
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@cityID", SqlDbType.Int).Value = cityID;
-                    cmd.Parameters.AddWithValue("@streetName", SqlDbType.VarChar).Value = streetName;
-                    cmd.Parameters.AddWithValue("@streetNo", SqlDbType.VarChar).Value = streetNo;
-                    cmd.Parameters.AddWithValue("@addressType", SqlDbType.VarChar).Value = addressType;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@cityID", SqlDbType.Int).Value = cityID;
+                        cmd.Parameters.AddWithValue("@streetName", SqlDbType.VarChar).Value = streetName;
+                        cmd.Parameters.AddWithValue("@streetNo", SqlDbType.VarChar).Value = streetNo;
+                        cmd.Parameters.AddWithValue("@addressType", SqlDbType.VarChar).Value = addressType;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
 
                 ///find the last manipulated id due to autoincrement and return it
-                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
+
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                    SqlDataReader reader = command.ExecuteReader();
-                    //won't need a while, since it will only retrieve one row
-                    reader.Read();
-                    //this is the id of the newly created data field
-                    result = Convert.ToInt32(reader["addressID"]);
-                    Debug.Print("AddressDAL: / ID/ " + result);
+                    using (SqlCommand cmd = new SqlCommand(queryAutoIncr, con))
+                    {
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        //won't need a while, since it will only retrieve one row
+                        reader.Read();
+                        //this is the id of the newly created data field
+                        result = Convert.ToInt32(reader["addressID"]);
+                        Debug.Print("AddressDAL: / ID/ " + result);
+                    }
                 }
-                return result;
             }
             catch (Exception e)
             {
-                result = 0;
                 Debug.Print("AddressDAL / Insert / Exception\n");
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -97,29 +102,24 @@ namespace WebsiteLaitBrasseur.DAL
                 "WHERE addressID = @addressID";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where email = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@cityID", SqlDbType.Int).Value = cityID;
-                    cmd.Parameters.AddWithValue("@streetName", SqlDbType.VarChar).Value = streetName;
-                    cmd.Parameters.AddWithValue("@streetNo", SqlDbType.VarChar).Value = streetNo;
-                    cmd.Parameters.AddWithValue("@addressType", SqlDbType.VarChar).Value = addressType;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@cityID", SqlDbType.Int).Value = cityID;
+                        cmd.Parameters.AddWithValue("@streetName", SqlDbType.VarChar).Value = streetName;
+                        cmd.Parameters.AddWithValue("@streetNo", SqlDbType.VarChar).Value = streetNo;
+                        cmd.Parameters.AddWithValue("@addressType", SqlDbType.VarChar).Value = addressType;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -139,23 +139,21 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
                             address = new AddressDTO();
                             city = new CityDTO();
                             address = address = GenerateAddress(reader, address, city);
                             //return product instance as data object 
-                            Debug.Print("AddressDAL: /FindByID/ " + address.ToString());
+                            Debug.Print("AddressDAL: /FindByID/ " + address.GetID());
                             return address;
                         }
                     }
@@ -164,11 +162,6 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
-                Debug.Print(e.ToString());
-            }
-            finally
-            {
-                connection.Close();
             }
             return null;
         }
@@ -189,16 +182,14 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@type", type);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@type", SqlDbType.VarChar).Value = type;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
                             address = new AddressDTO();
@@ -214,11 +205,6 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
-                Debug.Print(e.ToString());
-            }
-            finally
-            {
-                connection.Close();
             }
             return null;
         }
@@ -229,7 +215,7 @@ namespace WebsiteLaitBrasseur.DAL
             address.SetCity(city);
             address.SetID(Convert.ToInt32(reader["addressID"]));
             address.SetStreetName(reader["streetName"].ToString());
-            address.SetStreetName(reader["streetNo"].ToString());
+            address.SetStreetNo(reader["streetNo"].ToString());
             address.SetType(reader["addressType"].ToString());
             return address;
         }

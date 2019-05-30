@@ -13,7 +13,7 @@
             <h3 id="sheader">Manage Items</h3>
         
             <!--Information labels -->
-            <asp:Label id="lblItemList" Text="The items list is empty." runat="server" /><br />
+            <asp:Label id="lblItemList" Text="The items list is empty." runat="server"/><br />
             <asp:Label ID="lblError" runat="server" Text="" CssClass="text-danger"></asp:Label><br />
             <asp:Label ID="lblInfo" runat="server" Text="" CssClass="text-info"></asp:Label>
 

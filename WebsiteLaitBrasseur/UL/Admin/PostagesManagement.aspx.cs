@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
@@ -12,8 +10,8 @@ namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class PostagesOptions : System.Web.UI.Page
     {
-        ShippmentBL bl = new ShippmentBL();
-        List<ShippmentDTO> listShippment = new List<ShippmentDTO>();
+        ShippmentBL BL = new ShippmentBL();
+        IEnumerable<ShippmentDTO> listShippment = new List<ShippmentDTO>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -24,7 +22,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
         }
 
 
-        protected DataTable getDataTable(List<ShippmentDTO> LS)
+        protected DataTable getDataTable()
         {
             //DataTable initialization
             DataTable dtPostage = new DataTable();
@@ -37,28 +35,48 @@ namespace WebsiteLaitBrasseur.UL.Admin
             dtPostage.Columns.Add("Cost");
             dtPostage.Columns.Add("Status");
 
-            for (int i = 0; i < LS.Count; i++)
+            if (listShippment != null)
             {
-                DataRow dr = dtPostage.NewRow();
-                dr["ID"] = LS[i].GetID();
-                dr["Company"] = LS[i].GetCompany();
-                dr["Type"] = LS[i].GetShipType();
-                dr["DeliveryTime"] = LS[i].GetDeliveryTime();
-                dr["Cost"] = LS[i].GetCost();
-                dr["Status"] = LS[i].GetStatus();
+                foreach (ShippmentDTO s in listShippment)
+                {
+                    DataRow dr = dtPostage.NewRow();
+                    dr["ID"] = s.GetID();
+                    dr["Company"] = s.GetCompany();
+                    dr["Type"] = s.GetShipType();
+                    dr["DeliveryTime"] = s.GetDeliveryTime();
+                    dr["Cost"] = s.GetCost();
+                    dr["Status"] = s.GetStatus();
 
-                dtPostage.Rows.Add(dr);
-            }
+                    dtPostage.Rows.Add(dr);
+                }
+            }            
             return dtPostage;
         }
 
 
         protected void BindData()
         {
-            listShippment = bl.GetAllPostServices();
-            PostageTable.DataSource = getDataTable(listShippment);
-            PostageTable.DataBind();
-            lblPostageList.Text = "There is " + PostageTable.Rows.Count+"postage options. ";
+            try
+            {
+                listShippment = BL.GetAllPostServices();
+                PostageTable.DataSource = getDataTable();
+                PostageTable.DataBind();
+                string helper;
+                if (listShippment.Count() > 1)
+                {
+                    helper = "are";
+                }
+                else
+                {
+                    helper = "is";
+                }
+                lblPostageList.Text = $"There {helper} {listShippment.Count()} postage options.";
+            }
+            catch(Exception e)
+            {
+                e.GetBaseException();
+            }
+           
         }
 
 
@@ -85,14 +103,19 @@ namespace WebsiteLaitBrasseur.UL.Admin
         //Row Deleting
         protected void PostageTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
+            Byte status = 1; //suspendet
             //Index of grid recuperation
-            int index = Convert.ToInt32(e.RowIndex);
+            int index = Convert.ToInt32(e.RowIndex);            
+            int id = Convert.ToInt16(PostageTable.Rows[e.RowIndex].Cells[0].Text);
 
             //Fake deletion
             PostageTable.Rows[index].Visible = false;
             lblInfo.CssClass = "text-info";
             lblInfo.Text = "Not real deleting : The row is now invisible";
             lblError.Text = "";
+            //change status of shippment company 
+            // => delete = suspendet
+            BL.ChangeStatus(id, status);
         }
 
         ////Row Editing 
@@ -119,18 +142,18 @@ namespace WebsiteLaitBrasseur.UL.Admin
             try
             {
                 int ID = Convert.ToInt16(PostageTable.Rows[e.RowIndex].Cells[0].Text);
+                Debug.Write($"Postages / Update ID : {ID}");//DEBUG
                 TextBox editCompany = PostageTable.Rows[e.RowIndex].FindControl("TextCompanyName") as TextBox;
                 TextBox editType = PostageTable.Rows[e.RowIndex].FindControl("TextType") as TextBox;
                 TextBox editDeliveryTime = PostageTable.Rows[e.RowIndex].FindControl("TextDeliveryTime") as TextBox;
                 TextBox editCost = PostageTable.Rows[e.RowIndex].FindControl("TextCost") as TextBox;
                 TextBox editStatus = PostageTable.Rows[e.RowIndex].FindControl("TextStatus") as TextBox;
 
-                bl.UpdateAll(ID, editCompany.Text, editType.Text, Convert.ToInt32(editDeliveryTime.Text), Convert.ToDecimal(editCost.Text), Convert.ToInt16(editStatus.Text));
+                BL.UpdateAll(ID, editCompany.Text, editType.Text, Convert.ToInt32(editDeliveryTime.Text), Convert.ToDecimal(editCost.Text), Convert.ToByte(editStatus.Text));
 
                 lblInfo.CssClass = "text-success";
-                lblInfo.Text = "Updated achived with success";
+                lblInfo.Text = $"Updated {editCompany.Text} successfully.";
                 lblError.Text = "";
-
             }
             catch(Exception ex)
             {
@@ -159,7 +182,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     TextBox newCost = PostageTable.FooterRow.FindControl("TextAddCost") as TextBox;
                     TextBox newStatus = PostageTable.FooterRow.FindControl("TextAddStatus") as TextBox;
 
-                    var result = bl.Create(newType.Text, Convert.ToInt32(newDeliveryTime.Text), newCompany.Text, Convert.ToDecimal(newCost.Text), Convert.ToByte(newStatus.Text));                   
+                    var result = BL.Create(newType.Text, Convert.ToInt32(newDeliveryTime.Text), newCompany.Text, Convert.ToDecimal(newCost.Text), Convert.ToByte(newStatus.Text));                   
                     PostageTable.ShowFooter = false;
                     BindData();
                     lblInfo.CssClass = "text-success";

@@ -18,9 +18,9 @@ namespace WebsiteLaitBrasseur.DAL
         int UpdateAll(int accountID, string email, string password, string fname, string lname, string birthdate, string phoneNo, string imgPath);
         BL.AccountDTO FindBy(int id);
         BL.AccountDTO FindBy(string email);
-        List<BL.AccountDTO> FindAllUserBy(int isAdmin);
-        List<BL.AccountDTO> FindAll();
-        List<BL.AccountDTO> FindByStatus(int status);
+        IEnumerable<BL.AccountDTO> FindAllUserBy(int isAdmin);
+        IEnumerable<BL.AccountDTO> FindAll();
+        IEnumerable<BL.AccountDTO> FindByStatus(int status);
         BL.AccountDTO FindByName(string fname, string lname);
         int FindLoginCred(string email, string password);
         int FindLoginEmail(string email);

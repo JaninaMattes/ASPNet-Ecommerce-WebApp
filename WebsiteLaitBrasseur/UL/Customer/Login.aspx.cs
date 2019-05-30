@@ -31,7 +31,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 case 1:
                     //variable session creation
                     //session is a dictionary inside ASP.NET
-                    Session["email"] = TextEmail.Text.Trim();
+                    Session["Email"] = TextEmail.Text.Trim();
                     Response.Redirect("/UL/Customer/Default.aspx");
                     break;
                 case 2:
@@ -41,6 +41,10 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 case 3:
                     LblErrorMessage.Visible = true;
                     LblErrorMessage.Text = "Email address is incorrect.";
+                    break;
+                case 4:
+                    LblErrorMessage.Visible = true;
+                    LblErrorMessage.Text = "User is suspendet.";
                     break;
                 default:
                     break;

@@ -14,7 +14,7 @@ namespace WebsiteLaitBrasseur.BL
 {
     public class AccountBL
     {
-        private AccountDAL DB = new AccountDAL();
+        private readonly AccountDAL DB = new AccountDAL();
         private static int count = 0;
 
         /// <summary>
@@ -38,13 +38,14 @@ namespace WebsiteLaitBrasseur.BL
                 int isConfirmed = 0;
                 //check if format of email is correct && it doesnt already exist in DB 
                 //else return = 1
-                if (IsValidEmail(email) && (DB.FindLoginEmail(email) != 1))
+                if (DB.FindLoginEmail(email) == 1)
                 {
-                //check if the email address is an existing mail
-                    if (IsEmailValid(email) == false)
-                    {
-                        return isCorrect = 1; //is not correct
-                    }
+                    //check if the email address is an existing mail
+                    return isCorrect = 3; //is not correct & exists already
+                }
+                if (!IsEmailValid(email))
+                {                   
+                    return isCorrect = 1; //is not correct
                 }
                 //check if format of password is correct else return = 2
                 if (!IsValidPassword(password))
@@ -55,8 +56,9 @@ namespace WebsiteLaitBrasseur.BL
                 if (isCorrect == 0)
                 {
                     //encrypt the password before it is sent to the DB
-                    password = this.HashPassword(password);
-                    Debug.Print("AccountBL / Password hashed " + password.ToString());
+                    //encrypt the password before it is sent to the DB
+                    //password = this.HashPassword(password);
+                    //Debug.Print("AccountBL / Password hashed " + password.ToString());
                     //returns the created Account ID as integer value
                     DB.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin); 
                 }                
@@ -89,38 +91,38 @@ namespace WebsiteLaitBrasseur.BL
             string hashPW = password; //= HashPassword(password);
             if(count == 3)
             {
-                // 5 = suspend the user
-                isCorrect = 5;
+                //TODO suspend user after three wrong log in attempts
+                //5 = suspend the user;
+                // isCorrect = 5;
                 //Call timer
                 StartTimer();
             }
             try
             {
+                if (IsUserSuspendet(email))
+                {
+                    // 4 = user is suspendet
+                    return isCorrect = 4;
+                }
                 if (DB.FindLoginEmail(email) != 1)
                 {
                     // 3 = email is not correct
                     return isCorrect = 3; 
                 }
-                if (DB.FindLoginPW(hashPW) != 1)
+                if (DB.FindLoginPW(hashPW) == 0)
                 {
                     // 2 = password is not correct
                     return isCorrect = 2; 
-                }
-                if (isUserSuspendet(email) == true)
-                {
-                    // 4 = user is suspendet
-                    return isCorrect = 4; 
-                }
+                }                
                 else
                 {
                     //check if login is correct AND user already exists in database
                     // 1 = user exists in DB and email and PW are correct
-                    isCorrect = DB.FindLoginCred(email, hashPW);
+                    isCorrect = DB.FindLoginCred(email, hashPW); // 1 = user and password are in DB
                     Debug.Print("AccountBL / value returned " + isCorrect.ToString());
                 }
-
                 //count the login attempts
-                count++;
+                //count++;
             }
             catch (Exception e)
             {
@@ -232,12 +234,62 @@ namespace WebsiteLaitBrasseur.BL
             return IsCorrect;
         }
 
+        public int Update(string mail, string firstName, string lastName,
+            string birthDate, string phoneNo, string imgPath)
+        {
+            int IsCorrect = 0;
+            //TODO isConfirmed
+
+            AccountDTO customer = new AccountDTO();
+            
+            if (IsValidEmail(mail))
+            {
+                customer = DB.FindBy(mail);
+                Debug.Print("AccountBL / UpdateAll value returned " + customer.ToString());
+            }
+            else
+            {   //email is not correct => 2
+                return IsCorrect = 2;
+            }
+            //if update was successfull => 1
+            IsCorrect = DB.Update(customer.GetID(), mail, firstName, lastName, birthDate, phoneNo, imgPath);
+
+            Debug.Print("AccountBL / UpdateAll correction: " + IsCorrect);
+            return IsCorrect;
+        }
+
+        /// <summary>
+        /// Find single customer in DB
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public AccountDTO GetCustomer(string email)
         {
             AccountDTO customer = new AccountDTO();
             try
             {
                 customer = DB.FindBy(email);
+                Debug.Print("AccountBL / Customer ID: " + customer.GetID());
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return customer;
+        }
+
+        /// <summary>
+        /// Find single customer in DB
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public AccountDTO GetCustomer(int id)
+        {
+            AccountDTO customer = new AccountDTO();
+            try
+            {
+                customer = DB.FindBy(id);
+                Debug.Print("AccountBL / Customer ID: " + customer.GetID());
             }
             catch (Exception e)
             {
@@ -250,10 +302,10 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all Customers in DB.
         /// </summary>
         /// <returns></returns>
-        public List<AccountDTO> GetAllCustomers()
+        public IEnumerable<AccountDTO> GetAllCustomers()
         {
             int isAdmin = 0;
-            List<AccountDTO> results = new List<AccountDTO>();
+            IEnumerable<AccountDTO> results = new List<AccountDTO>();
             results = DB.FindAllUserBy(isAdmin);
             return results;
         }
@@ -262,10 +314,10 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all Admins in DB.
         /// </summary>
         /// <returns></returns>
-        public List<AccountDTO> GetAllAdmins()
+        public IEnumerable<AccountDTO> GetAllAdmins()
         {
             int isAdmin = 1;
-            List<AccountDTO> results = new List<AccountDTO>();
+            IEnumerable<AccountDTO> results = new List<AccountDTO>();
             results = DB.FindAllUserBy(isAdmin);
             return results;
         }
@@ -275,17 +327,17 @@ namespace WebsiteLaitBrasseur.BL
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        private bool isUserSuspendet(string email)
+        private bool IsUserSuspendet(string email)
         {
             AccountDTO customer = new AccountDTO();
             customer = DB.FindBy(email);
             int status = customer.GetStatus();
             Debug.Print("AccountBL: /isUserSuspendet/status " + customer.GetStatus());
-            if (customer != null && status != 1)
+            if (customer != null && status == 0)
             {
                 return false;       //isSuspended=0 ;false
             }
-            else if (customer != null && status != 0)
+            else if (customer != null && status == 1)
             {
                 return true;   //isSuspended=1 ;true
             }

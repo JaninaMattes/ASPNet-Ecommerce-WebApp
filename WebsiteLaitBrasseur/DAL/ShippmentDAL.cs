@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -12,7 +13,13 @@ namespace WebsiteLaitBrasseur.DAL
     public class ShippmentDAL: IShippmentDataAccess
     {
         //Get connection string from web.config file and create sql connection
-        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
+        private string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["LaitBrasseurDB"].ConnectionString;
+            }
+        }
 
         /// <summary>
         /// To Insert another Shipping company into the DB
@@ -29,9 +36,9 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="cost"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        
+
         [DataObjectMethod(DataObjectMethodType.Insert)]
-        public int Insert(string type, int deliveryTime, string company, decimal cost, int status)
+        public int Insert(string type, int deliveryTime, string company, decimal cost, Byte status)
         {
             int result;
             //no need to explicitely set id as autoincrement is used
@@ -42,42 +49,42 @@ namespace WebsiteLaitBrasseur.DAL
             string queryAutoincID = "SELECT TOP(1) dbo.Shippment.shippingID FROM dbo.Shippment ORDER BY 1 DESC";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@shipType", SqlDbType.VarChar).Value = type;
+                        cmd.Parameters.AddWithValue("@deliveryTime", SqlDbType.Int).Value = deliveryTime;
+                        cmd.Parameters.AddWithValue("@shipCompany", SqlDbType.VarChar).Value = company;
+                        cmd.Parameters.AddWithValue("@shipCost", SqlDbType.Decimal).Value = cost;
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.TinyInt).Value = status;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        var value = cmd.ExecuteNonQuery(); //returns the number of affected rows in the DB 
+                        Debug.Print("ShippmentDAL: /Insert/ " + value);
+                    }
                 }
-                //insert into database
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@shipType", SqlDbType.VarChar).Value = type;
-                    cmd.Parameters.AddWithValue("@deliveryTime", SqlDbType.Int).Value = deliveryTime;
-                    cmd.Parameters.AddWithValue("@shipCompany", SqlDbType.VarChar).Value = company;
-                    cmd.Parameters.AddWithValue("@shipCost", SqlDbType.Decimal).Value = cost;
-                    cmd.Parameters.AddWithValue("@status", SqlDbType.Binary).Value = status;
-                    cmd.CommandType = CommandType.Text;
-                    var value = cmd.ExecuteNonQuery(); //returns the number of affected rows in the DB 
-                    Debug.Print("ShippmentDAL: /Insert/ " + value);
-                }
-                ///find the last manipulated id due to autoincrement and return it
-                using (SqlCommand command = new SqlCommand(queryAutoincID, connection))
-                {
-                    SqlDataReader reader = command.ExecuteReader();
-                    //won't need a while, since it will only retrieve one row
-                    reader.Read();
-                    //this is the id of the newly created data field
-                    result = Convert.ToInt32(reader["shippingID"]);
-                    Debug.Print("ShippmentDAL: /Insert/ " + result.ToString());
+                    using (SqlCommand cmd = new SqlCommand(queryAutoincID, con))
+                    {
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        //won't need a while, since it will only retrieve one row
+                        reader.Read();
+                        //this is the id of the newly created data field
+                        result = Convert.ToInt32(reader["shippingID"]);
+                        Debug.Print("ShippmentDAL: /Insert/ " + result.ToString());
+                    }
                 }
             }
             catch (Exception e)
             {
                 result = 0;
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
-            }              
+            }            
             return result;
         }
 
@@ -91,32 +98,27 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
         
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int Update(int id, int status)
+        public int Update(int id, Byte status)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Shippment SET status = @status WHERE shippingID = @id";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Parameters.AddWithValue("@status", status);
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.TinyInt).Value = status;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -135,26 +137,21 @@ namespace WebsiteLaitBrasseur.DAL
             string queryString = "UPDATE dbo.Shippment SET shipCost = @shipCost WHERE shippingID = @id";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Parameters.AddWithValue("@shipCost", shipCost);
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                        cmd.Parameters.AddWithValue("@shipCost", shipCost);
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -170,39 +167,34 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int UpdateAll(int id, string type, int deliveryTime, string company, decimal cost, int status)
+        public int UpdateAll(int id, string type, int deliveryTime, string company, decimal cost, Byte status)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Shippment SET shipType = @type, estimatedTime = @deliveryTime, " +
                 "shipCost = @shipCost, shipCompany = @shipCompany, status = @status WHERE shippingID = @id";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where id = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                   
-                    cmd.Parameters.AddWithValue("@shipType", SqlDbType.VarChar).Value = type;
-                    cmd.Parameters.AddWithValue("@deliveryTime", SqlDbType.Int).Value = deliveryTime;
-                    cmd.Parameters.AddWithValue("@shipCompany", SqlDbType.VarChar).Value = company;
-                    cmd.Parameters.AddWithValue("@shipCost", SqlDbType.Decimal).Value = cost;
-                    cmd.Parameters.AddWithValue("@status", SqlDbType.Binary).Value = status;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                    Debug.Print("ShippmentDAL / UpdateAll / result :" + result);
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
+                        cmd.Parameters.AddWithValue("@type", SqlDbType.VarChar).Value = type;
+                        cmd.Parameters.AddWithValue("@deliveryTime", SqlDbType.Int).Value = deliveryTime;
+                        cmd.Parameters.AddWithValue("@shipCompany", SqlDbType.VarChar).Value = company;
+                        cmd.Parameters.AddWithValue("@shipCost", SqlDbType.Decimal).Value = cost;
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.TinyInt).Value = status;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        Debug.Print("ShippmentDAL / UpdateAll / result :" + result);
+                    }
                 }
             }
             catch (Exception e)
             {
                 Debug.Print("ShippmentDAL / UpdateAll / Exception : " );//DEBUG
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -221,16 +213,15 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@id", id);
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                   
                         if (reader.Read())
                         {
                             deliverer = new ShippmentDTO();
@@ -246,10 +237,6 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
-            }
-            finally
-            {
-                connection.Close();
             }
             return null;
         }
@@ -269,16 +256,14 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@name", name);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@name", name);
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
                             deliverer = new ShippmentDTO();
@@ -293,11 +278,6 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
-                Debug.Print(e.ToString());
-            }
-            finally
-            {
-                connection.Close();
             }
             return null;
         }
@@ -311,39 +291,29 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns>List<ShippmentDTO</returns>
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public List<ShippmentDTO> FindAllBy(int status)
+        public IEnumerable<ShippmentDTO> FindAllBy(Byte status)
         {
             string queryString = "SELECT * FROM dbo.Shippment WHERE status = @status";
             List<ShippmentDTO> results = new List<ShippmentDTO>();
             ShippmentDTO deliverer;
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@status", status);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        cmd.Parameters.AddWithValue("@status", status);
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                deliverer = new ShippmentDTO();
-                                deliverer = GenerateDeliverer(reader, deliverer);
-                                //return product instance as data object 
-                                Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID());
-                                //add data objects to result-list 
-                                results.Add(deliverer);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            deliverer = new ShippmentDTO();
+                            deliverer = GenerateDeliverer(reader, deliverer);
+                            //return product instance as data object 
+                            Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID());
+                            //add data objects to result-list 
+                            results.Add(deliverer);
                         }
                     }
                 }
@@ -352,12 +322,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
-
+            return results;
         }
 
         /// <summary>
@@ -367,38 +332,29 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public List<ShippmentDTO> FindAll()
+        public IEnumerable<ShippmentDTO> FindAll()
         {
             string queryString = "SELECT * FROM dbo.Shippment";
             List<ShippmentDTO> results = new List<ShippmentDTO>();
             ShippmentDTO deliverer;
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        if (reader.HasRows)
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
                         {
-                            while (reader.Read())
-                            {
-                                deliverer = new ShippmentDTO();
-                                deliverer = GenerateDeliverer(reader, deliverer);
-                                //return product instance as data object 
-                                Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID());
-                                //add data objects to result-list 
-                                results.Add(deliverer);
-                            }
-                            return results;
-                        }
-                        else
-                        {
-                            throw new EmptyRowException();
+                            deliverer = new ShippmentDTO();
+                            deliverer = GenerateDeliverer(reader, deliverer);
+                            //return product instance as data object 
+                            Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetID());
+                            Debug.Print("ShippmentDAL: /FindByID/ " + deliverer.GetCompany());
+                            //add data objects to result-list 
+                            results.Add(deliverer);
                         }
                     }
                 }
@@ -407,11 +363,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
             }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            return results;
         }
 
         private static ShippmentDTO GenerateDeliverer(SqlDataReader reader, ShippmentDTO deliverer)
@@ -422,7 +374,6 @@ namespace WebsiteLaitBrasseur.DAL
             deliverer.SetDeliveryTime(Convert.ToInt32(reader["estimatedTime"]));
             deliverer.SetStatus(Convert.ToInt32(reader["status"]));
             deliverer.SetType(reader["shipType"].ToString());
-
             return deliverer;
         }
     }

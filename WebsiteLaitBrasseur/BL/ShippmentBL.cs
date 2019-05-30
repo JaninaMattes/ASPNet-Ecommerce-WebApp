@@ -21,7 +21,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="cost"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public int Create(string type, int deliveryTime, string company, decimal cost, int status)
+        public int Create(string type, int deliveryTime, string company, decimal cost, Byte status)
         {
             int result = 0;
             try
@@ -42,7 +42,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="delivererID"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public int ChangeStatus(int delivererID, int status)
+        public int ChangeStatus(int delivererID, Byte status)
         {
             int result = 0;
             try
@@ -58,12 +58,12 @@ namespace WebsiteLaitBrasseur.BL
         }
 
 
-        public int UpdateAll(int delivererID, string company, string type, int deliveryTime, decimal cost, int status)
+        public int UpdateAll(int delivererID, string company, string type, int deliveryTime, decimal cost, Byte status)
         {
             int result = 0;
             try
             {
-                result =DB.UpdateAll(delivererID, type, deliveryTime, company, cost, status);
+                result = DB.UpdateAll(delivererID, type, deliveryTime, company, cost, status);
                 Debug.Print("ShippmentBL: /Update All/ " + result);
             }
             catch (Exception e)
@@ -80,10 +80,10 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all availble services.
         /// </summary>
         /// <returns></returns>
-        public List<ShippmentDTO> GetAvailablePostServices()
+        public IEnumerable<ShippmentDTO> GetAvailablePostServices()
         {
-            List<ShippmentDTO> result = new List<ShippmentDTO>();
-            int status = 0;
+            IEnumerable<ShippmentDTO> result = new List<ShippmentDTO>();
+            Byte status = 0;
             try
             {
                 result = DB.FindAllBy(status);
@@ -100,10 +100,10 @@ namespace WebsiteLaitBrasseur.BL
         /// Find all currently suspendet Services.
         /// </summary>
         /// <returns></returns>
-        public List<ShippmentDTO> GetSuspendetPostService()
+        public IEnumerable<ShippmentDTO> GetSuspendetPostService()
         {
-            List<ShippmentDTO> result = new List<ShippmentDTO>();
-            int status = 1;
+            IEnumerable<ShippmentDTO> result = new List<ShippmentDTO>();
+            Byte status = 1;
             try
             {
                 result = DB.FindAllBy(status);
@@ -116,17 +116,22 @@ namespace WebsiteLaitBrasseur.BL
             return result;
         }
 
+        internal void UpdateAll(object p)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Find all services.
         /// </summary>
         /// <returns></returns>
-        public List<ShippmentDTO> GetAllPostServices()
+        public IEnumerable<ShippmentDTO> GetAllPostServices()
         {
-            List<ShippmentDTO> result = new List<ShippmentDTO>();
+            IEnumerable<ShippmentDTO> result = new List<ShippmentDTO>();
             try
             {
                 result = DB.FindAll();
-                Debug.Print("ShippmentBL: /Find All/ " + result);
+                Debug.Print("ShippmentBL: /Find All/ found: " + result.Count());
             }
             catch (Exception e)
             {

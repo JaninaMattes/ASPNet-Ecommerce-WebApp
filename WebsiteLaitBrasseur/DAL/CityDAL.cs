@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
@@ -8,11 +10,16 @@ using WebsiteLaitBrasseur.BL;
 namespace WebsiteLaitBrasseur.DAL
 {
     [DataObject(true)]
-    public class CityDAL
+    public class CityDAL : ICityDataAccess
     {
         //Get connection string from web.config file and create sql connection
-        readonly SqlConnection connection = new SqlConnection(SqlDataAccess.ConnectionString);
-
+        private string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["LaitBrasseurDB"].ConnectionString;
+            }
+        }
 
         [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(string zipCode, string cityName)
@@ -24,28 +31,32 @@ namespace WebsiteLaitBrasseur.DAL
             string queryAutoIncr = "SELECT TOP(1) dbo.City.cityID FROM dbo.City ORDER BY 1 DESC";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                //The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@zipCode", SqlDbType.VarChar).Value = zipCode;
+                        cmd.Parameters.AddWithValue("@cityName", SqlDbType.VarChar).Value = cityName;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        var row = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        Debug.Print("CityDAL / Insert / cmd result : " + row);
+                    }
                 }
-                //insert into database
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    cmd.Parameters.AddWithValue("@zipCode", SqlDbType.VarChar).Value = zipCode;
-                    cmd.Parameters.AddWithValue("@cityName", SqlDbType.VarChar).Value = cityName;
-                    cmd.CommandType = CommandType.Text;
-                    cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                }
-
-                ///find the last manipulated id due to autoincrement and return it
-                using (SqlCommand command = new SqlCommand(queryAutoIncr, connection))
-                {
-                    SqlDataReader reader = command.ExecuteReader();
-                    //won't need a while, since it will only retrieve one row
-                    reader.Read();
-                    //this is the id of the newly created data field
-                    result = (Int32)reader["cityID"];
-                    Debug.Print("CityDAL: / ID/ " + result);
+                    ///find the last manipulated id due to autoincrement and return it
+                    using (SqlCommand command = new SqlCommand(queryAutoIncr, con))
+                    {
+                        con.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        //won't need a while, since it will only retrieve one row
+                        reader.Read();
+                        //this is the id of the newly created data field
+                        result = (Int32)reader["cityID"];
+                        Debug.Print("CityDAL: / ID/ " + result);
+                    }
                 }
                 return result;
             }
@@ -53,10 +64,6 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 result = 0;
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -69,28 +76,22 @@ namespace WebsiteLaitBrasseur.DAL
                 "WHERE cityID = @cityID";
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //update into database where email = XY to status suspendet(false) or enabled(true) 
-                //e.g. after three false log in attempts / upaied bills
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@cityID", SqlDbType.Int).Value = cityID;
-                    cmd.Parameters.AddWithValue("@zipCode", SqlDbType.VarChar).Value = zipCode;
-                    cmd.Parameters.AddWithValue("@cityName", SqlDbType.VarChar).Value = cityName;
-                    cmd.CommandType = CommandType.Text;
-                    result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@cityID", SqlDbType.Int).Value = cityID;
+                        cmd.Parameters.AddWithValue("@zipCode", SqlDbType.VarChar).Value = zipCode;
+                        cmd.Parameters.AddWithValue("@cityName", SqlDbType.VarChar).Value = cityName;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                    }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
-            }
-            finally
-            {
-                connection.Close();
             }
             return result;
         }
@@ -109,17 +110,14 @@ namespace WebsiteLaitBrasseur.DAL
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = id;
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@id", id);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
                             city = new CityDTO();
@@ -129,16 +127,12 @@ namespace WebsiteLaitBrasseur.DAL
                             return city;
                         }
                     }
-                }
+                }               
             }
             catch (Exception e)
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
-            }
-            finally
-            {
-                connection.Close();
             }
             return null;
         }
@@ -150,29 +144,24 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
         public CityDTO FindBy(string name)
         {
-            CityDTO city;
+            CityDTO city = new CityDTO();
             string queryString = "SELECT * FROM dbo.City WHERE cityName = @name";
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
+                using (SqlConnection con = new SqlConnection(ConnectionString))
                 {
-                    connection.Open();
-                }
-                //find entry in database where id = XY
-                using (SqlCommand cmd = new SqlCommand(queryString, connection))
-                {
-                    cmd.Parameters.AddWithValue("@name", name);
-                    cmd.CommandType = CommandType.Text;
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@name", name);
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();                        
                         if (reader.Read())
                         {
-                            city = new CityDTO();
                             city = GenerateCity(reader, city);
                             //return product instance as data object 
-                            Debug.Print("CityDAL: /FindByName/ " + city.GetId());
-                            return city;
+                            Debug.Print("CityDAL: /FindByName/ " + city.GetId());                            
                         }
                     }
                 }
@@ -181,19 +170,15 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 e.GetBaseException();
                 Debug.Print(e.ToString());
-            }
-            finally
-            {
-                connection.Close();
-            }
-            return null;
+            }            
+            return city;
         }
 
         private static CityDTO GenerateCity(SqlDataReader reader, CityDTO city)
         {
             city.SetId(Convert.ToInt32(reader["cityID"]));
-            city.SetCity(reader["cityName"].ToString());
-            city.SetZip(reader["cityCode"].ToString());
+            city.SetCity(Convert.ToString(reader["cityName"]));
+            city.SetZip(Convert.ToString(reader["zipCode"]));
             return city;
         }
     }

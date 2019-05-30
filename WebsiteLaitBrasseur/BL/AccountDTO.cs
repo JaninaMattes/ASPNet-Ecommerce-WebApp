@@ -13,9 +13,10 @@ namespace WebsiteLaitBrasseur.BL
         private string _email = "";
         private string _password = "";
         private int _isConfirmed = 0;
+        private int _confirmID = 0;
         private string _firstName = "";
         private string _lastName = "";
-        private string _birthDate = "";
+        private DateTime _birthDate;
         private string _phoneNo = "";
         private string _imgPath = "";
         private int _status = 0;
@@ -63,6 +64,16 @@ namespace WebsiteLaitBrasseur.BL
             this._isConfirmed = isConf;
         }
 
+        public int GetConfirmationID()
+        {
+            return this._confirmID;
+        }
+
+        public void SetConfirmationID(int id)
+        {
+            this._confirmID = id;
+        }
+
         public string GetFirstName()
         {
             return this._firstName;
@@ -83,12 +94,12 @@ namespace WebsiteLaitBrasseur.BL
             this._lastName = lname;
         }
 
-        public string GetBirthdate()
+        public DateTime GetBirthdate()
         {
             return this._birthDate;
         }
 
-        public void SetBirthdate(string date)
+        public void SetBirthdate(DateTime date)
         {
             this._birthDate = date;
         }
@@ -171,7 +182,7 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         public AccountDTO(byte id, string email, string password, string firstName, 
-            string lastName, string birthDate, string phoneNo, int status, int isAdmin, AddressDTO address) : 
+            string lastName, DateTime birthDate, string phoneNo, int status, int isAdmin, AddressDTO address) : 
             this(id, email, password)
         {
             _firstName = firstName;
@@ -183,12 +194,13 @@ namespace WebsiteLaitBrasseur.BL
             _address = address;
         }
 
-        public AccountDTO(byte id, string email, int isConfirmed, string firstName, string lastName, 
-            string birthDate, string phoneNo, string imgPath, int status, int isAdmin, List<InvoiceDTO> invoiceList, AddressDTO address)
+        public AccountDTO(byte id, string email, int isConfirmed, int confirmID, string firstName, string lastName, 
+            DateTime birthDate, string phoneNo, string imgPath, int status, int isAdmin, List<InvoiceDTO> invoiceList, AddressDTO address)
         {
             _id = id;
             _email = email;
             _isConfirmed = isConfirmed;
+            _confirmID = confirmID;
             _firstName = firstName;
             _lastName = lastName;
             _birthDate = birthDate;
@@ -231,7 +243,7 @@ namespace WebsiteLaitBrasseur.BL
             hashCode = hashCode * -1521134295 + _isConfirmed.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_firstName);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_lastName);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_birthDate);
+            hashCode = hashCode * -1521134295 + EqualityComparer<DateTime>.Default.GetHashCode(_birthDate);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_phoneNo);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_imgPath);
             hashCode = hashCode * -1521134295 + _status.GetHashCode();

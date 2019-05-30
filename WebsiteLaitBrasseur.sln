@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.438
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsiteLaitBrasseur", "WebsiteLaitBrasseur\WebsiteLaitBrasseur.csproj", "{A876833D-0C63-4A3B-98AE-9AE23FC7338E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaitBrasseurUnitTest", "LaitBrasseurUnitTest\LaitBrasseurUnitTest.csproj", "{3D7D9464-EA0E-4520-BAAE-F8C429CC9BFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A876833D-0C63-4A3B-98AE-9AE23FC7338E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A876833D-0C63-4A3B-98AE-9AE23FC7338E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A876833D-0C63-4A3B-98AE-9AE23FC7338E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D7D9464-EA0E-4520-BAAE-F8C429CC9BFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D7D9464-EA0E-4520-BAAE-F8C429CC9BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D7D9464-EA0E-4520-BAAE-F8C429CC9BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D7D9464-EA0E-4520-BAAE-F8C429CC9BFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
