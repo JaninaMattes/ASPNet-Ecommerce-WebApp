@@ -12,7 +12,7 @@
 
     <div class="row">
   
-    <asp:Repeater ID="ImageRepeater" runat="server" OnItemCommand="ImageRepeater_ItemCommand">
+    <asp:Repeater ID="ImageRepeater" runat="server" >
      <ItemTemplate>
 
       <div class="col-md-3">

@@ -4,32 +4,127 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
+using System.Data;
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class Profile : System.Web.UI.Page
     {
-        AccountBL DB = new AccountBL();
-        string SESSION_VAR; 
+        AccountBL blAccount = new AccountBL();
+        AddressBL blAddress = new AddressBL();
+        InvoiceBL blInvoice = new InvoiceBL();
+
+        AddressDTO address = new AddressDTO();
+        AccountDTO account = new AccountDTO();
+        List<InvoiceDTO> LI = new List<InvoiceDTO>();
+
+        string SESSION_VAR = "miriam.miller@gmail.com";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Page.IsPostBack)
             {
-                SESSION_VAR = HttpContext.Current.Session["Email"].ToString();
+                //SESSION_VAR =HttpContext.Current.Session["Email"].ToString();
+
                 /*Fill the shopping history table with data from the backend 
                  * and bind these to the datafields*/
-                BindGridList();
-                /*Fill the label with accurat item number*/
-                BindTableLabel();
+
                 /*Fill the user profiel information*/
-                BindProfileTextBox();
+                BindData();
             }
 
             DeleteButton_Click(sender, e);
             SaveButton_Click(sender, e);
 
         }
+
+        protected void BindData()
+        {
+            //Account
+            //Account init
+            account = blAccount.GetCustomer(SESSION_VAR);
+
+            //BindData
+            TextFirstname.Text = account.GetFirstName();
+            TextLastname.Text = account.GetLastName();
+            TextPhone.Text = account.GetPhoneNo();
+            TextBirthday.Text = account.GetBirthdate(); //WARNING : issue format
+            TextEmail.Text = account.GetEmail();
+
+            //Address 
+            //Address init
+            address = blAddress.FindAddress(account.GetID());
+
+            //BindData
+            Debug.Write("\n Street name:  " + address.GetStreetName()); //DEBUG
+            TextAddress1.Text = address.GetStreetName();
+            Debug.Write("\n City: " + address.GetCity().GetCity()); //DEBUG
+            TextCity.Text = address.GetCity().GetCity();
+            Debug.Write("\n Country: " + address.GetCountry()); //DEBUG
+            CountryDropDownList.Text = address.GetCountry();
+            Debug.Write("\n Number :" + address.GetStreetNo()); //DEBUG
+            TextAddressnumber.Text = address.GetStreetNo();
+            Debug.Write("\n Zip  : " + address.GetCity().GetZip()); //DEBUG
+            TextZip.Text = address.GetCity().GetZip();
+
+
+            //ShoppingTable
+            //List invoices init
+            LI = blInvoice.FindInvoices(SESSION_VAR);
+            Debug.Write("Invoices infos : " + LI.Count);
+
+            //BindData
+            ShoppingTable.DataSource = getDataTable();
+            ShoppingTable.DataBind();
+
+
+            //Label update
+            tableShoppingHistoryLabel.Text = "Your shopping history has " + ShoppingTable.Rows.Count + " items.";
+
+
+
+        }
+
+        protected DataTable getDataTable()
+        {
+            //DataTable initialization
+            DataTable dtShoppingTable = new DataTable();
+
+            //Colmuns declaration
+            dtShoppingTable.Columns.Add("ID");
+            dtShoppingTable.Columns.Add("TotalQuantity");
+            dtShoppingTable.Columns.Add("TotalShippinCost");
+            dtShoppingTable.Columns.Add("TotalTaxes");
+            dtShoppingTable.Columns.Add("TotalAmount");
+            dtShoppingTable.Columns.Add("OrderDate");
+            dtShoppingTable.Columns.Add("PaymentDate");
+            dtShoppingTable.Columns.Add("ArrivalDate");
+            dtShoppingTable.Columns.Add("PostageDate");
+            dtShoppingTable.Columns.Add("Status");
+
+            for (int i = 0; i < LI.Count; i++)
+            {
+                DataRow dr = dtShoppingTable.NewRow();
+                dr["ID"] = LI[i].GetID();
+                dr["TotalQuantity"] = LI[i].GetTotal();
+                dr["TotalShippinCost"] = LI[i].GetShippingCost();
+                dr["TotalTaxes"] = LI[i].GetTax();
+                dr["PaymentDate"] = LI[i].GetPaymentDate();
+                dr["ArrivalDate"] = LI[i].GetArrivalDate();
+                dr["PostageDate"] = LI[i].GetPostDate();
+                dr["Status"] = LI[i].GetStatus();
+
+
+                dtShoppingTable.Rows.Add(dr);
+
+            }
+            return dtShoppingTable;
+        }
+
+
+
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
@@ -46,11 +141,11 @@ namespace WebsiteLaitBrasseur.UL.Customer
             //...firstName = Request.Form["FirstnameTextbox"];
             //try
             //{
-            //    customer = DB.GetCustomer(SESSION_VAR);
+            //    customer = blAccount.GetCustomer(SESSION_VAR);
             //    customer.SetID(customer.GetID());
             //    // TODO
-            //    result = DB.UpdateAll();
-            //    //send to DB and update
+            //    result = blAccount.UpdateAll();
+            //    //send to blAccount and update
             //    if (result > 0)
             //    {
             //        //give customer feedback by pop up 
@@ -66,162 +161,15 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void UpdateButton_Click(object sender, EventArgs e)
         {
+
         }
 
-
-        /*Fill the shopping history table with data from the backend 
-         * and bind these to the datafields*/
-        protected void BindGridList()
-        {
-            ShoppingTable.DataSource = getShoppingList();
-            ShoppingTable.DataBind();
-        }
-
-
-        /*Fill the label with accurat item number*/
-        /*Fill the label with accurat item number*/
-        protected void BindTableLabel()
-        {
-            List<ShoppingListItem> shoppingLs = getShoppingList();
-            if (shoppingLs.LongCount<ShoppingListItem>() > 0)
-            {
-                tableShoppingHistoryLabel.Text = "Your shopping history has " + shoppingLs.LongCount<ShoppingListItem>() + " items.";
-            }
-        }
-
-
-        /*Fill the label with accurat item number*/
-        protected void BindProfileTextBox()
+        protected void Upload(object sender, EventArgs e)
         {
 
-            /*Textboxes with editable section information*/
-            TextFirstname.Text = getUserData().firstName;
-            TextLastname.Text = getUserData().lastName;
-            TextPhone.Text = getUserData().phoneNo;
-            TextBirthday.Text = getUserData().birthdate;
-            TextEmail.Text = getLoginData().email;
-
-            /*Textboxes with editable section information*/
-            TextAddress1.Text = getAddressData().streetName;
-            TextCity.Text = getAddressData().cityName;
-            CountryDropDownList.Text = getAddressData().country;
-            TextAddressnumber.Text = getAddressData().streetNo;
-            TextZip.Text = getAddressData().postCode;
         }
 
-        /*Dummy data for demonstration purpose*/
-        protected Customer getUserData()
-        {
-            Customer customer = new Customer(11110, "Marcus", "Miller", "+6194563221", "1992-02-15");
-            return customer;
-        }
 
-        /*Dummy data for demonstration purpose*/
-        protected Login getLoginData()
-        {
-            Login login = new Login(11111, "marcus.miller@gmail.com", "Xw1234%12");
-            return login;
-        }
-
-        /*Dummy data for demonstration purpose*/
-        protected Address getAddressData()
-        {
-            Address address = new Address(000012, "University Dr.", "130", "Newcastle", "2300", "Australia");
-            return address;
-        }
-
-        /*Dummy data for demonstration purpose*/
-        protected List<ShoppingListItem> getShoppingList()
-        {
-            List<ShoppingListItem> shoppingLs = new List<ShoppingListItem>();
-            ShoppingListItem ls = new ShoppingListItem(1234, 25.00f, "2019-02-01", "2019-02-25", "2019-03-25");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1235, 25.95f, "2019-01-01", "2019-01-30", "paied");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1236, 100.95f, "2018-12-01", "2018-12-30", "paied");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1237, 23.95f, "2018-12-01", "2018-12-30", "paied");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1238, 10.95f, "2018-12-01", "2018-12-25", "paied");
-            ls = new ShoppingListItem(1239, 10.95f, "2018-11-15", "2018-12-22", "paied");
-            shoppingLs.Add(ls);
-            ls = new ShoppingListItem(1240, 210.95f, "2018-10-01", "2018-10-15", "paied");
-            shoppingLs.Add(ls);
-
-            shoppingLs.Add(ls);
-            return shoppingLs;
-        }
-
-        /*Dummy data for demo purpose, to fill the aspx fields until database is connected*/
-        public class ShoppingListItem
-        {
-            public int InvoiceNumber { get; set; }
-            public float TotalAmount { get; set; }
-            public string OrderDate { get; set; }
-            public string ArrivalDate { get; set; }
-            public string PaymentDue { get; set; }
-
-            public ShoppingListItem(int id, float totalAmount, string orderDate, string arrivalDate, string payDue)
-            {
-                this.InvoiceNumber = id;
-                this.TotalAmount = totalAmount;
-                this.OrderDate = orderDate;
-                this.ArrivalDate = arrivalDate;
-                this.PaymentDue = payDue;
-            }
-        }
-
-        public class Customer
-        {
-            public int userId { get; set; }
-            public string firstName { get; set; }
-            public string lastName { get; set; }
-            public string phoneNo { get; set; }
-            public string birthdate { get; set; }
-
-            public Customer(int userId, string firstName, string lastName, string phoneNo, string birthdate)
-            {
-                this.userId = userId;
-                this.firstName = firstName;
-                this.lastName = lastName;
-                this.phoneNo = phoneNo;
-                this.birthdate = birthdate;
-            }
-        }
-
-        public class Address
-        {
-            public int addressId { get; set; }
-            public string streetName { get; set; }
-            public string streetNo { get; set; }
-            public string cityName { get; set; }
-            public string postCode { get; set; }
-            public string country { get; set; }
-
-            public Address(int addressId, string streetName, string streetNo, string cityName, string postCode, string country)
-            {
-                this.addressId = addressId;
-                this.streetName = streetName;
-                this.streetNo = streetNo;
-                this.cityName = cityName;
-                this.postCode = postCode;
-                this.country = country;
-            }
-        }
-
-        public class Login
-        {
-            public int loginId { get; set; }
-            public string email { get; set; }
-            public string password { get; set; }
-
-            public Login(int loginId, string email, string password)
-            {
-                this.loginId = loginId;
-                this.email = email;
-                this.password = password;
-            }
-        }
 
     }
 }
