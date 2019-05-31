@@ -18,9 +18,9 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            AccountBL bl = new AccountBL();
+            AccountBL BL = new AccountBL();
 
-            var isCorrect = bl.IsLoginCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
+            var isCorrect = BL.IsLoginCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
             switch (isCorrect)
             {
                 case 0:

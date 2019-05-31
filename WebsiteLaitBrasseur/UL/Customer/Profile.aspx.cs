@@ -23,15 +23,11 @@ namespace WebsiteLaitBrasseur.UL.Customer
             if (!Page.IsPostBack)
             {
                 SESSION_VAR = HttpContext.Current.Session["Email"].ToString();
-                //SESSION_VAR = "janina.mattes@gmail.com";
                 //Bind profile data
                 BindProfileData();
                 //Shopping history
                 BindDataInvoices();
             }
-
-            DeleteButton_Click(sender, e);
-            SaveButton_Click(sender, e);
         }
 
         protected void BindData()
@@ -40,7 +36,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             //Account init
             AccountDTO account = new AccountDTO();
             account = BL.GetCustomer(SESSION_VAR);
-
+            Debug.Print($"Profile.aspx / Customer found {account.GetID()}");
             //BindData
             TextFirstname.Text = account.GetFirstName();
             TextLastname.Text = account.GetLastName();
@@ -83,8 +79,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
 
             //ShoppingTable
-            //List invoices init
-            
+            //List invoices init            
             invoices = IBL.FindInvoices(SESSION_VAR);
             Debug.Write("Invoices infos : " + invoices.Count());
 
@@ -179,7 +174,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             if(GetUserData(SESSION_VAR).GetImgPath().Equals(" "))
             {                
-                ProfilePicture.ImageUrl = "~/UL/Images/defaultImg.jpg";
+                ProfilePicture.ImageUrl = "/Images/defaultImg.jpg";
                 Debug.Print($"No image found - default image under { ProfilePicture.ImageUrl.ToString()} used");
             }
             ProfilePicture.ImageUrl = GetUserData(SESSION_VAR).GetImgPath();
@@ -275,7 +270,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             return dtInvoice;
         }
 
-        /*Dummy data for demonstration purpose*/
+        // Get all data from DB
         protected AccountDTO GetUserData(string email)
         {
             AccountDTO customer = new AccountDTO();
@@ -289,8 +284,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
             return customer;
         }
-        
-        /*Dummy data for demonstration purpose*/
+
+        // Get all data from DB
         protected AddressDTO GetAddressData(string email)
         {
             AddressDTO address = new AddressDTO();
@@ -305,7 +300,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             return address;
         }
 
-        /*Dummy data for demonstration purpose*/
+        // Get all data from DB
         protected IEnumerable<InvoiceDTO> GetShoppingList(string email)
         {
             IEnumerable<InvoiceDTO> transactions = new List<InvoiceDTO>();

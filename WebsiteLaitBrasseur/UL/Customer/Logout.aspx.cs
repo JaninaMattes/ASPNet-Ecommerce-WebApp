@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
@@ -13,11 +14,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             try {
                 //session informations recuperation
-                string email = this.Session["email"].ToString();   
+                string email = this.Session["email"].ToString();
                 if (email != null)
                 {
-                    lblGoodBye.Text = "Good bye " + email;
-
+                    AccountBL BL = new AccountBL();
+                    AccountDTO account = new AccountDTO();
+                    account = BL.GetCustomer(email);
+                    lblGoodBye.Text = $"Good Bye {account.GetFirstName()} {account.GetLastName()}";
                     //Session variable removing
                     this.Session.Clear();
                 }

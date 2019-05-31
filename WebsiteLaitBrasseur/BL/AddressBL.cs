@@ -31,16 +31,16 @@ namespace WebsiteLaitBrasseur.BL
         public int CreateAddress(string zipCode, string cityName, string streetName, string streetNo, string addressType)
         {
             int result = 0;
-            if (IsPostCodeValid(zipCode))
+            try
             {
                 int cityID = CB.Insert(zipCode, cityName);
                 result = DB.Insert(cityID, streetName, streetNo, addressType);
-                Debug.Print("AddressBL: /Insert/ " + result.ToString());
+                Debug.Print("AddressBL: /Insert/ " + result);
             }
-            else
+            catch (Exception e)
             {
-                result = 2;
-            }
+                e.GetBaseException();
+            }                
             return result;
         }
 
@@ -61,6 +61,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns></returns>
         public int UpdateAddress(string email, string zipCode, string cityName, string streetName, string streetNo, string addressType)
         {
+            Debug.Print("AddressBL: /Update Address: / ");
             int result = 0;                      
             try
             {

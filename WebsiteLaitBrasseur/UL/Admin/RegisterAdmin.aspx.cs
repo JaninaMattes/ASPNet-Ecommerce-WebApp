@@ -23,7 +23,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             if (IsValid)
             {
-                var isAdmin = 1;
+                var isAdmin = 1; //is admin
                 var status = 0; //per default not suspendet user
                 var imgPath = ""; //if there is non
                 lblRegResult.Text = "";
@@ -50,7 +50,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
                         break;
                 }
                 Debug.Write("Check Value : " + check);
-
             }
         }
 

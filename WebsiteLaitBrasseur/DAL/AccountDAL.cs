@@ -754,6 +754,7 @@ namespace WebsiteLaitBrasseur.DAL
                 Debug.Print("AccountDAL / GenerateAccount: " + address.GetID());
                 account.SetAddress(address);
             }
+            //account.SetAddress(address);
             account.SetID(Convert.ToInt32(reader["accountID"]));
             account.SetEmail(reader["email"].ToString());
             account.SetPw(reader["password"].ToString());
