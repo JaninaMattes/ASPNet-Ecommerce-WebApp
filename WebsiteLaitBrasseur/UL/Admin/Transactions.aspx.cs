@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class Transactions : System.Web.UI.Page
     {
+        List<InvoiceDTO> LI = new List<InvoiceDTO>();
+        InvoiceBL blInv = new InvoiceBL();
+        AccountBL blCustomer = new AccountBL();
+
         InvoiceBL BL = new InvoiceBL();
         AccountBL AL = new AccountBL();
 
@@ -26,14 +30,15 @@ namespace WebsiteLaitBrasseur.UL.Admin
             }
         }
 
-        //protected void InvoiceListTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        //{
-        //}
 
-        //protected void InvoiceListTable_RowEditing(object sender, GridViewEditEventArgs e)
-        //{
-        //}
-        
+        protected void BindData()
+        {
+            //LI = blInv.FindInvoices(blCustomer.GetCustomer());
+
+        }
+
+        //Shopping history generation (Same in /Account/Profile.aspx)
+
         protected DataTable GetDataTable(IEnumerable<InvoiceDTO> invoices)
         {
             //DataTable initialization
