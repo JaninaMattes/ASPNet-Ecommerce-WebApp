@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-//using static WebsiteLaitBrasseur.Account.Profile; //TODO check this
 
 namespace WebsiteLaitBrasseur.BL
 {
@@ -12,15 +11,15 @@ namespace WebsiteLaitBrasseur.BL
         private int _id;
         private string _email = "";
         private string _password = "";
-        private int _isConfirmed = 0;
+        private byte _isConfirmed = 0;
         private int _confirmID = 0;
         private string _firstName = "";
         private string _lastName = "";
         private DateTime _birthDate;
         private string _phoneNo = "";
         private string _imgPath = "";
-        private int _status = 0;
-        private int _isAdmin = 0;
+        private byte _status = 0;
+        private byte _isAdmin = 0;
         private List<InvoiceDTO> _invoiceList = new List<InvoiceDTO>();
         private AddressDTO _address;
 
@@ -59,7 +58,7 @@ namespace WebsiteLaitBrasseur.BL
             return this._isConfirmed;
         }
 
-        public void SetIsConfirmed(int isConf)
+        public void SetIsConfirmed(byte isConf)
         {
             this._isConfirmed = isConf;
         }
@@ -129,7 +128,7 @@ namespace WebsiteLaitBrasseur.BL
             return this._status;
         }
 
-        public void SetStatus(int status)
+        public void SetStatus(byte status)
         {
             this._status = status;
         }
@@ -139,7 +138,7 @@ namespace WebsiteLaitBrasseur.BL
             return this._isAdmin;
         }
 
-        public void SetIsAdmin(int isAdmin)
+        public void SetIsAdmin(byte isAdmin)
         {
             this._isAdmin = isAdmin;
         }
@@ -182,7 +181,7 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         public AccountDTO(byte id, string email, string password, string firstName, 
-            string lastName, DateTime birthDate, string phoneNo, int status, int isAdmin, AddressDTO address) : 
+            string lastName, DateTime birthDate, string phoneNo, byte status, byte isAdmin, AddressDTO address) : 
             this(id, email, password)
         {
             _firstName = firstName;
@@ -194,8 +193,8 @@ namespace WebsiteLaitBrasseur.BL
             _address = address;
         }
 
-        public AccountDTO(byte id, string email, int isConfirmed, int confirmID, string firstName, string lastName, 
-            DateTime birthDate, string phoneNo, string imgPath, int status, int isAdmin, List<InvoiceDTO> invoiceList, AddressDTO address)
+        public AccountDTO(byte id, string email, byte isConfirmed, int confirmID, string firstName, string lastName, 
+            DateTime birthDate, string phoneNo, string imgPath, byte status, byte isAdmin, List<InvoiceDTO> invoiceList, AddressDTO address)
         {
             _id = id;
             _email = email;

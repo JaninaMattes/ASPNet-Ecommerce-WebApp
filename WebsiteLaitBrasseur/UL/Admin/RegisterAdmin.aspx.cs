@@ -3,33 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
-using System.Text.RegularExpressions;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class RegisterAdmin : System.Web.UI.Page
     {
-        AccountBL bl = new AccountBL();
+        AccountBL BL = new AccountBL();
+        private int confirmationID;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //TODO
+            
         }
+
         protected void CreateAccountButton_Click(object sender, EventArgs e)
         {
             if (IsValid)
             {
-                var isAdmin = 1; //is admin
-                var status = 0; //per default not suspendet user
+                byte isAdmin = 1; //is admin
+                byte status = 0; //per default not suspendet user
                 var imgPath = ""; //if there is non
                 lblRegResult.Text = "";
 
-                var check = bl.CreateAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
-                   TextLastName.Text.Trim(), TextBirthday.Text.Trim(), TextPhone.Text.Trim(), imgPath, status, isAdmin);
+                var check = BL.CreateAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
+                   TextLastName.Text.Trim(), TextBirthday.Text.Trim(), TextPhone.Text.Trim(), imgPath, status, isAdmin, confirmationID);
 
                 switch (check)
                 {                
@@ -51,6 +50,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 }
                 Debug.Write("Check Value : " + check);
             }
+            Response.Redirect("/UL/Admin/LoginAdmin.aspx");
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)
@@ -61,10 +61,11 @@ namespace WebsiteLaitBrasseur.UL.Admin
         private void MailSender()
         {
             //variable session creation
-            Random aleatoire = new Random();
-            Session["ConfID"] = aleatoire.Next();
+            Random random = new Random();
+            Session["ConfID"] = random.Next();
+            confirmationID = random.Next();
 
-            string confID = this.Session["ConfID"].ToString() ;    //Cookie recuperation
+            string confID = this.Session["ConfID"].ToString() ;    //Cookie recuperation            
 
             if (confID != null)
             {

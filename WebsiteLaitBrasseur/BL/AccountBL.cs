@@ -15,11 +15,6 @@ namespace WebsiteLaitBrasseur.BL
     public class AccountBL
     {
         private readonly AccountDAL DB = new AccountDAL();
-<<<<<<< HEAD
-=======
-
-        private static int count = 0;
->>>>>>> 02dd0317ad930a777a90cd6fa37e43ac294e14da
 
         /// <summary>
         /// Register a new User and create an account. 
@@ -34,7 +29,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="email"></param>
         /// <param name="password"></param>
         public int CreateAccount(string email, string password, string firstName, string lastName, 
-            string birthDate, string phoneNo, string imgPath, int status, int isAdmin)
+            string birthDate, string phoneNo, string imgPath, byte status, byte isAdmin, int confirmationID)
         {
             int flag = 0;
             try
@@ -64,7 +59,7 @@ namespace WebsiteLaitBrasseur.BL
                     //Debug.Print("AccountBL / Password hashed " + password.ToString());
                     //returns the created Account ID as integer value
                     if (status != 0) { status = 0; }
-                    DB.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin); 
+                    DB.Insert(email, password, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin, confirmationID); 
                 }                
             }
             catch (Exception e)
@@ -91,44 +86,17 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns></returns>
         public int IsLoginCorrect(string email, string password)
         {           
-            int isCorrect = 0;
             string hashPW = password; // = HashPassword(password);
             int flag = 0;
-            if(count == 3)
-            {
-                //TODO suspend user after three wrong log in attempts
-                //5 = suspend the user;
-                // isCorrect = 5;
-                //Call timer
-                StartTimer();
-            }
-           
+            
             try
             {
-<<<<<<< HEAD
                 if (IsUserSuspendet(email) == true)
-=======
-                if (!IsUserAdmin(email))
-                {
-                    // 6 = user isn't Admin
-                    return isCorrect = 6;
-                }
-                if (IsUserSuspendet(email))
->>>>>>> 02dd0317ad930a777a90cd6fa37e43ac294e14da
                 {
                     // 4 = user is suspendet
                     return flag = 4;
                 }
-<<<<<<< HEAD
                 else if (DB.FindLoginEmail(email) != 1)
-=======
-                if (!IsUserConfirmed(email))
-                {
-                    // 5 = user isn't confirmed
-                    return isCorrect = 5;
-                }
-                if (DB.FindLoginEmail(email) != 1)
->>>>>>> 02dd0317ad930a777a90cd6fa37e43ac294e14da
                 {
                     // 3 = email is not correct
                     return flag = 3; 
@@ -418,17 +386,6 @@ namespace WebsiteLaitBrasseur.BL
         }
 
         /// <summary>
-        /// Timer to set the counter back
-        /// and allow user to log in again.
-        /// </summary>
-        private void StartTimer()
-        {
-            count = 0;
-            //TODO
-        }
-
-
-        /// <summary>
         /// Check if the added email address is valid
         /// </summary>
         /// <param name="emailaddress"></param>
@@ -597,7 +554,6 @@ namespace WebsiteLaitBrasseur.BL
             savedPasswordHash = Convert.ToBase64String(hashBytes);
             Debug.Write("\nsavedPasswordHash : " + savedPasswordHash); //DEBUG
             return savedPasswordHash; //= Convert.ToBase64String(hashBytes);
-
 
         }
     }
