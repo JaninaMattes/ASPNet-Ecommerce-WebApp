@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -16,17 +17,22 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void Shippingbutton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Admin/PostagesManagement.aspx");
+            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "PostagesManagement.aspx";
+            Response.Redirect(url);
+
         }
 
         protected void Customerbutton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Admin/AccountManagment.aspx");
+            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "AccountManagment.aspx";
+            Response.Redirect(url);
+
         }
 
         protected void Productbutton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Admin/ItemsManagement.aspx");
+            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "ItemsManagement.aspx";
+            Response.Redirect(url);
         }
     }
 }
