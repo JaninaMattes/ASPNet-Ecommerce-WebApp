@@ -15,6 +15,11 @@ namespace WebsiteLaitBrasseur.BL
     public class AccountBL
     {
         private readonly AccountDAL DB = new AccountDAL();
+<<<<<<< HEAD
+=======
+
+        private static int count = 0;
+>>>>>>> 02dd0317ad930a777a90cd6fa37e43ac294e14da
 
         /// <summary>
         /// Register a new User and create an account. 
@@ -86,17 +91,44 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns></returns>
         public int IsLoginCorrect(string email, string password)
         {           
+            int isCorrect = 0;
+            string hashPW = password; // = HashPassword(password);
             int flag = 0;
-            string hashPW = password; //= HashPassword(password);
+            if(count == 3)
+            {
+                //TODO suspend user after three wrong log in attempts
+                //5 = suspend the user;
+                // isCorrect = 5;
+                //Call timer
+                StartTimer();
+            }
            
             try
             {
+<<<<<<< HEAD
                 if (IsUserSuspendet(email) == true)
+=======
+                if (!IsUserAdmin(email))
+                {
+                    // 6 = user isn't Admin
+                    return isCorrect = 6;
+                }
+                if (IsUserSuspendet(email))
+>>>>>>> 02dd0317ad930a777a90cd6fa37e43ac294e14da
                 {
                     // 4 = user is suspendet
                     return flag = 4;
                 }
+<<<<<<< HEAD
                 else if (DB.FindLoginEmail(email) != 1)
+=======
+                if (!IsUserConfirmed(email))
+                {
+                    // 5 = user isn't confirmed
+                    return isCorrect = 5;
+                }
+                if (DB.FindLoginEmail(email) != 1)
+>>>>>>> 02dd0317ad930a777a90cd6fa37e43ac294e14da
                 {
                     // 3 = email is not correct
                     return flag = 3; 
@@ -314,6 +346,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns></returns>
         private bool IsUserSuspendet(string email)
         {
+            Debug.Print("AccountBL: /isUserSuspendet/avant " );
             AccountDTO customer = new AccountDTO();
             customer = DB.FindBy(email);
             int status = customer.GetStatus();      
@@ -333,6 +366,67 @@ namespace WebsiteLaitBrasseur.BL
                 throw new ArgumentNullException($"No customer found for {email}");
             }
         }
+
+        /// <summary>
+        /// Check if a user is suspendet.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        private bool IsUserConfirmed(string email)
+        {
+            AccountDTO customer = new AccountDTO();
+            customer = DB.FindBy(email);
+            int isConfirmed = customer.GetIsConfirmed();
+            Debug.Print("AccountBL: /isUserConfirmed/ isConfirmed " + customer.GetIsConfirmed());
+            if (customer != null && isConfirmed == 0)
+            {
+                return false;       //isconfirmed=0 ;false
+            }
+            else if (customer != null && isConfirmed == 1)
+            {
+                return true;   //isconfirmed=1 ;true
+            }
+            else
+            {
+                throw new ArgumentNullException($"No customer found for {email}");
+            }
+        }
+
+        /// <summary>
+        /// Check if a user is suspendet.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        private bool IsUserAdmin(string email)
+        {
+            AccountDTO customer = new AccountDTO();
+            customer = DB.FindBy(email);
+            int isAdmin = customer.GetIsAdmin();
+            Debug.Print("AccountBL: /isUserAdmin/ isAdmin " + customer.GetIsAdmin());
+            if (customer != null && isAdmin == 0)
+            {
+                return false;       //isconfirmed=0 ;false
+            }
+            else if (customer != null && isAdmin == 1)
+            {
+                return true;   //isconfirmed=1 ;true
+            }
+            else
+            {
+                throw new ArgumentNullException($"No customer found for {email}");
+            }
+        }
+
+        /// <summary>
+        /// Timer to set the counter back
+        /// and allow user to log in again.
+        /// </summary>
+        private void StartTimer()
+        {
+            count = 0;
+            //TODO
+        }
+
 
         /// <summary>
         /// Check if the added email address is valid
@@ -469,6 +563,7 @@ namespace WebsiteLaitBrasseur.BL
             }
         }
 
+
         /// <summary>
         /// Source Stackoverflow: https://stackoverflow.com/questions/4181198/how-to-hash-a-password/10402129#10402129
         /// </summary>
@@ -480,14 +575,30 @@ namespace WebsiteLaitBrasseur.BL
             string savedPasswordHash;
             new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
             //get hash value
+            Debug.Write("\nInitialisation :"); //DEBUG
             var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            Debug.Write("\npbkdf2  :" + pbkdf2.ToString()); //DEBUG
             byte[] hash = pbkdf2.GetBytes(20);
+            Debug.Write("\nhash  :"); //DEBUG
+            for (int i = 0; i < hash.Length; i++) { Debug.Write(hash[i] + " "); }//DEBUG 
+
             //combine both
             byte[] hashBytes = new byte[36];
             Array.Copy(salt, 0, hashBytes, 0, 16);
+            Debug.Write("\nCopy salt => hashBytes / salt : ");
+            for (int i = 0; i < salt.Length; i++) { Debug.Write(salt[i] + " "); }//DEBUG 
             Array.Copy(hash, 0, hashBytes, 16, 20);
+            Debug.Write("\nCopy hash => hashBytes / hash : ");
+            for (int i = 0; i < hash.Length; i++) { Debug.Write(hash[i] + " "); }//DEBUG 
+
+            Debug.Write("\nHashBytes : ");
+            for (int i = 0; i < hashBytes.Length; i++) { Debug.Write(hashBytes[i] + " "); }//DEBUG 
             //return the created hash password
-            return savedPasswordHash = Convert.ToBase64String(hashBytes); 
+            savedPasswordHash = Convert.ToBase64String(hashBytes);
+            Debug.Write("\nsavedPasswordHash : " + savedPasswordHash); //DEBUG
+            return savedPasswordHash; //= Convert.ToBase64String(hashBytes);
+
+
         }
     }
 }

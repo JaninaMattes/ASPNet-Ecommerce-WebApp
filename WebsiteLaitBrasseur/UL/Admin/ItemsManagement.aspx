@@ -165,9 +165,9 @@
 
                             <asp:TemplateField >
                                 <ItemTemplate>
-
+                                    <asp:LinkButton ID="DetailButton" runat="server" CommandName="FakeDelete" Text="Delete" CssClass="btn btn-danger" ></asp:LinkButton>
                                     <asp:LinkButton ID="editButton" runat="server" CommandName="Edit" Text="Edit" CssClass="btn btn-primary" CausesValidation="true" ValidationGroup="edit"></asp:LinkButton>
-                                    <asp:LinkButton ID="deleteButton" runat="server" CommandName="Delete" Text="Delete" CssClass="btn btn-danger" ></asp:LinkButton>
+                                    <asp:LinkButton ID="deleteButton" runat="server" CommandName="Delete" Text="Details" CssClass="btn btn-primary" ></asp:LinkButton>
                                 </ItemTemplate>
 
                                 <EditItemTemplate>

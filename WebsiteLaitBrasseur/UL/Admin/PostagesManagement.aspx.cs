@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
+using System.Configuration;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
@@ -15,6 +16,12 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (this.Session["AdminID"] == null)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
+
+                Response.Redirect(url);
+            }
             if (!IsPostBack)
             {
                 BindData();

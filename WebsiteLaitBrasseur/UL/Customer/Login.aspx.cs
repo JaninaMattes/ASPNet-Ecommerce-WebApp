@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,6 +15,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             LblErrorMessage.Visible = false;
         }
 
@@ -30,8 +32,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 case 1:
                     //variable session creation
                     //session is a dictionary inside ASP.NET
-                    Session["Email"] = TextEmail.Text.Trim();
-                    Response.Redirect("/UL/Customer/Default.aspx");
+                    SessionInit();
+                    string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Default.aspx.aspx";
+                    Response.Redirect(url);
                     break;
                 case 2:
                     LblErrorMessage.Visible = true;
@@ -52,9 +55,17 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Customer/Register.aspx");
+            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Register.aspx";
+            Response.Redirect(url);
+
         }
 
+        private void SessionInit()
+        {
+            Session["email"] = TextEmail.Text.Trim();
+            Session["CustID"] = bl.GetCustomer(TextEmail.Text.Trim()).GetID();
+            Session["DateInit"] = DateTime.Now;
+        }
     }
 }
 

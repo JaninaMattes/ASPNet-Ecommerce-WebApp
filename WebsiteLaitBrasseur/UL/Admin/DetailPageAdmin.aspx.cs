@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -17,6 +18,12 @@ namespace WebsiteLaitBrasseur.UL.Admin
         ProductDTO product = new ProductDTO();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (this.Session["AdminID"] == null)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
+
+                Response.Redirect(url);
+            }
             // get id from query string and try to parse
             if (!IsPostBack)
             {
