@@ -107,6 +107,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@addressID", SqlDbType.Int).Value = addressID;
                         cmd.Parameters.AddWithValue("@cityID", SqlDbType.Int).Value = cityID;
                         cmd.Parameters.AddWithValue("@streetName", SqlDbType.VarChar).Value = streetName;
                         cmd.Parameters.AddWithValue("@streetNo", SqlDbType.VarChar).Value = streetNo;

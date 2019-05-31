@@ -11,7 +11,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class LoginWebForm : System.Web.UI.Page
     {
-        AccountBL bl = new AccountBL();
+        AccountBL BL = new AccountBL();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,9 +21,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            AccountBL bl = new AccountBL();
 
-            var isCorrect = bl.IsLoginCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
+            var isCorrect = BL.IsLoginCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
             switch (isCorrect)
             {
                 case 0:
