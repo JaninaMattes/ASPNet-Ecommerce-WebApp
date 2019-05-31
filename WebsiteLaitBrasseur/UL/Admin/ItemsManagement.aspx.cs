@@ -186,8 +186,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
         }
     }
 }
-
-    
     
 
 
