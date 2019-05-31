@@ -24,20 +24,14 @@ namespace WebsiteLaitBrasseur.UL.Customer
             {
                 SESSION_VAR = HttpContext.Current.Session["Email"].ToString();
                 //SESSION_VAR = "janina.mattes@gmail.com";
-                /*Fill the shopping history table with data from the backend 
-                 * and bind these to the datafields*/
-
-                /*Fill the user profiel information*/
-
+                //Bind profile data
                 BindProfileData();
                 //Shopping history
                 BindDataInvoices();
-
             }
 
             DeleteButton_Click(sender, e);
             SaveButton_Click(sender, e);
-
         }
 
         //Useless?
@@ -131,6 +125,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
+            //update User Profile
             var email = TextEmail.Text;
             var fName = TextFirstname.Text;
             var lName = TextLastname.Text;
@@ -138,33 +133,31 @@ namespace WebsiteLaitBrasseur.UL.Customer
             var phoneNo = TextPhone.Text;
             var imgPath = ProfilePicture.ImageUrl;
             //var password = TextPassword.Text;
-            var result = BL.Update(email,fName, lName,birthDate, phoneNo, imgPath);
-            Debug.Print("Profile aspx: /Save Button / Update " + result);
+            var res1 = BL.Update(email,fName, lName,birthDate, phoneNo, imgPath);
+            Debug.Print("Profile aspx: /Save Button / Update User Info " + res1);
+            //update Address
+            var streetName = TextAddress1.Text;
+            var zipCode = TextZip.Text;
+            var cityName = TextCity.Text;
+            var streetNo = TextAddressnumber.Text;
+            var addressType = "Home"; //TODO add field in UI
+            var res2 = ABL.UpdateAddress(email, zipCode, cityName, streetName, streetNo, addressType);
+            Debug.Print("Profile aspx: /Save Button / Update User Info " + res2);
         }
 
         protected void UpdateButton_Click(object sender, EventArgs e)
         {
         }
-
-        /*Fill the shopping history table with data from the backend 
-         * and bind these to the datafields*/
-        protected void BindGridList()
-        {
-            //ShoppingTable.DataSource = GetShoppingList(SESSION_VAR);
-            //ShoppingTable.DataBind();
-        }
-
-
+        
         /*Fill the label with accurat item number*/
         protected void BindTableLabel()
         {
             IEnumerable<InvoiceDTO> transactions = GetShoppingList(SESSION_VAR);
             if (transactions.LongCount<InvoiceDTO>() > 0)
             {
-                tableShoppingHistoryLabel.Text = "Your shopping history has " + transactions.LongCount<InvoiceDTO>() + " items.";
+                tableShoppingHistoryLabel.Text = $"Your shopping history has {transactions.LongCount<InvoiceDTO>()} items.";
             }
         }
-
 
         /*Fill the label with accurat item number*/
         protected void BindProfileData()
@@ -266,10 +259,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
             return dtInvoice;
         }
-
-
-
-
 
         /*Dummy data for demonstration purpose*/
         protected AccountDTO GetUserData(string email)
