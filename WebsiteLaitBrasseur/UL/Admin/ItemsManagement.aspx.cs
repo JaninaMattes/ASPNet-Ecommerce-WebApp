@@ -11,7 +11,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
     public partial class ItemsManagement : System.Web.UI.Page
     {
         IEnumerable<ProductDTO> productList = new List<ProductDTO>();
-        IEnumerable<SizeDTO> sizeList = new List<SizeDTO>();
         ProductBL BL = new ProductBL();
         SizeBL SBL = new SizeBL();
 
@@ -30,17 +29,17 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             productList = BL.GetAllProducts();
             List<ProductDTO> asList = productList.ToList();
-            ItemListTable.DataSource = getDataTable(asList);
+            ItemListTable.DataSource = GetDataTable(asList);
             ItemListTable.DataBind();
-            lblItemList.Text ="There is " + ItemListTable.Rows.Count + " items in the list.";
-         
+            lblItemList.Text ="There is " + ItemListTable.Rows.Count + " items in the list.";         
         }
 
 
-        protected DataTable getDataTable(List<ProductDTO> productList)
+        protected DataTable GetDataTable(List<ProductDTO> productList)
         {
             //DataTable initialization
             DataTable dtItem = new DataTable();
+            IEnumerable<SizeDTO> enumerable = new List<SizeDTO>();
 
             //Colmuns declaration
             dtItem.Columns.Add("ID");
@@ -52,9 +51,9 @@ namespace WebsiteLaitBrasseur.UL.Admin
             dtItem.Columns.Add("Status");
 
             foreach (ProductDTO p in productList)
-            {
-                sizeList = p.GetDetails();
-                List<SizeDTO> asList = sizeList.ToList();
+            {               
+                enumerable = SBL.GetDetails(p.GetId());
+                List<SizeDTO> asList = enumerable.ToList();
 
                 for (int i = 0;  i < asList.Count(); i++)
                 {
@@ -187,8 +186,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
         }
     }
 }
-
-    
     
 
 

@@ -5,17 +5,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
-using System.Data;
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class Profile : System.Web.UI.Page
     {
-        AccountBL DB = new AccountBL();
-        InvoiceBL BL = new InvoiceBL();
+        AccountBL BL = new AccountBL();
+        AddressBL ABL = new AddressBL();
+        InvoiceBL IBL = new InvoiceBL();
+
+        IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
 
         string SESSION_VAR; 
         protected void Page_Load(object sender, EventArgs e)
@@ -24,20 +24,14 @@ namespace WebsiteLaitBrasseur.UL.Customer
             {
                 SESSION_VAR = HttpContext.Current.Session["Email"].ToString();
                 //SESSION_VAR = "janina.mattes@gmail.com";
-                /*Fill the shopping history table with data from the backend 
-                 * and bind these to the datafields*/
-
-                /*Fill the user profiel information*/
-
+                //Bind profile data
                 BindProfileData();
                 //Shopping history
                 BindDataInvoices();
-
             }
 
             DeleteButton_Click(sender, e);
             SaveButton_Click(sender, e);
-
         }
 
         //Useless?
@@ -45,18 +39,20 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             //Account
             //Account init
-            account = blAccount.GetCustomer(SESSION_VAR);
+            AccountDTO account = new AccountDTO();
+            account = BL.GetCustomer(SESSION_VAR);
 
             //BindData
             TextFirstname.Text = account.GetFirstName();
             TextLastname.Text = account.GetLastName();
             TextPhone.Text = account.GetPhoneNo();
-            TextBirthday.Text = account.GetBirthdate(); //WARNING : issue format
+            TextBirthday.Text = account.GetBirthdate().ToString(); //WARNING : issue format
             TextEmail.Text = account.GetEmail();
 
             //Address 
             //Address init
-            address = blAddress.FindAddress(account.GetID());
+            AddressDTO address = new AddressDTO();
+            address = ABL.FindAddress(account.GetID());
 
             //BindData
             Debug.Write("\n Street name:  " + address.GetStreetName()); //DEBUG
@@ -73,19 +69,16 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
             //ShoppingTable
             //List invoices init
-            LI = blInvoice.FindInvoices(SESSION_VAR);
-            Debug.Write("Invoices infos : " + LI.Count);
+            
+            invoices = IBL.FindInvoices(SESSION_VAR);
+            Debug.Write("Invoices infos : " + invoices.Count());
 
             //BindData
             ShoppingTable.DataSource = getDataTable();
             ShoppingTable.DataBind();
 
-
             //Label update
             tableShoppingHistoryLabel.Text = "Your shopping history has " + ShoppingTable.Rows.Count + " items.";
-
-
-
         }
 
         //Useless?
@@ -106,37 +99,33 @@ namespace WebsiteLaitBrasseur.UL.Customer
             dtShoppingTable.Columns.Add("PostageDate");
             dtShoppingTable.Columns.Add("Status");
 
-            for (int i = 0; i < LI.Count; i++)
-            {
+            List<InvoiceDTO> invoiceList = invoices.ToList<InvoiceDTO>();
+            foreach (InvoiceDTO i in invoiceList) { 
                 DataRow dr = dtShoppingTable.NewRow();
-                dr["ID"] = LI[i].GetID();
-                dr["TotalQuantity"] = LI[i].GetTotal();
-                dr["TotalShippinCost"] = LI[i].GetShippingCost();
-                dr["TotalTaxes"] = LI[i].GetTax();
-                dr["PaymentDate"] = LI[i].GetPaymentDate();
-                dr["ArrivalDate"] = LI[i].GetArrivalDate();
-                dr["PostageDate"] = LI[i].GetPostDate();
-                dr["Status"] = LI[i].GetStatus();
-
+                dr["ID"] = i.GetID();
+                dr["TotalQuantity"] = i.GetTotal();
+                dr["TotalShippinCost"] = i.GetShippingCost();
+                dr["TotalTaxes"] = i.GetTax();
+                dr["PaymentDate"] = i.GetPaymentDate();
+                dr["ArrivalDate"] = i.GetArrivalDate();
+                dr["PostageDate"] = i.GetPostDate();
+                dr["Status"] = i.GetStatus();
 
                 dtShoppingTable.Rows.Add(dr);
-
             }
             return dtShoppingTable;
         }
-
-
-
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
              // suspend the user dont delete
              int status = 1;
-             DB.UpdateStatus(SESSION_VAR, status);
+             BL.UpdateStatus(SESSION_VAR, status);
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
+            //update User Profile
             var email = TextEmail.Text;
             var fName = TextFirstname.Text;
             var lName = TextLastname.Text;
@@ -144,33 +133,31 @@ namespace WebsiteLaitBrasseur.UL.Customer
             var phoneNo = TextPhone.Text;
             var imgPath = ProfilePicture.ImageUrl;
             //var password = TextPassword.Text;
-            var result = DB.Update(email,fName, lName,birthDate, phoneNo, imgPath);
-            Debug.Print("Profile aspx: /Save Button / Update " + result);
+            var res1 = BL.Update(email,fName, lName,birthDate, phoneNo, imgPath);
+            Debug.Print("Profile aspx: /Save Button / Update User Info " + res1);
+            //update Address
+            var streetName = TextAddress1.Text;
+            var zipCode = TextZip.Text;
+            var cityName = TextCity.Text;
+            var streetNo = TextAddressnumber.Text;
+            var addressType = "Home"; //TODO add field in UI
+            var res2 = ABL.UpdateAddress(email, zipCode, cityName, streetName, streetNo, addressType);
+            Debug.Print("Profile aspx: /Save Button / Update User Info " + res2);
         }
 
         protected void UpdateButton_Click(object sender, EventArgs e)
         {
         }
-
-        /*Fill the shopping history table with data from the backend 
-         * and bind these to the datafields*/
-        protected void BindGridList()
-        {
-            //ShoppingTable.DataSource = GetShoppingList(SESSION_VAR);
-            //ShoppingTable.DataBind();
-        }
-
-
+        
         /*Fill the label with accurat item number*/
         protected void BindTableLabel()
         {
             IEnumerable<InvoiceDTO> transactions = GetShoppingList(SESSION_VAR);
             if (transactions.LongCount<InvoiceDTO>() > 0)
             {
-                tableShoppingHistoryLabel.Text = "Your shopping history has " + transactions.LongCount<InvoiceDTO>() + " items.";
+                tableShoppingHistoryLabel.Text = $"Your shopping history has {transactions.LongCount<InvoiceDTO>()} items.";
             }
         }
-
 
         /*Fill the label with accurat item number*/
         protected void BindProfileData()
@@ -213,9 +200,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
             try
             {
                 IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
-                invoices = BL.FindInvoices(SESSION_VAR);
+                invoices = IBL.FindInvoices(SESSION_VAR);
                 AccountDTO customer = new AccountDTO();
-                customer = DB.GetCustomer(SESSION_VAR);
+                customer = BL.GetCustomer(SESSION_VAR);
                 ShoppingTable.DataSource = GetDataTable(invoices);
                 ShoppingTable.DataBind();
 
@@ -226,7 +213,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 }
                 else
                 {
-                    tableShoppingHistoryLabel.Text = $"The transactionlist is empty.";
+                    tableShoppingHistoryLabel.Text = "The transactionlist is empty.";
                 }
             }
             catch (Exception e)
@@ -269,14 +256,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 }
 
                 dtInvoice.Rows.Add(dr);
-
             }
             return dtInvoice;
         }
-
-
-
-
 
         /*Dummy data for demonstration purpose*/
         protected AccountDTO GetUserData(string email)
