@@ -61,32 +61,27 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns></returns>
         public int UpdateAddress(string email, string zipCode, string cityName, string streetName, string streetNo, string addressType)
         {
-            int result = 0;
-            AccountDTO customer = new AccountDTO();
-            AddressDTO address = new AddressDTO();
+            int result = 0;                      
             try
             {
-                if (IsPostCodeValid(zipCode))
+                AccountDTO customer = new AccountDTO();
+                customer = AB.FindBy(email);                
+                //if address already exists
+                if (customer.GetAddress() != null)
                 {
-                    //if address already exists
+                    AddressDTO address = new AddressDTO();
                     address = DB.FindBy(customer.GetAddress().GetID());
-                    if (address != null)
-                    {
-                        CB.UpdateCity(address.GetCity().GetId(), zipCode, cityName);
-                        result = DB.UpdateAddress(address.GetID(), address.GetCity().GetId(), streetName, streetNo, addressType);
-                        Debug.Print("AddressBL: /Update/ " + result);
-                    }
-                    else
-                    {
-                        //if address doesnt exist yet
-                        var cityID = CB.Insert(zipCode, cityName);
-                        var addressID = DB.Insert(cityID, streetName, streetNo, addressType);
-                        result = AB.UpdateAddress(email, addressID);
-                    }
+                    CB.UpdateCity(address.GetCity().GetId(), zipCode, cityName);
+                    result = DB.UpdateAddress(address.GetID(), address.GetCity().GetId(), streetName, streetNo, addressType);
+                    Debug.Print("AddressBL: /Update Address: / " + result);
                 }
                 else
                 {
-                    result = 2;
+                    //if address doesnt exist yet
+                    var cityID = CB.Insert(zipCode, cityName);
+                    var addressID = DB.Insert(cityID, streetName, streetNo, addressType);
+                    result = AB.UpdateAddress(email, addressID);
+                    Debug.Print("AddressBL: /Insert Address: / " + result);
                 }
             }
             catch (Exception e)

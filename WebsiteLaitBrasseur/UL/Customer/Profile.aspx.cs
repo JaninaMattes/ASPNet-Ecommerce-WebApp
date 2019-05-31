@@ -34,7 +34,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
             SaveButton_Click(sender, e);
         }
 
-        //Useless?
         protected void BindData()
         {
             //Account
@@ -49,22 +48,38 @@ namespace WebsiteLaitBrasseur.UL.Customer
             TextBirthday.Text = account.GetBirthdate().ToString(); //WARNING : issue format
             TextEmail.Text = account.GetEmail();
 
-            //Address 
-            //Address init
-            AddressDTO address = new AddressDTO();
-            address = ABL.FindAddress(account.GetID());
-
-            //BindData
-            Debug.Write("\n Street name:  " + address.GetStreetName()); //DEBUG
-            TextAddress1.Text = address.GetStreetName();
-            Debug.Write("\n City: " + address.GetCity().GetCity()); //DEBUG
-            TextCity.Text = address.GetCity().GetCity();
-            Debug.Write("\n Country: " + address.GetCountry()); //DEBUG
-            CountryDropDownList.Text = address.GetCountry();
-            Debug.Write("\n Number :" + address.GetStreetNo()); //DEBUG
-            TextAddressnumber.Text = address.GetStreetNo();
-            Debug.Write("\n Zip  : " + address.GetCity().GetZip()); //DEBUG
-            TextZip.Text = address.GetCity().GetZip();
+            if (account.GetAddress() != null)
+            {
+                Debug.Print($"Profile.aspx / Address found {account.GetAddress().GetID()}");
+                //Address 
+                //Address init
+                AddressDTO address = new AddressDTO();
+                address = ABL.FindAddress(account.GetID());
+                if (address != null)
+                {
+                    //BindData
+                    Debug.Write("\n Street name:  " + address.GetStreetName()); //DEBUG
+                    TextAddress1.Text = address.GetStreetName();
+                    Debug.Write("\n City: " + address.GetCity().GetCity()); //DEBUG
+                    TextCity.Text = address.GetCity().GetCity();
+                    Debug.Write("\n Country: " + address.GetCountry()); //DEBUG
+                    CountryDropDownList.Text = address.GetCountry();
+                    Debug.Write("\n Number :" + address.GetStreetNo()); //DEBUG
+                    TextAddressnumber.Text = address.GetStreetNo();
+                    Debug.Write("\n Zip  : " + address.GetCity().GetZip()); //DEBUG
+                    TextZip.Text = address.GetCity().GetZip();
+                }
+            }            
+            else
+            {
+                Debug.Print("No address found");
+                //BindData
+                TextAddress1.Text = "Please add streetname";
+                TextCity.Text = "Please add city";
+                CountryDropDownList.Text = "Please add country";
+                TextAddressnumber.Text = "Please add addressno";
+                TextZip.Text = "Please add zipcode";
+            }            
 
 
             //ShoppingTable
@@ -142,7 +157,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             var streetNo = TextAddressnumber.Text;
             var addressType = "Home"; //TODO add field in UI
             var res2 = ABL.UpdateAddress(email, zipCode, cityName, streetName, streetNo, addressType);
-            Debug.Print("Profile aspx: /Save Button / Update User Info " + res2);
+            Debug.Print("Profile aspx: /Save Button / Update Address Info " + res2);
         }
 
         protected void UpdateButton_Click(object sender, EventArgs e)

@@ -102,8 +102,8 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 dr["Email"] = customer.GetEmail();
                 dr["PhoneNo"] = customer.GetPhoneNo();
                 dr["IsConfirmed"] = customer.GetIsConfirmed();
-                if (customer.GetStatus() == 1) { dr["Status"] = "Active";}
-                else { dr["Status"] = "Suspended"; }               
+                if (customer.GetStatus() == 1) { dr["Status"] = "Suspended";}
+                else { dr["Status"] = "Active"; }               
 
                 dtUser.Rows.Add(dr);
 
