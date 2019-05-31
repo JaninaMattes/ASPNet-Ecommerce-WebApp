@@ -14,7 +14,8 @@
             <div class="col-md-2" >
                 <div class="profile-userpic">
                     <!--<img class="img-responsive" alt="User Image" src="/UL/Images/customerImg.jpg">-->
-                    <asp:ImageButton ID="ProfilePicture" runat="server" ToolTip="Profile Image" DataImageUrlField="Path" OnClick="UpdateButton_Click"/>                    
+                    
+                    <asp:ImageButton ID="ProfilePicture" runat="server" ToolTip="Profile Image" DataImageUrlField="Path" OnClick="UpdateButton_Click" CssClass="img-thumbnail"/>                   
 		        </div>
                 <div class="text-center">
                     <br /><br /><br />

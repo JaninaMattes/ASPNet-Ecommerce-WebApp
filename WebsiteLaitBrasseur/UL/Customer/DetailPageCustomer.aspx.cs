@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
+using Microsoft.AspNet.FriendlyUrls;
 using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Customer
@@ -14,9 +15,20 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected void Page_Load(object sender, EventArgs e)
         {
             AddButton_Click(sender, e);
+            string productID = null;
+            // get id from URL segment
+            try
+            {
+                var segments = Request.GetFriendlyUrlSegments();
+                 productID = segments[0];
+            }catch(Exception ex)
+            {
+                ex.GetBaseException();
+            }
+
 
             // get id from query string and try to parse
-            var idString = Request.QueryString["id"];
+            var idString = productID;
             int id;
 
             if (!string.IsNullOrEmpty(idString) && int.TryParse(idString, out id))
@@ -43,7 +55,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         // set up detail page elements
                         headerTitle.Text = product.GetName();
                         headerSubtitle.Text = product.GetShortInfo();
-                        descriptionLabel.Text = product.GetName();
+                        descriptionLabel.Text = product.GetInfo();
                         destinationImg.ImageUrl = product.GetImgPath();
                         nameLabel.Text = product.GetName();
                         labelProduct.Text = product.GetProductType();

@@ -63,7 +63,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         private void SessionInit()
         {
             Session["email"] = TextEmail.Text.Trim();
-            Session["CustID"] = bl.GetCustomer(TextEmail.Text.Trim()).GetID();
+            Session["CustID"] = BL.GetCustomer(TextEmail.Text.Trim()).GetID();
             Session["DateInit"] = DateTime.Now;
         }
     }

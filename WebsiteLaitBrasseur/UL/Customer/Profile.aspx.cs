@@ -29,7 +29,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
             if (!Page.IsPostBack)
             {
-                SESSION_VAR = HttpContext.Current.Session["Email"].ToString();
+                SESSION_VAR = Convert.ToString(this.Session["email"]);
                 //SESSION_VAR = "janina.mattes@gmail.com";
                 //Bind profile data
                 BindProfileData();
