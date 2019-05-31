@@ -38,107 +38,19 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
         }
 
-        protected void BindData()
+ 
+        protected void UploadButton_Click(object sender, EventArgs e)
         {
-            //Account
-            //Account init
-            AccountDTO account = new AccountDTO();
-            account = BL.GetCustomer(SESSION_VAR);
-            Debug.Print($"Profile.aspx / Customer found {account.GetID()}");
-            //BindData
-            TextFirstname.Text = account.GetFirstName();
-            TextLastname.Text = account.GetLastName();
-            TextPhone.Text = account.GetPhoneNo();
-            TextBirthday.Text = account.GetBirthdate().ToString(); //WARNING : issue format
-            TextEmail.Text = account.GetEmail();
-
-            if (account.GetAddress() != null)
-            {
-                Debug.Print($"Profile.aspx / Address found {account.GetAddress().GetID()}");
-                //Address 
-                //Address init
-                AddressDTO address = new AddressDTO();
-                address = ABL.FindAddress(account.GetID());
-                if (address != null)
-                {
-                    //BindData
-                    Debug.Write("\n Street name:  " + address.GetStreetName()); //DEBUG
-                    TextAddress1.Text = address.GetStreetName();
-                    Debug.Write("\n City: " + address.GetCity().GetCity()); //DEBUG
-                    TextCity.Text = address.GetCity().GetCity();
-                    Debug.Write("\n Country: " + address.GetCountry()); //DEBUG
-                    CountryDropDownList.Text = address.GetCountry();
-                    Debug.Write("\n Number :" + address.GetStreetNo()); //DEBUG
-                    TextAddressnumber.Text = address.GetStreetNo();
-                    Debug.Write("\n Zip  : " + address.GetCity().GetZip()); //DEBUG
-                    TextZip.Text = address.GetCity().GetZip();
-                }
-            }            
-            else
-            {
-                Debug.Print("No address found");
-                //BindData
-                TextAddress1.Text = "Please add streetname";
-                TextCity.Text = "Please add city";
-                CountryDropDownList.Text = "Please add country";
-                TextAddressnumber.Text = "Please add addressno";
-                TextZip.Text = "Please add zipcode";
-            }            
-
-
-            //ShoppingTable
-            //List invoices init            
-            invoices = IBL.FindInvoices(SESSION_VAR);
-            Debug.Write("Invoices infos : " + invoices.Count());
-
-            //BindData
-            ShoppingTable.DataSource = getDataTable();
-            ShoppingTable.DataBind();
-
-            //Label update
-            tableShoppingHistoryLabel.Text = "Your shopping history has " + ShoppingTable.Rows.Count + " items.";
-        }
-
-        //Useless?
-        protected DataTable getDataTable()
-        {
-            //DataTable initialization
-            DataTable dtShoppingTable = new DataTable();
-
-            //Colmuns declaration
-            dtShoppingTable.Columns.Add("ID");
-            dtShoppingTable.Columns.Add("TotalQuantity");
-            dtShoppingTable.Columns.Add("TotalShippinCost");
-            dtShoppingTable.Columns.Add("TotalTaxes");
-            dtShoppingTable.Columns.Add("TotalAmount");
-            dtShoppingTable.Columns.Add("OrderDate");
-            dtShoppingTable.Columns.Add("PaymentDate");
-            dtShoppingTable.Columns.Add("ArrivalDate");
-            dtShoppingTable.Columns.Add("PostageDate");
-            dtShoppingTable.Columns.Add("Status");
-
-            List<InvoiceDTO> invoiceList = invoices.ToList<InvoiceDTO>();
-            foreach (InvoiceDTO i in invoiceList) { 
-                DataRow dr = dtShoppingTable.NewRow();
-                dr["ID"] = i.GetID();
-                dr["TotalQuantity"] = i.GetTotal();
-                dr["TotalShippinCost"] = i.GetShippingCost();
-                dr["TotalTaxes"] = i.GetTax();
-                dr["PaymentDate"] = i.GetPaymentDate();
-                dr["ArrivalDate"] = i.GetArrivalDate();
-                dr["PostageDate"] = i.GetPostDate();
-                dr["Status"] = i.GetStatus();
-
-                dtShoppingTable.Rows.Add(dr);
-            }
-            return dtShoppingTable;
+            BL.UpdateImgPath(Convert.ToString(this.Session["email"]), TextImageLink.Text);
+            Debug.Write("Profile / Image Update / apres  update"); //DEBUG
+           
         }
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-             // suspend the user dont delete
-             int status = 1;
-             BL.UpdateStatus(SESSION_VAR, status);
+            // suspend the user dont delete
+            int status = 1;
+            BL.UpdateStatus(SESSION_VAR, status);
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
@@ -151,7 +63,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             var phoneNo = TextPhone.Text;
             var imgPath = ProfilePicture.ImageUrl;
             //var password = TextPassword.Text;
-            var res1 = BL.Update(email,fName, lName,birthDate, phoneNo, imgPath);
+            var res1 = BL.Update(email, fName, lName, birthDate, phoneNo, imgPath);
             Debug.Print("Profile aspx: /Save Button / Update User Info " + res1);
             //update Address
             var streetName = TextAddress1.Text;
@@ -163,10 +75,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             Debug.Print("Profile aspx: /Save Button / Update Address Info " + res2);
         }
 
-        protected void UpdateButton_Click(object sender, EventArgs e)
-        {
-        }
-        
+
         /*Fill the label with accurat item number*/
         protected void BindTableLabel()
         {
@@ -190,7 +99,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
             TextFirstname.Text = GetUserData(SESSION_VAR).GetFirstName();
             TextLastname.Text = GetUserData(SESSION_VAR).GetLastName();
             TextPhone.Text = GetUserData(SESSION_VAR).GetPhoneNo();
-            //TextBirthday.Text = Convert.ToDateTime(GetUserData(SESSION_VAR).GetBirthdate()).ToString();
+            var birthdate = GetUserData(SESSION_VAR).GetBirthdate();
+            TextBirthday.Text = birthdate.ToString("yyyy-MM-dd");
             TextEmail.Text = GetUserData(SESSION_VAR).GetEmail();
             TextName.Text = GetUserData(SESSION_VAR).GetFirstName() + " " + GetUserData(SESSION_VAR).GetLastName();
 
@@ -200,8 +110,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 TextAddress1.Text = GetAddressData(SESSION_VAR).GetStreetName();
                 TextCity.Text = GetAddressData(SESSION_VAR).GetCity().GetCity();
                 CountryDropDownList.Text = GetAddressData(SESSION_VAR).GetCountry();
-                TextAddressnumber.Text = GetAddressData(SESSION_VAR).GetStreetNo();
-                TextZip.Text = GetAddressData(SESSION_VAR).GetCity().GetZip();
+                TextAddressnumber.Text = GetAddressData(SESSION_VAR).GetStreetNo().Trim();
+                TextZip.Text = GetAddressData(SESSION_VAR).GetCity().GetZip().Trim();
             }
             else
             {
@@ -320,6 +230,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 e.GetBaseException();
             }
             return transactions;
-        }      
+        }
     }
 }

@@ -12,10 +12,13 @@
 
             <!--First column : User picture and "Save"/"Delete" button-->
             <div class="col-md-2" >
-                <div class="profile-userpic">
-                    <!--<img class="img-responsive" alt="User Image" src="/UL/Images/customerImg.jpg">-->
-                    
-                    <asp:ImageButton ID="ProfilePicture" runat="server" ToolTip="Profile Image" DataImageUrlField="Path" OnClick="UpdateButton_Click" CssClass="img-thumbnail"/>                   
+                <div class="text-center">
+                    <!--Image informations  -->
+                    <asp:ImageButton ID="ProfilePicture" runat="server" ToolTip="Profile Image" DataImageUrlField="Path"  AlternateText="Format issue"  CssClass="img-thumbnail"/>                   
+                    <!--TextBox for add a link to the new image + button to upload it -->
+                    <asp:TextBox ID="TextImageLink" runat="server" Text="Image link" CssClass="form-control"></asp:TextBox><br />
+                    <asp:Button ID="UploadButton" ToolTip="Update image." runat="server"  Text="Upload Image" OnClick="UploadButton_Click" CausesValidation="false"  CssClass="btn btn-primary" /><br />
+ 
 		        </div>
                 <div class="text-center">
                     <br /><br /><br />
@@ -121,7 +124,7 @@
                             <label for="TextZip" class="control-label text-info">Zip Code</label>
                             <asp:TextBox ID="TextZip" ToolTip="Edit postcode." runat="server" Cssclass="form-control" TextMode="Number"> </asp:TextBox>
                             <asp:RequiredFieldValidator ID="ZipReqField" runat="server" ErrorMessage="Zip is required" ControlToValidate="TextZip" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
-                            <asp:regularExpressionValidator ID="ZipRegExpValid" runat="server" ErrorMessage="Should be 5 or 9 Digits" ControlToValidate="TextZip" Display="Dynamic"  ValidationExpression="\d{5}-?(\d{4})?$" CssClass="text-danger"></asp:RegularExpressionValidator>                      
+                            <asp:regularExpressionValidator ID="ZipRegExpValid" runat="server" ErrorMessage="Should be 4 digits" ControlToValidate="TextZip" Display="Dynamic"  ValidationExpression="\d{4}$" CssClass="text-danger"></asp:RegularExpressionValidator>                      
                         </div>    
 
                         <!--Label / TextBox / Validator for City-->

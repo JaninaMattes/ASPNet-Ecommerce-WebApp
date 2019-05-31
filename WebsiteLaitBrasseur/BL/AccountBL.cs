@@ -164,8 +164,38 @@ namespace WebsiteLaitBrasseur.BL
                 throw new InputInvalidException("The user input is invalid.");
             }
             return result;
-        } 
+        }
 
+        /// <summary>
+        /// Change the path of the image of an user
+        /// </summary>
+        /// <param name="accountID"></param>
+        /// <param name="imgPath"></param>
+        /// <returns>int result</returns>
+        public int UpdateImgPath(string email, string imgPath)
+        {
+            int result = 0;
+            try
+            {
+                result = DB.UpdateImg(email, imgPath);
+                Debug.Print("AccountBL / Update ImgPath / value returned " + result);
+            }
+            catch (Exception ex)
+            {
+                ex.GetBaseException();
+            }
+
+
+            
+            return result;
+        }
+
+
+        /// <summary>
+        /// Confirmed an user
+        /// When successfull the result = 1
+        /// <param name="email"></param>
+        /// <returns>int result</returns>
         public int UpdateIsConfirmed(string email)
         {
             var result = DB.UpdateIsConfirmed(email,1);

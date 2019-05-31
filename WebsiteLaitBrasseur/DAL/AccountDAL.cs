@@ -253,7 +253,6 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="email"></param>
         /// <param name="imgPath"></param>
         /// <returns></returns>
-
         [DataObjectMethod(DataObjectMethodType.Update)]
         public int UpdateImg(string email, string imgPath)
         {
@@ -267,15 +266,19 @@ namespace WebsiteLaitBrasseur.DAL
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
                         cmd.Parameters.AddWithValue("@imgPath", imgPath);
+                        Debug.Write("imgPath " + imgPath);  //DEBUG
                         cmd.Parameters.AddWithValue("@email", email);
+                        Debug.Write("email " + email);  //DEBUG
                         cmd.CommandType = CommandType.Text;
                         result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        Debug.Print("AccountDAL / Update ImgPath / return " + result); //DEBUG
                     }
                 }
             }
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Print("AccountDAL / Update ImgPath / Exception "); //DEBUG
             }
             return result;
         }
