@@ -33,7 +33,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     //variable session creation
                     //session is a dictionary inside ASP.NET
                     SessionInit();
-                    string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Default.aspx.aspx";
+                    string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Default.aspx";
                     Response.Redirect(url);
                     break;
                 case 2:
@@ -48,7 +48,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     LblErrorMessage.Visible = true;
                     LblErrorMessage.Text = "User is suspendet.";
                     break;
-                default:
+                default: 
                     break;
             }
         }

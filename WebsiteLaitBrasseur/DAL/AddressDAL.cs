@@ -34,10 +34,11 @@ namespace WebsiteLaitBrasseur.DAL
         [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(int cityID, string streetName, string streetNo, string addressType)
         {
+            Debug.Print("AddressDAL: / Insert/ ");
             int result = 0;
             //no need to explicitely set id as autoincrement is used
             string queryString = "INSERT INTO dbo.Address(dbo.Address.cityID, dbo.Account.streetName, " +
-                "dbo.Account.streetNo, dbo.Account.addressType)" +
+                "dbo.Account.streetNo, dbo.Account.addressType) " +
                 "VALUES(@cityID, @streetName, @streetNo, @addressType)";
             string queryAutoIncr = "SELECT TOP(1) dbo.Address.addressID FROM dbo.Address ORDER BY 1 DESC";
             try
@@ -71,7 +72,7 @@ namespace WebsiteLaitBrasseur.DAL
                         reader.Read();
                         //this is the id of the newly created data field
                         result = Convert.ToInt32(reader["addressID"]);
-                        Debug.Print("AddressDAL: / ID/ " + result);
+                        Debug.Print("AddressDAL: / Insert AddressID/ " + result);
                     }
                 }
             }

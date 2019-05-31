@@ -44,15 +44,15 @@ namespace WebsiteLaitBrasseur.DAL
 
         [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate,
-            string phoneNo, string imgPath, int status, int isAdmin)
+            string phoneNo, string imgPath, Byte status, Byte isAdmin, int confirmationID)
         {
             int result = 0;
             //no need to explicitely set id as autoincrement is used
 
             string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, " +
                 "dbo.Account.firstName, dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.imgPath, " +
-                "dbo.Account.status, dbo.Account.isAdmin) VALUES(@email, @password, @isConfirmed, @firstName, @lastName, " +
-                "@birthDate, @phone, @imgPath, @status, @isAdmin)";
+                "dbo.Account.status, dbo.Account.isAdmin, dbo.Account.confirmationID) VALUES(@email, @password, @isConfirmed, @firstName, @lastName, " +
+                "@birthDate, @phone, @imgPath, @status, @isAdmin, @confID)";
 
             string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM dbo.Account ORDER BY 1 DESC";
             try
@@ -70,8 +70,9 @@ namespace WebsiteLaitBrasseur.DAL
                         cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
                         cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
                         cmd.Parameters.AddWithValue("@imgPath", SqlDbType.VarChar).Value = imgPath;
-                        cmd.Parameters.AddWithValue("@status", SqlDbType.Int).Value = status;
-                        cmd.Parameters.AddWithValue("@isAdmin", SqlDbType.Int).Value = isAdmin;
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.TinyInt).Value = status;
+                        cmd.Parameters.AddWithValue("@isAdmin", SqlDbType.TinyInt).Value = isAdmin;
+                        cmd.Parameters.AddWithValue("@confID", SqlDbType.Int).Value = confirmationID;
                         cmd.CommandType = CommandType.Text;
                         con.Open();
                         var row = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
@@ -754,6 +755,7 @@ namespace WebsiteLaitBrasseur.DAL
                 Debug.Print("AccountDAL / GenerateAccount: " + address.GetID());
                 account.SetAddress(address);
             }
+            //account.SetAddress(address);
             account.SetID(Convert.ToInt32(reader["accountID"]));
             account.SetEmail(reader["email"].ToString());
             account.SetPw(reader["password"].ToString());
@@ -762,9 +764,10 @@ namespace WebsiteLaitBrasseur.DAL
             account.SetBirthdate(Convert.ToDateTime(reader["birthDate"]));
             account.SetPhoneNo(reader["phone"].ToString());
             account.SetImgPath(reader["imgPath"].ToString());
-            account.SetIsAdmin(Convert.ToInt32(reader["isAdmin"]));
-            account.SetIsConfirmed(Convert.ToInt32(reader["isConfirmed"]));
-            account.SetStatus(Convert.ToInt32(reader["status"]));
+            account.SetIsAdmin(Convert.ToByte(reader["isAdmin"]));
+            account.SetIsConfirmed(Convert.ToByte(reader["isConfirmed"]));
+            account.SetConfirmationID(Convert.ToInt32(reader["confirmationID"]));
+            account.SetStatus(Convert.ToByte(reader["status"]));
             return account;
         }
     }

@@ -19,8 +19,8 @@
 		        </div>
                 <div class="text-center">
                     <br /><br /><br />
-                    <asp:button ID="DeleteButton" runat="server" ToolTip="Delete profile." Text="Delete Profile" class="btn btn-danger"/><br /><br /><br />
-                    <asp:button ID="SaveButton" runat="server" Text="Save Changes" class="btn btn-success" /><br /><br /><br />
+                    <asp:button ID="DeleteButton" runat="server" ToolTip="Delete profile." Text="Delete Profile" class="btn btn-danger" OnClick="DeleteButton_Click"/><br /><br /><br />
+                    <asp:button ID="SaveButton" runat="server" Text="Save Changes" class="btn btn-success" OnClick="SaveButton_Click"/><br /><br /><br />
                     
                 </div>
             </div>

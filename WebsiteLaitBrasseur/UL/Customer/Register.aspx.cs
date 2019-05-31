@@ -13,6 +13,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class Register : System.Web.UI.Page
     {
+        private int confirmationID;
+
         AccountBL bl = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -23,13 +25,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             if (IsValid)
             {
-                var isAdmin = 0; //customer 
-                var status = 0; //per default not suspendet user
+                Byte isAdmin = 0; //customer 
+                Byte status = 0; //per default not suspendet user
                 var imgPath = " "; //as there is no profile img
                 lblRegResult.Text = " ";
 
                 var check = bl.CreateAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
-                   TextLastName.Text.Trim(), TextBirthday.Text.Trim(), TextPhone.Text.Trim(), imgPath, status, isAdmin);
+                   TextLastName.Text.Trim(), TextBirthday.Text.Trim(), TextPhone.Text.Trim(), imgPath, status, isAdmin, confirmationID);
                 Debug.Write("Register User / Check Value : " + check);
 
                 switch (check)
@@ -53,6 +55,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         break;
                 }                
             }
+
+            Response.Redirect("/UL/Customer/LoginAdmin.aspx");
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)
@@ -65,6 +69,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             //variable session creation
             Random random = new Random();
             Session["ConfID"] = random.Next();
+            confirmationID = random.Next();
 
             string confID = this.Session["ConfID"].ToString();    //Cookie recuperation
 

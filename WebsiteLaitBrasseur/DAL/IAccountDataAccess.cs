@@ -8,7 +8,7 @@ namespace WebsiteLaitBrasseur.DAL
 {
     interface IAccountDataAccess
     {
-        int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate, string phoneNo, string imgPath, int status, int isAdmin);
+        int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate, string phoneNo, string imgPath, Byte status, Byte isAdmin, int confirmationID);
         int UpdateStatus(string email, int status);
         int UpdateUsername(string email, string fName, string lName);
         int UpdatePhoneNo(string email, string phoneNo);
