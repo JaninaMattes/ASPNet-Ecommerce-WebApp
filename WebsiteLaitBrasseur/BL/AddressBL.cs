@@ -64,24 +64,35 @@ namespace WebsiteLaitBrasseur.BL
             int result = 0;
             AccountDTO customer = new AccountDTO();
             AddressDTO address = new AddressDTO();
-            if (IsPostCodeValid(zipCode))
+            try
             {
-                customer = AB.FindBy(email);
-                if (customer != null)
+                if (IsPostCodeValid(zipCode))
                 {
+                    //if address already exists
                     address = DB.FindBy(customer.GetAddress().GetID());
+                    if (address != null)
+                    {
+                        CB.UpdateCity(address.GetCity().GetId(), zipCode, cityName);
+                        result = DB.UpdateAddress(address.GetID(), address.GetCity().GetId(), streetName, streetNo, addressType);
+                        Debug.Print("AddressBL: /Update/ " + result);
+                    }
+                    else
+                    {
+                        //if address doesnt exist yet
+                        var cityID = CB.Insert(zipCode, cityName);
+                        var addressID = DB.Insert(cityID, streetName, streetNo, addressType);
+                        result = AB.UpdateAddress(email, addressID);
+                    }
                 }
-                if(address != null)
+                else
                 {
-                    CB.UpdateCity(address.GetCity().GetId(), zipCode, cityName);
-                    result = DB.UpdateAddress(address.GetID(), address.GetCity().GetId(), streetName, streetNo, addressType);
-                    Debug.Print("AddressBL: /Update/ " + result);
-                }                
+                    result = 2;
+                }
             }
-            else
+            catch (Exception e)
             {
-                result = 2;
-            }
+                e.GetBaseException();
+            }            
             return result;
         }
 

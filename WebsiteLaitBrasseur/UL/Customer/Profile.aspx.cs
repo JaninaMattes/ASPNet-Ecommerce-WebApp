@@ -159,15 +159,16 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
         }
 
-        /*Fill the label with accurat item number*/
+        //Fill the label with accurat item number
         protected void BindProfileData()
         {
             if(GetUserData(SESSION_VAR).GetImgPath().Equals(" "))
-            {
+            {                
                 ProfilePicture.ImageUrl = "~/UL/Images/defaultImg.jpg";
+                Debug.Print($"No image found - default image under { ProfilePicture.ImageUrl.ToString()} used");
             }
             ProfilePicture.ImageUrl = GetUserData(SESSION_VAR).GetImgPath();
-            /*Textboxes with editable section information*/
+            //Textboxes with editable section information
             TextFirstname.Text = GetUserData(SESSION_VAR).GetFirstName();
             TextLastname.Text = GetUserData(SESSION_VAR).GetLastName();
             TextPhone.Text = GetUserData(SESSION_VAR).GetPhoneNo();
@@ -175,7 +176,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             TextEmail.Text = GetUserData(SESSION_VAR).GetEmail();
             TextName.Text = GetUserData(SESSION_VAR).GetFirstName() + " " + GetUserData(SESSION_VAR).GetLastName();
 
-            /*Textboxes with editable section information*/
+            //Textboxes with editable section information
             if (GetAddressData(SESSION_VAR) != null)
             {
                 TextAddress1.Text = GetAddressData(SESSION_VAR).GetStreetName();
@@ -254,7 +255,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 {
                     dr["PaymentStatus"] = "Open";
                 }
-
                 dtInvoice.Rows.Add(dr);
             }
             return dtInvoice;
@@ -264,27 +264,43 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected AccountDTO GetUserData(string email)
         {
             AccountDTO customer = new AccountDTO();
-            AccountBL BL = new AccountBL();
-            customer = BL.GetCustomer(email);
+            try
+            {               
+                customer = BL.GetCustomer(email);               
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
             return customer;
         }
         
         /*Dummy data for demonstration purpose*/
         protected AddressDTO GetAddressData(string email)
         {
-            AddressBL BL = new AddressBL();
             AddressDTO address = new AddressDTO();
-            address = BL.FindAddress(email);
+            try
+            {                
+                address = ABL.FindAddress(email);                
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
             return address;
         }
 
         /*Dummy data for demonstration purpose*/
         protected IEnumerable<InvoiceDTO> GetShoppingList(string email)
         {
-            //ProductSelectionBL BL = new ProductSelectionBL();
-            InvoiceBL BL = new InvoiceBL();
             IEnumerable<InvoiceDTO> transactions = new List<InvoiceDTO>();
-            transactions = BL.FindInvoices(email);
+            try {            
+            transactions = IBL.FindInvoices(email);
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
             return transactions;
         }      
     }

@@ -15,7 +15,7 @@ namespace WebsiteLaitBrasseur.BL
     public class AccountBL
     {
         private readonly AccountDAL DB = new AccountDAL();
-        private static int count = 0;
+        //private static int count = 0;
 
         /// <summary>
         /// Register a new User and create an account. 
@@ -89,14 +89,14 @@ namespace WebsiteLaitBrasseur.BL
         {           
             int isCorrect = 0;
             string hashPW = password; //= HashPassword(password);
-            if(count == 3)
-            {
+           // if(count == 3)
+           // {
                 //TODO suspend user after three wrong log in attempts
                 //5 = suspend the user;
                 // isCorrect = 5;
                 //Call timer
-                StartTimer();
-            }
+              //  StartTimer();
+           // }
             try
             {
                 if (IsUserSuspendet(email))
@@ -331,8 +331,8 @@ namespace WebsiteLaitBrasseur.BL
         {
             AccountDTO customer = new AccountDTO();
             customer = DB.FindBy(email);
-            int status = customer.GetStatus();
-            Debug.Print("AccountBL: /isUserSuspendet/status " + customer.GetStatus());
+            int status = customer.GetStatus();      
+            Debug.Print($"AccountBL: /isUserSuspendet/status {status}");
             if (customer != null && status == 0)
             {
                 return false;       //isSuspended=0 ;false
@@ -353,7 +353,7 @@ namespace WebsiteLaitBrasseur.BL
         /// </summary>
         private void StartTimer()
         {
-            count = 0;
+            //count = 0;
             //TODO
         }
 
