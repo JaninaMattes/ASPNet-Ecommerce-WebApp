@@ -12,7 +12,12 @@ namespace WebsiteLaitBrasseur.UL.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (this.Session["AdminID"] == null)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
+
+                Response.Redirect(url);
+            }
         }
 
         protected void Shippingbutton_Click(object sender, EventArgs e)

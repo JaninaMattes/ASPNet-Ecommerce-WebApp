@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
+using System.Configuration;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
@@ -17,6 +18,12 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (this.Session["AdminID"] == null)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
+
+                Response.Redirect(url);
+            }
             if (!IsPostBack)
             {
                 //Initialize Data elements (Gridview / DataSource )
@@ -97,13 +104,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
         protected void ItemListTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             //Index of grid recuperation
-            int index = Convert.ToInt32(e.RowIndex);
+            int productID = Convert.ToInt32(ItemListTable.Rows[e.RowIndex].Cells[0].Text);
+            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "DetailPageAdmin.aspx?id=" + productID;
+            Response.Redirect(url);
 
-            //Fake deletion
-            ItemListTable.Rows[index].Visible = false;
-            lblInfo.CssClass = "text-info";
-            lblInfo.Text = "Not real deleting : The row is now invisible";
-            lblError.Text = "";
         }
 
         ////Row Editing 
@@ -182,6 +186,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 }
                 ItemListTable.ShowFooter = false;
                 BindData();
+            }
+            if (e.CommandArgument.ToString() == "FakeDelete")
+            {
+                //TODO if time
             }
         }
     }

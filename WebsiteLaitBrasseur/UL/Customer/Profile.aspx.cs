@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
@@ -20,6 +21,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
         string SESSION_VAR; 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (this.Session["CustID"] == null)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
+
+                Response.Redirect(url);
+            }
             if (!Page.IsPostBack)
             {
                 SESSION_VAR = HttpContext.Current.Session["Email"].ToString();

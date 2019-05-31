@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -13,13 +15,16 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             try
             {
-                //Display Logout button if a session is active
                 if (this.Session["email"] != null)
                 {
-                    lblLogout.Visible = true;
+                        lblLogout.Visible = true;
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                ex.GetBaseException();
+                Debug.Write(ex.ToString());
+            }
         }
     }
 }

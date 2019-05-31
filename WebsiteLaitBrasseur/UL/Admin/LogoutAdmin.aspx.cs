@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -15,12 +16,17 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             try
             {
-                //session information recuperation
-                string email = this.Session["email"].ToString();    
-                if (email != null)
+                if (this.Session["AdminID"] == null)
                 {
+                    string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
+
+                    Response.Redirect(url);
+                }
+                else
+                {
+                    int adminID = Convert.ToInt32(this.Session["AdminID"]);
                     AccountDTO account = new AccountDTO();
-                    account = BL.GetCustomer(email); 
+                    account = BL.GetCustomer(adminID);
                     lblGoodBye.Text = $"Good Bye {account.GetFirstName()} {account.GetLastName()}";
                     //Session variable removing
                     this.Session.Clear();
