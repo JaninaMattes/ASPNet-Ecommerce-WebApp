@@ -260,7 +260,7 @@ namespace WebsiteLaitBrasseur.BL
             if (IsValidEmail(mail))
             {
                 customer = DB.FindBy(mail);
-                Debug.Print("AccountBL / UpdateAll value returned " + customer.ToString());
+                Debug.Print("AccountBL / Update value returned " + customer.ToString());
             }
             else
             {   //email is not correct => 2
@@ -269,9 +269,29 @@ namespace WebsiteLaitBrasseur.BL
             //if update was successfull => 1
             flag = DB.Update(customer.GetID(), mail, firstName, lastName, birthDate, phoneNo, imgPath);
 
-            Debug.Print("AccountBL / UpdateAll correction: " + flag);
+            Debug.Print("AccountBL / Update correction: " + flag);
             return flag;
         }
+
+        public int UpdateNamePhone(string email, string firstName, string lastName, string phoneNo)
+        {
+            int flag=0;
+            AccountDTO customer = new AccountDTO();
+            try
+            {
+                flag = DB.UpdateUsername(email, firstName, lastName);
+                Debug.Print("\nAccountBL / UpdateNamePhone/  flag1: " + flag);  //DEBUG
+
+                flag = DB.UpdatePhoneNo(email, phoneNo);
+                Debug.Print("\nAccountBL / UpdateNamePhone/  flag2: " + flag);   //DEBUG           
+            }catch(Exception ex)
+            {
+                ex.GetBaseException();
+                Debug.Print("\nAccountBL / UpdateAddress /Exception "); //DEBUG
+            }
+            return flag;
+        }
+
 
         /// <summary>
         /// Find single customer in DB

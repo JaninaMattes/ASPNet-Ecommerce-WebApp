@@ -31,6 +31,8 @@
             <div class="col-md-5">
                 <div id="UserInformation">
                     <h3 >Your informations</h3>
+                    <asp:Label ID="lblResultUserInfo" runat="server" Text="" CssClass="text-info"></asp:Label><br />
+                    <asp:Label ID="lblResultAddress" runat="server" Text="" CssClass="text-info"></asp:Label><br />
 
                     <!--FirstName + Last Name -->
                     <div class="row ">
@@ -137,15 +139,8 @@
                     </div>
 
 
-                    <!--Name + Country -->
+                    <!--Country -->
                     <div class="row">
-                        <!--Label / TextBox / Validator for Name -->
-                        <div class="col-md-6">
-                            <br />
-                            <label for="TextName" class="control-label text-info">Full Name</label>
-                            <asp:TextBox ID="TextName" runat="server" Cssclass="form-control"> </asp:TextBox>
-                            <asp:RequiredFieldValidator ID="NameReqField" runat="server" ErrorMessage="Name is required" ControlToValidate="TextName" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
-                        </div>
 
                         <!--DropDownList for Country-->
                         <div class="col-md-6">

@@ -67,6 +67,24 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         protected global::System.Web.UI.WebControls.Button SaveButton;
         
         /// <summary>
+        /// Contrôle lblResultUserInfo.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblResultUserInfo;
+        
+        /// <summary>
+        /// Contrôle lblResultAddress.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblResultAddress;
+        
+        /// <summary>
         /// Contrôle TextFirstname.
         /// </summary>
         /// <remarks>
@@ -254,24 +272,6 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator CityReqField;
-        
-        /// <summary>
-        /// Contrôle TextName.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextName;
-        
-        /// <summary>
-        /// Contrôle NameReqField.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator NameReqField;
         
         /// <summary>
         /// Contrôle CountryDropDownList.

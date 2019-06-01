@@ -165,11 +165,13 @@ namespace WebsiteLaitBrasseur.DAL
                         cmd.CommandType = CommandType.Text;
                         con.Open();
                         result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        Debug.Write("\nAccountDAL / UpdateUsername / result : " + result);//DEBUG
                     }
                 }
             }
             catch (Exception e)
             {
+                Debug.Write("\nAccountDAL / UpdateUsername / Exception"); //DEBUG
                 e.GetBaseException();
             }           
             return result;
@@ -195,16 +197,18 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@phone", SqlDbType.VarChar).Value = phoneNo;
+                        cmd.Parameters.AddWithValue("@phoneNo", SqlDbType.VarChar).Value = phoneNo;
                         cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
                         cmd.CommandType = CommandType.Text;
                         con.Open();
                         result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        Debug.Write("\nAccountDAL / UpdatePhoneNo / result = " + result);//DEBUG
                     }
                 }
             }
             catch (Exception e)
             {
+                Debug.Write("\nAccountDAL / UpdatePhoneNo / Exception : \n" + e.ToString()); //DEBUG
                 e.GetBaseException();
             }
            

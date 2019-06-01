@@ -18,7 +18,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
 
-        string SESSION_VAR; 
+        string emailCustomer; 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (this.Session["CustID"] == null)
@@ -29,8 +29,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
             if (!Page.IsPostBack)
             {
-                SESSION_VAR = Convert.ToString(this.Session["email"]);
-                //SESSION_VAR = "janina.mattes@gmail.com";
+                emailCustomer = Convert.ToString(this.Session["email"]);
+                //emailCustomer = "janina.mattes@gmail.com";
                 //Bind profile data
                 BindProfileData();
                 //Shopping history
@@ -50,7 +50,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             // suspend the user dont delete
             int status = 1;
-            BL.UpdateStatus(SESSION_VAR, status);
+            BL.UpdateStatus(emailCustomer, status);
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)
@@ -65,6 +65,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             //var password = TextPassword.Text;
             var res1 = BL.Update(email, fName, lName, birthDate, phoneNo, imgPath);
             Debug.Print("Profile aspx: /Save Button / Update User Info " + res1);
+
             //update Address
             var streetName = TextAddress1.Text;
             var zipCode = TextZip.Text;
@@ -73,13 +74,18 @@ namespace WebsiteLaitBrasseur.UL.Customer
             var addressType = "Home"; //TODO add field in UI
             var res2 = ABL.UpdateAddress(email, zipCode, cityName, streetName, streetNo, addressType);
             Debug.Print("Profile aspx: /Save Button / Update Address Info " + res2);
+
+            if (res1 == 1) { lblResultUserInfo.CssClass = "text-success"; lblResultUserInfo.Text += "User informations modified with success"; }
+            else { lblResultUserInfo.CssClass = "text-danger"; lblResultUserInfo.Text += "Error during user information update"; }
+            if (res2 == 1) { lblResultAddress.CssClass = "text-success"; lblResultAddress.Text += "Address modified with success"; }
+            else { lblResultAddress.CssClass = "text-danger"; lblResultAddress.Text += "Error during Address update"; }
         }
 
 
         /*Fill the label with accurat item number*/
         protected void BindTableLabel()
         {
-            IEnumerable<InvoiceDTO> transactions = GetShoppingList(SESSION_VAR);
+            IEnumerable<InvoiceDTO> transactions = GetShoppingList(emailCustomer);
             if (transactions.LongCount<InvoiceDTO>() > 0)
             {
                 tableShoppingHistoryLabel.Text = $"Your shopping history has {transactions.LongCount<InvoiceDTO>()} items.";
@@ -89,29 +95,29 @@ namespace WebsiteLaitBrasseur.UL.Customer
         //Fill the label with accurat item number
         protected void BindProfileData()
         {
-            if(GetUserData(SESSION_VAR).GetImgPath().Equals(" "))
+            if(GetUserData(emailCustomer).GetImgPath().Equals(" "))
             {                
                 ProfilePicture.ImageUrl = "/Images/defaultImg.jpg";
                 Debug.Print($"No image found - default image under { ProfilePicture.ImageUrl.ToString()} used");
             }
-            ProfilePicture.ImageUrl = GetUserData(SESSION_VAR).GetImgPath();
-            //Textboxes with editable section information
-            TextFirstname.Text = GetUserData(SESSION_VAR).GetFirstName();
-            TextLastname.Text = GetUserData(SESSION_VAR).GetLastName();
-            TextPhone.Text = GetUserData(SESSION_VAR).GetPhoneNo();
-            var birthdate = GetUserData(SESSION_VAR).GetBirthdate();
-            TextBirthday.Text = birthdate.ToString("yyyy-MM-dd");
-            TextEmail.Text = GetUserData(SESSION_VAR).GetEmail();
-            TextName.Text = GetUserData(SESSION_VAR).GetFirstName() + " " + GetUserData(SESSION_VAR).GetLastName();
+            ProfilePicture.ImageUrl = GetUserData(emailCustomer).GetImgPath();
 
             //Textboxes with editable section information
-            if (GetAddressData(SESSION_VAR) != null)
+            TextFirstname.Text = GetUserData(emailCustomer).GetFirstName();
+            TextLastname.Text = GetUserData(emailCustomer).GetLastName();
+            TextPhone.Text = GetUserData(emailCustomer).GetPhoneNo();
+            var birthdate = GetUserData(emailCustomer).GetBirthdate();
+            TextBirthday.Text = birthdate.ToString("yyyy-MM-dd");
+            TextEmail.Text = GetUserData(emailCustomer).GetEmail();
+
+            //Textboxes with editable section information
+            if (GetAddressData(emailCustomer) != null)
             {
-                TextAddress1.Text = GetAddressData(SESSION_VAR).GetStreetName();
-                TextCity.Text = GetAddressData(SESSION_VAR).GetCity().GetCity();
-                CountryDropDownList.Text = GetAddressData(SESSION_VAR).GetCountry();
-                TextAddressnumber.Text = GetAddressData(SESSION_VAR).GetStreetNo().Trim();
-                TextZip.Text = GetAddressData(SESSION_VAR).GetCity().GetZip().Trim();
+                TextAddress1.Text = GetAddressData(emailCustomer).GetStreetName();
+                TextCity.Text = GetAddressData(emailCustomer).GetCity().GetCity();
+                CountryDropDownList.Text = GetAddressData(emailCustomer).GetCountry();
+                TextAddressnumber.Text = GetAddressData(emailCustomer).GetStreetNo().Trim();
+                TextZip.Text = GetAddressData(emailCustomer).GetCity().GetZip().Trim();
             }
             else
             {
@@ -129,9 +135,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
             try
             {
                 IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
-                invoices = IBL.FindInvoices(SESSION_VAR);
+                invoices = IBL.FindInvoices(emailCustomer);
                 AccountDTO customer = new AccountDTO();
-                customer = BL.GetCustomer(SESSION_VAR);
+                customer = BL.GetCustomer(emailCustomer);
                 ShoppingTable.DataSource = GetDataTable(invoices);
                 ShoppingTable.DataBind();
 
