@@ -40,7 +40,7 @@
                     <!--Login/Register button & Forgot Password link -->
                     <div class="col-md-offset-3 col-md-9">
                         <asp:Button ID="LoginButton" runat="server" Text="Login" OnClick="LoginButton_Click" CssClass="btn btn-primary"/>
-                        <a href='/UL/Account/Logout.aspx'>Forgot password ?</a>
+                        <a href='/UL/Customer/EmailRecuperation.aspx'>Forgot password ?</a>
                         <br />
                         <asp:Button ID="Register" runat="server" Text="Register" OnClick="RegisterButton_Click" CausesValidation="False" CssClass="btn btn-info"/>
 

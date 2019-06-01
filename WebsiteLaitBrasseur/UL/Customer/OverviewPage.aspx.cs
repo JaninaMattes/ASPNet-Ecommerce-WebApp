@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
 using System.Data;
+using System.Configuration;
+using Microsoft.AspNet.FriendlyUrls;
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
@@ -54,7 +56,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void imgCommand(object sender, CommandEventArgs e)
         {
-            Response.Redirect("/UL/Customer/DetailPageCustomer.aspx?id=" + e.CommandArgument);
+            var urlF = FriendlyUrl.Href(ConfigurationManager.AppSettings["Customer"] + "DetailPageCustomer", e.CommandArgument);
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + urlF);
+            
         }
 
         protected void ImageRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)

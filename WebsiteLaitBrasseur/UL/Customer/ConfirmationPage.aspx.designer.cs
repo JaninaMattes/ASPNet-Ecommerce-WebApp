@@ -7,36 +7,27 @@
 // </généré automatiquement>
 //------------------------------------------------------------------------------
 
-namespace WebsiteLaitBrasseur.UL.Admin {
+namespace WebsiteLaitBrasseur.UL.Customer {
     
     
-    public partial class Default {
+    public partial class ConfirmationPage {
         
         /// <summary>
-        /// Contrôle Productbutton.
+        /// Contrôle UpdatePanel1.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Productbutton;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// Contrôle Customerbutton.
+        /// Contrôle lblRegistrationResult.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Customerbutton;
-        
-        /// <summary>
-        /// Contrôle Shippingbutton.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Shippingbutton;
+        protected global::System.Web.UI.WebControls.Label lblRegistrationResult;
     }
 }

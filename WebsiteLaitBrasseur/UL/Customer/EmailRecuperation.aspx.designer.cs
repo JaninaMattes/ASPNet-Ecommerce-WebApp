@@ -10,69 +10,51 @@
 namespace WebsiteLaitBrasseur.UL.Customer {
     
     
-    public partial class Default {
+    public partial class EmailRecuperation {
         
         /// <summary>
-        /// Contrôle lblWelcome.
+        /// Contrôle lblResult.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWelcome;
+        protected global::System.Web.UI.WebControls.Label lblResult;
         
         /// <summary>
-        /// Contrôle img1.
+        /// Contrôle TextEmail.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img1;
+        protected global::System.Web.UI.WebControls.TextBox TextEmail;
         
         /// <summary>
-        /// Contrôle Title0.
+        /// Contrôle EmailReqField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Title0;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailReqField;
         
         /// <summary>
-        /// Contrôle Subtitle0.
+        /// Contrôle EmailRegValid.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Subtitle0;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailRegValid;
         
         /// <summary>
-        /// Contrôle img2.
+        /// Contrôle ValidationButton.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ImageButton img2;
-        
-        /// <summary>
-        /// Contrôle Title1.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Title1;
-        
-        /// <summary>
-        /// Contrôle Subtitle1.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Subtitle1;
+        protected global::System.Web.UI.WebControls.Button ValidationButton;
     }
 }

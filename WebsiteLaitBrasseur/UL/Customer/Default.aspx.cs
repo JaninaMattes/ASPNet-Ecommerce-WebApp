@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.FriendlyUrls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,10 +15,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try { 
-                //Welcome
+            try {           
                 string email= this.Session["email"].ToString();
-
                 if (email != null)
                 {
                     AccountDTO customer = new AccountDTO();
@@ -28,6 +27,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             catch
             {
                 lblWelcome.Text = "Welcome & Bienvenue";
+
             }
         }
 

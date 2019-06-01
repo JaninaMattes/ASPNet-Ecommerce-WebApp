@@ -46,7 +46,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         lblRegResult.CssClass = "text-success";
                         lblRegResult.Text = "Password and email are correct.";
                         MailSender();
-                        Session["emailRegister"] = TextEmail.Text.Trim(); //TODO
                         break;
                     case 2:
                         lblRegResult.Visible = true;
@@ -93,7 +92,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 MailMessage mm = new MailMessage();
                 mm.To.Add(new MailAddress(TextEmail.Text, "Request for Verification"));
                 mm.From = new MailAddress("webProgProjUon@gmail.com");
-                mm.Body = "<a href='http://localhost:54429//UL/Admin/VerificationPage.aspx?ConfID=" + confID + " '> click here to verify </a>";
+                mm.Body = "<a href='http://localhost:54429//UL/Customer/ConfirmationPage.aspx?ConfID=" + confID + " '> click here to verify </a>";
                 mm.IsBodyHtml = true;
                 mm.Subject = "Verification";
 

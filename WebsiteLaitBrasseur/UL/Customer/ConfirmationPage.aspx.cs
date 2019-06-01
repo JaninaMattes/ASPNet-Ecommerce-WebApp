@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Diagnostics;
-using WebsiteLaitBrasseur.BL;
-using System.Configuration;
 
-namespace WebsiteLaitBrasseur.Admin
+namespace WebsiteLaitBrasseur.UL.Customer
 {
-    public partial class VerificationPage : System.Web.UI.Page
+    public partial class ConfirmationPage : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -18,7 +16,7 @@ namespace WebsiteLaitBrasseur.Admin
             {
                 if ((Request.QueryString["ConfID"] != null))
                 {
-                     string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
+                    string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
                     Response.Redirect(url);
                 }
                 //User informations recuperated from cookie
@@ -26,7 +24,7 @@ namespace WebsiteLaitBrasseur.Admin
                 //select * from account where ConfID == Request.QueryString["ConfID"] && IsConfirmed==false
                 //Account.GetEmail
                 //bl.UpdateIsConfirmed(email)
-                /*if ((Request.QueryString["ConfID"] != null) && (Request.QueryString["ConfID"] == this.Session["ConfID"].ToString()))
+                /*if( (Request.QueryString["ConfID"] == this.Session["ConfID"].ToString()))
                 {
                     AccountBL bl = new AccountBL();
 
@@ -37,13 +35,9 @@ namespace WebsiteLaitBrasseur.Admin
                     else
                     {
                         lblRegistrationResult.Text = "Issue during verification";
-                    }
-
-                    
+                    }                  
                     
                 }*/
-
-
 
             }
         }

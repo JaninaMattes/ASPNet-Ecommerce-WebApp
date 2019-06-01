@@ -12,9 +12,13 @@
 
             <!--First column : User picture and "Save"/"Delete" button-->
             <div class="col-md-2" >
-                <div class="profile-userpic">
-                    <!--<img class="img-responsive" alt="User Image" src="/UL/Images/customerImg.jpg">-->
-                    <asp:ImageButton ID="ProfilePicture" runat="server" ToolTip="Profile Image" DataImageUrlField="Path" OnClick="UpdateButton_Click"/>                    
+                <div class="text-center">
+                    <!--Image informations  -->
+                    <asp:ImageButton ID="ProfilePicture" runat="server" ToolTip="Profile Image" DataImageUrlField="Path"  AlternateText="Format issue"  CssClass="img-thumbnail"/>                   
+                    <!--TextBox for add a link to the new image + button to upload it -->
+                    <asp:TextBox ID="TextImageLink" runat="server" Text="Image link" CssClass="form-control"></asp:TextBox><br />
+                    <asp:Button ID="UploadButton" ToolTip="Update image." runat="server"  Text="Upload Image" OnClick="UploadButton_Click" CausesValidation="false"  CssClass="btn btn-primary" /><br />
+ 
 		        </div>
                 <div class="text-center">
                     <br /><br /><br />
@@ -27,6 +31,8 @@
             <div class="col-md-5">
                 <div id="UserInformation">
                     <h3 >Your informations</h3>
+                    <asp:Label ID="lblResultUserInfo" runat="server" Text="" CssClass="text-info"></asp:Label><br />
+                    <asp:Label ID="lblResultAddress" runat="server" Text="" CssClass="text-info"></asp:Label><br />
 
                     <!--FirstName + Last Name -->
                     <div class="row ">
@@ -120,7 +126,7 @@
                             <label for="TextZip" class="control-label text-info">Zip Code</label>
                             <asp:TextBox ID="TextZip" ToolTip="Edit postcode." runat="server" Cssclass="form-control" TextMode="Number"> </asp:TextBox>
                             <asp:RequiredFieldValidator ID="ZipReqField" runat="server" ErrorMessage="Zip is required" ControlToValidate="TextZip" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
-                            <asp:regularExpressionValidator ID="ZipRegExpValid" runat="server" ErrorMessage="Should be 5 or 9 Digits" ControlToValidate="TextZip" Display="Dynamic"  ValidationExpression="\d{5}-?(\d{4})?$" CssClass="text-danger"></asp:RegularExpressionValidator>                      
+                            <asp:regularExpressionValidator ID="ZipRegExpValid" runat="server" ErrorMessage="Should be 4 digits" ControlToValidate="TextZip" Display="Dynamic"  ValidationExpression="\d{4}$" CssClass="text-danger"></asp:RegularExpressionValidator>                      
                         </div>    
 
                         <!--Label / TextBox / Validator for City-->
@@ -133,15 +139,8 @@
                     </div>
 
 
-                    <!--Name + Country -->
+                    <!--Country -->
                     <div class="row">
-                        <!--Label / TextBox / Validator for Name -->
-                        <div class="col-md-6">
-                            <br />
-                            <label for="TextName" class="control-label text-info">Full Name</label>
-                            <asp:TextBox ID="TextName" runat="server" Cssclass="form-control"> </asp:TextBox>
-                            <asp:RequiredFieldValidator ID="NameReqField" runat="server" ErrorMessage="Name is required" ControlToValidate="TextName" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
-                        </div>
 
                         <!--DropDownList for Country-->
                         <div class="col-md-6">

@@ -61,7 +61,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns></returns>
         public int UpdateAddress(string email, string zipCode, string cityName, string streetName, string streetNo, string addressType)
         {
-            Debug.Print("AddressBL: /Update Address: / ");
+            Debug.Print("AddressBL: /Update Address: / enter in function");
             int result = 0;                      
             try
             {

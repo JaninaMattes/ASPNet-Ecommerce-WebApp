@@ -157,6 +157,24 @@ namespace WebsiteLaitBrasseur.UL.Admin {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordField;
         
         /// <summary>
+        /// Contrôle PasswordReqValid.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator PasswordReqValid;
+        
+        /// <summary>
+        /// Contrôle lblRequirement.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblRequirement;
+        
+        /// <summary>
         /// Contrôle TextPasswordConf.
         /// </summary>
         /// <remarks>

@@ -8,6 +8,7 @@
         <br />
 
         <!--Welcoming picture -->
+        
 
         <asp:Label ID="lblWelcome" Text="" runat="server" CssClass="center text-black-50 text-center" Font-Size="35px">WelcomeBienvenue</asp:Label><br />
  

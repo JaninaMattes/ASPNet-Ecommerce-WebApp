@@ -45,8 +45,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AspNet.ScriptManager.jQuery, Version=3.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\AspNet.ScriptManager.jQuery.3.3.1\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+    <Reference Include="AspNet.ScriptManager.jQuery, Version=3.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.3.4.1\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.FriendlyUrls, Version=1.0.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -73,8 +76,17 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="UL\Customer\AboutUs.aspx" />
+    <Content Include="UL\Customer\ConfirmationPage.aspx" />
+    <Content Include="UL\Customer\EmailRecuperation.aspx" />
     <Content Include="UL\Customer\Logout.aspx" />
+    <Content Include="UL\Customer\PasswordChanging.aspx" />
     <Content Include="UL\Customer\Register.aspx" />
     <Content Include="UL\Admin\DetailPageAdmin.aspx" />
     <Content Include="UL\Admin\ItemsManagement.aspx" />
@@ -129,6 +141,9 @@
     <Content Include="UL\Scripts\esm\popper-utils.js.map" />
     <Content Include="UL\Admin\Admin.Master" />
     <Content Include="Connected Services\Application Insights\ConnectedService.json" />
+    <Content Include="Site.Mobile.Master" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
     <None Include="UL\Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="UL\Scripts\jquery-3.3.1.js" />
     <Content Include="UL\Scripts\jquery-3.3.1.min.js" />
@@ -143,11 +158,13 @@
     <Content Include="UL\Scripts\umd\popper-utils.min.js" />
     <Content Include="UL\Scripts\umd\popper.js" />
     <Content Include="UL\Scripts\umd\popper.min.js" />
+    <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="BL\AccountDTO.cs" />
     <Compile Include="BL\AccountBL.cs" />
     <Compile Include="BL\AddressBL.cs" />
@@ -190,6 +207,16 @@
     <Compile Include="DAL\ShippmentDAL.cs" />
     <Compile Include="DAL\SizeDAL.cs" />
     <Compile Include="DAL\SqlDataAccess.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.designer.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
     <Compile Include="UL\Customer\AboutUs.aspx.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -197,12 +224,33 @@
     <Compile Include="UL\Customer\AboutUs.aspx.designer.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UL\Customer\ConfirmationPage.aspx.cs">
+      <DependentUpon>ConfirmationPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\Customer\ConfirmationPage.aspx.designer.cs">
+      <DependentUpon>ConfirmationPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\Customer\EmailRecuperation.aspx.cs">
+      <DependentUpon>EmailRecuperation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\Customer\EmailRecuperation.aspx.designer.cs">
+      <DependentUpon>EmailRecuperation.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UL\Customer\Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UL\Customer\Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\Customer\PasswordChanging.aspx.cs">
+      <DependentUpon>PasswordChanging.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\Customer\PasswordChanging.aspx.designer.cs">
+      <DependentUpon>PasswordChanging.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\Customer\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
@@ -358,6 +406,13 @@
     </Compile>
     <Compile Include="UL\Customer\Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.designer.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

@@ -72,7 +72,10 @@
                 <label for="TextPassword" class="control-label col-md-3 text-info">Password</label>
                 <div class="col-md-5">
                     <asp:TextBox ID="TextPassword" runat="server" Cssclass="form-control" TextMode="Password"> </asp:TextBox>
-                    <asp:RequiredFieldValidator ID="PasswordField" runat="server"  ControlToValidate="TextPassword" Display="Dynamic" CssClass="text-danger" ErrorMessage="Password is required"></asp:RequiredFieldValidator><br />
+                    <asp:RequiredFieldValidator ID="PasswordField" runat="server"  ControlToValidate="TextPassword" Display="Dynamic" CssClass="text-danger" ErrorMessage="Password is required"></asp:RequiredFieldValidator>
+                     <asp:RegularExpressionValidator ID="PasswordReqValid" runat="server" ControlToValidate="TextPassword" ValidationExpression="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9#?!@$%^&*-]).{8,}$" ErrorMessage="The password format does not meet the requirements." CssClass="text-danger" ></asp:RegularExpressionValidator>
+                    <br /><asp:Label ID="lblRequirement" runat="server" CssClass="text-info" Text="(8 characters : at least 1 upper case, 1 lower case, one number or one special character)"></asp:Label>                                  
+                
                 </div>
          </div>
 

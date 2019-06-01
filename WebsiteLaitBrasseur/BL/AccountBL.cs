@@ -111,9 +111,15 @@ namespace WebsiteLaitBrasseur.BL
                     return flag = 5;
                 }
                 else if (DB.FindLoginEmail(email) != 1)
+
                 {
                     // 3 = email is not correct
                     return flag = 4; 
+                }
+                else if (IsUserSuspendet(email) == true)
+                {
+                    // 4 = user is suspendet
+                    return flag = 4;
                 }
                 else if (DB.FindLoginPW(hashPW) == 0)
                 {
@@ -245,8 +251,38 @@ namespace WebsiteLaitBrasseur.BL
                 throw new InputInvalidException("The user input is invalid.");
             }
             return result;
-        } 
+        }
 
+        /// <summary>
+        /// Change the path of the image of an user
+        /// </summary>
+        /// <param name="accountID"></param>
+        /// <param name="imgPath"></param>
+        /// <returns>int result</returns>
+        public int UpdateImgPath(string email, string imgPath)
+        {
+            int result = 0;
+            try
+            {
+                result = DB.UpdateImg(email, imgPath);
+                Debug.Print("AccountBL / Update ImgPath / value returned " + result);
+            }
+            catch (Exception ex)
+            {
+                ex.GetBaseException();
+            }
+
+
+            
+            return result;
+        }
+
+
+        /// <summary>
+        /// Confirmed an user
+        /// When successfull the result = 1
+        /// <param name="email"></param>
+        /// <returns>int result</returns>
         public int UpdateIsConfirmed(string email)
         {
             var result = DB.UpdateIsConfirmed(email,1);
@@ -312,7 +348,7 @@ namespace WebsiteLaitBrasseur.BL
             if (IsValidEmail(mail))
             {
                 customer = DB.FindBy(mail);
-                Debug.Print("AccountBL / UpdateAll value returned " + customer.ToString());
+                Debug.Print("AccountBL / Update value returned " + customer.ToString());
             }
             else
             {   //email is not correct => 2
@@ -321,9 +357,29 @@ namespace WebsiteLaitBrasseur.BL
             //if update was successfull => 1
             flag = DB.Update(customer.GetID(), mail, firstName, lastName, birthDate, phoneNo, imgPath);
 
-            Debug.Print("AccountBL / UpdateAll correction: " + flag);
+            Debug.Print("AccountBL / Update correction: " + flag);
             return flag;
         }
+
+        public int UpdateNamePhone(string email, string firstName, string lastName, string phoneNo)
+        {
+            int flag=0;
+            AccountDTO customer = new AccountDTO();
+            try
+            {
+                flag = DB.UpdateUsername(email, firstName, lastName);
+                Debug.Print("\nAccountBL / UpdateNamePhone/  flag1: " + flag);  //DEBUG
+
+                flag = DB.UpdatePhoneNo(email, phoneNo);
+                Debug.Print("\nAccountBL / UpdateNamePhone/  flag2: " + flag);   //DEBUG           
+            }catch(Exception ex)
+            {
+                ex.GetBaseException();
+                Debug.Write(ex.ToString());
+            }
+            return flag;
+        }
+
 
         /// <summary>
         /// Update the user password in DB.
@@ -368,6 +424,7 @@ namespace WebsiteLaitBrasseur.BL
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return customer;
         }
@@ -388,6 +445,7 @@ namespace WebsiteLaitBrasseur.BL
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return customer;
         }
@@ -423,7 +481,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns></returns>
         private bool IsUserSuspendet(string email)
         {
-            Debug.Print("AccountBL: /isUserSuspendet/avant " );
+            Debug.Print("AccountBL: /isUserSuspendet/avant " ); //DEBUG
             AccountDTO customer = new AccountDTO();
             customer = DB.FindBy(email);
             int status = customer.GetStatus();      
@@ -579,7 +637,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns>boolean value</returns>
         private bool IsValidPassword(string password)
         {
-            string MatchPasswordRules =  "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$";
+            string MatchPasswordRules = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9#?!@$%^&*-]).{8,}$";
             if (password != null) return Regex.IsMatch(password, MatchPasswordRules);
             else return false;
         }
