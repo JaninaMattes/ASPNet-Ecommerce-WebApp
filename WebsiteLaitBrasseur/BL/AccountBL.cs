@@ -91,15 +91,15 @@ namespace WebsiteLaitBrasseur.BL
             
             try
             {
-                if (IsUserSuspendet(email) == true)
-                {
-                    // 4 = user is suspendet
-                    return flag = 4;
-                }
-                else if (DB.FindLoginEmail(email) != 1)
+                if (DB.FindLoginEmail(email) != 1)
                 {
                     // 3 = email is not correct
                     return flag = 3; 
+                }
+                else if (IsUserSuspendet(email) == true)
+                {
+                    // 4 = user is suspendet
+                    return flag = 4;
                 }
                 else if (DB.FindLoginPW(hashPW) == 0)
                 {
@@ -287,7 +287,7 @@ namespace WebsiteLaitBrasseur.BL
             }catch(Exception ex)
             {
                 ex.GetBaseException();
-                Debug.Print("\nAccountBL / UpdateAddress /Exception "); //DEBUG
+                Debug.Write(ex.ToString());
             }
             return flag;
         }
@@ -309,6 +309,7 @@ namespace WebsiteLaitBrasseur.BL
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return customer;
         }
@@ -329,6 +330,7 @@ namespace WebsiteLaitBrasseur.BL
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return customer;
         }
@@ -364,7 +366,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns></returns>
         private bool IsUserSuspendet(string email)
         {
-            Debug.Print("AccountBL: /isUserSuspendet/avant " );
+            Debug.Print("AccountBL: /isUserSuspendet/avant " ); //DEBUG
             AccountDTO customer = new AccountDTO();
             customer = DB.FindBy(email);
             int status = customer.GetStatus();      
@@ -520,7 +522,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <returns>boolean value</returns>
         private bool IsValidPassword(string password)
         {
-            string MatchPasswordRules =  "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$";
+            string MatchPasswordRules = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9#?!@$%^&*-]).{8,}$";
             if (password != null) return Regex.IsMatch(password, MatchPasswordRules);
             else return false;
         }

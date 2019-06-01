@@ -65,7 +65,9 @@ namespace WebsiteLaitBrasseur.UL.Admin
             Session["ConfID"] = random.Next();
             confirmationID = random.Next();
 
-            string confID = this.Session["ConfID"].ToString() ;    //Cookie recuperation            
+
+            string confID = this.Session["ConfID"].ToString() ;    //Cookie recuperation 
+
 
             if (confID != null)
             {
@@ -75,7 +77,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 MailMessage mm = new MailMessage();                                         
                 mm.To.Add(new MailAddress(TextEmail.Text, "Request for Verification"));
                 mm.From = new MailAddress("webProgProjUon@gmail.com");
-                mm.Body = "<a href='http://localhost:54429//UL/Admin/VerificationPage.aspx?ConfID=" + confID + " '> click here to verify </a>" ;
+                mm.Body = "<a href='https://localhost44314:/UL/Admin/VerificationPage.aspx?ConfID" + confID + " '> click here to verify</a>";
                 mm.IsBodyHtml = true;
                 mm.Subject = "Verification";
 

@@ -10,34 +10,16 @@
 namespace WebsiteLaitBrasseur.UL.Customer {
     
     
-    public partial class LoginWebForm {
+    public partial class PasswordChanging {
         
         /// <summary>
-        /// Contrôle TextEmail.
+        /// Contrôle lblResult.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextEmail;
-        
-        /// <summary>
-        /// Contrôle EmailReqField.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailReqField;
-        
-        /// <summary>
-        /// Contrôle EmailRegValid.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailRegValid;
+        protected global::System.Web.UI.WebControls.Label lblResult;
         
         /// <summary>
         /// Contrôle TextPassword.
@@ -49,48 +31,48 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         protected global::System.Web.UI.WebControls.TextBox TextPassword;
         
         /// <summary>
-        /// Contrôle PasswordReqField.
+        /// Contrôle PasswordField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordReqField;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordField;
         
         /// <summary>
-        /// Contrôle RememberMeBox.
+        /// Contrôle TextPasswordConf.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox RememberMeBox;
+        protected global::System.Web.UI.WebControls.TextBox TextPasswordConf;
         
         /// <summary>
-        /// Contrôle LoginButton.
+        /// Contrôle ConfirmPasswordField.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button LoginButton;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ConfirmPasswordField;
         
         /// <summary>
-        /// Contrôle Register.
+        /// Contrôle PasswordCompValid.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Register;
+        protected global::System.Web.UI.WebControls.CompareValidator PasswordCompValid;
         
         /// <summary>
-        /// Contrôle LblErrorMessage.
+        /// Contrôle ChangeButton.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LblErrorMessage;
+        protected global::System.Web.UI.WebControls.Button ChangeButton;
     }
 }

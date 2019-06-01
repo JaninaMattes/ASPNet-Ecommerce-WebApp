@@ -40,23 +40,22 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         lblRegResult.CssClass = "text-success";
                         lblRegResult.Text = "Password and email are correct.";
                         MailSender();
-                        Session["emailRegister"] = TextEmail.Text.Trim(); //TODO
                         break;
                     case 1:
                         lblRegResult.Text = "The email format is wrong.";
                         break;
                     case 2:
-                        lblRegResult.Text = "The password format does not meet the requirements."; //TODO explain requirements
+                        lblRegResult.Text = "The password format does not meet the requirements.\n(8 characters : at least 1 upper case, 1 lower case, one number or one special character)"; //TODO explain requirements
                         break;
                     case 3:
-                        lblRegResult.Text = "The email is already taken."; //TODO explain requirements
+                        lblRegResult.Text = "The email is already taken."; 
                         break;
                     default:
                         break;
                 }                
             }
 
-            Response.Redirect("/UL/Customer/LoginAdmin.aspx");
+           
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)
@@ -81,7 +80,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 MailMessage mm = new MailMessage();
                 mm.To.Add(new MailAddress(TextEmail.Text, "Request for Verification"));
                 mm.From = new MailAddress("webProgProjUon@gmail.com");
-                mm.Body = "<a href='http://localhost:54429//UL/Admin/VerificationPage.aspx?ConfID=" + confID + " '> click here to verify </a>";
+                mm.Body = "<a href='http://localhost:54429//UL/Customer/ConfirmationPage.aspx?ConfID=" + confID + " '> click here to verify </a>";
                 mm.IsBodyHtml = true;
                 mm.Subject = "Verification";
 
