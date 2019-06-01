@@ -7,6 +7,11 @@
 
     <h3>  Create a new account</h3>
 
+        <!--Label result to inform the user that a confirmation email has been sent -->
+        <div class="col-md-9">
+            <asp:Label ID="lblRegResult" runat="server" CssClass="text-danger"></asp:Label>
+        </div>
+
         <!--Label /TextBox / Validator for E-mail -->
         <div class="form-group">
                 <label for="TextEmail" class="control-label col-md-3 text-info">E-mail</label>
@@ -81,8 +86,5 @@
                 <asp:Button ID="CreateAccountButton" runat="server" Text="Create Account" CssClass="btn btn-primary" OnClick="CreateAccountButton_Click"/>
                 <asp:button ID="CancelButton" runat="server" Text="Cancel" CssClass="btn btn-danger" CausesValidation="False" OnClick="CancelButton_Click"/>
          </div>
-        
-            <div class="col-md-9">
-                <asp:Label ID="lblRegResult" runat="server" CssClass="text-info"></asp:Label>
-            </div>
+
 </asp:Content>

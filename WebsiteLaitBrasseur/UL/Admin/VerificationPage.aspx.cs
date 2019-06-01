@@ -12,39 +12,37 @@ namespace WebsiteLaitBrasseur.Admin
 {
     public partial class VerificationPage : System.Web.UI.Page
     {
+        AccountBL blAccount= new AccountBL();
+        AccountDTO dtoAccount = new AccountDTO();
+        string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 if ((Request.QueryString["ConfID"] != null))
                 {
-                     string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
-                    Response.Redirect(url);
+                    int paramConfID = (Convert.ToInt32(Request.QueryString["ConfID"]));         //ConfID (URL parameter recuperation)
+                    dtoAccount =blAccount.GetCustomerByConfID(paramConfID);                     //Admin recuperation*
+
+
+                    Debug.Write("\nVerificationPage / paramID : " + paramConfID);//DEBUG
+                    Debug.Write("\nVerificationPage / GetConfID : " + dtoAccount.GetConfirmationID());   //DEBUG
+
+                    if (dtoAccount.GetConfirmationID() == 0) { lblRegistrationResult.Text = "Account already confirmed or ConfID invalid"; }  
+                    else if ((paramConfID == dtoAccount.GetConfirmationID()))   //Test parameterConfID =?= ConfID in DB
+                    {
+                        if (blAccount.UpdateIsConfirmed(dtoAccount.GetEmail()) == 1)    //Update isConfirmed
+                        {
+                            lblRegistrationResult.Text = " you are well registered";
+                        }
+                        else
+                        {
+                            lblRegistrationResult.Text = "Issue during verification";
+                        }
+                    }
+                    else { Response.Redirect(url); }
                 }
-                //User informations recuperated from cookie
-                //TODO
-                //select * from account where ConfID == Request.QueryString["ConfID"] && IsConfirmed==false
-                //Account.GetEmail
-                //bl.UpdateIsConfirmed(email)
-                /*if ((Request.QueryString["ConfID"] != null) && (Request.QueryString["ConfID"] == this.Session["ConfID"].ToString()))
-                {
-                    AccountBL bl = new AccountBL();
-
-                    if (bl.UpdateIsConfirmed(this.Session["emailRegister"].ToString()) == 1)
-                    {
-                        lblRegistrationResult.Text = " you are well registered";
-                    }
-                    else
-                    {
-                        lblRegistrationResult.Text = "Issue during verification";
-                    }
-
-                    
-                    
-                }*/
-
-
-
+                else   {Response.Redirect(url);}
             }
         }
     }

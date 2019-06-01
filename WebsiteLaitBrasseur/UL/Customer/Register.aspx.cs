@@ -28,6 +28,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 byte isAdmin = 0; //customer 
                 byte status = 0; //per default not suspendet user
                 var imgPath = " "; //as there is no profile img
+                Random random = new Random();
+                confirmationID = random.Next();
                 lblRegResult.Text = " ";
 
                 var check = bl.CreateAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
@@ -40,12 +42,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         lblRegResult.Visible = true;
                         lblRegResult.CssClass = "text-danger";
                         lblRegResult.Text = "Database error.";
+
                         break;
                     case 1:
                         lblRegResult.Visible = true;
                         lblRegResult.CssClass = "text-success";
                         lblRegResult.Text = "Password and email are correct.";
-                        MailSender();
+                        MailSender(confirmationID);
                         break;
                     case 2:
                         lblRegResult.Visible = true;
@@ -63,11 +66,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         lblRegResult.Text = "The email is already taken."; //TODO explain requirements
                         break;
                     default:
+                        lblRegResult.Visible = true;
+                        lblRegResult.CssClass = "text-danger";
+                        lblRegResult.Text = "Error in account creation. Try later"; //TODO explain requirements
+                        Debug.Write("Check : out of values");
                         break;
                 }                
             }
-
-            Response.Redirect("/UL/Customer/Login.aspx");
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)
@@ -75,14 +80,15 @@ namespace WebsiteLaitBrasseur.UL.Customer
             Response.Redirect("/UL/Customer/Logout.aspx");
         }
 
-        private void MailSender()
+        private void MailSender(int confirmationID)
         {
-            //variable session creation
-            Random random = new Random();
-            Session["ConfID"] = random.Next();
-            confirmationID = random.Next();
+            bl.GetCustomer(TextEmail.Text.Trim()).SetConfirmationID(confirmationID);
+            string confID = confirmationID.ToString();
 
-            string confID = this.Session["ConfID"].ToString();    //Cookie recuperation
+
+            Debug.Write("\nMailSender / confirmationID : " + confirmationID + "\n");   //DEBUG
+            Debug.Write("\nMailSender / getConfID :  " + bl.GetCustomer(TextEmail.Text.Trim()).GetConfirmationID());    //DEBUG
+            Debug.Write("\nMailSender / confIDString : " + confID);   //DEBUG
 
             if (confID != null)
             {
@@ -92,7 +98,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 MailMessage mm = new MailMessage();
                 mm.To.Add(new MailAddress(TextEmail.Text, "Request for Verification"));
                 mm.From = new MailAddress("webProgProjUon@gmail.com");
-                mm.Body = "<a href='http://localhost:54429//UL/Customer/ConfirmationPage.aspx?ConfID=" + confID + " '> click here to verify </a>";
+                mm.Body = "<a href='https://localhost:44314/UL/Customer/ConfirmationPage.aspx?ConfID=" + confID + " '> click here to verify </a>";
                 mm.IsBodyHtml = true;
                 mm.Subject = "Verification";
 

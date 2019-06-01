@@ -64,6 +64,9 @@ namespace WebsiteLaitBrasseur.BL
                     //generate hashed password to store in DB with salt 
                     var md5 = GenerateSaltedHash(password);
                     flag = DB.Insert(email, md5, salt, isConfirmed, firstName, lastName, birthDate, phoneNo, imgPath, status, isAdmin, confirmationID); 
+
+                    //Flag return new customer ID ?  need flag=1 if ok to have check=1 => registration validate
+                    if (flag >4 ) { flag=1 ; }
                 }                
             }
             catch (Exception e)
@@ -441,6 +444,27 @@ namespace WebsiteLaitBrasseur.BL
             {
                 customer = DB.FindBy(id);
                 Debug.Print("AccountBL / Customer ID: " + customer.GetID());
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+                Debug.Write(e.ToString());
+            }
+            return customer;
+        }
+
+        /// <summary>
+        /// Find single customer in DB
+        /// </summary>
+        /// <param name="confID"></param>
+        /// <returns></returns>
+        public AccountDTO GetCustomerByConfID(int confID)
+        {
+            AccountDTO customer = new AccountDTO();
+            try
+            {
+                customer= DB.FindByConfID(confID);
+                Debug.Print("AccountBL / Conf ID: " + customer.GetConfirmationID());
             }
             catch (Exception e)
             {

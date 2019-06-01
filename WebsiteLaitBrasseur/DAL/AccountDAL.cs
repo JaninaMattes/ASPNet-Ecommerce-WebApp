@@ -441,7 +441,6 @@ namespace WebsiteLaitBrasseur.DAL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         [DataObjectMethod(DataObjectMethodType.Select)]
         public AccountDTO FindBy(int accountID)
         {
@@ -472,6 +471,49 @@ namespace WebsiteLaitBrasseur.DAL
             }
             catch (Exception e)
             {
+                e.GetBaseException();
+                Debug.Print(e.ToString());
+            }
+            return account;
+        }
+
+        /// <summary>
+        /// Find a specific user in the database by its 
+        /// unique indentifier ConfID
+        /// </summary>
+        /// <param name="Confid"></param>
+        /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public AccountDTO FindByConfID(int ConfID)
+        {
+            AccountDTO account = new AccountDTO();
+            AddressDTO address;
+            string queryString = "SELECT * FROM dbo.Account WHERE confirmationID = @ConfID AND isConfirmed=0";
+
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@ConfID", SqlDbType.Int).Value = ConfID;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            address = new AddressDTO();
+                            account = GenerateAccount(reader, account, address);
+                            //return product instance as data object 
+                            Debug.Print("AccountDAL: /FindByID/ " + account.GetID());
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Write("\n\nError with ConfID SQL query, check ConfID Values in DB\n\n");
                 e.GetBaseException();
                 Debug.Print(e.ToString());
             }

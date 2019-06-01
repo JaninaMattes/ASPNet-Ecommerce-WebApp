@@ -27,16 +27,6 @@
                         </div>
                     </div>
 
-                    <!--Remerber Me checkBox-->
-                    <div class="form-group">
-                        <div class="col-md-offset-3 col-md-9">
-                            <div class="checkbox">
-                                <asp:CheckBox ID="RememberMeBox" runat="server" />
-                                <label for="RememberMeBox" >Remember me ?</label>
-                            </div>
-                        </div> 
-                    </div>
-
                     <!--Login/Register button & Forgot Password link -->
                     <div class="col-md-offset-3 col-md-9">
                         <asp:Button ID="LoginButton" runat="server" Text="Login" OnClick="LoginButton_Click" CssClass="btn btn-primary"/>

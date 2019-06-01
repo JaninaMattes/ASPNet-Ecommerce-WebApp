@@ -13,6 +13,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
     {
         AccountBL BL = new AccountBL();
         private int confirmationID;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             lblRegResult.Visible = false;
@@ -25,6 +26,8 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 byte isAdmin = 1; //admin 
                 byte status = 0; //per default not suspendet user
                 var imgPath = " "; //as there is no profile img
+                Random random = new Random(); 
+                confirmationID = random.Next();
                 lblRegResult.Text = " ";
 
                 var check = BL.CreateAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
@@ -35,16 +38,14 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 {
                     case 0:
                         lblRegResult.Visible = true;
-                        lblRegResult.CssClass = "text-success";
-                        lblRegResult.Text = "Password and email are correct.";
-                        MailSender();
-                        Session["emailRegister"] = TextEmail.Text.Trim(); //TODO
-                        Response.Redirect("/UL/Admin/LoginAdmin.aspx");
+                        lblRegResult.CssClass = "text-danger";
+                        lblRegResult.Text = "Database error.";
                         break;
                     case 1:
                         lblRegResult.Visible = true;
-                        lblRegResult.CssClass = "text-danger";
-                        lblRegResult.Text = "The email format is wrong.";
+                        lblRegResult.CssClass = "text-success";
+                        lblRegResult.Text = "Password and email are correct.";
+                        MailSender(confirmationID);
                         break;
                     case 2:
                         lblRegResult.Visible = true;
@@ -52,11 +53,21 @@ namespace WebsiteLaitBrasseur.UL.Admin
                         lblRegResult.Text = "The password format does not meet the requirements."; //TODO explain requirements
                         break;
                     case 3:
+                        Response.Redirect("/UL/Admin/LoginAdmin.aspx");
+                        lblRegResult.Visible = true;
+                        lblRegResult.CssClass = "text-danger";
+                        lblRegResult.Text = "The email format is wrong.";
+                        break;
+                    case 4:
                         lblRegResult.Visible = true;
                         lblRegResult.CssClass = "text-danger";
                         lblRegResult.Text = "The email is already taken."; //TODO explain requirements
                         break;
                     default:
+                        lblRegResult.Visible = true;
+                        lblRegResult.CssClass = "text-danger";
+                        lblRegResult.Text = "Error in account creation. Try later"; //TODO explain requirements
+                        Debug.Write("Check : out of values");
                         break;
                 }
             }            
@@ -67,16 +78,15 @@ namespace WebsiteLaitBrasseur.UL.Admin
             Response.Redirect("/UL/Admin/LoginAdmin.aspx");
         }
 
-        private void MailSender()
+        private void MailSender(int confirmationID)
         {
-            //variable session creation
-            Random random = new Random();
-            Session["ConfID"] = random.Next();
-            confirmationID = random.Next();
+            BL.GetCustomer(TextEmail.Text.Trim()).SetConfirmationID(confirmationID);
+            string confID = confirmationID.ToString() ;
 
 
-            string confID = this.Session["ConfID"].ToString() ;    //Cookie recuperation 
-
+            Debug.Write("\nMailSender / confirmationID : " + confirmationID + "\n");   //DEBUG
+            Debug.Write("\nMailSender / getConfID :  " + BL.GetCustomer(TextEmail.Text.Trim()).GetConfirmationID());    //DEBUG
+            Debug.Write("\nMailSender / confIDString : " + confID);   //DEBUG
 
             if (confID != null)
             {
@@ -86,7 +96,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 MailMessage mm = new MailMessage();                                         
                 mm.To.Add(new MailAddress(TextEmail.Text, "Request for Verification"));
                 mm.From = new MailAddress("webProgProjUon@gmail.com");
-                mm.Body = "<a href='https://localhost44314:/UL/Admin/VerificationPage.aspx?ConfID" + confID + " '> click here to verify</a>";
+                mm.Body = "<a href='https://localhost:44314/UL/Admin/VerificationPage.aspx?ConfID=" + confID + " '> click here to verify</a>";
                 mm.IsBodyHtml = true;
                 mm.Subject = "Verification";
 
