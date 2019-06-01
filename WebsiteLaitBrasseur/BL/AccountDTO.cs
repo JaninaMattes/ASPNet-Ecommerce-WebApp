@@ -10,7 +10,8 @@ namespace WebsiteLaitBrasseur.BL
         //private properties
         private int _id;
         private string _email = "";
-        private string _password = "";
+        private byte[] _password;
+        private byte[] _salt;
         private byte _isConfirmed = 0;
         private int _confirmID = 0;
         private string _firstName = "";
@@ -43,12 +44,22 @@ namespace WebsiteLaitBrasseur.BL
             this._email = email;
         }
 
-        public string GetPW()
+        public byte[] GetPW()
         {
             return this._password;
         }
 
-        public void SetPw(string pw)
+        public void SetSalt(byte[] pw)
+        {
+            this._salt = pw;
+        }
+
+        public byte[] GetSalt()
+        {
+            return this._salt;
+        }
+
+        public void SetPw(byte[] pw)
         {
             this._password = pw;
         }
@@ -133,7 +144,7 @@ namespace WebsiteLaitBrasseur.BL
             this._status = status;
         }
 
-        public int GetIsAdmin()
+        public byte GetIsAdmin()
         {
             return this._isAdmin;
         }

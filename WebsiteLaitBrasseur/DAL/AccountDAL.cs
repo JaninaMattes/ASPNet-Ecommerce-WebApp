@@ -33,7 +33,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// The return value contains the autoincremented ID for the Account.
         /// </summary>
         /// <param name="email"></param>
-        /// <param name="password"></param>
+        /// <param name="md5"></param>
         /// <param name="fname"></param>
         /// <param name="lname"></param>
         /// <param name="birthdate"></param>
@@ -43,15 +43,15 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns>The id value of the account.</returns>
 
         [DataObjectMethod(DataObjectMethodType.Insert)]
-        public int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate,
-            string phoneNo, string imgPath, Byte status, Byte isAdmin, int confirmationID)
+        public int Insert(string email, byte[] md5, byte[] salt, int isConfirmed, string fname, string lname, string birthdate,
+            string phoneNo, string imgPath, byte status, byte isAdmin, int confirmationID)
         {
             int result = 0;
             //no need to explicitely set id as autoincrement is used
 
-            string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.password, dbo.Account.isConfirmed, " +
+            string queryString = "INSERT INTO dbo.Account(dbo.Account.email, dbo.Account.md5pw, dbo.Account.salt, dbo.Account.isConfirmed, " +
                 "dbo.Account.firstName, dbo.Account.lastName, dbo.Account.birthDate, dbo.Account.phone, dbo.Account.imgPath, " +
-                "dbo.Account.status, dbo.Account.isAdmin, dbo.Account.confirmationID) VALUES(@email, @password, @isConfirmed, @firstName, @lastName, " +
+                "dbo.Account.status, dbo.Account.isAdmin, dbo.Account.confirmationID) VALUES(@email, @md5, @salt, @isConfirmed, @firstName, @lastName, " +
                 "@birthDate, @phone, @imgPath, @status, @isAdmin, @confID)";
 
             string queryAutoIncr = "SELECT TOP(1) dbo.Account.accountID FROM dbo.Account ORDER BY 1 DESC";
@@ -63,8 +63,9 @@ namespace WebsiteLaitBrasseur.DAL
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
                         cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
-                        cmd.Parameters.AddWithValue("@password", SqlDbType.VarChar).Value = password;
-                        cmd.Parameters.AddWithValue("@isConfirmed", SqlDbType.Int).Value = isConfirmed;
+                        cmd.Parameters.AddWithValue("@md5", SqlDbType.VarBinary).Value = md5;
+                        cmd.Parameters.AddWithValue("@salt", SqlDbType.VarBinary).Value = salt;
+                        cmd.Parameters.AddWithValue("@isConfirmed", SqlDbType.TinyInt).Value = isConfirmed;
                         cmd.Parameters.AddWithValue("@firstName", SqlDbType.VarChar).Value = fname;
                         cmd.Parameters.AddWithValue("@lastName", SqlDbType.VarChar).Value = lname;
                         cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
@@ -112,7 +113,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int UpdateStatus(string email, int status)
+        public int UpdateStatus(string email, byte status)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Account SET status = @status WHERE email = @email";
@@ -123,7 +124,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@status", SqlDbType.Int).Value = status;
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.TinyInt).Value = status;
                         cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
                         cmd.CommandType = CommandType.Text;
                         con.Open();
@@ -281,7 +282,7 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int UpdateIsConfirmed(string email, int confirmed)
+        public int UpdateIsConfirmed(string email, byte confirmed)
         {
             int result = 0;
             string queryString = "UPDATE dbo.Account SET isConfirmed = @isConfirmed WHERE email = @email";
@@ -308,12 +309,56 @@ namespace WebsiteLaitBrasseur.DAL
             return result;
         }
 
+        /// <summary>
+        /// Update password in DB.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public int UpdatePassword(string email, byte[] password)
+        {
+            int result = 0;
+            string queryString = "UPDATE dbo.Account SET md5pw = @pw WHERE email = @email";
+            try
+            {
+                // The connection is automatically closed at the end of the using block.
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@pw", SqlDbType.VarBinary).Value = password;
+                        cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        Debug.Print("AccountDAL: /Update Is confirmed/ result : " + result);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Update all values in user profile.
+        /// </summary>
+        /// <param name="accountID"></param>
+        /// <param name="email"></param>
+        /// <param name="fname"></param>
+        /// <param name="lname"></param>
+        /// <param name="birthdate"></param>
+        /// <param name="phoneNo"></param>
+        /// <param name="imgPath"></param>
+        /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int UpdateAll(int accountID, string email, string password, string fname, string lname,
+        public int UpdateAll(int accountID, string email, string fname, string lname,
             string birthdate, string phoneNo, string imgPath)
         {
             int result = 0;
-            string queryString = "UPDATE dbo.Account SET email = @email, password = @password, " +
+            string queryString = "UPDATE dbo.Account SET email = @email, " +
                 "firstName = @firstName, lastName = @lastName, " +
                 "birthDate = @birthDate, phone = @phoneNo, imgPath = @imgPath " +
                 "WHERE accountID = @accountID";
@@ -326,7 +371,6 @@ namespace WebsiteLaitBrasseur.DAL
                     {
                         cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
                         cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
-                        cmd.Parameters.AddWithValue("@password", SqlDbType.VarChar).Value = password;
                         cmd.Parameters.AddWithValue("@firstName", SqlDbType.VarChar).Value = fname;
                         cmd.Parameters.AddWithValue("@lastName", SqlDbType.VarChar).Value = lname;
                         cmd.Parameters.AddWithValue("@birthDate", SqlDbType.Date).Value = birthdate;
@@ -426,6 +470,7 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return account;
         }
+
         /// <summary>
         /// Read operation find a specific user in the database
         /// by selecting his unique email address to indentify the entry.
@@ -480,7 +525,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public IEnumerable<AccountDTO> FindAllUserBy(int isAdmin)
+        public IEnumerable<AccountDTO> FindAllUserBy(byte isAdmin)
         {
             string queryString = "SELECT * FROM dbo.Account WHERE isAdmin = @isAdmin";
             List<AccountDTO> results = new List<AccountDTO>();
@@ -490,7 +535,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@isAdmin", SqlDbType.Int).Value = isAdmin;
+                        cmd.Parameters.AddWithValue("@isAdmin", SqlDbType.TinyInt).Value = isAdmin;
                         cmd.CommandType = CommandType.Text;
                         con.Open();
                         SqlDataReader reader = cmd.ExecuteReader();
@@ -564,7 +609,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public IEnumerable<AccountDTO> FindByStatus(int status)
+        public IEnumerable<AccountDTO> FindByStatus(byte status)
         {
             string queryString = "SELECT * FROM dbo.Account WHERE status = @status";
             List<AccountDTO> results = new List<AccountDTO>();
@@ -574,7 +619,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@status", SqlDbType.Int).Value = status;
+                        cmd.Parameters.AddWithValue("@status", SqlDbType.TinyInt).Value = status;
                         cmd.CommandType = CommandType.Text;
                         con.Open();
                         SqlDataReader reader = cmd.ExecuteReader();
@@ -639,14 +684,14 @@ namespace WebsiteLaitBrasseur.DAL
         /// if the credentials of a user exist the effected number of rows = 1 returned
         /// </summary>
         /// <param name="email"></param>
-        /// <param name="password"></param>
+        /// <param name="md5"></param>
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public int FindLoginCred(string email, string password)
+        public int FindLoginCred(string email, byte[] md5)
         {
             int result = 0;
-            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE email = @email AND password = @password";
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE email = @email AND md5pw = @password";
 
             try
             {
@@ -655,8 +700,8 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@email", email);
-                        cmd.Parameters.AddWithValue("@password", password);
+                        cmd.Parameters.AddWithValue("@email", SqlDbType.VarChar).Value = email;
+                        cmd.Parameters.AddWithValue("@password", SqlDbType.VarBinary).Value = md5;
                         cmd.CommandType = CommandType.Text;
                         con.Open();
                         result = Convert.ToInt32(cmd.ExecuteScalar()); //is expected to return value 1 if successfull
@@ -703,7 +748,6 @@ namespace WebsiteLaitBrasseur.DAL
             }
             catch (Exception e)
             {
-                e.ToString();
                 e.GetBaseException();
                 Debug.Print(e.ToString());
             }
@@ -714,14 +758,14 @@ namespace WebsiteLaitBrasseur.DAL
         /// Find the entry for the password
         /// Will return a value of 1 if password is found in DB.
         /// </summary>
-        /// <param name="password"></param>
+        /// <param name="md5"></param>
         /// <returns></returns>
 
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public int FindLoginPW(string password)
+        public int FindLoginPW(byte[] md5)
         {
             int result = 0;
-            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE password = @password";
+            string queryString = "SELECT COUNT(1) FROM dbo.Account WHERE md5pw = @md5";
 
             try
             {
@@ -730,7 +774,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@password", password);
+                        cmd.Parameters.AddWithValue("@md5", md5);
                         cmd.CommandType = CommandType.Text;
                         con.Open();
                         result = Convert.ToInt32(cmd.ExecuteScalar());
@@ -755,10 +799,10 @@ namespace WebsiteLaitBrasseur.DAL
                 Debug.Print("AccountDAL / GenerateAccount: " + address.GetID());
                 account.SetAddress(address);
             }
-            //account.SetAddress(address);
             account.SetID(Convert.ToInt32(reader["accountID"]));
             account.SetEmail(reader["email"].ToString());
-            account.SetPw(reader["password"].ToString());
+            account.SetPw((byte[])reader["md5pw"]);
+            account.SetSalt((byte[])reader["salt"]);
             account.SetFirstName(reader["firstName"].ToString());
             account.SetLastName(reader["lastName"].ToString());
             account.SetBirthdate(Convert.ToDateTime(reader["birthDate"]));
@@ -770,5 +814,6 @@ namespace WebsiteLaitBrasseur.DAL
             account.SetStatus(Convert.ToByte(reader["status"]));
             return account;
         }
+        
     }
 }

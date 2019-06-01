@@ -161,6 +161,7 @@
     <Compile Include="BL\PayPalDTO.cs" />
     <Compile Include="BL\ProductBL.cs" />
     <Compile Include="BL\ProductSelectionBL.cs" />
+    <Compile Include="BL\SecurePasswordHasher.cs" />
     <Compile Include="BL\ShippmentBL.cs" />
     <Compile Include="BL\SizeBL.cs" />
     <Compile Include="BL\SizeDTO.cs" />

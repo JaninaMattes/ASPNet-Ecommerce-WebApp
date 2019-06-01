@@ -8,22 +8,23 @@ namespace WebsiteLaitBrasseur.DAL
 {
     interface IAccountDataAccess
     {
-        int Insert(string email, string password, int isConfirmed, string fname, string lname, string birthdate, string phoneNo, string imgPath, Byte status, Byte isAdmin, int confirmationID);
-        int UpdateStatus(string email, int status);
+        int Insert(string email, byte[] password, byte[] salt, int isConfirmed, string fname, string lname, string birthdate, string phoneNo, string imgPath, byte status, byte isAdmin, int confirmationID);
+        int UpdateStatus(string email, byte status);
         int UpdateUsername(string email, string fName, string lName);
         int UpdatePhoneNo(string email, string phoneNo);
         int UpdateAddress(string email, int addressID);
+        int UpdatePassword(string email, byte[] password);
         int UpdateImg(string email, string imgPath);
-        int UpdateIsConfirmed(string email, int confirmed);
-        int UpdateAll(int accountID, string email, string password, string fname, string lname, string birthdate, string phoneNo, string imgPath);
+        int UpdateIsConfirmed(string email, byte confirmed);
+        int UpdateAll(int accountID, string email, string fname, string lname, string birthdate, string phoneNo, string imgPath);
         BL.AccountDTO FindBy(int id);
         BL.AccountDTO FindBy(string email);
-        IEnumerable<BL.AccountDTO> FindAllUserBy(int isAdmin);
+        IEnumerable<BL.AccountDTO> FindAllUserBy(byte isAdmin);
         IEnumerable<BL.AccountDTO> FindAll();
-        IEnumerable<BL.AccountDTO> FindByStatus(int status);
+        IEnumerable<BL.AccountDTO> FindByStatus(byte status);
         BL.AccountDTO FindByName(string fname, string lname);
-        int FindLoginCred(string email, string password);
+        int FindLoginCred(string email, byte[] password);
         int FindLoginEmail(string email);
-        int FindLoginPW(string password);
+        int FindLoginPW(byte[] password);
     }
 }

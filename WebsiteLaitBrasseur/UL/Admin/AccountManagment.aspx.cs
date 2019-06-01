@@ -27,7 +27,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             try
             {
-                int status = 0;
+                byte status = 0;
                 if (UserListTable.Rows[e.RowIndex].Cells[6].Text == "Active") { status = 0; }
                 else if (UserListTable.Rows[e.RowIndex].Cells[6].Text == "Suspended") { status = 1; }
                 else { lblError.Text = "Status invalid"; }

@@ -26,7 +26,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             AccountBL BL = new AccountBL();
 
-            var isCorrect = BL.IsLoginCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
+            var isCorrect = BL.IsAdminLoginCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
             switch (isCorrect)
             {
                 case 0:
@@ -41,23 +41,23 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     break;
                 case 2:
                     LblErrorMessage.Visible = true;
-                    LblErrorMessage.Text = "Password is incorrect.";
+                    LblErrorMessage.Text = "You are not registered as admin."; //Add link?
                     break;
                 case 3:
                     LblErrorMessage.Visible = true;
-                    LblErrorMessage.Text = "Email address is incorrect.";
+                    LblErrorMessage.Text = "Password is incorrect.";
                     break;
                 case 4:
                     LblErrorMessage.Visible = true;
-                    LblErrorMessage.Text = "Your account is currently suspended";
+                    LblErrorMessage.Text = "Username is incorrect.";
                     break;
                 case 5:
                     LblErrorMessage.Visible = true;
-                    LblErrorMessage.Text = "Your email isn't confirmed";
+                    LblErrorMessage.Text = "Login is not confirmed. Please find confirmation link in email.";                    
                     break;
                 case 6:
                     LblErrorMessage.Visible = true;
-                    LblErrorMessage.Text = "You are not an admin, please join the Customer Login Page"; //Add link?
+                    LblErrorMessage.Text = "User is suspendet.";
                     break;
                 default:
                     break;
@@ -71,12 +71,9 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         private void SessionInit()
         {
-            Session["email"] = TextEmail.Text.Trim();
+            Session["Email"] = TextEmail.Text.Trim();
             Session["AdminID"] = bl.GetCustomer(TextEmail.Text.Trim()).GetID();
             Session["DateInit"] = DateTime.Now;         
         }
-
-
-
     }
 }

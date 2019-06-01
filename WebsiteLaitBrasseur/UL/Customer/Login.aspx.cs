@@ -22,7 +22,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected void LoginButton_Click(object sender, EventArgs e)
         {
 
-            var isCorrect = BL.IsLoginCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
+            var isCorrect = BL.IsCustomerLoginCorrect(TextEmail.Text.Trim(), TextPassword.Text.Trim());
             switch (isCorrect)
             {
                 case 0:
@@ -37,14 +37,20 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     Response.Redirect(url);
                     break;
                 case 2:
+                    //if user is admin cant log in to customer page
                     LblErrorMessage.Visible = true;
-                    LblErrorMessage.Text = "Password is incorrect.";
+                    LblErrorMessage.Text = "Not entitled to log in as customer. Please register";
+                    Response.Redirect("/UL/Customer/Register.aspx");
                     break;
                 case 3:
                     LblErrorMessage.Visible = true;
-                    LblErrorMessage.Text = "Email address is incorrect.";
+                    LblErrorMessage.Text = "Password is incorrect.";
                     break;
                 case 4:
+                    LblErrorMessage.Visible = true;
+                    LblErrorMessage.Text = "Email is incorrect.";
+                    break;
+                case 5:
                     LblErrorMessage.Visible = true;
                     LblErrorMessage.Text = "User is suspendet.";
                     break;

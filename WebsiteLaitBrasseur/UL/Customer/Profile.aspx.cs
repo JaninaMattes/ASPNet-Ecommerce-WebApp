@@ -136,7 +136,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
              // suspend the user dont delete
-             int status = 1;
+             byte status = 1;
              BL.UpdateStatus(SESSION_VAR, status);
         }
 

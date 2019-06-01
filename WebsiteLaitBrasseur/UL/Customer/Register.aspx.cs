@@ -18,37 +18,49 @@ namespace WebsiteLaitBrasseur.UL.Customer
         AccountBL bl = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            lblRegResult.Visible = false;
         }
 
         protected void CreateAccountButton_Click(object sender, EventArgs e)
         {
             if (IsValid)
             {
-                Byte isAdmin = 0; //customer 
-                Byte status = 0; //per default not suspendet user
+                byte isAdmin = 0; //customer 
+                byte status = 0; //per default not suspendet user
                 var imgPath = " "; //as there is no profile img
                 lblRegResult.Text = " ";
 
                 var check = bl.CreateAccount(TextEmail.Text.Trim(), TextPassword.Text.Trim(), TextFirstName.Text.Trim(),
                    TextLastName.Text.Trim(), TextBirthday.Text.Trim(), TextPhone.Text.Trim(), imgPath, status, isAdmin, confirmationID);
-                Debug.Write("Register User / Check Value : " + check);
+                Debug.Write("Register Customer / Check Value : " + check);
 
                 switch (check)
                 {
                     case 0:
+                        lblRegResult.Visible = true;
+                        lblRegResult.CssClass = "text-danger";
+                        lblRegResult.Text = "Database error.";
+                        break;
+                    case 1:
+                        lblRegResult.Visible = true;
                         lblRegResult.CssClass = "text-success";
                         lblRegResult.Text = "Password and email are correct.";
                         MailSender();
                         Session["emailRegister"] = TextEmail.Text.Trim(); //TODO
                         break;
-                    case 1:
-                        lblRegResult.Text = "The email format is wrong.";
-                        break;
                     case 2:
+                        lblRegResult.Visible = true;
+                        lblRegResult.CssClass = "text-danger";
                         lblRegResult.Text = "The password format does not meet the requirements."; //TODO explain requirements
                         break;
                     case 3:
+                        lblRegResult.Visible = true;
+                        lblRegResult.CssClass = "text-danger";
+                        lblRegResult.Text = "The email format is wrong.";
+                        break;                        
+                    case 4:
+                        lblRegResult.Visible = true;
+                        lblRegResult.CssClass = "text-danger";
                         lblRegResult.Text = "The email is already taken."; //TODO explain requirements
                         break;
                     default:
@@ -56,7 +68,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 }                
             }
 
-            Response.Redirect("/UL/Customer/LoginAdmin.aspx");
+            Response.Redirect("/UL/Customer/Login.aspx");
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)
