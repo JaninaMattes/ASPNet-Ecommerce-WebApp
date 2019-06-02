@@ -53,6 +53,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
              BL.UpdateStatus(emailCustomer, status);
         }
 
+        protected void ChangePasswordButton_Click(object sender, EventArgs e)
+        {
+            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "PasswordChanging.aspx";
+
+            Response.Redirect(url);
+        }
+
         protected void SaveButton_Click(object sender, EventArgs e)
         {
             //update User Profile
@@ -237,5 +244,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
             return transactions;
         }
+
+
     }
 }

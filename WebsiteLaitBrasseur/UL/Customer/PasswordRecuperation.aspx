@@ -1,26 +1,17 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="PasswordChanging.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.PasswordChanging" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="PasswordRecuperation.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.PasswordRecuperation" %>
 
 
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <!--Page managing the modification of a password-->
+      <!--Page managing the recuperation of the password-->
 
     <div class="container-fluid">
-        <h3>Password Modification </h3>
+        <h3>Password Reinitialization </h3>
         <asp:Label ID="lblResult" runat="server" Text="" CssClass="text-success"></asp:Label> 
 
-        
-        <!--Label /TextBox / Validator for Old Password -->
-        <div class="form-group">
-                <label for="TextOldPassword" class="control-label col-md-3 text-info">Old Password</label>
-                <div class="col-md-5">
-                    <asp:TextBox ID="TextOldPassword" runat="server" Cssclass="form-control" TextMode="Password"> </asp:TextBox>
-                    <asp:RequiredFieldValidator ID="OldPasswordReqField" runat="server"  ControlToValidate="TextOldPassword" Display="Dynamic" CssClass="text-danger" ErrorMessage="Old Password is required"></asp:RequiredFieldValidator><br />
-                </div>
-         </div>
-        
-
-        <!--Label /TextBox / Validator for New Password -->
+        <!--Label /TextBox / Validator for Password -->
         <div class="form-group">
                 <label for="TextPassword" class="control-label col-md-3 text-info">New Password</label>
                 <div class="col-md-5">
@@ -32,7 +23,7 @@
                 </div>
          </div>
 
-         <!--Label /TextBox / Validator(compare with New password entry) for Confirm Password -->
+         <!--Label /TextBox / Validator(compare with first password entry) for Confirm Password -->
          <div class="form-group">
                 <label for="TextPasswordConf" class="control-label col-md-3 text-info">Confirm New Password</label>
                 <div class="col-md-5">

@@ -6,43 +6,53 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class PasswordChanging : System.Web.UI.Page
     {
+        AccountBL blAcc = new AccountBL();
+        AccountDTO dtoAcc = new AccountDTO();
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*if ((Request.QueryString["RecupID"] != null)  )                         //Test if url contain recupID token
-            {
-                string[] strRecupValues = (string[])(this.Session["RecupValues"]);  //Session values recuperation   
-
-                if ((Request.QueryString["RecupID"] == strRecupValues[0]))          //Test if RecupID from URL = RecupID from Session       
-                {
-                    this.Session["EmailRecuperation"] = strRecupValues[1];          //Customer email is put in another varaible session
-                }
-                else  //Redirection
-                {
-                    string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
-                    Response.Redirect(url);
-                }
-            }
-            else   //Redirection
+            if (this.Session["CustID"] == null)
             {
                 string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
                 Response.Redirect(url);
-            }*/
-
+            }
         }
 
         protected void ChangeButton_Click(object sender, EventArgs e)
         {
-            //TODO : TEST password resistance
+            //Test if password enter by user correspond to its password in DB
+            string oldPassword = TextOldPassword.Text;
+            int result = -1;
+            result=blAcc.IsCustomerLoginCorrect(this.Session["email"].ToString(), oldPassword);
 
-            //TODO : Update Password (slat generation + Hash(password+salt) + storage in DB)
 
-            Session.Remove("RecupValues");
-            Session.Remove("EmailRecuperation");
+            if (result == 1)    //If password match
+            {
+                //Update password in DB
+                result = blAcc.UpdatePassword(this.Session["email"].ToString(), TextPassword.Text);
+
+
+                //Display result
+                if (result == 1) { lblResult.CssClass = "text-success"; lblResult.Text = "New Password updates with success"; }
+                else if (result == 0) { lblResult.CssClass = "text-danger"; lblResult.Text = "Invalid new password"; }
+                else { lblResult.CssClass = "text-danger"; lblResult.Text = "Error during treatment of the new password"; }
+
+            }
+            //If password doesn't match
+            else if (result == 3) { lblResult.CssClass="text-danger"; lblResult.Text = "Password doesn't match"; }
+            else { lblResult.CssClass = "text-danger"; lblResult.Text = "Error during treatment"; }
+
+
+            
+
+
+
         }
+
     }
 }

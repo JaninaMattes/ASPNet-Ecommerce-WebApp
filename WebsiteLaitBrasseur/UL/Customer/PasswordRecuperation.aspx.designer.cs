@@ -10,7 +10,7 @@
 namespace WebsiteLaitBrasseur.UL.Customer {
     
     
-    public partial class PasswordChanging {
+    public partial class PasswordRecuperation {
         
         /// <summary>
         /// Contrôle lblResult.
@@ -20,24 +20,6 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblResult;
-        
-        /// <summary>
-        /// Contrôle TextOldPassword.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextOldPassword;
-        
-        /// <summary>
-        /// Contrôle OldPasswordReqField.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator OldPasswordReqField;
         
         /// <summary>
         /// Contrôle TextPassword.

@@ -88,7 +88,7 @@
                         <!--Password change button -->
                         <div class="col-md-6 text-center">
                             <br /><br />
-                            <asp:Button ID="ChangePasswordButton" runat="server" Text="Change Password" class="btn btn-primary" />
+                            <asp:Button ID="ChangePasswordButton" runat="server" Text="Change Password" OnClick="ChangePasswordButton_Click" CausesValidation="false" CssClass ="btn btn-primary" />
                         </div>
 
 

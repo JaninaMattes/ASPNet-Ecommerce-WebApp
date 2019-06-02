@@ -39,7 +39,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 case 2:
                     //if user is admin cant log in to customer page
                     LblErrorMessage.Visible = true;
-                    LblErrorMessage.Text = "Not entitled to log in as customer. Please register";
+                    LblErrorMessage.Text = "Not entitled to log in as customer. Please register";   //No time to display
                     Response.Redirect("/UL/Customer/Register.aspx");
                     break;
                 case 3:

@@ -397,6 +397,10 @@ namespace WebsiteLaitBrasseur.BL
             {
                 try
                 {
+                    //get stored values from DB to check PW
+                    var account = DB.FindBy(email);
+                    var salt = account.GetSalt();       //seems that salt is empty
+
                     var pw = GenerateByteArr(password);
                     var md5 = GenerateSaltedHash(pw, salt);
 
@@ -406,8 +410,9 @@ namespace WebsiteLaitBrasseur.BL
                 catch (Exception e)
                 {
                     e.GetBaseException();
+                    Debug.Write(e.ToString());
                 }
-             }
+            }
             return result;
         }
 
@@ -646,6 +651,7 @@ namespace WebsiteLaitBrasseur.BL
                 return false;
             }
         }
+
 
         /// <summary>
         /// function to check if a password is correct entered in the textfield

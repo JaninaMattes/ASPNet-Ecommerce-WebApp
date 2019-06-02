@@ -87,6 +87,7 @@
     <Content Include="UL\Customer\EmailRecuperation.aspx" />
     <Content Include="UL\Customer\Logout.aspx" />
     <Content Include="UL\Customer\PasswordChanging.aspx" />
+    <Content Include="UL\Customer\PasswordRecuperation.aspx" />
     <Content Include="UL\Customer\Register.aspx" />
     <Content Include="UL\Admin\DetailPageAdmin.aspx" />
     <Content Include="UL\Admin\ItemsManagement.aspx" />
@@ -251,6 +252,13 @@
     </Compile>
     <Compile Include="UL\Customer\PasswordChanging.aspx.designer.cs">
       <DependentUpon>PasswordChanging.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UL\Customer\PasswordRecuperation.aspx.cs">
+      <DependentUpon>PasswordRecuperation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\Customer\PasswordRecuperation.aspx.designer.cs">
+      <DependentUpon>PasswordRecuperation.aspx</DependentUpon>
     </Compile>
     <Compile Include="UL\Customer\Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>

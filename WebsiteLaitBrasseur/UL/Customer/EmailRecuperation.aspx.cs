@@ -55,7 +55,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     MailMessage mm = new MailMessage();
                     mm.To.Add(new MailAddress(TextEmail.Text, "Request for New Password"));
                     mm.From = new MailAddress("webProgProjUon@gmail.com");
-                    mm.Body = "<a href='https://localhost:44314/UL/Customer/PasswordChanging.aspx?RecupID=" + strRecupID + " '> click here to reinitialize your password </a>";
+                    mm.Body = "<a href='https://localhost:44314/UL/Customer/PasswordRecuperation.aspx?RecupID=" + strRecupID + " '> click here to reinitialize your password </a>";
                     mm.IsBodyHtml = true;
                     mm.Subject = "Verification";
 
