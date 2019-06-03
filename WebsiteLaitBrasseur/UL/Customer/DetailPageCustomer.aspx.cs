@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Diagnostics;
 using Microsoft.AspNet.FriendlyUrls;
 using WebsiteLaitBrasseur.BL;
+using System.Configuration;
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
@@ -14,63 +15,64 @@ namespace WebsiteLaitBrasseur.UL.Customer
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            AddButton_Click(sender, e);
-            string productID = null;
-            // get id from URL segment
+            AddButton_Click(sender, e); //Useful ?
+
             try
             {
+                // get id from URL segment
                 var segments = Request.GetFriendlyUrlSegments();
-                 productID = segments[0];
-            }catch(Exception ex)
+                string idString = segments[0];
+
+                // get id from query string and try to parse
+                int id;
+
+                if (!string.IsNullOrEmpty(idString) && int.TryParse(idString, out id))
+                {
+                    //call product from Database                
+                    ProductBL db = new ProductBL();
+                    SizeBL sb = new SizeBL();
+
+                    if (IsPostBack)
+                    {
+                        labelPrice.Text = sb.GetPriceBySize(id, Convert.ToInt32(unitDropDownList.SelectedValue)).ToString();
+                        totalAmount.Text = GetTotalAmount(labelPrice.Text, quantityDropDownList.SelectedValue.ToString());
+                    }
+                    if (!IsPostBack)
+                    {
+                        // retrieve a prodcut from our db
+                        var product = db.GetProduct(id);
+                        var details = sb.GetDetails(product.GetId());
+                        List<SizeDTO> productDetails = details.ToList();
+
+                        //only display available products to the customer
+                        if (product != null && product.GetStatus() == 1)
+                        {
+                            // set up detail page elements
+                            headerTitle.Text = product.GetName();
+                            headerSubtitle.Text = product.GetShortInfo();
+                            descriptionLabel.Text = product.GetInfo();
+                            destinationImg.ImageUrl = product.GetImgPath();
+                            nameLabel.Text = product.GetName();
+                            labelProduct.Text = product.GetProductType();
+                            labelProducer.Text = product.GetProducer();
+                            for (int i = 0; i < productDetails.Count; i++) { unitDropDownList.Items.Add(productDetails[i].GetSize().ToString()); }
+                            labelPrice.Text = sb.GetPriceBySize(id, Convert.ToInt32(unitDropDownList.SelectedValue)).ToString();
+                            for (int i = 0; i < product.GetStock(); i++) { quantityDropDownList.Items.Add(i.ToString()); }
+                            if (product.GetStock() <= 5) { lowStock.Text = $"Low stock. Only {product.GetStock()} availble"; }
+                        }
+                        else
+                        {
+                            //TODO Use case when product is not in stock 
+                            headerTitle.Text = "Product currently not available";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
             {
                 ex.GetBaseException();
-            }
-
-
-            // get id from query string and try to parse
-            var idString = productID;
-            int id;
-
-            if (!string.IsNullOrEmpty(idString) && int.TryParse(idString, out id))
-            {
-                //call product from Database                
-                ProductBL db = new ProductBL();
-                SizeBL sb = new SizeBL();
-
-                if (IsPostBack)
-                {
-                    labelPrice.Text = sb.GetPriceBySize(id, Convert.ToInt32(unitDropDownList.SelectedValue)).ToString();
-                    totalAmount.Text = GetTotalAmount(labelPrice.Text , quantityDropDownList.SelectedValue.ToString());
-                }
-                if (!IsPostBack)
-                {
-                    // retrieve a prodcut from our db
-                    var product = db.GetProduct(id);
-                    var details = sb.GetDetails(product.GetId());
-                    List<SizeDTO> productDetails = details.ToList();
-
-                    //only display available products to the customer
-                    if (product != null && product.GetStatus()==1)
-                    {
-                        // set up detail page elements
-                        headerTitle.Text = product.GetName();
-                        headerSubtitle.Text = product.GetShortInfo();
-                        descriptionLabel.Text = product.GetInfo();
-                        destinationImg.ImageUrl = product.GetImgPath();
-                        nameLabel.Text = product.GetName();
-                        labelProduct.Text = product.GetProductType();
-                        labelProducer.Text = product.GetProducer();
-                        for (int i = 0; i < productDetails.Count; i++)  {  unitDropDownList.Items.Add(productDetails[i].GetSize().ToString());  }
-                        labelPrice.Text = sb.GetPriceBySize ( id , Convert.ToInt32(unitDropDownList.SelectedValue)).ToString();
-                        for (int i = 0; i < product.GetStock(); i++) { quantityDropDownList.Items.Add(i.ToString()); }
-                        if (product.GetStock()<=5) { lowStock.Text = $"Low stock. Only {product.GetStock()} availble"; }
-                    }
-                    else
-                    {
-                        //TODO Use case when product is not in stock 
-                        headerTitle.Text = "Product currently not available";
-                    }
-                }
+                //Invalid URL : redirection
+                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/OverviewPage.aspx");
             }
         }
 

@@ -23,49 +23,60 @@ namespace WebsiteLaitBrasseur.UL.Customer
             
             if (!IsPostBack)
             {
-                // get id from query string and try to parse
-                var type = Request.QueryString["productType"];
+                string type="";
+                // get id from URL segment
+                try
+                {
+                    var segments = Request.GetFriendlyUrlSegments();
+                    type = segments[0];
+                    if (type == null) { Debug.Write("\nError Url Friendly"); } //DEBUG 
+                }
+                catch (Exception ex)
+                {
+                    ex.GetBaseException();
+                }
+
                 if (!string.IsNullOrEmpty(type))
-                {   
-                    Debug.WriteLine($"Product {type} selected.");
-                    if (!IsPostBack)
-                    {
-                        // retrieve a list of filtered prodcuts from the blProd
-                        BindDataByType(type);                                           
-                        if (productList != null)
+                {
+                        Debug.WriteLine($"Product {type} selected.");
+                        if (!IsPostBack)
                         {
-                            Subtitle_Warn.Text = $"A selection of our best {type} products.";
+                            // retrieve a list of filtered prodcuts from the blProd
+                            BindDataByType(type);
+                            if (productList != null)
+                            {
+                                Subtitle_Warn.Text = $"A selection of our best {type} products.";
+                            }
+                            else
+                            {
+                                Subtitle_Warn.Text = "No products could be found.";
+                            }
                         }
-                        else
-                        {
-                            Subtitle_Warn.Text = "No products could be found.";
-                        }
-                    }
                 }
                 else
                 {
-                    // retrieve a list of all prodcuts from the blProd
-                    BindAllData();
-                    if (productList != null)
-                    {
-                        Subtitle_Warn.Text = "A hand selected overview of all seasonal available products.";
-                    }
+                        // retrieve a list of all prodcuts from the blProd
+                        BindAllData();
+                        if (productList != null)
+                        {
+                            Subtitle_Warn.Text = "A hand selected overview of all seasonal available products.";
+                        }
                 }
+
             }
         }
 
         protected void imgCommand(object sender, CommandEventArgs e)
         {
-            var urlF = FriendlyUrl.Href(ConfigurationManager.AppSettings["Customer"] + "DetailPageCustomer", e.CommandArgument);
+            var urlF = FriendlyUrl.Href("/UL/Customer/DetailPageCustomer", e.CommandArgument);
             Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + urlF);
             
         }
 
         protected void ImageRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-
         }
-     
+    
 
         protected void BindAllData()
         {

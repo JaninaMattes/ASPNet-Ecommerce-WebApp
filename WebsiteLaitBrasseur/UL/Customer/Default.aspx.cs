@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.FriendlyUrls;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -16,7 +17,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected void Page_Load(object sender, EventArgs e)
         {
             try {           
-                string email= this.Session["email"].ToString();
+                string email= this.Session["Email"].ToString();
                 if (email != null)
                 {
                     AccountDTO customer = new AccountDTO();
@@ -34,7 +35,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
         // image has a click interaction to overview page containing the requested products
         protected void imgCommand(object sender, CommandEventArgs e)
         {
-            Response.Redirect("/UL/Customer/OverviewPage.aspx?productType=" + e.CommandArgument);
+            var urlF = FriendlyUrl.Href("/UL/Customer/OverviewPage", e.CommandArgument);
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + urlF);
         }
     }
 }

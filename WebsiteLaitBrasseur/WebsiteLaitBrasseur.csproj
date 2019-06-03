@@ -83,6 +83,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="UL\Customer\AboutUs.aspx" />
+    <Content Include="UL\Customer\Checkout.aspx" />
     <Content Include="UL\Customer\ConfirmationPage.aspx" />
     <Content Include="UL\Customer\EmailRecuperation.aspx" />
     <Content Include="UL\Customer\Logout.aspx" />
@@ -173,6 +174,8 @@
     <Compile Include="BL\CardDTO.cs" />
     <Compile Include="BL\CityDTO.cs" />
     <Compile Include="BL\EmptyRowException.cs" />
+    <Compile Include="BL\INFT3050PaymentFactory.cs" />
+    <Compile Include="BL\INFT3050PaymentSystem.cs" />
     <Compile Include="BL\InvoiceBL.cs" />
     <Compile Include="BL\InvoiceDTO.cs" />
     <Compile Include="BL\PaymentBL.cs" />
@@ -225,6 +228,13 @@
     <Compile Include="UL\Customer\AboutUs.aspx.designer.cs">
       <DependentUpon>AboutUs.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UL\Customer\Checkout.aspx.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UL\Customer\Checkout.aspx.designer.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UL\Customer\ConfirmationPage.aspx.cs">
       <DependentUpon>ConfirmationPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -239,6 +249,7 @@
     <Compile Include="UL\Customer\EmailRecuperation.aspx.designer.cs">
       <DependentUpon>EmailRecuperation.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BL\IPaymentSystem.cs" />
     <Compile Include="UL\Customer\Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -12,9 +12,15 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected void Page_Load(object sender, EventArgs e)
         {
             try {
-                if (this.Session["email"] != null)
+                if (this.Session["Email"] != null)
                 {
-                    lblLogout.Visible = true;
+                    LogoutButton.Visible = true;
+                    LogInButton.Visible = false;
+                }
+                else
+                {
+                    LogoutButton.Visible =false;
+                    LogInButton.Visible = true;
                 }
             }
             catch { }

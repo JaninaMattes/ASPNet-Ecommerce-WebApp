@@ -14,7 +14,8 @@ namespace WebsiteLaitBrasseur.Admin
     {
         AccountBL blAccount= new AccountBL();
         AccountDTO dtoAccount = new AccountDTO();
-        string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
+        string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin.aspx";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

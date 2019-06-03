@@ -13,33 +13,26 @@ namespace WebsiteLaitBrasseur.UL.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Redirection if not login
             if (this.Session["AdminID"] == null)
             {
-                var urlF = FriendlyUrl.Href(ConfigurationManager.AppSettings["Admin"] + "LoginAdmin");
-
-                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + urlF);
+                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin");
             }
         }
 
         protected void Shippingbutton_Click(object sender, EventArgs e)
         {
-            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "PostagesManagement.aspx";
-            var urlF = FriendlyUrl.Href("~/PostagesManagment.aspx");
-            Response.Redirect(url);
-
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/PostagesManagement.aspx");
         }
 
         protected void Customerbutton_Click(object sender, EventArgs e)
         {
-            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "AccountManagment.aspx";
-            Response.Redirect(url);
-
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/AccountManagment.aspx");
         }
 
         protected void Productbutton_Click(object sender, EventArgs e)
         {
-            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "ItemsManagement.aspx";
-            Response.Redirect(url);
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/ItemsManagement.aspx");
         }
     }
 }

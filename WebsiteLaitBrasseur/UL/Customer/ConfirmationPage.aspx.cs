@@ -14,7 +14,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
     {
         AccountBL blAccount = new AccountBL();
         AccountDTO dtoAccount = new AccountDTO();
-        string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
+        string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -22,7 +23,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 if ((Request.QueryString["ConfID"] != null))
                 {
                     int paramConfID = (Convert.ToInt32(Request.QueryString["ConfID"]));         //ConfID (URL parameter recuperation)
-                    dtoAccount = blAccount.GetCustomerByConfID(paramConfID);                     //Admin recuperation*
+                    dtoAccount = blAccount.GetCustomerByConfID(paramConfID);                     //Account recuperation
 
                     Debug.Write("\nVerificationPage / paramID : " + paramConfID);//DEBUG
                     Debug.Write("\nVerificationPage / GetConfID : " + dtoAccount.GetConfirmationID());   //DEBUG

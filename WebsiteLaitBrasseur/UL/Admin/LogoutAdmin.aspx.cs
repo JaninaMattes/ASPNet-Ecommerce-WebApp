@@ -16,11 +16,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             try
             {
+                //Redirection if not login
                 if (this.Session["AdminID"] == null)
                 {
-                    string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
-
-                    Response.Redirect(url);
+                    Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin.aspx");
                 }
                 else
                 {

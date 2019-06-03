@@ -23,13 +23,11 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             if (this.Session["CustID"] == null)
             {
-                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
-
-                Response.Redirect(url);
+                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
             }
             if (!Page.IsPostBack)
             {
-                emailCustomer = Convert.ToString(this.Session["email"]);
+                emailCustomer = Convert.ToString(this.Session["Email"]);
                 //emailCustomer = "janina.mattes@gmail.com";
                 //Bind profile data
                 BindProfileData();
@@ -41,7 +39,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
  
         protected void UploadButton_Click(object sender, EventArgs e)
         {
-            BL.UpdateImgPath(Convert.ToString(this.Session["email"]), TextImageLink.Text);
+            BL.UpdateImgPath(Convert.ToString(this.Session["Email"]), TextImageLink.Text);
             Debug.Write("Profile / Image Update / apres  update"); //DEBUG
            
         }
@@ -55,9 +53,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void ChangePasswordButton_Click(object sender, EventArgs e)
         {
-            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "PasswordChanging.aspx";
-
-            Response.Redirect(url);
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/PasswordChanging.aspx");
         }
 
         protected void SaveButton_Click(object sender, EventArgs e)

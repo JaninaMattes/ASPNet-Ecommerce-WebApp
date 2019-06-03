@@ -251,6 +251,53 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         /// <summary>
+        /// Find one that belong to a certain customer
+        /// And return it.
+        /// </summary>
+        /// /// <param name="accountID"></param>
+        /// <param name="invoiceID"></param>
+        /// <returns></returns>
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public List<InvoiceDTO> FindByCustomer(int accountID, int invoiceID)
+        {
+            string queryString = "SELECT * FROM dbo.Invoice WHERE accountID = @accountID AND invoiceID=@invoiceID";
+            List<InvoiceDTO> results = new List<InvoiceDTO>();
+            InvoiceDTO invoice;
+            AccountDTO account;
+            ShippmentDTO shipping;
+            try
+            {
+                using (SqlConnection con = new SqlConnection(ConnectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand(queryString, con))
+                    {
+                        cmd.Parameters.AddWithValue("@accountID", SqlDbType.Int).Value = accountID;
+                        cmd.Parameters.AddWithValue("@invoiceID", SqlDbType.Int).Value = invoiceID;
+                        cmd.CommandType = CommandType.Text;
+                        con.Open();
+
+                        SqlDataReader reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            invoice = new InvoiceDTO();
+                            account = new AccountDTO();
+                            shipping = new ShippmentDTO();
+                            invoice = GenerateInvoice(reader, invoice, account, shipping);
+                            Debug.Print("InvoiceDAL: /FindByCustomer/ " + invoice.GetID());
+                            //add data objects to result-list 
+                            results.Add(invoice);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
+            return results;
+        }
+
+        /// <summary>
         /// Find all invoices that are paymentStatus = 0 (unpaied) OR
         ///                            paymentStatus = 1 (paied)
         /// </summary>

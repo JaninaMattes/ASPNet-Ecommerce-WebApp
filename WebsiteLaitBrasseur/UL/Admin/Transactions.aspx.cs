@@ -7,6 +7,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
+using Microsoft.AspNet.FriendlyUrls;
+using System.Configuration;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
@@ -21,12 +23,28 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // TODO: get id from query string and try to parse
-            int custID = Convert.ToInt32(Request.QueryString["custID"]);
-          
-            if (!string.IsNullOrEmpty(custID.ToString()) && int.TryParse(custID.ToString(), out custID))
+            //Redirection if not login
+            if (this.Session["AdminID"] == null)
             {
-                BindDataInvoices(custID);
+                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin.aspx");
+            }
+
+            try
+            {
+                // get id from URL segment
+                var segments = Request.GetFriendlyUrlSegments();
+                int custID = Convert.ToInt32(segments[0]);
+
+                //BindData
+                if (!string.IsNullOrEmpty(custID.ToString()) && int.TryParse(custID.ToString(), out custID))
+                {
+                    BindDataInvoices(custID);
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.GetBaseException();
+                Debug.Write(ex.ToString());
             }
         }
 

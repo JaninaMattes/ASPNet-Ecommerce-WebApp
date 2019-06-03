@@ -15,8 +15,23 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
             LblErrorMessage.Visible = false;
+
+            if (IsPostBack)
+            {
+                //Atempt incrementation
+                int attempt = Convert.ToInt16(this.Session["attempt"]);
+                attempt++;
+                this.Session["attempt"] = attempt;
+
+
+                //if 3 attempt : redirection
+                if (attempt >= 3)
+                {
+                    //Todo : IsSuepended            //Based on what?
+                    this.Session["attempt"] = 0;
+                }
+            }
         }
 
         protected void LoginButton_Click(object sender, EventArgs e)
@@ -33,14 +48,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     //variable session creation
                     //session is a dictionary inside ASP.NET
                     SessionInit();
-                    string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Default.aspx";
-                    Response.Redirect(url);
+                    Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Default.aspx");
                     break;
                 case 2:
                     //if user is admin cant log in to customer page
                     LblErrorMessage.Visible = true;
-                    LblErrorMessage.Text = "Not entitled to log in as customer. Please register";   //No time to display
-                    Response.Redirect("/UL/Customer/Register.aspx");
+                    LblErrorMessage.Text = "Not entitled to log in as customer. Please register";  
                     break;
                 case 3:
                     LblErrorMessage.Visible = true;
@@ -61,14 +74,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
-            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Register.aspx";
-            Response.Redirect(url);
-
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Register.aspx");
         }
 
         private void SessionInit()
         {
-            Session["email"] = TextEmail.Text.Trim();
+            Session["Email"] = TextEmail.Text.Trim();
             Session["CustID"] = BL.GetCustomer(TextEmail.Text.Trim()).GetID();
             Session["DateInit"] = DateTime.Now;
         }

@@ -202,21 +202,12 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         protected global::System.Web.UI.WebControls.Button SaveAddress;
         
         /// <summary>
-        /// Contrôle CreditCard.
+        /// Contrôle Cart.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button CreditCard;
-        
-        /// <summary>
-        /// Contrôle Paypal.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Paypal;
+        protected global::System.Web.UI.WebControls.Button Cart;
     }
 }

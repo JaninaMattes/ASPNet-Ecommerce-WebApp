@@ -14,16 +14,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
         AccountBL BL = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (this.Session["custID"] == null)
+            {
+                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
+            }
             try {
                 //session informations
-                string email = this.Session["email"].ToString();
-                if (this.Session["custID"] == null)
-                {
-                    string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login";
-
-                    Response.Redirect(url);
-                }
-
+                string email = this.Session["Email"].ToString();
                 if (email != null)
                 {
                     AccountBL BL = new AccountBL();

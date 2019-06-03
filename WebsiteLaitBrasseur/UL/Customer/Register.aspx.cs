@@ -8,6 +8,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
+using System.Configuration;
 
 namespace WebsiteLaitBrasseur.UL.Customer
 {
@@ -77,7 +78,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Customer/Logout.aspx");
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
         }
 
         private void MailSender(int confirmationID)

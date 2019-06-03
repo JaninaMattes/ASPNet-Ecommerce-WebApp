@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.FriendlyUrls;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
@@ -18,22 +19,32 @@ namespace WebsiteLaitBrasseur.UL.Admin
         ProductDTO product = new ProductDTO();
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Redirection if not login
             if (this.Session["AdminID"] == null)
             {
-                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
-
-                Response.Redirect(url);
+                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin.aspx");
             }
-            // get id from query string and try to parse
+
             if (!IsPostBack)
             {
-                var idString = Request.QueryString["id"];
-                int id;
-                if (!string.IsNullOrEmpty(idString) && int.TryParse(idString, out id))
+                try
                 {
-                    // retrieve a prodcut from the db and feed the information on website
+                    // get id from url and try to parse
+                    var segments = Request.GetFriendlyUrlSegments();
+                    string productIDstr = segments[0];
+                    int id;
 
-                    BindData(id);
+                    if (productIDstr == null) { Debug.Write("\nError Url Friendly"); }//DEBUG 
+
+                    if (!string.IsNullOrEmpty(productIDstr) && int.TryParse(productIDstr, out id))
+                    {
+                        // retrieve a prodcut from the db and feed the information on website
+                        BindData(id);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ex.GetBaseException();
                 }
             }
             
@@ -42,10 +53,14 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
-            // get id from query string and try to parse
-            var idString = Request.QueryString["id"];
+            // get id from url and try to parse
+            var segments = Request.GetFriendlyUrlSegments();
+            string productIDstr = segments[0];
             int id;
-            if (!string.IsNullOrEmpty(idString) && int.TryParse(idString, out id))
+
+            if (productIDstr == null) { Debug.Write("\nError Url Friendly"); }//DEBUG 
+
+            if (!string.IsNullOrEmpty(productIDstr) && int.TryParse(productIDstr, out id))
             {
                 db.UpdateSecondary(id, TextShortDescription.Text, TextLongDescription.Text, TextProducer.Text);
 
@@ -55,10 +70,14 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void UploadButton_Click(object sender, EventArgs e)
         {
-            // get id from query string and try to parse
-            var idString = Request.QueryString["id"];
+            // get id from url and try to parse
+            var segments = Request.GetFriendlyUrlSegments();
+            string productIDstr = segments[0];
             int id;
-            if (!string.IsNullOrEmpty(idString) && int.TryParse(idString, out id))
+
+            if (productIDstr == null) { Debug.Write("\nError Url Friendly"); }//DEBUG 
+
+            if (!string.IsNullOrEmpty(productIDstr) && int.TryParse(productIDstr, out id))
             {
                 db.UpdateImg(id, TextImageLink.Text);
                 BindData(id);

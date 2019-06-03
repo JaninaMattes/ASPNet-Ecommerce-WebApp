@@ -12,6 +12,8 @@
 
             <h3>Enter your credit card informations</h3>
 
+            <asp:Label ID="lblResult" runat="server" Text="" CssClass="text-info"></asp:Label>
+
             <!--Label /TextBox / Validator for the Owner of the credit card-->
             <div class="form-group">
                 <div>
@@ -21,29 +23,13 @@
                 </div>
             </div>
 
-            <!--Label /Radio button / Validator for the Type of Card-->
-            <div class="form-group">
-                <div>
-                     <label class="control-label "> Card Type :</label>
-                     &nbsp;&nbsp;
-                    <asp:RadioButtonList ID="CreditCardButton" runat="server">
-                        <asp:ListItem Text="<img id='LogoVisa' alt='Visa' src='/UL/Images/visa_logo.jpg' style='height:40px;width:40px'/>"  ></asp:ListItem>
-                        <asp:ListItem Text="<img id='LogoMasterCard' alt='Mastercard' src='/UL/Images/mastercard-logo-.png' style='height:50px;width:50px;' />"></asp:ListItem>
-                    </asp:RadioButtonList>
-
-                     <asp:RequiredFieldValidator ID="TypeCardReqField" runat="server" ErrorMessage="Choose a type of Credit Card" ControlToValidate="CreditCardButton" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator><br />
-
-                </div>
-
-            </div>
-
-            <!--Label /TextBox / Validators for the Type of Card-->
+            <!--Label /TextBox / Validators for the Number of the Card-->
             <div class="form-group">
                     <div >
                             <label for="TextCardNumber" class="control-label">Card Number</label>
                             <asp:TextBox ID="TextCardNumber" runat="server" Cssclass="form-control" > </asp:TextBox>
                             <asp:RequiredFieldValidator ID="CardNumberReqFiled" runat="server" ErrorMessage="Card Number is required" ControlToValidate="TextCardNumber" Display="Dynamic" CssClass="text-danger"></asp:RequiredFieldValidator>
-                            <asp:regularExpressionValidator ID="CardNumberRegValid" runat="server" ErrorMessage="Should be 20 Digits" ControlToValidate="TextCardNumber" Display="Dynamic"  ValidationExpression="\d{20}$" CssClass="text-danger"></asp:RegularExpressionValidator><br />
+                            <asp:regularExpressionValidator ID="CardNumberRegValid" runat="server" ErrorMessage="Should be 16 Digits" ControlToValidate="TextCardNumber" Display="Dynamic"  ValidationExpression="\d{16}$" CssClass="text-danger"></asp:RegularExpressionValidator><br />
 
                     </div>
                 </div>   
@@ -95,7 +81,7 @@
            <div class="col-md-offset-3 col-md-9">
                 <asp:Button ID="CancelButton" runat="server" Text="Cancel" OnClick="CancelButton_Click" CausesValidation="false" CssClass="btn btn-danger"/>
                         &nbsp;
-                <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" CssClass="btn btn-success"/>
+                <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" CausesValidation="true" CssClass="btn btn-success"/>
            </div>
       </div>
 

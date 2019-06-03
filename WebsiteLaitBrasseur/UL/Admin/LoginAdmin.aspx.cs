@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
 using System.Security.Cryptography;
+using System.Configuration;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
@@ -15,10 +16,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
         AccountBL bl = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
-            /*Debug.Write("Avant fonction"); //DEBUG
-            string password = "123456";
-            HashPassword(password);
-            Debug.Write("\nSortie Fonction"); //DEBUG*/
             LblErrorMessage.Visible = false;
         }
 
@@ -37,7 +34,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     //variable session creation
                     //session is a dictionary inside ASP.NET
                     SessionInit();
-                    Response.Redirect("/UL/Admin/Default.aspx");
+                    Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/Default.aspx");
                     break;
                 case 2:
                     LblErrorMessage.Visible = true;
@@ -66,7 +63,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Admin/RegisterAdmin.aspx");
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/RegisterAdmin.aspx");
         }
 
         private void SessionInit()

@@ -7,6 +7,8 @@ using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
 using System.Data;
+using System.Configuration;
+using Microsoft.AspNet.FriendlyUrls;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
@@ -15,8 +17,15 @@ namespace WebsiteLaitBrasseur.UL.Admin
         readonly AccountBL BL = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (this.Session["AdminID"] == null)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin.aspx";
+                Response.Redirect(url);
+            }
+
             if (!IsPostBack)
             {
+
                 BindDataCustomer();
                 BindDataAdmin();
             }
@@ -44,7 +53,8 @@ namespace WebsiteLaitBrasseur.UL.Admin
         //redirection to transanctions history page
         protected void UserListTable_RowEditing(object sender, GridViewEditEventArgs e)
         {
-            Response.Redirect("/UL/Admin/Transactions.aspx?custid=" + UserListTable.Rows[e.NewEditIndex].Cells[0].Text.ToString());
+            var urlF = FriendlyUrl.Href("/UL/Admin/Transactions", UserListTable.Rows[e.NewEditIndex].Cells[0].Text.ToString());
+            Response.Redirect(urlF);
         }
 
 

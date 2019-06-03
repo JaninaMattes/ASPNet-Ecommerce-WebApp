@@ -6,6 +6,7 @@ using System.Net.Mail;
 using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
+using System.Configuration;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
@@ -16,7 +17,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            lblRegResult.Visible = false;
+            lblRegResult.Visible = false;            
         }
 
         protected void CreateAccountButton_Click(object sender, EventArgs e)
@@ -53,7 +54,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                         lblRegResult.Text = "The password format does not meet the requirements."; //TODO explain requirements
                         break;
                     case 3:
-                        Response.Redirect("/UL/Admin/LoginAdmin.aspx");
+                       // Response.Redirect("/UL/Admin/LoginAdmin.aspx");
                         lblRegResult.Visible = true;
                         lblRegResult.CssClass = "text-danger";
                         lblRegResult.Text = "The email format is wrong.";
@@ -75,7 +76,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Admin/LoginAdmin.aspx");
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin.aspx");
         }
 
         private void MailSender(int confirmationID)

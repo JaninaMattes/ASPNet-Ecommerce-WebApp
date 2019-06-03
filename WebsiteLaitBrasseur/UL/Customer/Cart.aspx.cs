@@ -12,11 +12,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (this.Session["CustID"] == null)
-            {
-                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
-                Response.Redirect(url);
-            }
         }
 
         protected void saveButton_Click(object sender, EventArgs e)

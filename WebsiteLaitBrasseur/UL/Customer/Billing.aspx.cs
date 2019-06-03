@@ -17,33 +17,31 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Redirection if not login
             if (this.Session["CustID"] == null)
             {
-                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
-                Response.Redirect(url);
+                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
             }
 
             if (!Page.IsPostBack)
             {
-                string emailCustomer = Convert.ToString(this.Session["email"]);
+                string emailCustomer = Convert.ToString(this.Session["Email"]);
 
                 //Bind profile data
                 BindData(emailCustomer);
-                Debug.Write("BINDTA ////////////////////");
 
             }
         }
 
-        protected void CreditCardButton_Click(object sender, EventArgs e)
+        protected void CartButton_Click(object sender, EventArgs e)
         {
-            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "CardPayment.aspx";
-            Response.Redirect(url);
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Cart.aspx");
         }
 
 
         protected void SaveButton_Click(object sender, EventArgs e)
         {
-            string emailCustomer = Convert.ToString(this.Session["email"]);
+            string emailCustomer = Convert.ToString(this.Session["Email"]);
             //update User Profile
             var fName = TextFirstname.Text;
             var lName = TextLastname.Text;

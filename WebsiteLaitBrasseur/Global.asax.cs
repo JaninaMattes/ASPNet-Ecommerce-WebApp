@@ -20,7 +20,7 @@ namespace WebsiteLaitBrasseur
 
         protected void Session_Start(object sender, EventArgs e)
         {
-
+            Session["Attempt"] = 0;
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -40,7 +40,8 @@ namespace WebsiteLaitBrasseur
 
         protected void Session_End(object sender, EventArgs e)
         {
-
+            //this.Session.Remove("Attempt");
+            this.Session.Clear();
         }
 
         protected void Application_End(object sender, EventArgs e)

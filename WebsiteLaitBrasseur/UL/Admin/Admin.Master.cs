@@ -16,7 +16,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             try
             {
-                if (this.Session["email"] != null)
+                if (this.Session["Email"] != null)
                 {
                         lblLogout.Visible = true;
                 }

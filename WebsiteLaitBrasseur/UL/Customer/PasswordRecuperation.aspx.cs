@@ -25,14 +25,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 }
                 else  //Redirection
                 {
-                    string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
-                    Response.Redirect(url);
+                    Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
                 }
             }
             else   //Redirection
             {
-                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
-                Response.Redirect(url);
+                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
             }
 
         }
@@ -49,8 +47,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
             else { lblResult.CssClass = "text-danger"; lblResult.Text = "Error during treatment of the new password"; }
 
             //Session variables removing
-            Session.Remove("RecupValues");
-            Session.Remove("EmailRecuperation");
+            this.Session.Remove("RecupValues");
+            this.Session.Remove("EmailRecuperation");
         }
     }
 }

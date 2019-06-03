@@ -18,8 +18,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             if (this.Session["CustID"] == null)
             {
-                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Customer"] + "Login.aspx";
-                Response.Redirect(url);
+                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
             }
         }
 
@@ -28,13 +27,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
             //Test if password enter by user correspond to its password in DB
             string oldPassword = TextOldPassword.Text;
             int result = -1;
-            result=blAcc.IsCustomerLoginCorrect(this.Session["email"].ToString(), oldPassword);
+            result=blAcc.IsCustomerLoginCorrect(this.Session["Email"].ToString(), oldPassword);
 
 
             if (result == 1)    //If password match
             {
                 //Update password in DB
-                result = blAcc.UpdatePassword(this.Session["email"].ToString(), TextPassword.Text);
+                result = blAcc.UpdatePassword(this.Session["Email"].ToString(), TextPassword.Text);
 
 
                 //Display result

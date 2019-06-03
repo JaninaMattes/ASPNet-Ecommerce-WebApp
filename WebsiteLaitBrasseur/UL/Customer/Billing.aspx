@@ -96,9 +96,8 @@
             <!--Button for Save the adress information / access to credit Card payment or Paypal payment-->
             <div class="col-md-4 text-center" >
                 <br /><br /><br /><br />
-                <asp:Button ID="SaveAddress" runat="server" CssClass="btn btn-primary" text="Save address changes" OnClick="SaveButton_Click"/><br /><br /><br /><br />
-                <asp:Button ID="CreditCard" runat="server" CssClass="btn btn-success" OnClick="CreditCardButton_Click" text="Credit Card"/><br /><br /><br /><br />
-                <asp:Button ID="Paypal" runat="server" CssClass="btn btn-success" text="PayPal"/><br /><br /><br /><br />
+                <asp:Button ID="SaveAddress" runat="server" CssClass="btn btn-success" text="Save address changes" OnClick="SaveButton_Click"/><br /><br /><br /><br />
+                <asp:Button ID="Cart" runat="server" CssClass="btn btn-primary" OnClick="CartButton_Click" text="CArt"/><br /><br /><br /><br />
             </div>
 
     </div>

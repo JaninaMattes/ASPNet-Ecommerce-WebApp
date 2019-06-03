@@ -117,7 +117,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <summary>
         /// Find all invoices of one Customer.
         /// </summary>
-        /// <param name="email"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
         public IEnumerable<InvoiceDTO> FindInvoices(int id)
         {
@@ -127,6 +127,24 @@ namespace WebsiteLaitBrasseur.BL
             if (customer != null)
             {
                 result = DB.FindByCustomer(customer.GetID());
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Find a specific invoice of a customer.
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <param name="invoiceID"></param>
+        /// <returns>List of Invoice but contains 1 element</returns>
+        public List<InvoiceDTO> FindInvoiceByID(int customerID, int invoiceID)
+        {
+            AccountDTO customer = new AccountDTO();
+            customer = AB.FindBy(customerID);
+            List<InvoiceDTO> result = new List<InvoiceDTO>();
+            if (customer != null)
+            {
+                result = DB.FindByCustomer(customer.GetID(), invoiceID);
             }
             return result;
         }

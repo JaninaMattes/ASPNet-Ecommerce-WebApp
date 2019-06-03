@@ -6,6 +6,7 @@ using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
 using System.Configuration;
+using Microsoft.AspNet.FriendlyUrls;
 
 namespace WebsiteLaitBrasseur.UL.Admin
 {
@@ -18,11 +19,11 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Redirection if not login
+
             if (this.Session["AdminID"] == null)
             {
-                string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "LoginAdmin.aspx";
-
-                Response.Redirect(url);
+                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin.aspx");
             }
             if (!IsPostBack)
             {
@@ -105,9 +106,9 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             //Index of grid recuperation
             int productID = Convert.ToInt32(ItemListTable.Rows[e.RowIndex].Cells[0].Text);
-            string url = ConfigurationManager.AppSettings["SecurePath"] + ConfigurationManager.AppSettings["Admin"] + "DetailPageAdmin.aspx?id=" + productID;
-            Response.Redirect(url);
 
+            var urlF = FriendlyUrl.Href("/UL/Admin/DetailPageAdmin", productID);
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + urlF);
         }
 
         ////Row Editing 
@@ -150,10 +151,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
             }
             catch (Exception ex)
             {
-                Debug.Write("ItemsManagment / Exception : \n");//DEBUG
                 lblError.Text = "DataBase error";
                 lblInfo.Text = "";
                 ex.GetBaseException();
+                Debug.Write(ex.ToString());
             }
             ////Reset the edit index.
             ItemListTable.EditIndex = -1;
