@@ -7,6 +7,7 @@
 
 <!-- Content of detail view page-->
 <div class="container-fluid">
+        <asp:Label ID="lblResult" runat="server" Text="" CssClass="text-danger"></asp:Label>
 
         <div class="row">
             <div class="col-md-12" style="text-align: center;">

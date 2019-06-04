@@ -16,42 +16,48 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             if (!IsPostBack)
             {
+                string result="";
                 if (this.Session["CustID"] == null)
                 {
                     Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx"); ;
                 }
 
+                //Attempt reinitialization
+                this.Session["attempt"] = 0;
+
+                //Get id from url
                 try
                 {
                     var segments = Request.GetFriendlyUrlSegments();
-                    string result = segments[0];
-                    if (result == null) { Debug.Write("\nError Url Friendly"); } //DEBUG 
-
-                    this.Session["attempt"] = 0;
-                    if (this.Session["CustID"] != null && result != null)     //Test customer is authentified OK ; else => redirection login  
-                    {
-                        if (result == "0")  //Denied
-                        {
-                            
-                            //TODO :
-                            //Invoice Status cancel
-                            //Rerverse updtae DB
-                        }
-                        else if (result == "1")  //Approved 
-                        {
-                            //TODO:
-                            //Invoice staus : paied
-                        }
-                        else { lblResult.Text = "Error"; }
-                    }
-                    else
-                    {
-                        Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
-                    }
+                    result = segments[0];
                 }
                 catch(Exception ex)
                 {
                     ex.GetBaseException();
+                    Debug.Write(ex.ToString());
+                    lblResult.Text = "Error URL";
+                }
+
+                //Test customer is authentified OK ; else => redirection login  
+                if (this.Session["CustID"] != null && result != null)     
+                {
+                    if (result == "0")  //Denied
+                    {
+
+                        //TODO :
+                        //Invoice Status cancel
+                        //Rerverse updtae DB
+                    }
+                    else if (result == "1")  //Approved 
+                    {
+                        //TODO:
+                        //Invoice staus : paied
+                    }
+                    else { lblResult.Text = "Error"; }
+                }
+                else
+                {
+                    Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
                 }
             }
         }

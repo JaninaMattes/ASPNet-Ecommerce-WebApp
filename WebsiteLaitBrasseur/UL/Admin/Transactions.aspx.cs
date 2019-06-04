@@ -23,28 +23,37 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            string custIDstr = "";
+            int custID;
+
             //Redirection if not login
             if (this.Session["AdminID"] == null)
             {
                 Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin.aspx");
             }
 
+            // get id from URL segment
             try
             {
-                // get id from URL segment
                 var segments = Request.GetFriendlyUrlSegments();
-                int custID = Convert.ToInt32(segments[0]);
-
-                //BindData
-                if (!string.IsNullOrEmpty(custID.ToString()) && int.TryParse(custID.ToString(), out custID))
-                {
-                    BindDataInvoices(custID);
-                }
+                custIDstr = segments[0];
             }
             catch (Exception ex)
             {
                 ex.GetBaseException();
                 Debug.Write(ex.ToString());
+                lblError.Text = "Error URL";
+            }
+
+            // get id from url and try to parse
+            if (!string.IsNullOrEmpty(custIDstr.ToString()) && int.TryParse(custIDstr.ToString(), out custID))
+            {
+                //BindData
+                BindDataInvoices(custID);
+            }
+            else
+            {
+                lblError.Text = "Error URL";
             }
         }
 

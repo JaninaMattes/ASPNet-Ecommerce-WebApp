@@ -7,9 +7,9 @@
     <ContentTemplate>
 
 <!--Page managing the detail of a product in the admin side -->
-    
+    <asp:Label ID="lblError" runat="server" Text="" CssClass="text-danger"></asp:Label>    
+
     <div class="container-fluid row">
-        
         <!--Left part of the page -->
         <div class="col-md-6">
 

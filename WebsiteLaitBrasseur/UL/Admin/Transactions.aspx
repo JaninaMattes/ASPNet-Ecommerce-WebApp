@@ -6,6 +6,7 @@
     <ContentTemplate>
 
 <!--Page managing the display of the transactions history of an user-->
+        <asp:Label ID="lblError" runat="server" Text="" CssClass="text-danger"></asp:Label>
 
                 <div id="tableShoppingHistory clearfix" class="offset-md-2 col-md-7">
 

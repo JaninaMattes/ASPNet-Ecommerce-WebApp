@@ -19,6 +19,9 @@ namespace WebsiteLaitBrasseur.UL.Admin
         ProductDTO product = new ProductDTO();
         protected void Page_Load(object sender, EventArgs e)
         {
+            string productIDstr = "";
+            int productID;
+
             //Redirection if not login
             if (this.Session["AdminID"] == null)
             {
@@ -27,28 +30,34 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
             if (!IsPostBack)
             {
+                // get id from URL segment
                 try
                 {
-                    // get id from url and try to parse
                     var segments = Request.GetFriendlyUrlSegments();
-                    string productIDstr = segments[0];
-                    int id;
+                    productIDstr = segments[0];
 
-                    if (productIDstr == null) { Debug.Write("\nError Url Friendly"); }//DEBUG 
-
-                    if (!string.IsNullOrEmpty(productIDstr) && int.TryParse(productIDstr, out id))
-                    {
-                        // retrieve a prodcut from the db and feed the information on website
-                        BindData(id);
-                    }
                 }
                 catch (Exception ex)
                 {
                     ex.GetBaseException();
+                    Debug.Write(ex.ToString());
+                    lblError.Text = "Error URL";
+                }
+
+                // get id from url and try to parse
+                if (!string.IsNullOrEmpty(productIDstr) && int.TryParse(productIDstr, out productID))
+                {
+                    // retrieve a prodcut from the db and feed the information on website
+                    BindData(productID);
+                }
+                else
+                {
+                    lblError.Text = "Error URL";
                 }
             }
-            
         }
+            
+    
 
 
         protected void SaveButton_Click(object sender, EventArgs e)

@@ -24,6 +24,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             if (!IsPostBack)
             {
                 string type="";
+
                 // get id from URL segment
                 try
                 {
@@ -65,6 +66,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
             }
         }
+
 
         protected void imgCommand(object sender, CommandEventArgs e)
         {
