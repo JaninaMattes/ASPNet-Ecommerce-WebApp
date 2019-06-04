@@ -271,9 +271,10 @@ namespace WebsiteLaitBrasseur.DAL
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
                         cmd.Parameters.AddWithValue("@imgPath", imgPath);
-                        Debug.Write("imgPath " + imgPath);  //DEBUG
+                        Debug.Write("\nimgPath " + imgPath);  //DEBUG
                         cmd.Parameters.AddWithValue("@email", email);
-                        Debug.Write("email " + email);  //DEBUG
+                        Debug.Write("\nemail " + email);  //DEBUG
+                        con.Open();
                         cmd.CommandType = CommandType.Text;
                         result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                         Debug.Print("AccountDAL / Update ImgPath / return " + result); //DEBUG
@@ -283,7 +284,7 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
-                Debug.Print("AccountDAL / Update ImgPath / Exception "); //DEBUG
+                Debug.Print(e.ToString()); //DEBUG
             }
             return result;
         }

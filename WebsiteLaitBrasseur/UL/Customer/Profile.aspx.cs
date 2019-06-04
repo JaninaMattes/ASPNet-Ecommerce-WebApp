@@ -39,9 +39,10 @@ namespace WebsiteLaitBrasseur.UL.Customer
  
         protected void UploadButton_Click(object sender, EventArgs e)
         {
-            BL.UpdateImgPath(Convert.ToString(this.Session["Email"]), TextImageLink.Text);
-            Debug.Write("Profile / Image Update / apres  update"); //DEBUG
-           
+            emailCustomer = Convert.ToString(this.Session["Email"]);
+            BL.UpdateImgPath(emailCustomer, TextImageLink.Text);        
+            BindProfileData();
+
         }
 
         protected void DeleteButton_Click(object sender, EventArgs e)
