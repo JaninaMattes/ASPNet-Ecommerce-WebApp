@@ -49,6 +49,33 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         protected global::System.Web.UI.WebControls.GridView CartTable;
         
         /// <summary>
+        /// Contrôle AmountLabels.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AmountLabels;
+        
+        /// <summary>
+        /// Contrôle lblAmount.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAmount;
+        
+        /// <summary>
+        /// Contrôle lblAmountValue.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAmountValue;
+        
+        /// <summary>
         /// Contrôle CartTitle2.
         /// </summary>
         /// <remarks>
@@ -58,49 +85,49 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl CartTitle2;
         
         /// <summary>
-        /// Contrôle Amount.
+        /// Contrôle lblPostage.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Amount;
+        protected global::System.Web.UI.WebControls.Label lblPostage;
         
         /// <summary>
-        /// Contrôle AmountValue.
+        /// Contrôle lblPostageValue.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label AmountValue;
+        protected global::System.Web.UI.WebControls.Label lblPostageValue;
         
         /// <summary>
-        /// Contrôle PostageDropDownList.
+        /// Contrôle PostagesTable.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList PostageDropDownList;
+        protected global::System.Web.UI.WebControls.GridView PostagesTable;
         
         /// <summary>
-        /// Contrôle Tax.
+        /// Contrôle lblTax.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Tax;
+        protected global::System.Web.UI.WebControls.Label lblTax;
         
         /// <summary>
-        /// Contrôle TaxValue.
+        /// Contrôle lblTaxValue.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label TaxValue;
+        protected global::System.Web.UI.WebControls.Label lblTaxValue;
         
         /// <summary>
         /// Contrôle TotalCost.
@@ -121,15 +148,6 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         protected global::System.Web.UI.WebControls.Label TotalCostValue;
         
         /// <summary>
-        /// Contrôle saveButton.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button saveButton;
-        
-        /// <summary>
         /// Contrôle CreditCardButton.
         /// </summary>
         /// <remarks>
@@ -139,15 +157,6 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         protected global::System.Web.UI.WebControls.Button CreditCardButton;
         
         /// <summary>
-        /// Contrôle PaypalButton.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button PaypalButton;
-        
-        /// <summary>
         /// Contrôle ChangeAddressButton.
         /// </summary>
         /// <remarks>
@@ -155,5 +164,14 @@ namespace WebsiteLaitBrasseur.UL.Customer {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ChangeAddressButton;
+        
+        /// <summary>
+        /// Contrôle lblValidation.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblValidation;
     }
 }

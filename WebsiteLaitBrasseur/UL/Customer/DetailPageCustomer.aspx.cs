@@ -85,9 +85,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void AddButton_Click(object sender, EventArgs e)
         {
-
             try
             {
+                bool modified = false;
                 // get id from URL segment
                 var segments = Request.GetFriendlyUrlSegments();
                 int productID = Convert.ToInt32(segments[0]);
@@ -108,7 +108,21 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 
                 //Add to Cart 
                 cart = (List<ProductSelectionDTO>) (this.Session["cart"]);
-                cart.Insert(cart.Count, dtoProdSel);
+
+                //Test ifproduct already exist in Cart
+                foreach (ProductSelectionDTO p in cart)
+                {
+                    if ( (p.GetProduct().GetId() == dtoProdSel.GetProduct().GetId()) && (p.GetOrigSize() == dtoProdSel.GetOrigSize()))
+                    {  
+                        //If the exact same product is already in the cart, quantities are merge
+                        p.SetQuantity(p.GetQuantity() + dtoProdSel.GetQuantity());
+                        modified = true;
+                    }
+                }
+
+                //If the product isn't in the Cart, It's added
+                if (modified == false) { cart.Insert(cart.Count, dtoProdSel); }     
+                
                 this.Session["cart"] = cart;
                 lblResult.Text = "Added to cart with success!";
 

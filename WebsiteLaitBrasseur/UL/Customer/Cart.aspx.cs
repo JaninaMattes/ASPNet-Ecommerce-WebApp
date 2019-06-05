@@ -15,146 +15,153 @@ namespace WebsiteLaitBrasseur.UL.Customer
     public partial class Cart : System.Web.UI.Page
     {
         ProductBL blProduct = new ProductBL();
+        ShippmentBL blShippment = new ShippmentBL();
+        IEnumerable<ShippmentDTO> listShippment = new List<ShippmentDTO>();
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                Debug.Write("\nIsNotPostBack :BindData \n"); //DEBUG
                 BindData();
             }
 
         }
 
         ///Buttons          
-        protected void saveButton_Click(object sender, EventArgs e)
-        {
-            ((TextBox)(CartTable.FindControl("lblTotalPrice"))).Text = ((DropDownList)(CartTable.FindControl("DDLQuantity"))).Text;
-            //TODO
-
-            //Variables initialization
-            Decimal sCost = Convert.ToDecimal(2.5);
-            //if (PostageDropDownList.SelectedItem.Value == "1") { sCost = Convert.ToDecimal(2.5);}
-            //if (PostageDropDownList.SelectedItem.Value == "2") { sCost = Convert.ToDecimal(5); }
-            //if (PostageDropDownList.SelectedItem.Value == "3") { sCost = Convert.ToDecimal(7.5); }
-
-            //var pBrune = Convert.ToDecimal(PriceBrune.Text) ;
-            //var pBlonde = Convert.ToDecimal(PriceBlonde.Text);
-            //var pBlanche = Convert.ToDecimal(PriceBlanche.Text);
-            //var pCarreEst = Convert.ToDecimal(PriceCheese.Text);
-
-            //var qBrune = Convert.ToDecimal(QuantityBrune.Text);
-            //var qBlonde = Convert.ToDecimal(QuantityBlonde.Text);
-            //var qBlanche = Convert.ToDecimal(QuantityBlanche.Text);
-            //var qCarreEst = Convert.ToDecimal(QuantityCheese.Text);
-
-
-            //var tax = (Convert.ToDecimal(TaxValue.Text) /100 );
-
-            ////Calcul of total values
-            //var totBrune = pBrune * qBrune;
-            //var totBlonde = pBlonde * qBlonde;
-            //var totBlanche = pBlanche * qBlanche;
-            //var totCarreEst = pCarreEst * qCarreEst;
-            //var amount = totBrune + totBlonde + totBlanche + totCarreEst;
-
-            ////Conversion (Int => String) + attribution to labels
-            //TotalBrune.Text = Convert.ToString(totBrune);
-            //TotalBlonde.Text = Convert.ToString(totBlonde);
-            //TotalBlanche.Text = Convert.ToString(totBlanche);
-            //TotalCheese.Text = Convert.ToString(totCarreEst);
-            //AmountValue.Text = Convert.ToString(amount);
-            //TotalCostValue.Text = Convert.ToString( (amount + sCost) + tax*(amount + sCost));
-
-        }
-
-
         protected void CreditCardButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Customer/CardPayment.aspx");
+            if (this.Session["CustID"] != null)
+            {
+                if ( ((List<ProductSelectionDTO>)(this.Session["Cart"])).Count != 0)
+                {
+                    if (PostagesTable.SelectedIndex >= 0)
+                    {
+                        Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/CardPayment.aspx");
+                    }
+                    else { lblValidation.Text = "Please select a Postage Option"; }
+                }
+                else { lblValidation.Text = "Your cart is empty"; }
+
+            }
+            else { lblValidation.Text = "Please authenticate yourself"; }
+
         }
 
-        protected void PaypalButton_Click(object sender, EventArgs e)
-        {
-
-        }
 
         protected void ChangeAddressButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/UL/Customer/Billing.aspx");
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Billing.aspx"); 
         }
 
         ///GridView commands
-        protected void CartTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
-        {
-
-        }
-
-        protected void CartTable_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
-        {
-
-        }
 
         protected void CartTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-
+            try
+            { 
+                int index = e.RowIndex;
+                ((List<ProductSelectionDTO>)(this.Session["Cart"])).RemoveAt(index);
+                BindData();
+            }
+            catch (Exception ex)
+            {
+                ex.GetBaseException();
+                Debug.Write(ex.ToString());
+            }
         }
+
 
         protected void CartTable_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            Debug.Write("\nRowDataBound \n"); //DEBUG
-                //Setup of the Quantity DropDownList with the selected value by the Customer
-                if (e.Row.RowType == DataControlRowType.DataRow)
+            //Setup of the Quantity DropDownList with the selected value by the Customer
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                //Get the ID of the product
+                int id = Convert.ToInt32(e.Row.Cells[0].Text);
+
+                //Get the stock of the product by ID
+                int stock = blProduct.GetProduct(id).GetStock();
+
+                //Find the DropDownList in the Row.
+                DropDownList ddlQuantity = (e.Row.FindControl("DDLQuantity") as DropDownList);
+
+                //Fill the DropDownList with the values possible (stock)
+                for (int i = 1; i < stock; i++)
                 {
-                    //Get the ID of the product
-                    int id = Convert.ToInt32(e.Row.Cells[0].Text);
+                    ddlQuantity.Items.Add(i.ToString());
+                }
 
-                    //Get the stock of the product by ID
-                    int stock = blProduct.GetProduct(id).GetStock();
+                //Value selected by Customer recuperation from Cart
+                List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);
 
-                    //Find the DropDownList in the Row.
-                    DropDownList ddlQuantity = (e.Row.FindControl("DDLQuantity") as DropDownList);
-                    
-                    //Fill the DropDownList with the values possible (stock)
-                    for (int i = 1; i < stock; i++)
-                    {
-                        ddlQuantity.Items.Add(i.ToString());
-                    }
+                //Get the quantity selected by customer in Cart[with index RowIndex] and set it as the selected value
+                ddlQuantity.Items.FindByValue(cart[e.Row.RowIndex].GetQuantity().ToString()).Selected = true;
 
-                    //Value selected by Customer recuperation from Cart
-                    List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);
+                //Set Total Price
+                //Total Price update
+                decimal price = Convert.ToDecimal(((Label)e.Row.FindControl("lblPrice")).Text);
+                decimal quantity = Convert.ToDecimal(((DropDownList)(e.Row.FindControl("DDLQuantity"))).SelectedValue);
+                price = quantity * price;
+                ((Label)e.Row.FindControl("lblTotalPrice")).Text = (price).ToString();
+            }
+        }
 
-                    //Get the quantity selected by customer in Cart[with index RowIndex] and set it as the selected value
-                    ddlQuantity.Items.FindByValue(cart[e.Row.RowIndex].GetQuantity().ToString()).Selected = true;
+
+        protected void PostagesTable_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Color the selected row
+            foreach (GridViewRow row in PostagesTable.Rows)
+            {
+                if (row.RowIndex == PostagesTable.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#A1DCF2");
+                    decimal shippingCostPerItem = Convert.ToDecimal(((Label)row.FindControl("lblCost")).Text);
+                    decimal productNumber = CartTable.Rows.Count;
+                    lblPostageValue.Text = (shippingCostPerItem * productNumber).ToString();
 
                 }
+                else
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                }
+                Calcul();
+            }
         }
+
 
         ///DataBinding
         protected void BindData()
         {
-            //Cart recuperation
+            //Postages options
+            BindPostages();
+
+            //Cart content
+                //Cart recuperation
             List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);
+            CartTable.Columns[0].Visible = true;            //ID column visible for the Binding
+            CartTable.DataSource = getDataTableCart(cart);
+            CartTable.DataBind();
+            CartTable.Columns[0].Visible = false;
+            Calcul();
 
             if (cart.Count == 0)
             {
                 lblResult.Text=("Your cart is empty");
+                AmountLabels.Visible = false;
             }
             else
             {
-                CartTable.Columns[0].Visible = true;            //ID column visible for the Binding
-                CartTable.DataSource = getDataTable(cart);
-                CartTable.DataBind();
-                CartTable.Columns[0].Visible = false;
+                AmountLabels.Visible = true;
             }
         }
 
-        protected DataTable getDataTable(List<ProductSelectionDTO> cart)
+        protected DataTable getDataTableCart(List<ProductSelectionDTO> cart)
         {
             //DataTable initialization
             DataTable dtCart = new DataTable();
 
             //Colmuns declaration
-
             dtCart.Columns.Add("ID");
             dtCart.Columns.Add("Image");
             dtCart.Columns.Add("Name");
@@ -167,7 +174,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 try
                 {
                     p.GetID();
-
                     DataRow dr = dtCart.NewRow();
 
                     dr["ID"] = p.GetProduct().GetId();
@@ -184,10 +190,50 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     Debug.Write(ex.ToString());
                 }
             }
-
             return dtCart;
         }
 
+        protected void BindPostages()
+        {
+            try
+            {
+                listShippment = blShippment.GetAvailablePostServices();
+                PostagesTable.DataSource = getDataTablePostages();
+                PostagesTable.DataBind();
+                lblPostageValue.Text = "";
+            }
+            catch (Exception ex)
+            {
+                ex.GetBaseException();
+                Debug.Write(ex.ToString());
+            }
+        }
+
+        protected DataTable getDataTablePostages()
+        {
+            //DataTable initialization
+            DataTable dtPostage = new DataTable();
+
+            //Colmuns declaration
+            dtPostage.Columns.Add("Company");
+            dtPostage.Columns.Add("DeliveryTime");
+            dtPostage.Columns.Add("Cost");
+
+            if (listShippment != null)
+            {
+                foreach (ShippmentDTO s in listShippment)
+                {
+                    DataRow dr = dtPostage.NewRow();
+
+                    dr["Company"] = s.GetCompany();
+                    dr["DeliveryTime"] = s.GetDeliveryTime();
+                    dr["Cost"] = s.GetCost();
+
+                    dtPostage.Rows.Add(dr);
+                }
+            }
+            return dtPostage;
+        }
 
         protected void DDLQuantity_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -210,8 +256,42 @@ namespace WebsiteLaitBrasseur.UL.Customer
             price = ((decimal)newQuantity) * price;
             ((Label)row.FindControl("lblTotalPrice")).Text = (price).ToString();
 
+            Calcul();
         }
 
+        private void Calcul()
+        {
+            try
+            {
+                decimal amount = 0;
+                decimal tax = (Convert.ToDecimal(lblTaxValue.Text) / 100);
+
+                for (int i = 0; i < CartTable.Rows.Count; i++)
+                {
+                    amount += Convert.ToDecimal(((Label)CartTable.Rows[i].FindControl("lblTotalPrice")).Text);
+                }
+                lblAmountValue.Text = Convert.ToString(amount);
+
+                if (lblPostageValue.Text != "" )
+                {
+                    if (lblAmountValue.Text != "")
+                    {
+                        decimal sCost = Convert.ToDecimal(lblPostageValue.Text);
+                        TotalCostValue.Text = Convert.ToString((amount + sCost) + tax * (amount + sCost));
+                    }
+                }
+                else
+                {
+                    TotalCostValue.Text = "";
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.GetBaseException();
+                Debug.Write(ex.ToString());
+            }
+
+        }
 
     }
 }
