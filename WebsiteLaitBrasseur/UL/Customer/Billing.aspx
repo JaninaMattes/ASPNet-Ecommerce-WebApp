@@ -97,7 +97,7 @@
             <div class="col-md-4 text-center" >
                 <br /><br /><br /><br />
                 <asp:Button ID="SaveAddress" runat="server" CssClass="btn btn-success" text="Save address changes" OnClick="SaveButton_Click"/><br /><br /><br /><br />
-                <asp:Button ID="Cart" runat="server" CssClass="btn btn-primary" OnClick="CartButton_Click" text="CArt"/><br /><br /><br /><br />
+                <asp:Button ID="Cart" runat="server" CssClass="btn btn-primary" OnClick="CartButton_Click" text="Cart"/><br /><br /><br /><br />
             </div>
 
     </div>

@@ -288,10 +288,18 @@ namespace WebsiteLaitBrasseur.BL
             List<ProductDTO> results = new List<ProductDTO>();
             try
             {
-                Debug.WriteLine("ProductBL / GetAllProducts / ");
+                Debug.WriteLine("\nProductBL / GetAllProducts / ");
                 results = DB.FindAll();
-                Debug.WriteLine("ProductBL / RESULT / ");
-                foreach (ProductDTO p in results)
+                Debug.WriteLine("\nProductBL / RESULT / ");
+
+                for (int i = 0; i < results.Count; i++)
+                {
+                    List<SizeDTO> list = SB.FindByProduct(results[i].GetId());
+                    results[i].SetDetails(list);
+                    Debug.Write("\n ProductBL / In foreach / product0 Price :" + results[i].GetDetails()[0].GetPrice() + "\n"); //DEBUG
+                }
+
+                /*foreach (ProductDTO p in results)
                 {
                     var enumerable = SB.FindByProduct(p.GetId());
                     List<SizeDTO> list = enumerable.ToList();
@@ -299,11 +307,12 @@ namespace WebsiteLaitBrasseur.BL
                     //debugging purpose, will later remove
                     Debug.WriteLine("ProductBL / Size / " + p.GetId());
                     results.Add(p);
-                }
+                }*/
             }
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return results;
         }

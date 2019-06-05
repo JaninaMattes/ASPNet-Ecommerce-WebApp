@@ -46,6 +46,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 foreach (ShippmentDTO s in listShippment)
                 {
                     DataRow dr = dtPostage.NewRow();
+
                     dr["ID"] = s.GetID();
                     dr["Company"] = s.GetCompany();
                     dr["Type"] = s.GetShipType();

@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
+using WebsiteLaitBrasseur.BL;
 
 namespace WebsiteLaitBrasseur
 {
@@ -21,6 +22,7 @@ namespace WebsiteLaitBrasseur
         protected void Session_Start(object sender, EventArgs e)
         {
             Session["Attempt"] = 0;
+            Session["Cart"] = new List<ProductSelectionDTO>();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

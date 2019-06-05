@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Cart" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.Cart" %>
+﻿<%@ Page Title="Cart" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" EnableEventValidation="false" CodeBehind="Cart.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.Cart" %>
 
 
 <asp:Content ID="Body" ContentPlaceHolderID="MainContent" runat="server">
@@ -16,185 +16,63 @@
                 <div id="CartTitle1" runat="server" class="ContentHead">
                     <h1>Shopping Cart</h1>
                 </div>
-
-                <!--Shopping Card Legend-->
-                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;">
-                   <div class="col-md-3" >
-                       <asp:Label ID="LegendImage" runat="server" cssclass="text-info" Text="Image"></asp:Label>                 
-                   </div>
-
-                   <div class="col-md-2" >
-                       <asp:Label ID="LegendNamePrice" runat="server" cssclass="text-info" Text="Name/Price"></asp:Label>                 
-                   </div>
-
-                   <div class="col-md-2" >
-                       <asp:Label ID="LegendQuantity" runat="server" cssclass="text-info" Text="Quantity"></asp:Label>                 
-                   </div>
-
-                   <div class="col-md-2" >
-                       <asp:Label ID="LegendTotal" runat="server" cssclass="text-info" Text="Total Price"></asp:Label>                 
-                   </div>
-
-                    <div class="col-md-1">
-                        <asp:Label ID="LegendRemove" runat="server" cssclass="text-info" Text="Remove Item"></asp:Label> 
-                    </div>
-                </div>
-
-
-                <!--First Item : Image / Name + Price / Dropdown List for quantity / CheckBox to remove the Item-->
-                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:160px;">
-                   <div class="col-md-3" >
-                       <img id="Brune" alt="Beer_Brown" src="https://images.pexels.com/photos/8812/food-wood-night-alcohol.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500"  class="img-fluid rounded"/>                 
-                   </div>
-
-                   <div class="col-md-2  ">
-                       <asp:Label ID="NameBrune" runat="server" cssclass="text-info " Text="Fleurac La Triple IPA"></asp:Label><br />
-                       <asp:Label ID="PriceBrune" runat="server" cssclass="text-info" Text="14,95"></asp:Label>
-                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
-                   </div>
-
-                   <div class="col-md-2   ">
-                   <!--Dropdown list to select the quantity of products-->
-                   <asp:DropDownList ID="QuantityBrune" runat="server">
-                       <asp:ListItem Selected="True" Value="1"></asp:ListItem>
-                       <asp:ListItem  Value="2"></asp:ListItem>
-                       <asp:ListItem  Value="4"></asp:ListItem>
-                       <asp:ListItem  Value="5"></asp:ListItem>
-                       <asp:ListItem  Value="6"></asp:ListItem>
-                       <asp:ListItem  Value="7"></asp:ListItem>
-                       <asp:ListItem  Value="8"></asp:ListItem>
-                       <asp:ListItem  Value="9"></asp:ListItem>
-                       <asp:ListItem  Value="10"></asp:ListItem>
                 
-                   </asp:DropDownList>
+                <asp:Label ID="lblResult" runat="server" Text="" CssClass="text-info" style="font-size:20px"></asp:Label>
 
-                   </div>
-
-                   <!--Label for total price -->
-                   <div class="col-md-2   ">
-                      <asp:Label ID="TotalBrune" runat="server" cssclass="text-info " Text=""></asp:Label>
-                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
-                   </div>
-
-
-                   <div class="col-md-1">
-                        <asp:checkbox ID="checkboxBrune" runat="server" />
-                   </div>
-                </div>
-
-                <!--Second Item-->
-                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:160px">
-                   <div class="col-md-3" ">
-                       <img id="Blonde" alt="Beer_Blonde" src="https://images.pexels.com/photos/1089930/pexels-photo-1089930.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img-fluid rounded" />                     
-                   </div>
-
-                   <div class="col-md-2">
-                       <asp:Label ID="NameBlonde" runat="server" cssclass="text-info " Text="Pilsener de Rockefort"></asp:Label><br />
-                       <asp:Label ID="PriceBlonde" runat="server" cssclass="text-info" Text="9,95"></asp:Label>
-                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
-                   </div>
-
-                   <div class="col-md-2 ">
-                   <asp:DropDownList ID="QuantityBlonde" runat="server">
-                       <asp:ListItem Selected="True" Value="1"></asp:ListItem>
-                       <asp:ListItem  Value="2"></asp:ListItem>
-                       <asp:ListItem  Value="3"></asp:ListItem>
-                       <asp:ListItem  Value="4"></asp:ListItem>
-                       <asp:ListItem  Value="5"></asp:ListItem>
-                       <asp:ListItem  Value="6"></asp:ListItem>
-                       <asp:ListItem  Value="7"></asp:ListItem>
-                       <asp:ListItem  Value="8"></asp:ListItem>
-                       <asp:ListItem  Value="9"></asp:ListItem>
-                       <asp:ListItem  Value="10"></asp:ListItem>
-                    
-                   </asp:DropDownList>
-                   </div>
-
-                   <div class="col-md-2 ">
-                      <asp:Label ID="TotalBlonde" runat="server" cssclass="text-info " Text=""></asp:Label>
-                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
-                   </div>
-
-                   <div class="col-md-1">
-                        <asp:checkbox ID="checkBoxBlonde" runat="server" />
-                   </div>
-                </div>
+                <asp:gridview id="CartTable" runat="server"
+                    gridlines="none"
+                    autogeneratecolumns="false"
+                    class="table table-hover table-striped text-center"
+                    OnRowDataBound="CartTable_RowDataBound"
+                    OnRowCancelingEdit="CartTable_RowCancelingEdit"
+                    OnRowDeleting="CartTable_RowDeleting"
+                    OnRowUpdating="CartTable_RowUpdating"
+                    >
 
 
-                <!--Third Item-->
-                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:160px">
-                   <div class="col-md-3" ">
-                       <img id="Blanche" alt="Beer_Blanche" src="https://images.pexels.com/photos/1727829/pexels-photo-1727829.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="img-fluid rounded"/>                  
-                   </div>
+                        <Columns>
+                            <asp:BoundField DataField="ID" ReadOnly="true" />
 
-                   <div class="col-md-2">
-                       <asp:Label ID="NameBlanche" runat="server" cssclass="text-info " Text="La Choulette Blonde"></asp:Label><br />
-                       <asp:Label ID="PriceBlanche" runat="server" cssclass="text-info" Text="10,95"></asp:Label>
-                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
-                   </div>
+                            <asp:templateField >
+                                <ItemTemplate>
+                                    <asp:Image ID="Image" runat="server"  ImageUrl='<%# Bind("Image") %>' Width="165px" Height="110px"/>  
+                                </ItemTemplate>
+                            </asp:templateField>
 
-                   <div class="col-md-2  ">
-                   <asp:DropDownList ID="QuantityBlanche" runat="server">
-                       <asp:ListItem Selected="True" Value="1"></asp:ListItem>
-                       <asp:ListItem  Value="2"></asp:ListItem>
-                       <asp:ListItem  Value="3"></asp:ListItem>
-                       <asp:ListItem  Value="4"></asp:ListItem>
-                       <asp:ListItem  Value="5"></asp:ListItem>
-                       <asp:ListItem  Value="6"></asp:ListItem>
-                       <asp:ListItem  Value="7"></asp:ListItem>
-                       <asp:ListItem  Value="8"></asp:ListItem>
-                       <asp:ListItem  Value="9"></asp:ListItem>
-                       <asp:ListItem  Value="10"></asp:ListItem>
-                     
-                   </asp:DropDownList>
-                   </div>
+                            <asp:templateField HeaderText="Product Name">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblProductName" runat="server" Text='<%# Bind("Name") %>' ></asp:Label>
+                                </ItemTemplate>
+                            </asp:templateField>
 
-                   <div class="col-md-2 ">
-                      <asp:Label ID="TotalBlanche" runat="server" cssclass="text-info " Text=""></asp:Label>
-                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
-                   </div>
+                            <asp:templateField HeaderText="Size">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblSize" runat="server" Text='<%# Bind("Size") %>' ></asp:Label>
+                                </ItemTemplate>
+                            </asp:templateField>
 
-                   <div class="col-md-1">
-                        <asp:checkbox ID="checkBoxBlanche" runat="server" />
-                   </div>
-                </div>
+                            <asp:templateField HeaderText="Price">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblPrice" runat="server" Text='<%# Bind("Price") %>' ></asp:Label>
+                                </ItemTemplate>
+                            </asp:templateField>
 
-                <!--Fourth Item-->
-                <div class="col-md-12 row rounded justify-content-center"  style="border:solid;border-color:grey;height:160px">
-                   <div class="col-md-3" ">
-                       <img id="Carre" alt="Cheese" src="https://cdn.pixabay.com/photo/2016/01/19/16/57/cheese-1149471__340.jpg" class="img-fluid rounded"/>                  
-                   </div>
+                            <asp:templateField HeaderText="Quantity">
+                                <ItemTemplate>
+                                    <asp:DropDownList ID="DDLQuantity" runat="server" Cssclass="form-control" AutoPostBack="true"  OnSelectedIndexChanged="DDLQuantity_SelectedIndexChanged">
+                                        
+                                    </asp:DropDownList>
+                                </ItemTemplate>                           
+                            </asp:templateField>
 
-                   <div class="col-md-2 ">
-                       <asp:Label ID="NameCheese" runat="server" cssclass="text-info " Text="Brie de Meaux"></asp:Label><br />
-                       <asp:Label ID="PriceCheese" runat="server" cssclass="text-info" Text="11,95"></asp:Label>
-                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
-                   </div>
+                            <asp:templateField HeaderText="Total Price">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblTotalPrice" runat="server" Text="" ></asp:Label>
+                                </ItemTemplate>
+                            </asp:templateField>
 
-                   <div class="col-md-2 ">
-                   <asp:DropDownList ID="QuantityCheese" runat="server">
-                       <asp:ListItem Selected="True" Value="1"></asp:ListItem>
-                       <asp:ListItem  Value="2"></asp:ListItem>
-                       <asp:ListItem  Value="4"></asp:ListItem>
-                       <asp:ListItem  Value="5"></asp:ListItem>
-                       <asp:ListItem  Value="6"></asp:ListItem>
-                       <asp:ListItem  Value="7"></asp:ListItem>
-                       <asp:ListItem  Value="8"></asp:ListItem>
-                       <asp:ListItem  Value="9"></asp:ListItem>
-                       <asp:ListItem  Value="10"></asp:ListItem>
-           
-                   </asp:DropDownList>
-                   </div>
-                   <div class="col-md-2 ">
-                      <asp:Label ID="TotalCheese" runat="server" cssclass="text-info " Text=""></asp:Label>
-                       <asp:Label  runat="server" cssclass="text-info" Text="€"></asp:Label>
-                   </div>
-
-                   <div class="col-md-1">
-                        <asp:checkbox ID="checkBoxCheese" runat="server" />
-                   </div>
-                </div>
-
+                        </Columns>
+            </asp:gridview>
 
             </div> 
 

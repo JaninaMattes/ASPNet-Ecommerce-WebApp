@@ -30,11 +30,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 {
                     var segments = Request.GetFriendlyUrlSegments();
                     type = segments[0];
-                    if (type == null) { Debug.Write("\nError Url Friendly"); } //DEBUG 
                 }
                 catch (Exception ex)
                 {
                     ex.GetBaseException();
+                    Debug.Write(ex.ToString());
+                    Debug.Write("\n\n Pas d'ID \n\n");
                 }
 
                 if (!string.IsNullOrEmpty(type))

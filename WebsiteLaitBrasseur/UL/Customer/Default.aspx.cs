@@ -16,17 +16,15 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            try {           
+            if (this.Session["Email"] != null)
+            { 
                 string email= this.Session["Email"].ToString();
-                if (email != null)
-                {
-                    AccountDTO customer = new AccountDTO();
-                    customer = DB.GetCustomer(email);
-                    lblWelcome.Text = "Welcome back " + customer.GetFirstName() + " " + customer.GetLastName();
-                }
+                AccountDTO customer = new AccountDTO();
+                customer = DB.GetCustomer(email);
+                lblWelcome.Text = "Welcome back " + customer.GetFirstName() + " " + customer.GetLastName();
             }
-            catch
-            {
+            else
+            { 
                 lblWelcome.Text = "Welcome & Bienvenue";
 
             }

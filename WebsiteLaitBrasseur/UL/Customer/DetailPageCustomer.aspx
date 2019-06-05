@@ -7,7 +7,7 @@
 
 <!-- Content of detail view page-->
 <div class="container-fluid">
-        <asp:Label ID="lblResult" runat="server" Text="" CssClass="text-danger"></asp:Label>
+        <asp:Label ID="lblError" runat="server" Text="" CssClass="text-danger"></asp:Label>
 
         <div class="row">
             <div class="col-md-12" style="text-align: center;">
@@ -38,7 +38,7 @@
                     <p></p><p class="text-info"><asp:Label ID="lowStock" runat="server" Text="" CssClass="text-danger"></asp:Label></p><br/>
 
                     <!--Dropdown list with different sizes for the product to be selected-->
-                    <p>Unit Size (gr):</p>
+                    <p>Unit Size :</p>
                     <asp:DropDownList ID="unitDropDownList" runat="server" Cssclass="form-control" AutoPostBack="true" >
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator InitialValue="-1" ID="Req_ID" Display="Dynamic" 
@@ -61,7 +61,9 @@
                     <div class ="col-md-6">                                              
                     <!--Button to add products to shopping list-->
                     Add a product to the shopping cart.<br />                   
-                   <asp:button ID="AddProduct" ToolTip="Add product."  runat="server" Text="Add Product" class="btn btn-info"/><br />
+                   <asp:button ID="AddProduct" ToolTip="Add product."  runat="server" Text="Add Product" OnClick="AddButton_Click" class="btn btn-info"/><br /><br />
+                   <asp:Label ID="lblResult" runat="server" Text="" CssClass="text-info"></asp:Label>
+
              </div>
            </div>
                           
