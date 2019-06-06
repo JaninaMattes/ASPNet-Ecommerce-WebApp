@@ -85,7 +85,6 @@ namespace WebsiteLaitBrasseur.DAL
                 
                     using (SqlCommand cmd = new SqlCommand(queryAutoIncr, con))
                     {
-                        con.Open();
                         SqlDataReader reader = cmd.ExecuteReader();
                         //won't need a while, since it will only retrieve one row
                         reader.Read();
@@ -99,6 +98,7 @@ namespace WebsiteLaitBrasseur.DAL
             {
                 result = 0;
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return result;
         }

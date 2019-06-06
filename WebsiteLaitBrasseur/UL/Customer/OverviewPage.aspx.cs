@@ -86,7 +86,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             try
             {
                 Debug.WriteLine("BindAllDAta");
-                var result = BL.GetAllProducts();
+                var result = BL.GetAllActiveProducts();
                 productList = result.ToList();
                 ImageRepeater.DataSource = GetDataTable();
                 ImageRepeater.DataBind();

@@ -548,7 +548,7 @@ namespace WebsiteLaitBrasseur.DAL
                             product = new ProductDTO();
                             product = GenerateProduct(reader, product);
                             //add data objects to result-list 
-                            Debug.Print("ProductDAL: /FindBy/ " + product.GetId());
+                            //Debug.Print("ProductDAL: /FindBy/ " + product.GetId());
                             return product;
                         }
                     }

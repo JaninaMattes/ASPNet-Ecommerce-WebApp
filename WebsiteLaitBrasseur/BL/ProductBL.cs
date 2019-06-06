@@ -296,7 +296,6 @@ namespace WebsiteLaitBrasseur.BL
                 {
                     List<SizeDTO> list = SB.FindByProduct(results[i].GetId());
                     results[i].SetDetails(list);
-                    Debug.Write("\n ProductBL / In foreach / product0 Price :" + results[i].GetDetails()[0].GetPrice() + "\n"); //DEBUG
                 }
 
                 /*foreach (ProductDTO p in results)
@@ -381,18 +380,20 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="type"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public int Update2(int productID, int size, decimal price, string name, string type, int stock, int status)
+        public int Update2(int productID,int sizeID, int size, decimal price, string name, string type, int stock, int status)
         {
             ProductDTO product = new ProductDTO();
+            SizeDTO dtoSize = new SizeDTO();
             int result = 0;
             try
             {
                 result = DB.Update(productID, name, type,stock, status);
-                SB.UpdateSize2(productID, size, price);
+                SB.UpdateSize2(sizeID, size, price);
             }
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return result;
         }

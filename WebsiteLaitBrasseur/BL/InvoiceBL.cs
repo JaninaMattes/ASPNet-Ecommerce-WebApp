@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using WebsiteLaitBrasseur.DAL;
@@ -24,11 +25,13 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="shippingID"></param>
         /// <param name="products"></param>
         /// <returns>Int InvoiceID</returns>
-        public int CreateInvoice(string email, int shippingID, List<ProductSelectionDTO> products, int paymentStatus)
+        public int CreateInvoice(string email, int shippingID, List<ProductSelectionDTO> products)
         {
             AccountDTO customer = new AccountDTO();
             ShippmentDTO deliverer = new ShippmentDTO();
             int result = 0;
+            int paymentStatus = 0;
+
             try
             {
                 customer = AB.FindBy(email);
@@ -39,7 +42,7 @@ namespace WebsiteLaitBrasseur.BL
                     {
                         //set current time when Invoice is created
                         DateTime orderDate = DateTime.Now;
-                        DateTime paymentDate = new DateTime();
+                        DateTime paymentDate = DateTime.Now;
                         DateTime arrivalDate = DateTime.Now.AddDays(deliverer.GetDeliveryTime());
                         DateTime postageDate = DateTime.Now;
                         //calculate all other values for the invoice
@@ -52,7 +55,8 @@ namespace WebsiteLaitBrasseur.BL
 
                         UpdateProductInfo(products);
 
-                        if (paymentStatus == 1)
+                        //Direct payment or invoice cancelled
+                        /*if (paymentStatus == 1)
                         {
                             //if payment has not been directly done
                             paymentDate = DateTime.Now;
@@ -61,7 +65,8 @@ namespace WebsiteLaitBrasseur.BL
                         {
                             //Business Rule: Payment in 30 days
                             paymentDate = DateTime.Now.AddDays(30);
-                        }
+                        }*/
+
                         //insert into DB
                         result = DB.Insert(customer.GetID(), deliverer.GetID(), totalQuantity, totalShippingCost, totalProductCost, totalTaxes,
                             totalAmount, orderDate.ToString(), paymentDate.ToString(), arrivalDate.ToString(), postageDate.ToString(), paymentStatus, email);
@@ -79,6 +84,7 @@ namespace WebsiteLaitBrasseur.BL
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }            
             return result;
         }

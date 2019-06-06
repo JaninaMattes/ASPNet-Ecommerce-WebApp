@@ -114,10 +114,10 @@ namespace WebsiteLaitBrasseur.DAL
         }
 
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int UpdateSize2(int productID, int size, decimal price)
+        public int UpdateSize2(int sizeID, int size, decimal price)
         {
             int result = 0;
-            string queryString = "UPDATE dbo.Size SET unitSize = @size, unitPrice = @price WHERE productID = @id";
+            string queryString = "UPDATE dbo.Size SET unitSize = @size, unitPrice = @price WHERE sizeID = @id";
             try
             {
                 //The connection is automatically closed at the end of the using block.
@@ -125,7 +125,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
-                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = productID;
+                        cmd.Parameters.AddWithValue("@id", SqlDbType.Int).Value = sizeID;
                         cmd.Parameters.AddWithValue("@size", SqlDbType.Int).Value = size;
                         cmd.Parameters.AddWithValue("@price", SqlDbType.Decimal).Value = price;
                         cmd.CommandType = CommandType.Text;
