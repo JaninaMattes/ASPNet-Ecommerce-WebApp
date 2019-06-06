@@ -232,7 +232,10 @@ namespace WebsiteLaitBrasseur.DAL
             return result;
         }
 
-        //find all shipping companies available
+        /// <summary>
+        /// Find all products bought
+        /// </summary>
+        /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductSelectionDTO> FindAll()
         {
@@ -275,6 +278,12 @@ namespace WebsiteLaitBrasseur.DAL
             }
             return results;
         }
+
+        /// <summary>
+        /// Find all products per customer invoice
+        /// </summary>
+        /// <param name="invoiceID"></param>
+        /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductSelectionDTO> FindAllPerInvoice(int invoiceID)
         {
@@ -326,7 +335,8 @@ namespace WebsiteLaitBrasseur.DAL
             product.SetId(Convert.ToInt32(reader["productID"]));
             selection.SetID(Convert.ToInt32(reader["selectionID"]));
             selection.SetProduct(product);
-            selection.SetID(Convert.ToInt32(reader["invoiceID"]));
+            inv.SetID(Convert.ToInt32(reader["invoiceID"]));
+            selection.SetInvoice(inv);
             selection.SetOrigPrice(Convert.ToDecimal(reader["originalPrice"]));
             selection.SetOrigSize(Convert.ToInt32(reader["originalSize"]));
             selection.SetQuantity(Convert.ToInt32(reader["quantity"]));

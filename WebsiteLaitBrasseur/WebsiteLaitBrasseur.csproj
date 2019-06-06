@@ -174,8 +174,8 @@
     <Compile Include="BL\CardDTO.cs" />
     <Compile Include="BL\CityDTO.cs" />
     <Compile Include="BL\EmptyRowException.cs" />
-    <Compile Include="BL\INFT3050PaymentFactory.cs" />
-    <Compile Include="BL\INFT3050PaymentSystem.cs" />
+    <Compile Include="BL\PaymentFactory.cs" />
+    <Compile Include="BL\PaymentSystem.cs" />
     <Compile Include="BL\InvoiceBL.cs" />
     <Compile Include="BL\InvoiceDTO.cs" />
     <Compile Include="BL\PaymentBL.cs" />
@@ -208,6 +208,7 @@
     <Compile Include="DAL\PayPalDAL.cs" />
     <Compile Include="DAL\ProductDAL.cs" />
     <Compile Include="DAL\ProductSelectionDAL.cs" />
+    <Compile Include="DAL\Product_ProdSelectionDAL.cs" />
     <Compile Include="DAL\ShippmentDAL.cs" />
     <Compile Include="DAL\SizeDAL.cs" />
     <Compile Include="DAL\SqlDataAccess.cs" />
