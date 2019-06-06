@@ -37,8 +37,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             productList = BL.GetAllProducts();
             List<ProductDTO> asList = productList.ToList();
+            ItemListTable.Columns[0].Visible = true;
             ItemListTable.DataSource = GetDataTable(asList);
             ItemListTable.DataBind();
+            ItemListTable.Columns[0].Visible = false;
             lblItemList.Text ="There is " + ItemListTable.Rows.Count + " items in the list.";         
         }
 
@@ -50,7 +52,8 @@ namespace WebsiteLaitBrasseur.UL.Admin
             IEnumerable<SizeDTO> enumerable = new List<SizeDTO>();
 
             //Colmuns declaration
-            dtItem.Columns.Add("ID");
+            dtItem.Columns.Add("SizeID");
+            dtItem.Columns.Add("ProductID");
             dtItem.Columns.Add("Name");
             dtItem.Columns.Add("Type");
             dtItem.Columns.Add("Size");
@@ -66,7 +69,8 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 for (int i = 0;  i < asList.Count(); i++)
                 {
                     DataRow dr = dtItem.NewRow();
-                    dr["ID"] = p.GetId();
+                    dr["SizeID"] = asList[i].GetID();
+                    dr["ProductID"] = p.GetId();
                     dr["Name"] = p.GetName();
                     dr["Type"] = p.GetProductType();
                     dr["Size"] = asList[i].GetSize();
@@ -105,7 +109,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
         protected void ItemListTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             //Index of grid recuperation
-            int productID = Convert.ToInt32(ItemListTable.Rows[e.RowIndex].Cells[0].Text);
+            int productID = Convert.ToInt32(ItemListTable.Rows[e.RowIndex].Cells[1].Text);
 
             var urlF = FriendlyUrl.Href("/UL/Admin/DetailPageAdmin", productID);
             Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + urlF);
@@ -134,7 +138,8 @@ namespace WebsiteLaitBrasseur.UL.Admin
         {
             try
             {
-                int ID = Convert.ToInt16(ItemListTable.Rows[e.RowIndex].Cells[0].Text);
+                int sizeID = Convert.ToInt16(ItemListTable.Rows[e.RowIndex].Cells[0].Text);
+                int productID = Convert.ToInt16(ItemListTable.Rows[e.RowIndex].Cells[1].Text);
                 TextBox newName = ItemListTable.Rows[e.RowIndex].FindControl("TextEditProductName") as TextBox;
                 DropDownList ddlType = ItemListTable.Rows[e.RowIndex].FindControl("DDLProductType") as DropDownList;
                 TextBox newSize = ItemListTable.Rows[e.RowIndex].FindControl("TextEditSize") as TextBox;
@@ -142,7 +147,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 TextBox newStock = ItemListTable.Rows[e.RowIndex].FindControl("TextEditStock") as TextBox;
                 DropDownList ddlStatus = ItemListTable.Rows[e.RowIndex].FindControl("DDLStatus") as DropDownList;
 
-                BL.Update2(ID,Convert.ToInt32(newSize.Text), Convert.ToDecimal(newPrice.Text), newName.Text, ddlType.Text, Convert.ToInt32(newStock.Text), Convert.ToInt16(ddlStatus.Text));
+                BL.Update2(productID, sizeID, Convert.ToInt32(newSize.Text), Convert.ToDecimal(newPrice.Text), newName.Text, ddlType.Text, Convert.ToInt32(newStock.Text), Convert.ToInt16(ddlStatus.Text));
 
                 lblInfo.CssClass = "text-success";
                 lblInfo.Text = "Updated achived with success";

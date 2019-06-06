@@ -97,6 +97,8 @@
                     class="table table-hover table-striped text-center"
                    >
                         <Columns>
+                            <asp:BoundField DataField="PostageID" ReadOnly="true" />
+
                             <asp:templateField HeaderText="Company">
                                 <ItemTemplate>
                                     <asp:Label ID="lblCompany" runat="server" Text='<%# Bind("Company") %>' ></asp:Label>

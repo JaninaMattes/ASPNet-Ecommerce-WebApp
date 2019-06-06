@@ -39,8 +39,9 @@
 
 
                         <Columns>
-                            <asp:BoundField DataField="id" HeaderText="ID" ReadOnly="true" />
+                            <asp:BoundField DataField="SizeID" ReadOnly="true" />
 
+                            <asp:BoundField DataField="ProductID" HeaderText="ID" ReadOnly="true" />
 
                             <asp:templateField HeaderText="Product Name">
                                 <ItemTemplate>

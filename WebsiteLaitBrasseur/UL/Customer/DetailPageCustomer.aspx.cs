@@ -112,10 +112,21 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 //Test ifproduct already exist in Cart
                 foreach (ProductSelectionDTO p in cart)
                 {
+                    //If the exact same product is already in the cart, quantities are merge
                     if ( (p.GetProduct().GetId() == dtoProdSel.GetProduct().GetId()) && (p.GetOrigSize() == dtoProdSel.GetOrigSize()))
-                    {  
-                        //If the exact same product is already in the cart, quantities are merge
-                        p.SetQuantity(p.GetQuantity() + dtoProdSel.GetQuantity());
+                    {
+
+                        //If the new quantity is bigger thanthe stock, the newQuantity is the maximum(=stock)
+                        if (p.GetQuantity() + dtoProdSel.GetQuantity() <= p.GetProduct().GetStock() )
+                        {
+                            p.SetQuantity(p.GetQuantity() + dtoProdSel.GetQuantity());
+                        }
+                        else
+                        {
+                            p.SetQuantity(p.GetProduct().GetStock()-1);
+                            lblResult.Text = "Maximum stock reached but   ";
+                        }
+
                         modified = true;
                     }
                 }
@@ -124,7 +135,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 if (modified == false) { cart.Insert(cart.Count, dtoProdSel); }     
                 
                 this.Session["cart"] = cart;
-                lblResult.Text = "Added to cart with success!";
+                lblResult.Text += "Added to cart with success!";
 
                 //TEST CART
                 int i=0;
