@@ -9,6 +9,7 @@ namespace WebsiteLaitBrasseur.BL
     public class ProductSelectionBL
     {
         ProductSelectionDAL DB = new ProductSelectionDAL();
+        Product_ProdSelectionDAL PDB = new Product_ProdSelectionDAL();
 
         /// <summary>
         /// TODO Check the logic of shopping => Customer can only buy if product is availbale
@@ -18,12 +19,13 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="origSize"></param>
         /// <param name="origPrice"></param>
         /// <returns></returns>
-        public int Create(int invoiceID, int quantity, int origSize, decimal origPrice)
+        public int Create(int invoiceID, int productID, int quantity, int origSize, decimal origPrice)
         {
             int result = 0;
             try
             {
                 result = DB.Insert(invoiceID, quantity, origSize, origPrice);
+                if (result > 0) { PDB.Insert(productID, result);}                
             }
             catch (Exception e)
             {
@@ -51,6 +53,5 @@ namespace WebsiteLaitBrasseur.BL
             return results;
         }
 
-        //TODO
     }
 }

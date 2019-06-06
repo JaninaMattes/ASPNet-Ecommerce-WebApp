@@ -32,7 +32,7 @@ namespace INFT3050.PaymentSystem
     /// <summary>
     /// A dummy payment system for INFT 3050
     /// </summary>
-    public class INFT3050PaymentSystem : IPaymentSystem
+    public class PaymentSystem : IPaymentSystem
     {
         //
         // make a dummy payment based on the dummy accounts

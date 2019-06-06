@@ -11,6 +11,6 @@ namespace INFT3050.PaymentSystem
         /// Create a payment system. 
         /// </summary>
         /// <returns></returns>
-        public static IPaymentSystem Create() { return new INFT3050PaymentSystem(); }
+        public static IPaymentSystem Create() { return new PaymentSystem(); }
     }
 }
