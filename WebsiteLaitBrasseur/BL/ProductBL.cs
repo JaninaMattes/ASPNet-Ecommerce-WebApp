@@ -206,7 +206,12 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 results = DB.FindActiveProducts(status);
-                foreach(ProductDTO p in results)
+                for (int i = 0; i < results.Count; i++)
+                {
+                    List<SizeDTO> list = SB.FindByProduct(results[i].GetId());
+                    results[i].SetDetails(list);
+                }
+                /*foreach(ProductDTO p in results)
                 {
                     var enumerable = SB.FindByProduct(p.GetId());
                     List<SizeDTO> asList = enumerable.ToList();
@@ -214,11 +219,12 @@ namespace WebsiteLaitBrasseur.BL
                     results.Add(p);
                     //debugging purpose, will later remove
                     Debug.WriteLine("ProductBL / products found / " + p.GetId());
-                }
+                }*/
             }
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return results;
         }

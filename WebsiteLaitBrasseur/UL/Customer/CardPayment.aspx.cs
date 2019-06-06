@@ -43,6 +43,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 int attempt = Convert.ToInt16(this.Session["attempt"]);
                 attempt++;
                 this.Session["attempt"] = attempt;
+                Debug.Write("\n Attempt :  " + attempt); //DEBUG
 
                 //if 3 attempt : redirection
                 if (attempt>=3)
@@ -61,8 +62,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 //Invoice recuperation (List of 1 element)
                 int customerID = Convert.ToInt32(this.Session["CustID"]);
                 int invoiceID = Convert.ToInt32(this.Session["InvoiceID"]);
-                //decimal TotalAmount = blInvoice.FindInvoiceByID(customerID, invoiceID)[0].GetTotal();
-                decimal TotalAmount = 52.26m;
+                decimal TotalAmount = blInvoice.FindInvoiceByID(customerID, invoiceID)[0].GetTotal();
 
                 //Payment 
                 //Created the Payment system
@@ -73,22 +73,22 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
 
                 //Value to make the payment approved
-                /*payment.CardName = "Arthur Anderson";
+                payment.CardName = "Arthur Anderson";
                 payment.CardNumber = "4444333322221111";
                 payment.CVC = 123;
                 payment.Expiry = new DateTime(2020, 11, 1);
-                payment.Amount = 200;*/
+                payment.Amount = 200;
 
-                payment.CardName = TextName.Text;
+                /*payment.CardName = TextName.Text;
                 payment.CardNumber = TextCardNumber.Text;
                 payment.CVC = Convert.ToInt16(TextCSC.Text);
                 payment.Expiry = new DateTime(Convert.ToInt16(YearExpiration.SelectedValue), Convert.ToInt16(MonthExpiration.SelectedValue), 1);
-                payment.Amount = TotalAmount;
+                payment.Amount = TotalAmount;*/
                 payment.Description = "OrderID : " + invoiceID + " for customer : " + customerID;
                 var task = paymentSystem.MakePayment(payment);
 
                 int i = 0;
-                while (!task.IsCompleted)  { i++; if (i > 200000000) { break; } }      //Let time to executing transaction
+                while (!task.IsCompleted)  { /*i++; if (i > 200000000) { break; } */}      //Let time to executing transaction
 
                  Debug.Write("\n" + i + "\n"); //DEBUG
 

@@ -18,7 +18,13 @@ namespace WebsiteLaitBrasseur.UL.Admin
             {
                 if (this.Session["Email"] != null)
                 {
-                        lblLogout.Visible = true;
+                    LogoutButton.Visible = true;
+                    LogInButton.Visible = false;
+                }
+                else
+                {
+                    LogoutButton.Visible = false;
+                    LogInButton.Visible = true;
                 }
             }
             catch (Exception ex)

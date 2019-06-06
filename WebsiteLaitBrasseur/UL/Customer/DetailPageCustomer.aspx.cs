@@ -46,6 +46,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 {
                     labelPrice.Text = sb.GetPriceBySize(id, Convert.ToInt32(unitDropDownList.SelectedValue)).ToString();
                     totalAmount.Text = GetTotalAmount(labelPrice.Text, quantityDropDownList.SelectedValue.ToString());
+                    lblResult.Text = "";
                 }
                 if (!IsPostBack)
                 {

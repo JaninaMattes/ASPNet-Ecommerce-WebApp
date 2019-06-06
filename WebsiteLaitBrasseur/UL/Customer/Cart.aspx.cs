@@ -39,8 +39,15 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 {
                     if (PostagesTable.SelectedIndex >= 0)
                     {
-                        InvoiceCreation();
-                        Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/CardPayment.aspx");
+                        if (InvoiceCreation() > 0)
+                        { 
+                            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/CardPayment.aspx");
+                        }
+                        else
+                        {
+                            lblValidation.Text = "Error during Invoice creation";
+                        }
+
                     }
                     else { lblValidation.Text = "Please select a Postage Option"; }
                 }
@@ -309,27 +316,34 @@ namespace WebsiteLaitBrasseur.UL.Customer
         }
 
         //Invoice creation
-        private void InvoiceCreation()
+        private int InvoiceCreation()
         {
+            int result = 0;
             try
             {
                 if (this.Session["CustID"] != null && this.Session["Email"] != null)
                 {
                     //Email and Cart Recuperation from session
                     string email = this.Session["Email"].ToString();
-                    List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);
+                    List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);                
 
                     //Postage Id recuperation from Cell[0] of selected Row
                     int postageID = Convert.ToInt32(PostagesTable.Rows[PostagesTable.SelectedIndex].Cells[0].Text);
 
                     //Invoice creation
-                    Debug.Write("\n Postage ID : " + PostagesTable.SelectedIndex);  //DEBUG
-                    blInvoice.CreateInvoice(email, postageID, cart);
-                    Debug.Write("\n ASPX : Apreès CreateInvoice");  //DEBUG
+                    result =blInvoice.CreateInvoice(email, postageID, cart);
+                    Debug.Write("\nInvoiceID = " + result);
+                    if (result > 0)
+                    {
+                        if (blInvoice.UpdateStockProductSelection(result, cart, false) == 0) { lblValidation.Text = "Error DataBase"; }
+                        else
+                        {
+                            this.Session["InvoiceID"] = result;
+                        }
+                    }
                 }
                 else
                 {
-                    Debug.Write("\n ERRORR");  //DEBUG
                     lblValidation.Text = "Error in authentication, please Login again.";
                 }
 
@@ -339,6 +353,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 ex.GetBaseException();
                 Debug.Write(ex.ToString());
             }
+            return result;
 
         }
 

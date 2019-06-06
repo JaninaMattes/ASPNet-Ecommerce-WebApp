@@ -189,9 +189,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 {
                     dr["PaymentStatus"] = "Paied";
                 }
+                else if (invoice.GetStatus() == 2)
+                {
+                    dr["PaymentStatus"] = "Cancelled";
+                }
                 else
                 {
-                    dr["PaymentStatus"] = "Open";
+                    dr["PaymentStatus"] = "ErrorValue";
                 }
                 dtInvoice.Rows.Add(dr);
             }
