@@ -10,6 +10,7 @@ namespace WebsiteLaitBrasseur.BL
         //private properties
         private int _id;
         private ProductDTO _selection;
+        private InvoiceDTO _invoice;
         //private InvoiceDTO _invoice;
         private int _quantity;
         private decimal _origPrice;
@@ -34,6 +35,16 @@ namespace WebsiteLaitBrasseur.BL
         public void SetProduct(ProductDTO select)
         {
             this._selection = select;
+        }
+
+        public InvoiceDTO GetInvoice()
+        {
+            return this._invoice;
+        }
+
+        public void SetInvoice(InvoiceDTO inv)
+        {
+            this._invoice = inv;
         }
 
         public int GetQuantity()
@@ -71,10 +82,11 @@ namespace WebsiteLaitBrasseur.BL
         {
         }
 
-        public ProductSelectionDTO(int id, ProductDTO selection, int quantity, decimal origPrice, int origSize)
+        public ProductSelectionDTO(int id, ProductDTO selection, InvoiceDTO inv, int quantity, decimal origPrice, int origSize)
         {
             _id = id;
             _selection = selection;
+            _invoice = inv;
             _quantity = quantity;
             _origPrice = origPrice;
             _origSize = origSize;

@@ -25,7 +25,7 @@ namespace WebsiteLaitBrasseur.BL
             try
             {
                 result = DB.Insert(invoiceID, quantity, origSize, origPrice);
-                if (result > 0) { PDB.Insert(productID, result);}                
+                if (result > 0) { PDB.Insert(productID, result); }                
             }
             catch (Exception e)
             {

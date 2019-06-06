@@ -119,46 +119,7 @@ namespace WebsiteLaitBrasseur.DAL
             return result;
         }
 
-        /// <summary>
-        /// This returns the number of affected rows in the table.
-        /// If success full the result = 1
-        /// If not successfull the result = 0
-        /// 
-        /// If the product is updated in the Product_ProdSelection Table
-        /// the original price in the ProductSelection Table needs to be
-        /// updated as well.
-        /// </summary>
-        /// <param name="selectionID"></param>
-        /// <param name="productID"></param>
-        /// <returns></returns>
-        [DataObjectMethod(DataObjectMethodType.Update)]
-        public int UpdateProduct(int selectionID, int productID)
-        {
-            int result = 0;
-            string queryString = "UPDATE dbo.Product_ProdSelection SET productID = @productID " +
-                "WHERE selectionID = @selectionID";
 
-            try
-            {
-                //The connection is automatically closed at the end of the using block.
-                using (SqlConnection con = new SqlConnection(ConnectionString))
-                {
-                    using (SqlCommand cmd = new SqlCommand(queryString, con))
-                    {
-                        cmd.Parameters.AddWithValue("@productID", productID);
-                        cmd.Parameters.AddWithValue("@selectionID", selectionID);
-                        cmd.CommandType = CommandType.Text;
-                        con.Open();
-                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                e.GetBaseException();
-            }
-            return result;
-        }
 
         /// <summary>
         /// Update the selected quantity in the database.
@@ -205,7 +166,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="origPrice"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int Update(int selectionID, decimal origPrice)
+        public int UpdatePrice(int selectionID, decimal origPrice)
         {
             int result = 0;
             string queryString = "UPDATE dbo.ProductSelection SET originalPrice = @originalPrice WHERE selectionID = @selectionID";
@@ -242,7 +203,7 @@ namespace WebsiteLaitBrasseur.DAL
         /// <param name="origSize"></param>
         /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Update)]
-        public int Update(int selectionID, int origSize)
+        public int UpdateSize(int selectionID, int origSize)
         {
             int result = 0;
             string queryString = "UPDATE dbo.ProductSelection SET originalSize = @originalSize WHERE selectionID = @selectionID";
@@ -277,6 +238,7 @@ namespace WebsiteLaitBrasseur.DAL
         {
             ProductSelectionDTO selection;
             ProductDTO product;
+            InvoiceDTO invoice;
             //do an innerjoin over the two tables to retrieve all values
             List<ProductSelectionDTO> results = new List<ProductSelectionDTO>();
             string queryString = "SELECT dbo.Product_ProdSelection.productID, dbo.ProductSelection.selectionID, " +
@@ -297,7 +259,8 @@ namespace WebsiteLaitBrasseur.DAL
                             //TODO InvoiceID Logic
                             product = new ProductDTO();
                             selection = new ProductSelectionDTO();
-                            selection = GenerateSelection(reader, product, selection);
+                            invoice = new InvoiceDTO();
+                            selection = GenerateSelection(reader, product, invoice, selection);
                             //return product instance as data object 
                             Debug.Print("ProductSelectionDAL: /FindAll/ " + selection.GetID());
                             //add data objects to result-list 
@@ -317,12 +280,15 @@ namespace WebsiteLaitBrasseur.DAL
         {
             ProductSelectionDTO selection;
             ProductDTO product;
+            InvoiceDTO invoice;
             //do an innerjoin over the two tables to retrieve all values
             List<ProductSelectionDTO> results = new List<ProductSelectionDTO>();
-            string queryString = "SELECT dbo.Product_ProdSelection.productID, dbo.ProductSelection.selectionID, " +
-                "dbo.ProductSelection.invoiceID, dbo.ProductSelection.quantity, dbo.ProductSelection.originalSize, " +
-                "dbo.ProductSelection.originalPrice FROM dbo.ProductSelection " +
-                "INNER JOIN dbo.Product_ProdSelection ON dbo.ProductSelection.invoiceID =" + invoiceID;
+            string queryString = "SELECT dbo.Product_ProdSelection.productID, dbo.ProductSelection.selectionID, dbo.ProductSelection.quantity, " +
+                "dbo.ProductSelection.originalSize, dbo.ProductSelection.originalPrice " +
+                "FROM dbo.Product_ProdSelection " +
+                "INNER JOIN dbo.ProductSelection " +
+                "ON dbo.ProductSelection.selectionID = dbo.ProductSelection.selectionID " +
+                "WHERE dbo.ProductSelection.invoiceID = " + invoiceID;
             try
             { 
                 //The connection is automatically closed at the end of the using block.
@@ -330,6 +296,7 @@ namespace WebsiteLaitBrasseur.DAL
                 {
                     using (SqlCommand cmd = new SqlCommand(queryString, con))
                     {
+                        cmd.Parameters.AddWithValue("@invoiceID", SqlDbType.Int).Value = invoiceID;
                         con.Open();
                         SqlDataReader reader = cmd.ExecuteReader();
                         
@@ -337,7 +304,8 @@ namespace WebsiteLaitBrasseur.DAL
                         {
                             product = new ProductDTO();
                             selection = new ProductSelectionDTO();
-                            selection = GenerateSelection(reader, product, selection);
+                            invoice = new InvoiceDTO();
+                            selection = GenerateSelection(reader, product, invoice, selection);
                             //return product instance as data object 
                             Debug.Print("ProductSelectionDAL: /FindAllByInvoice/ " + selection.GetID());
                             //add data objects to result-list 
@@ -353,11 +321,12 @@ namespace WebsiteLaitBrasseur.DAL
             return results;
         }
 
-        private static ProductSelectionDTO GenerateSelection(SqlDataReader reader, ProductDTO product, ProductSelectionDTO selection)
+        private static ProductSelectionDTO GenerateSelection(SqlDataReader reader, ProductDTO product, InvoiceDTO inv, ProductSelectionDTO selection)
         {
             product.SetId(Convert.ToInt32(reader["productID"]));
             selection.SetID(Convert.ToInt32(reader["selectionID"]));
             selection.SetProduct(product);
+            selection.SetID(Convert.ToInt32(reader["invoiceID"]));
             selection.SetOrigPrice(Convert.ToDecimal(reader["originalPrice"]));
             selection.SetOrigSize(Convert.ToInt32(reader["originalSize"]));
             selection.SetQuantity(Convert.ToInt32(reader["quantity"]));
