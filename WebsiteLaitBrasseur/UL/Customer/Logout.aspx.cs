@@ -28,7 +28,10 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     account = BL.GetCustomer(email);
                     lblGoodBye.Text = $"Good Bye {account.GetFirstName()} {account.GetLastName()}";
                     //Session variable removing
-                    this.Session.Clear();
+                    this.Session.Remove("CustID");
+                    this.Session.Remove("Email");
+                    this.Session.Remove("DateInit");
+
                 }
             }
             catch

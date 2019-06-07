@@ -17,16 +17,22 @@ namespace WebsiteLaitBrasseur.UL.Customer
         ProductBL blProduct = new ProductBL();
         ShippmentBL blShippment = new ShippmentBL();
         InvoiceBL blInvoice = new InvoiceBL();
+        AccountBL blaccount = new AccountBL();
         IEnumerable<ShippmentDTO> listShippment = new List<ShippmentDTO>();
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Request.IsSecureConnection)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Cart.aspx";
+                Response.Redirect(url);
+            }
+
             if (!IsPostBack)
             {
                 BindData();
             }
-
         }
 
         ///Buttons          
@@ -39,15 +45,18 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 {
                     if (PostagesTable.SelectedIndex >= 0)
                     {
-                        if (InvoiceCreation() > 0)
-                        { 
-                            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/CardPayment.aspx");
-                        }
-                        else
+                        if (blaccount.GetCustomer(this.Session["Email"].ToString()).GetAddress() != null )
                         {
-                            lblValidation.Text = "Error during Invoice creation";
+                            if (InvoiceCreation() > 0)
+                            {
+                                Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/CardPayment.aspx");
+                            }
+                            else
+                            {
+                                lblValidation.Text = "Error during Invoice creation";
+                            }
                         }
-
+                        else { lblValidation.Text = "Please enter a valid address"; }
                     }
                     else { lblValidation.Text = "Please select a Postage Option"; }
                 }
@@ -64,8 +73,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
             Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Billing.aspx"); 
         }
 
-        ///GridView commands
 
+        ///GridView commands
         protected void CartTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
@@ -137,7 +146,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     decimal shippingCostPerItem = Convert.ToDecimal(((Label)row.FindControl("lblCost")).Text);
                     decimal productNumber = CartTable.Rows.Count;
                     lblPostageValue.Text = (shippingCostPerItem * productNumber).ToString();
-
                 }
                 else
                 {
@@ -157,7 +165,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             //Cart content
                 //Cart recuperation
             List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);
-            CartTable.Columns[0].Visible = true;            //ID column visible for the Binding
+            CartTable.Columns[0].Visible = true;                //ID column visible for the Binding
             CartTable.DataSource = getDataTableCart(cart);
             CartTable.DataBind();
             CartTable.Columns[0].Visible = false;
@@ -330,8 +338,14 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     //Postage Id recuperation from Cell[0] of selected Row
                     int postageID = Convert.ToInt32(PostagesTable.Rows[PostagesTable.SelectedIndex].Cells[0].Text);
 
+                    decimal postage = Convert.ToDecimal(lblPostageValue.Text);
+                    decimal amount = Convert.ToDecimal(lblAmountValue.Text);
+                    int tax = Convert.ToInt16(lblTaxValue.Text);
+                    decimal cost = Convert.ToDecimal(TotalCostValue.Text);
+
+
                     //Invoice creation
-                    result =blInvoice.CreateInvoice(email, postageID, cart);
+                    result = blInvoice.CreateInvoice(email, postageID, cart,postage ,amount , tax, cost);
                     Debug.Write("\nInvoiceID = " + result);
                     if (result > 0)
                     {

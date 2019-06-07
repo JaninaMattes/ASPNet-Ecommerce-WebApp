@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="EmailRecuperation.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.EmailRecuperation" %>
+﻿<%@ Page Title="Recuperation Email" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="EmailRecuperation.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.EmailRecuperation" %>
 
 
 

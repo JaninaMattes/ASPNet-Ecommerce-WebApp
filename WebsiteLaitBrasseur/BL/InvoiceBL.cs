@@ -25,7 +25,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="shippingID"></param>
         /// <param name="products"></param>
         /// <returns>Int InvoiceID</returns>
-        public int CreateInvoice(string email, int shippingID, List<ProductSelectionDTO> products)
+        public int CreateInvoice(string email, int shippingID, List<ProductSelectionDTO> products, decimal shippingCost, decimal totalAmount, decimal taxValue, decimal finalCost)
         {
             AccountDTO customer = new AccountDTO();
             ShippmentDTO deliverer = new ShippmentDTO();
@@ -45,18 +45,21 @@ namespace WebsiteLaitBrasseur.BL
                         DateTime paymentDate = DateTime.Now;
                         DateTime arrivalDate = DateTime.Now.AddDays(deliverer.GetDeliveryTime());
                         DateTime postageDate = DateTime.Now;
-                        //calculate all other values for the invoice
-                        int totalWeight = CalculateWeight(products);
-                        decimal totalShippingCost = deliverer.GetCost() + (decimal)0.1 * totalWeight;
+
                         int totalQuantity = CalculateQuantity(products);
+
+                        //calculate all other values for the invoice
+                        /*int totalWeight = CalculateWeight(products);
+                        decimal totalShippingCost = deliverer.GetCost() + (decimal)0.1 * totalWeight;
+                        decimal totalShippingCost = ;
                         decimal totalProductCost = CalculateProductCost(products);
                         decimal totalTaxes = CalculateTax(totalProductCost);
-                        decimal totalAmount = totalTaxes + totalProductCost + totalShippingCost;
+                        decimal totalAmount = totalTaxes + totalProductCost + totalShippingCost;*/
 
-                   //UpdateProductInfo(products);
+                        //UpdateProductInfo(products);
 
                         //insert into DB
-                        result = DB.Insert(customer.GetID(), deliverer.GetID(), totalQuantity, totalShippingCost, totalProductCost, totalTaxes,
+                        result = DB.Insert(customer.GetID(), deliverer.GetID(), totalQuantity, shippingCost, finalCost, taxValue,
                             totalAmount, orderDate.ToString(), paymentDate.ToString(), arrivalDate.ToString(), postageDate.ToString(), paymentStatus, email);
                     }
                     else

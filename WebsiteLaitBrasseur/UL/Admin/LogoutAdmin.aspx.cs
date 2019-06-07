@@ -28,12 +28,15 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     account = BL.GetCustomer(adminID);
                     lblGoodBye.Text = $"Good Bye {account.GetFirstName()} {account.GetLastName()}";
                     //Session variable removing
-                    this.Session.Clear();
+                    this.Session.Remove("AdminID");
+                    this.Session.Remove("Email");
+                    this.Session.Remove("DateInit");
                 }
             }
             catch
             {
-                lblGoodBye.Text = "Good bye /Debug : Pas de session";
+              
+                lblGoodBye.Text = "Good bye ";
             }
         }
     }

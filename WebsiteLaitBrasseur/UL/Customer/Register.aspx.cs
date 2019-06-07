@@ -20,6 +20,19 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected void Page_Load(object sender, EventArgs e)
         {
             lblRegResult.Visible = false;
+
+            if (!Request.IsSecureConnection)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Register.aspx";
+                Response.Redirect(url);
+            }
+
+            if (this.Session["CustID"] != null)
+            {
+                this.Session.Remove("Email");
+                this.Session.Remove("CustID");
+                this.Session.Remove("DateInit");
+            }
         }
 
         protected void CreateAccountButton_Click(object sender, EventArgs e)
