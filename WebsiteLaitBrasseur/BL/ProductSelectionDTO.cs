@@ -95,7 +95,7 @@ namespace WebsiteLaitBrasseur.BL
         {
             return obj is ProductSelectionDTO selection &&
                    id == selection.id &&
-                   EqualityComparer<ProductDTO>.Default.Equals(selection, selection.selection) &&
+                   EqualityComparer<ProductDTO>.Equals(selection, selection.selection) &&
                    quantity == selection.quantity &&
                    originalPrice == selection.originalPrice;
         }
