@@ -67,25 +67,25 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     case 2:
                         lblRegResult.Visible = true;
                         lblRegResult.CssClass = "text-danger";
-                        lblRegResult.Text = "The password format does not meet the requirements."; //TODO explain requirements
+                        lblRegResult.Text = "The password format does not meet the requirements."; 
                         break;
                     case 3:
                         lblRegResult.Visible = true;
                         lblRegResult.CssClass = "text-danger";
                         lblRegResult.Text = "The email format is wrong.";
-                        break;                        
+                        break;
                     case 4:
                         lblRegResult.Visible = true;
                         lblRegResult.CssClass = "text-danger";
-                        lblRegResult.Text = "The email is already taken."; //TODO explain requirements
+                        lblRegResult.Text = "The email is already taken."; 
                         break;
                     default:
                         lblRegResult.Visible = true;
                         lblRegResult.CssClass = "text-danger";
-                        lblRegResult.Text = "Error in account creation. Try later"; //TODO explain requirements
+                        lblRegResult.Text = "Error in account creation. Try later"; 
                         Debug.Write("Check : out of values");
                         break;
-                }                
+                }
             }
         }
 
@@ -98,10 +98,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             bl.GetCustomer(TextEmail.Text.Trim()).SetConfirmationID(confirmationID);
             string confID = confirmationID.ToString();
-
-            Debug.Write("\nMailSender / confirmationID : " + confirmationID + "\n");   //DEBUG
-            Debug.Write("\nMailSender / getConfID :  " + bl.GetCustomer(TextEmail.Text.Trim()).GetConfirmationID());    //DEBUG
-            Debug.Write("\nMailSender / confIDString : " + confID);   //DEBUG
 
             if (confID != null)
             {
@@ -130,7 +126,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 catch (SmtpException e)
                 {
                     e.GetBaseException();
-                }                
+                }
             }
             else
                 lblRegResult.Text = "There is a problem with your email.";

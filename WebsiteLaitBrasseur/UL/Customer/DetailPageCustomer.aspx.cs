@@ -58,7 +58,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     //only display available products to the customer
                     if (product != null && product.GetStatus() == 1)
                     {
-                        // set up detail page elements
+                        // set up detail page elements with data from the product
                         headerTitle.Text = product.GetName();
                         headerSubtitle.Text = product.GetShortInfo();
                         descriptionLabel.Text = product.GetInfo();
@@ -75,17 +75,21 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     }
                     else
                     {
-                        //TODO Use case when product is not in stock 
                         headerTitle.Text = "Product currently not available";
                     }
                 }
             }
-            else 
+            else
             {
                 lblError.Text = "Error URL";
             }
         }
 
+        /// <summary>
+        /// Add the product to the cart(session Variable):
+        /// -"freeze" information of the product in ProductSelection Object
+        /// Check if the product/size is already in the cart : if true :just add the quantity
+        /// </summary>
         protected void AddButton_Click(object sender, EventArgs e)
         {
             try
@@ -94,7 +98,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 // get id from URL segment
                 var segments = Request.GetFriendlyUrlSegments();
                 int productID = Convert.ToInt32(segments[0]);
-                Debug.Write("\n productID :" + productID); //DEBUG
 
                 //ProductSelectionCreation
                 dtoProdSel.SetProduct(blProduct.GetProduct(productID));
@@ -103,30 +106,24 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 dtoProdSel.SetQuantity(Convert.ToInt32(quantityDropDownList.SelectedValue));
 
 
-                Debug.Write("\n Product name :" + blProduct.GetProduct(productID).GetName()); //DEBUG
-                Debug.Write("\n  Price :" + Convert.ToDecimal(labelPrice.Text).ToString()); //DEBUG
-                Debug.Write("\n  Size  :" + Convert.ToInt32(unitDropDownList.SelectedValue).ToString()); //DEBUG
-                Debug.Write("\n  Quantity : " + Convert.ToInt32(quantityDropDownList.SelectedValue).ToString()); //DEBUG
-
-                
                 //Add to Cart 
-                cart = (List<ProductSelectionDTO>) (this.Session["cart"]);
+                cart = (List<ProductSelectionDTO>)(this.Session["cart"]);
 
                 //Test ifproduct already exist in Cart
                 foreach (ProductSelectionDTO p in cart)
                 {
                     //If the exact same product is already in the cart, quantities are merge
-                    if ( (p.GetProduct().GetId() == dtoProdSel.GetProduct().GetId()) && (p.GetOrigSize() == dtoProdSel.GetOrigSize()))
+                    if ((p.GetProduct().GetId() == dtoProdSel.GetProduct().GetId()) && (p.GetOrigSize() == dtoProdSel.GetOrigSize()))
                     {
 
                         //If the new quantity is bigger thanthe stock, the newQuantity is the maximum(=stock)
-                        if (p.GetQuantity() + dtoProdSel.GetQuantity() <= p.GetProduct().GetStock() )
+                        if (p.GetQuantity() + dtoProdSel.GetQuantity() <= p.GetProduct().GetStock())
                         {
                             p.SetQuantity(p.GetQuantity() + dtoProdSel.GetQuantity());
                         }
                         else
                         {
-                            p.SetQuantity(p.GetProduct().GetStock()-1);
+                            p.SetQuantity(p.GetProduct().GetStock() - 1);
                             lblResult.Text = "Maximum stock reached but   ";
                         }
 
@@ -135,20 +132,11 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 }
 
                 //If the product isn't in the Cart, It's added
-                if (modified == false) { cart.Insert(cart.Count, dtoProdSel); }     
-                
+                if (modified == false) { cart.Insert(cart.Count, dtoProdSel); }
+
                 this.Session["cart"] = cart;
                 lblResult.Text += "Added to cart with success!";
 
-                //TEST CART
-                int i=0;
-                foreach (ProductSelectionDTO p in cart)
-                {
-                    i++;
-                    Debug.Write("\n "+ i +"   Product name :  " + p.GetProduct().GetName()); //DEBUG;
-                }
-                //END  TEST CART
-                
             }
             catch (Exception ex)
             {
@@ -158,6 +146,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
         }
 
+        //Update the TotalAmount label
         private string GetTotalAmount(string priceStr, string QuantityStr)
         {
             decimal price = Convert.ToDecimal(priceStr);

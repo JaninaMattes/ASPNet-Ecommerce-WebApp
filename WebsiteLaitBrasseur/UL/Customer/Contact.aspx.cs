@@ -19,18 +19,16 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
-            ResultLabel.Text = "Your message has been delivered";
-
-
+            MailSender();
         }
 
-        private void MailSender(int confirmationID)
+        private void MailSender()
         {
             string body = TextName.Text + ", " + TextEmail.Text + "\nObject : " + TextObject.Text + "\n " + TextMessage.Text;
 
             //Mail sending procedure
 
-                //Message creation (To / From/ link to verification)
+            //Message creation (To / From/ link to verification)
             MailMessage mm = new MailMessage();
             mm.To.Add(new MailAddress(TextEmail.Text));
             mm.From = new MailAddress("contact@lait-brasseur.com");
@@ -38,7 +36,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             mm.IsBodyHtml = true;
             mm.Subject = "Verification";
 
-                //SMTP client initialization (gmail with projet address)
+            //SMTP client initialization (gmail with projet address)
             SmtpClient smcl = new SmtpClient();
             smcl.Host = "smtp.gmail.com";
             smcl.Port = 587;
@@ -47,7 +45,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             smcl.Send(mm);
 
             ResultLabel.CssClass = "text-success";
-            ResultLabel.Text = "A confirmation email has been sent.";
+            ResultLabel.Text = "Your message has been delivered";
         }
     }
 }

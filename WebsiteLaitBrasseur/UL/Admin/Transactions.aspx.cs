@@ -12,7 +12,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
     public partial class Transactions : System.Web.UI.Page
     {
         // BL/DTO variables initialization
-        List<InvoiceDTO> LI = new List<InvoiceDTO>();
         InvoiceBL blInvoice = new InvoiceBL();
         AccountBL blCustomer = new AccountBL();
 

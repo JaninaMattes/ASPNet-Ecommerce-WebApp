@@ -20,10 +20,10 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
             if (!IsPostBack)
             {
-                string type="";
+                string type = "";
 
                 // get id from URL segment
                 try
@@ -38,48 +38,49 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     Debug.Write("\n\n Pas d'ID \n\n");
                 }
 
+                //Test type of product pre-selected
                 if (!string.IsNullOrEmpty(type))
                 {
-                        Debug.WriteLine($"Product {type} selected.");
-                        if (!IsPostBack)
+                    Debug.WriteLine($"Product {type} selected.");
+                    if (!IsPostBack)
+                    {
+                        // retrieve a list of filtered prodcuts from the blProd
+                        BindDataByType(type);
+                        if (productList != null)
                         {
-                            // retrieve a list of filtered prodcuts from the blProd
-                            BindDataByType(type);
-                            if (productList != null)
-                            {
-                                Subtitle_Warn.Text = $"A selection of our best {type} products.";
-                            }
-                            else
-                            {
-                                Subtitle_Warn.Text = "No products could be found.";
-                            }
+                            Subtitle_Warn.Text = $"A selection of our best {type} products.";
                         }
+                        else
+                        {
+                            Subtitle_Warn.Text = "No products could be found.";
+                        }
+                    }
                 }
                 else
                 {
-                        // retrieve a list of all prodcuts from the blProd
-                        BindAllData();
-                        if (productList != null)
-                        {
-                            Subtitle_Warn.Text = "A hand selected overview of all seasonal available products.";
-                        }
+                    // retrieve a list of all prodcuts from the blProd
+                    BindAllData();
+                    if (productList != null)
+                    {
+                        Subtitle_Warn.Text = "A hand selected overview of all seasonal available products.";
+                    }
                 }
 
             }
         }
 
-
+        //Redirection to Details page of a product
         protected void imgCommand(object sender, CommandEventArgs e)
         {
             var urlF = FriendlyUrl.Href("/UL/Customer/DetailPageCustomer", e.CommandArgument);
             Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + urlF);
-            
+
         }
 
         protected void ImageRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
         }
-    
+
 
         protected void BindAllData()
         {
@@ -94,7 +95,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             catch (Exception e)
             {
                 e.GetBaseException();
-            }           
+            }
         }
 
         protected void BindDataByType(string type)
@@ -118,20 +119,20 @@ namespace WebsiteLaitBrasseur.UL.Customer
             dtProduct.Columns.Add("Price");
             dtProduct.Columns.Add("Status");
 
-           foreach(ProductDTO p in productList)
+            foreach (ProductDTO p in productList)
             {
                 Debug.WriteLine($"Overviewpage: / ProductID {p.GetId()}");
-                    //sizeList = p.GetDetails();
-                    DataRow dr = dtProduct.NewRow();
-                    dr["ID"] = p.GetId();
-                    dr["ImgPath"] = p.GetImgPath();
-                    dr["Name"] = p.GetName();
-                    dr["ShortInfo"] = p.GetShortInfo();
-                    //dr["Price"] = p.GetPrice();
-                    //dr["Size"] = p.GetSize();
-                    if (p.GetStatus() == 1) { dr["Status"] = "Available"; }
-                    else { dr["Status"] = "Out of Stock"; }
-                    dtProduct.Rows.Add(dr);
+                //sizeList = p.GetDetails();
+                DataRow dr = dtProduct.NewRow();
+                dr["ID"] = p.GetId();
+                dr["ImgPath"] = p.GetImgPath();
+                dr["Name"] = p.GetName();
+                dr["ShortInfo"] = p.GetShortInfo();
+                //dr["Price"] = p.GetPrice();
+                //dr["Size"] = p.GetSize();
+                if (p.GetStatus() == 1) { dr["Status"] = "Available"; }
+                else { dr["Status"] = "Out of Stock"; }
+                dtProduct.Rows.Add(dr);
             }
             return dtProduct;
         }

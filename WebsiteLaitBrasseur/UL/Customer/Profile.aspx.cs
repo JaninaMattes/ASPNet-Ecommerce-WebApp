@@ -18,7 +18,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
 
-        string emailCustomer; 
+        string emailCustomer;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (this.Session["CustID"] == null)
@@ -36,20 +36,20 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
         }
 
- 
+
         protected void UploadButton_Click(object sender, EventArgs e)
         {
             emailCustomer = Convert.ToString(this.Session["Email"]);
-            BL.UpdateImgPath(emailCustomer, TextImageLink.Text);        
+            BL.UpdateImgPath(emailCustomer, TextImageLink.Text);
             BindProfileData();
 
         }
 
         protected void DeleteButton_Click(object sender, EventArgs e)
         {
-             // suspend the user dont delete
-             byte status = 1;
-             BL.UpdateStatus(emailCustomer, status);
+            // suspend the user dont delete
+            byte status = 1;
+            BL.UpdateStatus(emailCustomer, status);
         }
 
         protected void ChangePasswordButton_Click(object sender, EventArgs e)
@@ -75,7 +75,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             var zipCode = TextZip.Text;
             var cityName = TextCity.Text;
             var streetNo = TextAddressnumber.Text;
-            var addressType = "Home"; //TODO add field in UI
+            var addressType = "Home"; 
             var res2 = ABL.UpdateAddress(email, zipCode, cityName, streetName, streetNo, addressType);
             Debug.Print("Profile aspx: /Save Button / Update Address Info " + res2);
 
@@ -99,8 +99,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
         //Fill the label with accurat item number
         protected void BindProfileData()
         {
-            if(GetUserData(emailCustomer).GetImgPath().Equals(" "))
-            {                
+            if (GetUserData(emailCustomer).GetImgPath().Equals(" "))
+            {
                 ProfilePicture.ImageUrl = "/Images/defaultImg.jpg";
                 Debug.Print($"No image found - default image under { ProfilePicture.ImageUrl.ToString()} used");
             }
@@ -130,8 +130,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 CountryDropDownList.Text = " ";
                 TextAddressnumber.Text = "Please add number";
                 TextZip.Text = "Please add post code";
-            }           
-           
+            }
+
         }
 
         protected void BindDataInvoices()
@@ -207,8 +207,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             AccountDTO customer = new AccountDTO();
             try
-            {               
-                customer = BL.GetCustomer(email);               
+            {
+                customer = BL.GetCustomer(email);
             }
             catch (Exception e)
             {
@@ -222,8 +222,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             AddressDTO address = new AddressDTO();
             try
-            {                
-                address = ABL.FindAddress(email);                
+            {
+                address = ABL.FindAddress(email);
             }
             catch (Exception e)
             {
@@ -236,8 +236,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected IEnumerable<InvoiceDTO> GetShoppingList(string email)
         {
             IEnumerable<InvoiceDTO> transactions = new List<InvoiceDTO>();
-            try {            
-            transactions = IBL.FindInvoices(email);
+            try
+            {
+                transactions = IBL.FindInvoices(email);
             }
             catch (Exception e)
             {

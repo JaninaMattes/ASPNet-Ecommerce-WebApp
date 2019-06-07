@@ -68,7 +68,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 case 2:
                     //if user is admin cant log in to customer page
                     LblErrorMessage.Visible = true;
-                    LblErrorMessage.Text = "Not entitled to log in as customer. Please register";  
+                    LblErrorMessage.Text = "Not entitled to log in as customer. Please register";
                     break;
                 case 3:
                     LblErrorMessage.Visible = true;
@@ -82,7 +82,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     LblErrorMessage.Visible = true;
                     LblErrorMessage.Text = "User is suspendet.";
                     break;
-                default: 
+                default:
                     break;
             }
         }

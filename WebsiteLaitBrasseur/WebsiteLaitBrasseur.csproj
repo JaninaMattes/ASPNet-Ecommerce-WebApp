@@ -116,6 +116,8 @@
     <Content Include="UL\CSS\Content\bootstrap.min.css" />
     <Content Include="UL\Customer\Default.aspx" />
     <Content Include="UL\Customer\Login.aspx" />
+    <Content Include="UL\Images\beer1.jpg" />
+    <Content Include="UL\Images\cheese13.jpg" />
     <Content Include="UL\Images\laitBrasseur.jpg" />
     <Content Include="UL\Scripts\bootstrap.bundle.js" />
     <Content Include="UL\Scripts\bootstrap.bundle.min.js" />

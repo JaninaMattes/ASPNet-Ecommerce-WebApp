@@ -16,6 +16,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         AccountDTO dtoAcc = new AccountDTO();
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Redirection if not login
             if (this.Session["CustID"] == null)
             {
                 Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
@@ -27,13 +28,20 @@ namespace WebsiteLaitBrasseur.UL.Customer
             //Test if password enter by user correspond to its password in DB
             string oldPassword = TextOldPassword.Text;
             int result = -1;
-            result=blAcc.IsCustomerLoginCorrect(this.Session["Email"].ToString(), oldPassword);
+            result = blAcc.IsCustomerLoginCorrect(this.Session["Email"].ToString(), oldPassword);
 
 
             if (result == 1)    //If password match
             {
-                //Update password in DB
-                result = blAcc.UpdatePassword(this.Session["Email"].ToString(), TextPassword.Text);
+                try
+                {
+                    //Update password in DB
+                    result = blAcc.UpdatePassword(this.Session["Email"].ToString(), TextPassword.Text);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Write(ex.ToString());
+                }
 
 
                 //Display result
@@ -42,14 +50,10 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 else { lblResult.CssClass = "text-danger"; lblResult.Text = "Error during treatment of the new password"; }
 
             }
+
             //If password doesn't match
-            else if (result == 3) { lblResult.CssClass="text-danger"; lblResult.Text = "Password doesn't match"; }
+            else if (result == 3) { lblResult.CssClass = "text-danger"; lblResult.Text = "Password doesn't match"; }
             else { lblResult.CssClass = "text-danger"; lblResult.Text = "Error during treatment"; }
-
-
-            
-
-
 
         }
 

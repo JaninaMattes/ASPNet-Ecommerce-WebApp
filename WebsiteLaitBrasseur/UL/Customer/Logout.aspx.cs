@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,19 +15,23 @@ namespace WebsiteLaitBrasseur.UL.Customer
         AccountBL BL = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Redirection if not login
             if (this.Session["custID"] == null)
             {
                 Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
             }
-            try {
-                //session informations
+            try
+            {
                 string email = this.Session["Email"].ToString();
+
+                //session information check
                 if (email != null)
                 {
                     AccountBL BL = new AccountBL();
                     AccountDTO account = new AccountDTO();
                     account = BL.GetCustomer(email);
                     lblGoodBye.Text = $"Good Bye {account.GetFirstName()} {account.GetLastName()}";
+
                     //Session variable removing
                     this.Session.Remove("CustID");
                     this.Session.Remove("Email");
@@ -34,9 +39,10 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                lblGoodBye.Text = "Good bye /Debug : Pas de session";
+                Debug.Write(ex.ToString());
+                lblGoodBye.Text = "Good bye";
             }
         }
     }

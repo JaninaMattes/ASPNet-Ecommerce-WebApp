@@ -14,12 +14,14 @@ namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class CardPayment : System.Web.UI.Page
     {
+        // BL/DTO variables initialization
         InvoiceBL blInvoice = new InvoiceBL();
         InvoiceDTO dtoInvoice = new InvoiceDTO();
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //HTTPS Redirection
             if (!Request.IsSecureConnection)
             {
                 string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/CardPayment.aspx";
@@ -44,12 +46,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
             {
                 lblWait.Visible = true;
 
-                //Atempt incrementation
+                //Attempt counting
                 int attempt = Convert.ToInt16(this.Session["attempt"]);
                 attempt++;
                 this.Session["attempt"] = attempt;
 
-                //if 3 attempt : redirection
+                //if >3 attempt : redirection
                 if (attempt >= 3)
                 {
                     var urlF = FriendlyUrl.Href("/UL/Customer/checkout", 0);
@@ -59,23 +61,34 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         }
 
+        //Payment with DummyAcocunt data 
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
             bool realPayment = false;
             Payment(realPayment);
         }
 
+        //Payment with Data enter by user
         protected void SubmitButtonReal_Click(object sender, EventArgs e)
         {
             bool realPayment = true;
             Payment(realPayment);
         }
 
+
         protected void CancelButton_Click(object sender, EventArgs e)
         {
             Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Cart.aspx");
         }
 
+
+        /// <summary>
+        /// take Invoice/customer information
+        /// set a paymentRequest corresponding to the subit button used
+        /// Wait until end of payment
+        /// Display result
+        /// </summary>
+        /// <param name="realPayment"></param>
         private void Payment(bool realPayment)
         {
             try

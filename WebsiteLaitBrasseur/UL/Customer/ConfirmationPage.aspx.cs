@@ -22,16 +22,20 @@ namespace WebsiteLaitBrasseur.UL.Customer
             {
                 if ((Request.QueryString["ConfID"] != null))
                 {
-                    int paramConfID = (Convert.ToInt32(Request.QueryString["ConfID"]));         //ConfID (URL parameter recuperation)
-                    dtoAccount = blAccount.GetCustomerByConfID(paramConfID);                     //Account recuperation
+                    //ConfID (URL parameter recuperation)
+                    int paramConfID = (Convert.ToInt32(Request.QueryString["ConfID"]));         
 
-                    Debug.Write("\nVerificationPage / paramID : " + paramConfID);//DEBUG
-                    Debug.Write("\nVerificationPage / GetConfID : " + dtoAccount.GetConfirmationID());   //DEBUG
+                    //Account recuperation from ConfID
+                    dtoAccount = blAccount.GetCustomerByConfID(paramConfID);                     
 
+                    //Case : confID=0
                     if (dtoAccount.GetConfirmationID() == 0) { lblRegistrationResult.Text = "Account already confirmed or ConfID invalid"; }
-                    else if ((paramConfID == dtoAccount.GetConfirmationID()))   //Test parameterConfID =?= ConfID in DB
+
+                    //Test matching confIDs
+                    else if ((paramConfID == dtoAccount.GetConfirmationID()))   
                     {
-                        if (blAccount.UpdateIsConfirmed(dtoAccount.GetEmail()) == 1)    //Update isConfirmed
+                        //Update isConfirmed in DB
+                        if (blAccount.UpdateIsConfirmed(dtoAccount.GetEmail()) == 1)    
                         {
                             lblRegistrationResult.Text = " you are well registered";
                         }

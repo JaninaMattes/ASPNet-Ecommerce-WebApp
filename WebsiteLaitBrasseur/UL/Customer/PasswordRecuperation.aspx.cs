@@ -15,7 +15,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
         AccountBL blAcc = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
-            if ((Request.QueryString["RecupID"] != null)  )                         //Test if url contain recupID token
+            if ((Request.QueryString["RecupID"] != null))                         //Test if url contain recupID token
             {
                 string[] strRecupValues = (string[])(this.Session["RecupValues"]);  //Session values recuperation   
 
@@ -38,8 +38,16 @@ namespace WebsiteLaitBrasseur.UL.Customer
         protected void ChangeButton_Click(object sender, EventArgs e)
         {
             //Update password in DB
-            int result=-1;
-            result = blAcc.UpdatePassword(this.Session["EmailRecuperation"].ToString(), TextPassword.Text);
+            int result = -1;
+            try
+            {
+
+                result = blAcc.UpdatePassword(this.Session["EmailRecuperation"].ToString(), TextPassword.Text);
+            }
+            catch (Exception ex)
+            {
+                Debug.Write(ex.ToString());
+            }
 
             //Display result
             if (result == 1) { lblResult.CssClass = "text-success"; lblResult.Text = "New Password updates with success"; }
@@ -49,6 +57,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             //Session variables removing
             this.Session.Remove("RecupValues");
             this.Session.Remove("EmailRecuperation");
+
         }
     }
 }

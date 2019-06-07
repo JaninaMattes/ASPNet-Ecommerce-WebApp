@@ -46,7 +46,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             var fName = TextFirstname.Text;
             var lName = TextLastname.Text;
             var phoneNo = TextPhone.Text;
-            var res1 = blAccount.UpdateNamePhone(emailCustomer, fName, lName,phoneNo);
+            var res1 = blAccount.UpdateNamePhone(emailCustomer, fName, lName, phoneNo);
             Debug.Print("Billing aspx: /Save Button / Update User Info " + res1);
 
             //update Address

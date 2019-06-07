@@ -28,9 +28,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 {
                     MailSender();
                 }
-
-
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ex.GetBaseException();
                 Debug.Write(ex.ToString());
@@ -73,7 +72,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 else
                     lblResult.Text = "Internal error.";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ex.GetBaseException();
                 Debug.Write(ex.ToString());

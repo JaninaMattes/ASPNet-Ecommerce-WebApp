@@ -14,6 +14,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 {
     public partial class Cart : System.Web.UI.Page
     {
+        // DTO/BL  variables initialization
         ProductBL blProduct = new ProductBL();
         ShippmentBL blShippment = new ShippmentBL();
         InvoiceBL blInvoice = new InvoiceBL();
@@ -23,6 +24,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Redirection in HTTPS
             if (!Request.IsSecureConnection)
             {
                 string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Cart.aspx";
@@ -35,17 +37,23 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
         }
 
-        ///Buttons          
+        ////Buttons  methods     
+
+        /// <summary>
+        /// Check if necessary informations are known
+        /// Created Invoice
+        /// Redirect to CardPayment if invoice is well created
+        /// </summary>
         protected void CreditCardButton_Click(object sender, EventArgs e)
         {
-            //TESTS before payment access (authentication / cart not empty / postage option selected)
+            //TESTS before payment access (authentication / cart not empty / postage option selected / addess not null)
             if (this.Session["CustID"] != null)
             {
-                if ( ((List<ProductSelectionDTO>)(this.Session["Cart"])).Count != 0)
+                if (((List<ProductSelectionDTO>)(this.Session["Cart"])).Count != 0)
                 {
                     if (PostagesTable.SelectedIndex >= 0)
                     {
-                        if (blaccount.GetCustomer(this.Session["Email"].ToString()).GetAddress() != null )
+                        if (blaccount.GetCustomer(this.Session["Email"].ToString()).GetAddress() != null)
                         {
                             if (InvoiceCreation() > 0)
                             {
@@ -70,15 +78,23 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void ChangeAddressButton_Click(object sender, EventArgs e)
         {
-            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Billing.aspx"); 
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Billing.aspx");
         }
 
 
-        ///GridView commands
+        ////GridView commands
+        //-RowDeleting   (CartTable)
+        //-RowDataBound  (CartTable)
+        //-DDLQuantity SelectedIndexChanged (CartTable)
+        //-SelectedIndexChanged (PostageTable)
+
+        /// <summary>
+        /// Remove A product from cart(session Variable) and BindData
+        /// </summary>
         protected void CartTable_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
-            { 
+            {
                 int index = e.RowIndex;
                 ((List<ProductSelectionDTO>)(this.Session["Cart"])).RemoveAt(index);
                 BindData();
@@ -90,7 +106,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
         }
 
-
+        /// <summary>
+        /// Set the DropDownList at the value of the stock corresponding to the product
+        /// Set the selected Value to the quantity selected by the customer when he added it to the cart
+        /// Update TotalPrice with the Quantity
+        /// Executed for each row
+        /// </summary>
         protected void CartTable_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             try
@@ -135,6 +156,38 @@ namespace WebsiteLaitBrasseur.UL.Customer
         }
 
 
+        /// <summary>
+        /// Update invoice information because of new Quantity
+        /// </summary>
+        protected void DDLQuantity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Row data recuperation
+            DropDownList ddlQuantity = sender as DropDownList;
+            int newQuantity = Convert.ToInt32(ddlQuantity.SelectedValue);
+            GridViewRow row = (GridViewRow)ddlQuantity.Parent.Parent;
+            decimal price = Convert.ToDecimal(((Label)row.FindControl("lblPrice")).Text);
+
+            //Cart recuperation
+            List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);
+
+            //Modification of the Quantity in the cart          
+            cart[row.RowIndex].SetQuantity(newQuantity);
+
+            //Cart update
+            this.Session["Cart"] = cart;
+
+            //Total Price update
+            price = ((decimal)newQuantity) * price;
+            ((Label)row.FindControl("lblTotalPrice")).Text = (price).ToString();
+
+            Calcul();
+        }
+
+
+        /// <summary>
+        /// Color the row of the selected Postage option
+        /// Update the Postage Value (shippingCost * number of product)
+        /// </summary>
         protected void PostagesTable_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Color the selected row
@@ -156,14 +209,21 @@ namespace WebsiteLaitBrasseur.UL.Customer
         }
 
 
-        ///DataBinding
+        ////Data Methods
+
+        /// <summary>
+        /// Bind PostageTable Gridview
+        /// Take the cart from session variable and bind CartTable gridview
+        /// Columns 0 is made visible and hide because it correspond to the ID of whichis irrelevant for the user
+        /// Update the value of invoice (Calcul())
+        /// </summary>
         protected void BindData()
         {
             //Postages options
             BindPostages();
 
             //Cart content
-                //Cart recuperation
+            //Cart recuperation
             List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);
             CartTable.Columns[0].Visible = true;                //ID column visible for the Binding
             CartTable.DataSource = getDataTableCart(cart);
@@ -173,7 +233,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
             if (cart.Count == 0)
             {
-                lblResult.Text=("Your cart is empty");
+                lblResult.Text = ("Your cart is empty");
                 AmountLabels.Visible = false;
             }
             else
@@ -219,6 +279,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
             return dtCart;
         }
 
+        /// <summary>
+        /// Take Postages options from DB
+        /// </summary>
         protected void BindPostages()
         {
             try
@@ -265,44 +328,28 @@ namespace WebsiteLaitBrasseur.UL.Customer
             return dtPostage;
         }
 
-        protected void DDLQuantity_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //Row data recuperation
-            DropDownList ddlQuantity = sender as DropDownList;
-            int newQuantity = Convert.ToInt32(ddlQuantity.SelectedValue);
-            GridViewRow row = (GridViewRow)ddlQuantity.Parent.Parent;
-            decimal price = Convert.ToDecimal(( (Label) row.FindControl("lblPrice") ).Text);
+        //Private Methods
 
-            //Cart recuperation
-            List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);
-
-            //Modification of the Quantity in the cart          
-            cart[row.RowIndex].SetQuantity(newQuantity);
-
-            //Cart update
-            this.Session["Cart"] = cart;
-
-            //Total Price update
-            price = ((decimal)newQuantity) * price;
-            ((Label)row.FindControl("lblTotalPrice")).Text = (price).ToString();
-
-            Calcul();
-        }
-
+        /// <summary>
+        /// Update the value of  labels displaying invoice information
+        /// </summary>
         private void Calcul()
         {
             try
             {
+                //TotalAmount and Tax initialization
                 decimal amount = 0;
                 decimal tax = (Convert.ToDecimal(lblTaxValue.Text) / 100);
 
+                //Sum totalPrice of each product
                 for (int i = 0; i < CartTable.Rows.Count; i++)
                 {
                     amount += Convert.ToDecimal(((Label)CartTable.Rows[i].FindControl("lblTotalPrice")).Text);
                 }
                 lblAmountValue.Text = Convert.ToString(amount);
 
-                if (lblPostageValue.Text != "" )
+                // If postageValue and TotalAmout are known, finalCost is calculated
+                if (lblPostageValue.Text != "")
                 {
                     if (lblAmountValue.Text != "")
                     {
@@ -323,7 +370,11 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         }
 
-        //Invoice creation
+        /// <summary>
+        /// Manage the creation of the invoice
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private int InvoiceCreation()
         {
             int result = 0;
@@ -333,11 +384,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 {
                     //Email and Cart Recuperation from session
                     string email = this.Session["Email"].ToString();
-                    List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);                
+                    List<ProductSelectionDTO> cart = (List<ProductSelectionDTO>)(this.Session["Cart"]);
 
                     //Postage Id recuperation from Cell[0] of selected Row
                     int postageID = Convert.ToInt32(PostagesTable.Rows[PostagesTable.SelectedIndex].Cells[0].Text);
 
+                    //Invoice costs recuperation from labels
                     decimal postage = Convert.ToDecimal(lblPostageValue.Text);
                     decimal amount = Convert.ToDecimal(lblAmountValue.Text);
                     int tax = Convert.ToInt16(lblTaxValue.Text);
@@ -345,13 +397,19 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
 
                     //Invoice creation
-                    result = blInvoice.CreateInvoice(email, postageID, cart,postage ,amount , tax, cost);
-                    Debug.Write("\nInvoiceID = " + result);
+                    result = blInvoice.CreateInvoice(email, postageID, cart, postage, amount, tax, cost);
+
+                    //Update the stock in DB
                     if (result > 0)
                     {
-                        if (blInvoice.UpdateStockProductSelection(result, cart, false) == 0) { lblValidation.Text = "Error DataBase"; }
+                        //Give invoiceID, cart and way to update (reverse or not) / if equal to 0, there is an error during the update
+                        if (blInvoice.UpdateStockProductSelection(result, cart, false) == 0)
+                        {
+                            lblValidation.Text = "Error DataBase";
+                        }
                         else
                         {
+                            //If the update is correctly executed, invoiceID is set as variable session and used to authenticate on the Payment page
                             this.Session["InvoiceID"] = result;
                         }
                     }
@@ -366,6 +424,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             {
                 ex.GetBaseException();
                 Debug.Write(ex.ToString());
+                lblValidation.Text = "Error during invoice creation.";
             }
             return result;
 
