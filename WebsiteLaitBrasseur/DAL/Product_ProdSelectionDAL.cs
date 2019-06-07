@@ -22,6 +22,14 @@ namespace WebsiteLaitBrasseur.DAL
             }
         }
 
+        /// <summary>
+        /// 
+        /// returns only 1 or 0, not the ID as it is a 
+        /// combined FK/PK for the table.
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <param name="selectionID"></param>
+        /// <returns></returns>
         [DataObjectMethod(DataObjectMethodType.Insert)]
         public int Insert(int productID, int selectionID)
         {
@@ -40,7 +48,7 @@ namespace WebsiteLaitBrasseur.DAL
                         cmd.Parameters.AddWithValue("@selectionID", SqlDbType.Int).Value = selectionID;
                         cmd.CommandType = CommandType.Text;
                         con.Open();
-                        cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
+                        result = cmd.ExecuteNonQuery(); //returns amount of affected rows if successfull
                     }
                 }
                 return result;

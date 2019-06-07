@@ -8,175 +8,175 @@ namespace WebsiteLaitBrasseur.BL
     public class AccountDTO
     {
         //private properties
-        private int _id;
-        private string _email = "";
-        private byte[] _password;
-        private byte[] _salt;
-        private byte _isConfirmed = 0;
-        private int _confirmID = 0;
-        private string _firstName = "";
-        private string _lastName = "";
-        private DateTime _birthDate;
-        private string _phoneNo = "";
-        private string _imgPath = "";
-        private byte _status = 0;
-        private byte _isAdmin = 0;
-        private List<InvoiceDTO> _invoiceList = new List<InvoiceDTO>();
-        private AddressDTO _address;
+        private int id;
+        private string email = "";
+        private byte[] passwordMd5;
+        private byte[] salt;
+        private byte isConfirmed = 0;
+        private int confirmationID = 0;
+        private string firstName = "";
+        private string lastName = "";
+        private DateTime birthDate;
+        private string phoneNo = "";
+        private string imgPath = "";
+        private byte status = 0;
+        private byte isAdmin = 0;
+        private List<InvoiceDTO> invoices;
+        private AddressDTO address;
 
         //getter and setter
         public int GetID()
         {
-            return this._id;
+            return this.id;
         }
 
         public void SetID(int id)
         {
-            this._id = id;
+            this.id = id;
         }
         public string GetEmail()
         {
-            return this._email;
+            return this.email;
         }
 
         public void SetEmail(string email)
         {
-            this._email = email;
+            this.email = email;
         }
 
         public byte[] GetPW()
         {
-            return this._password;
+            return this.passwordMd5;
         }
 
         public void SetSalt(byte[] pw)
         {
-            this._salt = pw;
+            this.salt = pw;
         }
 
         public byte[] GetSalt()
         {
-            return this._salt;
+            return this.salt;
         }
 
         public void SetPw(byte[] pw)
         {
-            this._password = pw;
+            this.passwordMd5 = pw;
         }
 
         public int GetIsConfirmed()
         {
-            return this._isConfirmed;
+            return this.isConfirmed;
         }
 
         public void SetIsConfirmed(byte isConf)
         {
-            this._isConfirmed = isConf;
+            this.isConfirmed = isConf;
         }
 
         public int GetConfirmationID()
         {
-            return this._confirmID;
+            return this.confirmationID;
         }
 
         public void SetConfirmationID(int id)
         {
-            this._confirmID = id;
+            this.confirmationID = id;
         }
 
         public string GetFirstName()
         {
-            return this._firstName;
+            return this.firstName;
         }
 
         public void SetFirstName(string fname)
         {
-            this._firstName = fname;
+            this.firstName = fname;
         }
 
         public string GetLastName()
         {
-            return this._lastName;
+            return this.lastName;
         }
 
         public void SetLastName(string lname)
         {
-            this._lastName = lname;
+            this.lastName = lname;
         }
 
         public DateTime GetBirthdate()
         {
-            return this._birthDate;
+            return this.birthDate;
         }
 
         public void SetBirthdate(DateTime date)
         {
-            this._birthDate = date;
+            this.birthDate = date;
         }
 
         public string GetPhoneNo()
         {
-            return this._phoneNo;
+            return this.phoneNo;
         }
 
         public void SetPhoneNo(string phoneNo)
         {
-            this._phoneNo = phoneNo;
+            this.phoneNo = phoneNo;
         }
 
         public string GetImgPath()
         {
-            return this._imgPath;
+            return this.imgPath;
         }
 
         public void SetImgPath(string imgPath)
         {
-            this._imgPath = imgPath;
+            this.imgPath = imgPath;
         }
 
         public int GetStatus()
         {
-            return this._status;
+            return this.status;
         }
 
         public void SetStatus(byte status)
         {
-            this._status = status;
+            this.status = status;
         }
 
         public byte GetIsAdmin()
         {
-            return this._isAdmin;
+            return this.isAdmin;
         }
 
         public void SetIsAdmin(byte isAdmin)
         {
-            this._isAdmin = isAdmin;
+            this.isAdmin = isAdmin;
         }
 
         public List<InvoiceDTO> GetInvoices()
         {
-            return this._invoiceList;
+            return this.invoices;
         }
 
         public void SetInvoices(List<InvoiceDTO> invoices)
         {
-            this._invoiceList = invoices;
+            this.invoices = invoices;
         }
 
         public void AddInvoice(InvoiceDTO invoice)
         {
-            this._invoiceList.Add(invoice);
+            this.invoices.Add(invoice);
         }
 
         public AddressDTO GetAddress()
         {
-            return this._address;
+            return this.address;
         }
 
         public void SetAddress(AddressDTO address)
         {
-            this._address = address;
+            this.address = address;
         }
 
         //constructor
@@ -187,39 +187,39 @@ namespace WebsiteLaitBrasseur.BL
 
         public AccountDTO(byte id, string email, string pw)
         {
-            _id = id;
-            _email = email;
+            this.id = id;
+            this.email = email;
         }
 
         public AccountDTO(byte id, string email, string password, string firstName, 
             string lastName, DateTime birthDate, string phoneNo, byte status, byte isAdmin, AddressDTO address) : 
             this(id, email, password)
         {
-            _firstName = firstName;
-            _lastName = lastName;
-            _birthDate = birthDate;
-            _phoneNo = phoneNo;
-            _status = status;
-            _isAdmin = isAdmin;
-            _address = address;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.birthDate = birthDate;
+            this.phoneNo = phoneNo;
+            this.status = status;
+            this.isAdmin = isAdmin;
+            this.address = address;
         }
 
         public AccountDTO(byte id, string email, byte isConfirmed, int confirmID, string firstName, string lastName, 
             DateTime birthDate, string phoneNo, string imgPath, byte status, byte isAdmin, List<InvoiceDTO> invoiceList, AddressDTO address)
         {
-            _id = id;
-            _email = email;
-            _isConfirmed = isConfirmed;
-            _confirmID = confirmID;
-            _firstName = firstName;
-            _lastName = lastName;
-            _birthDate = birthDate;
-            _phoneNo = phoneNo;
-            _imgPath = imgPath;
-            _status = status;
-            _isAdmin = isAdmin;
-            _invoiceList = invoiceList;
-            _address = address;
+            this.id = id;
+            this.email = email;
+            this.isConfirmed = isConfirmed;
+            confirmationID = confirmID;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.birthDate = birthDate;
+            this.phoneNo = phoneNo;
+            this.imgPath = imgPath;
+            this.status = status;
+            this.isAdmin = isAdmin;
+            invoices = invoiceList;
+            this.address = address;
         }
 
 
@@ -231,35 +231,35 @@ namespace WebsiteLaitBrasseur.BL
         public override bool Equals(object obj)
         {
             return obj is AccountDTO bO &&
-                   _id == bO._id &&
-                   _email == bO._email &&
-                   _isConfirmed == bO._isConfirmed &&
-                   _firstName == bO._firstName &&
-                   _lastName == bO._lastName &&
-                   _birthDate == bO._birthDate &&
-                   _phoneNo == bO._phoneNo &&
-                   _imgPath == bO._imgPath &&
-                   _status == bO._status &&
-                   _isAdmin == bO._isAdmin &&
-                   EqualityComparer<List<InvoiceDTO>>.Default.Equals(_invoiceList, bO._invoiceList) &&
-                   EqualityComparer<AddressDTO>.Default.Equals(_address, bO._address);
+                   id == bO.id &&
+                   email == bO.email &&
+                   isConfirmed == bO.isConfirmed &&
+                   firstName == bO.firstName &&
+                   lastName == bO.lastName &&
+                   birthDate == bO.birthDate &&
+                   phoneNo == bO.phoneNo &&
+                   imgPath == bO.imgPath &&
+                   status == bO.status &&
+                   isAdmin == bO.isAdmin &&
+                   EqualityComparer<List<InvoiceDTO>>.Default.Equals(invoices, bO.invoices) &&
+                   EqualityComparer<AddressDTO>.Default.Equals(address, bO.address);
         }
 
         public override int GetHashCode()
         {
             var hashCode = -111360723;
-            hashCode = hashCode * -1521134295 + _id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_email);
-            hashCode = hashCode * -1521134295 + _isConfirmed.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_firstName);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_lastName);
-            hashCode = hashCode * -1521134295 + EqualityComparer<DateTime>.Default.GetHashCode(_birthDate);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_phoneNo);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_imgPath);
-            hashCode = hashCode * -1521134295 + _status.GetHashCode();
-            hashCode = hashCode * -1521134295 + _isAdmin.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<List<InvoiceDTO>>.Default.GetHashCode(_invoiceList);
-            hashCode = hashCode * -1521134295 + EqualityComparer<AddressDTO>.Default.GetHashCode(_address);
+            hashCode = hashCode * -1521134295 + id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(email);
+            hashCode = hashCode * -1521134295 + isConfirmed.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(firstName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(lastName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<DateTime>.Default.GetHashCode(birthDate);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(phoneNo);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(imgPath);
+            hashCode = hashCode * -1521134295 + status.GetHashCode();
+            hashCode = hashCode * -1521134295 + isAdmin.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<InvoiceDTO>>.Default.GetHashCode(invoices);
+            hashCode = hashCode * -1521134295 + EqualityComparer<AddressDTO>.Default.GetHashCode(address);
             return hashCode;
         }
     }

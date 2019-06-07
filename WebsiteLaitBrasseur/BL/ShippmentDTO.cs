@@ -9,110 +9,112 @@ namespace WebsiteLaitBrasseur.BL
     {
 
         //private properties
-        private int _id;
-        private string _company = "";
-        private string _type = "";
-        private int _deliveryTime = 0;
-        private decimal _cost;
-        private int _status = 0;
+        private int id;
+        private string company = "";
+        private string type = "";
+        private int deliveryTime = 0;
+        private decimal cost;
+        private int status = 0;
 
         //getter and setter
         public int GetID()
         {
-            return this._id;
+            return this.id;
         }
 
         public void SetID(int id)
         {
-            this._id = id;
+            this.id = id;
         }
 
         public string GetCompany()
         {
-            return this._company;
+            return this.company;
         }
 
         public void SetCompany(string company)
         {
-            this._company = company;
+            this.company = company;
         }
 
         public string GetShipType()
         {
-            return this._type;
+            return this.type;
         }
 
         public void SetType(string type)
         {
-            this._type = type;
+            this.type = type;
         }
 
         public int GetDeliveryTime()
         {
-            return this._deliveryTime;
+            return this.deliveryTime;
         }
 
         public void SetDeliveryTime(int days)
         {
-            this._deliveryTime = days;
+            this.deliveryTime = days;
         }
 
         public decimal GetCost()
         {
-            return this._cost;
+            return this.cost;
         }
 
         public void SetCost(decimal cost)
         {
-            this._cost = cost;
+            this.cost = cost;
         }
 
         public int GetStatus()
         {
-            return this._status;
+            return this.status;
         }
 
         public void SetStatus(int status)
         {
-            this._status = status;
+            this.status = status;
         }
 
         public override bool Equals(object obj)
         {
             return obj is ShippmentDTO dTO &&
-                   _id == dTO._id &&
-                   _company == dTO._company &&
-                   _type == dTO._type &&
-                   _deliveryTime == dTO._deliveryTime &&
-                   _cost == dTO._cost &&
-                   _status == dTO._status;
+                   id == dTO.id &&
+                   company == dTO.company &&
+                   type == dTO.type &&
+                   deliveryTime == dTO.deliveryTime &&
+                   cost == dTO.cost &&
+                   status == dTO.status;
         }
 
         public override int GetHashCode()
         {
             var hashCode = 402499420;
-            hashCode = hashCode * -1521134295 + _id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_company);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_type);
-            hashCode = hashCode * -1521134295 + _deliveryTime.GetHashCode();
-            hashCode = hashCode * -1521134295 + _cost.GetHashCode();
-            hashCode = hashCode * -1521134295 + _status.GetHashCode();
+            hashCode = hashCode * -1521134295 + id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(company);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(type);
+            hashCode = hashCode * -1521134295 + deliveryTime.GetHashCode();
+            hashCode = hashCode * -1521134295 + cost.GetHashCode();
+            hashCode = hashCode * -1521134295 + status.GetHashCode();
             return hashCode;
         }
 
+        // constructor
+
         public ShippmentDTO(int id, string company, string type, int deliveryTime, decimal cost)
         {
-            _id = id;
-            _company = company;
-            _type = type;
-            _deliveryTime = deliveryTime;
-            _cost = cost;
+            this.id = id;
+            this.company = company;
+            this.type = type;
+            this.deliveryTime = deliveryTime;
+            this.cost = cost;
         }
 
         public ShippmentDTO(int id, string company, string type, int deliveryTime, decimal cost, int status) : 
             this(id, company, type, deliveryTime, cost)
         {
-            _status = status;
+            this.status = status;
         }
 
         public ShippmentDTO()

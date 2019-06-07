@@ -7,62 +7,63 @@ namespace WebsiteLaitBrasseur.BL
 {
     public class SizeDTO
     {
-        private int _id;
-        private int _size;
-        private decimal _price;
-        private ProductDTO _product;
+        private int id;
+        private int size;
+        private decimal price;
+        private ProductDTO product;
 
         //getter and setter
         public int GetID()
         {
-            return this._id;
+            return this.id;
         }
 
         public void SetID(int id)
         {
-            this._id = id;
+            this.id = id;
         }
 
         public int GetSize()
         {
-            return this._size;
+            return this.size;
         }
 
         public void SetSize(int size)
         {
-            this._size = size;
+            this.size = size;
         }
 
         public decimal GetPrice()
         {
-            return this._price;
+            return this.price;
         }
 
         public void SetPrice(decimal price)
         {
-            this._price = price;
+            this.price = price;
         }
 
         public ProductDTO GetProduct()
         {
-            return this._product;
+            return this.product;
         }
 
         public void SetProduct(ProductDTO product)
         {
-            this._product = product;
+            this.product = product;
         }
 
+        //constructor
         public SizeDTO()
         {
         }
 
         public SizeDTO(int id, int size, decimal price, ProductDTO product)
         {
-            _id = id;
-            _size = size;
-            _price = price;
-            _product = product;
+            this.id = id;
+            this.size = size;
+            this.price = price;
+            this.product = product;
         }
     }
 }

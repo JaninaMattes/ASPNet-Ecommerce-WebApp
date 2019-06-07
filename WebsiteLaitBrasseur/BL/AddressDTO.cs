@@ -7,72 +7,72 @@ namespace WebsiteLaitBrasseur.BL
 {
     public class AddressDTO
     {
-        private int _id;
-        private string _streetName ="";
-        private string _streetNo = "";
-        private string _country = "";
-        private string _type = "";
-        private CityDTO _city;
+        private int id;
+        private string streetName ="";
+        private string streetNo = "";
+        private string country = "";
+        private string type = "";
+        private CityDTO city;
 
         //getter and setter
         public int GetID()
         {
-            return this._id;
+            return this.id;
         }
 
         public void SetID(int id)
         {
-            this._id = id;
+            this.id = id;
         }
 
         public string GetStreetName()
         {
-            return this._streetName;
+            return this.streetName;
         }
 
         public void SetStreetName(string street)
         {
-            this._streetName = street;
+            this.streetName = street;
         }
 
         public string GetStreetNo()
         {
-            return this._streetNo;
+            return this.streetNo;
         }
 
         public void SetStreetNo(string streetNo)
         {
-            this._streetNo = streetNo;
+            this.streetNo = streetNo;
         }
 
         public string GetCountry()
         {
-            return this._country;
+            return this.country;
         }
 
         public void SetCountry(string country)
         {
-            this._country = country;
+            this.country = country;
         }
 
         public string GetAddressType()
         {
-            return this._type;
+            return this.type;
         }
 
         public void SetType(string type)
         {
-            this._type = type;
+            this.type = type;
         }
 
         public CityDTO GetCity()
         {
-            return this._city;
+            return this.city;
         }
 
         public void SetCity(CityDTO city)
         {
-            this._city = city;
+            this.city = city;
         }
 
         //constructor
@@ -83,11 +83,11 @@ namespace WebsiteLaitBrasseur.BL
 
         public AddressDTO(byte id, string streetName, string streetNo, string country, CityDTO city)
         {
-            _id = id;
-            _streetName = streetName;
-            _streetNo = streetNo;
-            _country = country;
-            _city = city;
+            this.id = id;
+            this.streetName = streetName;
+            this.streetNo = streetNo;
+            this.country = country;
+            this.city = city;
         }
 
         public override string ToString()
@@ -98,21 +98,21 @@ namespace WebsiteLaitBrasseur.BL
         public override bool Equals(object obj)
         {
             return obj is AddressDTO dTO &&
-                   _id == dTO._id &&
-                   _streetName == dTO._streetName &&
-                   _streetNo == dTO._streetNo &&
-                   _country == dTO._country &&
-                   EqualityComparer<CityDTO>.Default.Equals(_city, dTO._city);
+                   id == dTO.id &&
+                   streetName == dTO.streetName &&
+                   streetNo == dTO.streetNo &&
+                   country == dTO.country &&
+                   EqualityComparer<CityDTO>.Default.Equals(city, dTO.city);
         }
 
         public override int GetHashCode()
         {
             var hashCode = -1678693544;
-            hashCode = hashCode * -1521134295 + _id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_streetName);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_streetNo);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_country);
-            hashCode = hashCode * -1521134295 + EqualityComparer<CityDTO>.Default.GetHashCode(_city);
+            hashCode = hashCode * -1521134295 + id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(streetName);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(streetNo);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(country);
+            hashCode = hashCode * -1521134295 + EqualityComparer<CityDTO>.Default.GetHashCode(city);
             return hashCode;
         }
     }

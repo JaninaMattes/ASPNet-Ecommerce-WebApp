@@ -99,7 +99,6 @@ namespace WebsiteLaitBrasseur.UL.Customer
             bl.GetCustomer(TextEmail.Text.Trim()).SetConfirmationID(confirmationID);
             string confID = confirmationID.ToString();
 
-
             Debug.Write("\nMailSender / confirmationID : " + confirmationID + "\n");   //DEBUG
             Debug.Write("\nMailSender / getConfID :  " + bl.GetCustomer(TextEmail.Text.Trim()).GetConfirmationID());    //DEBUG
             Debug.Write("\nMailSender / confIDString : " + confID);   //DEBUG
@@ -115,17 +114,23 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 mm.Body = "<a href='https://localhost:44314/UL/Customer/ConfirmationPage.aspx?ConfID=" + confID + " '> click here to verify </a>";
                 mm.IsBodyHtml = true;
                 mm.Subject = "Verification";
+                try
+                {
+                    //SMTP client initialization (gmail with projet address)
+                    SmtpClient smcl = new SmtpClient();
+                    smcl.Host = "smtp.gmail.com";
+                    smcl.Port = 587;
+                    smcl.Credentials = new NetworkCredential("webProgProjUon@gmail.com", "clementjanina");
+                    smcl.EnableSsl = true;
+                    smcl.Send(mm);
 
-                //SMTP client initialization (gmail with projet address)
-                SmtpClient smcl = new SmtpClient();
-                smcl.Host = "smtp.gmail.com";
-                smcl.Port = 587;
-                smcl.Credentials = new NetworkCredential("webProgProjUon@gmail.com", "clementjanina");
-                smcl.EnableSsl = true;
-                smcl.Send(mm);
-
-                lblRegResult.CssClass = "text-success";
-                lblRegResult.Text = "A confirmation email has been sent.";
+                    lblRegResult.CssClass = "text-success";
+                    lblRegResult.Text = "A confirmation email has been sent.";
+                }
+                catch (SmtpException e)
+                {
+                    e.GetBaseException();
+                }                
             }
             else
                 lblRegResult.Text = "There is a problem with your email.";
