@@ -11,7 +11,7 @@
     <div class="container-fluid col-md-4"  ">
 
             <h3>Enter your credit card informations</h3>
-            <asp:Label ID="lblWait" runat="server" Text="Please Wait..." CssClass="text-info" Visible="false"></asp:Label><br />
+            <asp:Label ID="lblWait" runat="server"   Text="Please Wait..." CssClass="text-info" Visible="false"></asp:Label><br />
             <asp:Label ID="lblResult" runat="server" Text="" CssClass="text-info"></asp:Label>
 
             <!--Label /TextBox / Validator for the Owner of the credit card-->
@@ -82,6 +82,9 @@
                 <asp:Button ID="CancelButton" runat="server" Text="Cancel" OnClick="CancelButton_Click" CausesValidation="false" CssClass="btn btn-danger"/>
                         &nbsp;
                 <asp:Button ID="SubmitButton" runat="server" Text="Submit" OnClick="SubmitButton_Click" CausesValidation="true" CssClass="btn btn-success"/>
+                <asp:Button ID="SubmitButtonReal" runat="server" Text="Submit (Real)" OnClick="SubmitButtonReal_Click" CausesValidation="true" CssClass="btn btn-success"/>
+                <asp:Label ID="lblDetails1" runat="server" Text="Submit(Real) uses the information enter by the user in the page to make the payment, so it won't work."></asp:Label><br />
+                <asp:Label ID="lblDetails2" runat="server" Text="Submit uses the information in the DummyAccount of the Payment System to make it work."></asp:Label>
            </div>
       </div>
 

@@ -80,7 +80,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                             blInvoice.SetAsPaied(invoiceID);
                             List<InvoiceDTO> dtoInvoice = blInvoice.FindInvoiceByID(Convert.ToInt32(this.Session["CustID"]),invoiceID);
                             DateTime dt = dtoInvoice[0].GetArrivalDate();
-                            lblResult.Text = "Your order is well register, thank you !";
+                            lblResult.Text = "Your order is well register, thank you ! ";
                             lblArrivalDate.Text = "Your order should arrive around the " + dt.ToString("dd/MM/yyyy");
 
                             MailSender(dtoInvoice[0]);

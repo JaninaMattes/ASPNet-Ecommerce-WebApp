@@ -1,10 +1,10 @@
 ﻿//------------------------------------------------------------------------------
-// <automatisch generiert>
-//     Dieser Code wurde von einem Tool generiert.
+// <généré automatiquement>
+//     Ce code a été généré par un outil.
 //
-//     Änderungen an dieser Datei können fehlerhaftes Verhalten verursachen und gehen verloren, wenn
-//     der Code neu generiert wird.
-// </automatisch generiert>
+//     Les modifications apportées à ce fichier peuvent provoquer un comportement incorrect et seront perdues si
+//     le code est régénéré.
+// </généré automatiquement>
 //------------------------------------------------------------------------------
 
 namespace WebsiteLaitBrasseur.Admin {
@@ -13,20 +13,20 @@ namespace WebsiteLaitBrasseur.Admin {
     public partial class VerificationPage {
         
         /// <summary>
-        /// UpdatePanel1-Steuerelement
+        /// Contrôle UpdatePanel1.
         /// </summary>
         /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
         
         /// <summary>
-        /// lblRegistrationResult-Steuerelement
+        /// Contrôle lblRegistrationResult.
         /// </summary>
         /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblRegistrationResult;
     }
