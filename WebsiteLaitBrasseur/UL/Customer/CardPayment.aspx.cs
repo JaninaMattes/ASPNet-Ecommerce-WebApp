@@ -20,6 +20,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Request.IsSecureConnection)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/CardPayment.aspx";
+                Response.Redirect(url);
+            }
+
             if (!IsPostBack)
             {
                 if (this.Session["CustID"] != null)             //Test customer is authentified OK ; else => redirection login
@@ -36,8 +42,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             }
             else 
             {
-                //Label result cleaned
-                lblResult.Text="";
+                lblWait.Visible=true;
 
                 //Atempt incrementation
                 int attempt = Convert.ToInt16(this.Session["attempt"]);
@@ -61,8 +66,8 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 //Invoice recuperation (List of 1 element)
                 int customerID = Convert.ToInt32(this.Session["CustID"]);
                 int invoiceID = Convert.ToInt32(this.Session["InvoiceID"]);
-                //decimal TotalAmount = blInvoice.FindInvoiceByID(customerID, invoiceID)[0].GetTotal();
-                decimal TotalAmount = 52.26m;
+                decimal TotalAmount = blInvoice.FindInvoiceByID(customerID, invoiceID)[0].GetTotal();
+
 
                 //Payment 
                 //Created the Payment system
@@ -87,10 +92,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 payment.Description = "OrderID : " + invoiceID + " for customer : " + customerID;
                 var task = paymentSystem.MakePayment(payment);
 
-                int i = 0;
-                while (!task.IsCompleted)  { i++; if (i > 200000000) { break; } }      //Let time to executing transaction
-
-                 Debug.Write("\n" + i + "\n"); //DEBUG
+                while (!task.IsCompleted)  {}      //Let time to executing transaction
 
                 //Display result
                 if (task.Result.TransactionResult.ToString() == "Approved")
@@ -107,10 +109,12 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
                     lblResult.CssClass = "text-danger";
                     lblResult.Text = "Issue during the paiment :  " + task.Result.TransactionResult.ToString();
+                    lblWait.Visible = false;
                 }
                 else
                 {
                     lblResult.Text = "Issue during the paiment procedure, please try later";
+                    lblWait.Visible = false;
                 }
             }
             catch(Exception ex)

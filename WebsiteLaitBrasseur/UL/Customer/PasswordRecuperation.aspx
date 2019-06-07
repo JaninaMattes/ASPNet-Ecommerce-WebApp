@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="PasswordRecuperation.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.PasswordRecuperation" %>
+﻿<%@ Page Title="Password Recuperation" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="PasswordRecuperation.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.PasswordRecuperation" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">

@@ -69,14 +69,14 @@
 
                                 <EditItemTemplate>
                                     <asp:DropDownList ID="DDLProductType" runat="server"  >
-                                        <asp:ListItem Value="Cheese" Selected="True" Text="Cheese"></asp:ListItem>
+                                        <asp:ListItem Value="Cheese"  Text="Cheese"></asp:ListItem>
                                         <asp:ListItem Value="Beer" Text="Beer"></asp:ListItem>
                                     </asp:DropDownList>
                                 </EditItemTemplate>
                            
                                 <FooterTemplate>
                                     <asp:DropDownList ID="DDLProductAddType" runat="server"  >
-                                        <asp:ListItem Value="Cheese" Selected="True" Text="Cheese"></asp:ListItem>
+                                        <asp:ListItem Value="Cheese" Text="Cheese"></asp:ListItem>
                                         <asp:ListItem Value="Beer" Text="Beer"></asp:ListItem>
                                     </asp:DropDownList>
                                 </FooterTemplate>
@@ -151,14 +151,14 @@
 
                                 <EditItemTemplate>
                                     <asp:DropDownList ID="DDLStatus" runat="server"  >
-                                        <asp:ListItem Value="1" Selected="True" Text="Available"></asp:ListItem>
+                                        <asp:ListItem Value="1"  Text="Available"></asp:ListItem>
                                         <asp:ListItem Value="0" Text="Not Available"></asp:ListItem>
                                     </asp:DropDownList>
                                 </EditItemTemplate>
 
                                 <FooterTemplate>
                                     <asp:DropDownList ID="DDLAddStatus" runat="server"  >
-                                        <asp:ListItem Value="1" Selected="True" Text="Available"></asp:ListItem>
+                                        <asp:ListItem Value="1" Text="Available"></asp:ListItem>
                                         <asp:ListItem Value="0" Text="Not Available"></asp:ListItem>
                                     </asp:DropDownList>
                                 </FooterTemplate>

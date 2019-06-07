@@ -11,7 +11,7 @@
     <div class="container-fluid col-md-4"  ">
 
             <h3>Enter your credit card informations</h3>
-
+            <asp:Label ID="lblWait" runat="server" Text="Please Wait..." CssClass="text-info" Visible="false"></asp:Label><br />
             <asp:Label ID="lblResult" runat="server" Text="" CssClass="text-info"></asp:Label>
 
             <!--Label /TextBox / Validator for the Owner of the credit card-->

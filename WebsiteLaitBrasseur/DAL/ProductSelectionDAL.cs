@@ -326,6 +326,7 @@ namespace WebsiteLaitBrasseur.DAL
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return results;
         }

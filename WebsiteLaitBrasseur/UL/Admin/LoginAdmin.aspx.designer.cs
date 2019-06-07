@@ -1,10 +1,10 @@
 ﻿//------------------------------------------------------------------------------
-// <automatisch generiert>
-//     Dieser Code wurde von einem Tool generiert.
+// <généré automatiquement>
+//     Ce code a été généré par un outil.
 //
-//     Änderungen an dieser Datei können fehlerhaftes Verhalten verursachen und gehen verloren, wenn
-//     der Code neu generiert wird.
-// </automatisch generiert>
+//     Les modifications apportées à ce fichier peuvent provoquer un comportement incorrect et seront perdues si
+//     le code est régénéré.
+// </généré automatiquement>
 //------------------------------------------------------------------------------
 
 namespace WebsiteLaitBrasseur.UL.Admin {
@@ -13,74 +13,74 @@ namespace WebsiteLaitBrasseur.UL.Admin {
     public partial class LoginAdmin {
         
         /// <summary>
-        /// TextEmail-Steuerelement
+        /// Contrôle TextEmail.
         /// </summary>
         /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextEmail;
         
         /// <summary>
-        /// EmailReqField-Steuerelement
+        /// Contrôle EmailReqField.
         /// </summary>
         /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator EmailReqField;
         
         /// <summary>
-        /// EmailRegValid-Steuerelement
+        /// Contrôle EmailRegValid.
         /// </summary>
         /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailRegValid;
         
         /// <summary>
-        /// TextPassword-Steuerelement
+        /// Contrôle TextPassword.
         /// </summary>
         /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TextPassword;
         
         /// <summary>
-        /// PasswordReqField-Steuerelement
+        /// Contrôle PasswordReqField.
         /// </summary>
         /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator PasswordReqField;
         
         /// <summary>
-        /// LoginButton-Steuerelement
+        /// Contrôle LoginButton.
         /// </summary>
         /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button LoginButton;
         
         /// <summary>
-        /// Register-Steuerelement
+        /// Contrôle Register.
         /// </summary>
         /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Register;
         
         /// <summary>
-        /// LblErrorMessage-Steuerelement
+        /// Contrôle LblErrorMessage.
         /// </summary>
         /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LblErrorMessage;
     }

@@ -117,8 +117,6 @@
     <Content Include="UL\Customer\Default.aspx" />
     <Content Include="UL\Customer\Login.aspx" />
     <Content Include="UL\Images\laitBrasseur.jpg" />
-    <Content Include="UL\Images\mastercard-logo-.png" />
-    <Content Include="UL\Images\visa_logo.jpg" />
     <Content Include="UL\Scripts\bootstrap.bundle.js" />
     <Content Include="UL\Scripts\bootstrap.bundle.min.js" />
     <Content Include="UL\Scripts\bootstrap.js" />

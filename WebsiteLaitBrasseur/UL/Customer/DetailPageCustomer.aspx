@@ -38,7 +38,7 @@
                     <p></p><p class="text-info"><asp:Label ID="lowStock" runat="server" Text="" CssClass="text-danger"></asp:Label></p><br/>
 
                     <!--Dropdown list with different sizes for the product to be selected-->
-                    <p>Unit Size :</p>
+                    <p>Unit Size <asp:Label ID ="lblUnit" runat="server" Text=""></asp:Label> :</p>
                     <asp:DropDownList ID="unitDropDownList" runat="server" Cssclass="form-control" AutoPostBack="true" >
                     </asp:DropDownList>
                     <asp:RequiredFieldValidator InitialValue="-1" ID="Req_ID" Display="Dynamic" 

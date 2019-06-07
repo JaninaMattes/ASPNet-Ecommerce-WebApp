@@ -125,7 +125,7 @@
 
 
                      <!-- Tax will apply -->
-                     <asp:Label ID="lblTax" runat="server" cssclass="text-info " Text="Tax  :"></asp:Label>
+                     <asp:Label ID="lblTax" runat="server" cssclass="text-info " Text="Tax : "></asp:Label>
                      <asp:Label ID="lblTaxValue" runat="server" CssClass="text-body" Text="20"></asp:Label>%
                      <br /></br>
 

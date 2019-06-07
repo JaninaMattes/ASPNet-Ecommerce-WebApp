@@ -102,7 +102,7 @@ namespace WebsiteLaitBrasseur.DAL
         public int UpdateStatus(int id, int status)
         {
             int result = 0;
-            string queryString = "UPDATE dbo.Product SET status = @status WHERE productID = @id";
+            string queryString = "UPDATE dbo.Product SET pstatus = @status WHERE productID = @id";
             try
             { 
                 //The connection is automatically closed at the end of the using block.
@@ -571,7 +571,7 @@ namespace WebsiteLaitBrasseur.DAL
         public List<ProductDTO> FindByType(string type)
         {
             List<ProductDTO> results = new List<ProductDTO>();
-            string queryString = "SELECT * FROM dbo.Product WHERE pType = @type";
+            string queryString = "SELECT * FROM dbo.Product WHERE pType = @type AND pstatus=1";
             try
             {
                 //The connection is automatically closed at the end of the using block.

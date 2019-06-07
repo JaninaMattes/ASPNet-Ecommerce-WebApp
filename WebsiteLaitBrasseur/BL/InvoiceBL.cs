@@ -25,7 +25,7 @@ namespace WebsiteLaitBrasseur.BL
         /// <param name="shippingID"></param>
         /// <param name="products"></param>
         /// <returns>Int InvoiceID</returns>
-        public int CreateInvoice(string email, int shippingID, List<ProductSelectionDTO> products)
+        public int CreateInvoice(string email, int shippingID, List<ProductSelectionDTO> products, decimal shippingCost, decimal totalAmount, decimal taxValue, decimal finalCost)
         {
             AccountDTO customer = new AccountDTO();
             ShippmentDTO deliverer = new ShippmentDTO();
@@ -45,30 +45,21 @@ namespace WebsiteLaitBrasseur.BL
                         DateTime paymentDate = DateTime.Now;
                         DateTime arrivalDate = DateTime.Now.AddDays(deliverer.GetDeliveryTime());
                         DateTime postageDate = DateTime.Now;
-                        //calculate all other values for the invoice
-                        int totalWeight = CalculateWeight(products);
-                        decimal totalShippingCost = deliverer.GetCost() + (decimal)0.1 * totalWeight;
+
                         int totalQuantity = CalculateQuantity(products);
+
+                        //calculate all other values for the invoice
+                        /*int totalWeight = CalculateWeight(products);
+                        decimal totalShippingCost = deliverer.GetCost() + (decimal)0.1 * totalWeight;
+                        decimal totalShippingCost = ;
                         decimal totalProductCost = CalculateProductCost(products);
                         decimal totalTaxes = CalculateTax(totalProductCost);
-                        decimal totalAmount = totalTaxes + totalProductCost + totalShippingCost;
+                        decimal totalAmount = totalTaxes + totalProductCost + totalShippingCost;*/
 
-                        UpdateProductInfo(products);
-
-                        //Direct payment or invoice cancelled
-                        /*if (paymentStatus == 1)
-                        {
-                            //if payment has not been directly done
-                            paymentDate = DateTime.Now;
-                        }
-                        else
-                        {
-                            //Business Rule: Payment in 30 days
-                            paymentDate = DateTime.Now.AddDays(30);
-                        }*/
+                        //UpdateProductInfo(products);
 
                         //insert into DB
-                        result = DB.Insert(customer.GetID(), deliverer.GetID(), totalQuantity, totalShippingCost, totalProductCost, totalTaxes,
+                        result = DB.Insert(customer.GetID(), deliverer.GetID(), totalQuantity, shippingCost, finalCost, taxValue,
                             totalAmount, orderDate.ToString(), paymentDate.ToString(), arrivalDate.ToString(), postageDate.ToString(), paymentStatus, email);
                     }
                     else
@@ -103,6 +94,19 @@ namespace WebsiteLaitBrasseur.BL
             return result;
         }
 
+        /// <summary>
+        /// Update the payment status and set
+        /// an invoice to "Cancelled"
+        /// </summary>
+        /// <param name="invoiceID"></param>
+        /// <returns></returns>
+        public int SetAsCancelled(int invoiceID)
+        {
+            int result = 0;
+            int paymentStatus = 2;
+            result = DB.Update(invoiceID, paymentStatus);
+            return result;
+        }
         /// <summary>
         /// Find all invoices of one Customer.
         /// </summary>
@@ -139,6 +143,7 @@ namespace WebsiteLaitBrasseur.BL
 
         /// <summary>
         /// Find a specific invoice of a customer.
+        /// Returns List of Invoice but contains 1 element
         /// </summary>
         /// <param name="customerID"></param>
         /// <param name="invoiceID"></param>
@@ -259,7 +264,7 @@ namespace WebsiteLaitBrasseur.BL
                     product = PPB.FindBy(p.GetProduct().GetId());
                     stock = product.GetStock() - p.GetQuantity();
                     result = PPB.UpdateStock(p.GetProduct().GetId(), stock);
-                    if (stock == 0)
+                    if (stock == 1)
                     {
                         //suspend the product if the stock is too low
                         PPB.UpdateStatus(p.GetProduct().GetId(), 1);
@@ -271,6 +276,58 @@ namespace WebsiteLaitBrasseur.BL
                 e.GetBaseException();
             }
             
+            return result;
+        }
+
+        public int UpdateStockProductSelection(int invoiceID,List<ProductSelectionDTO> cart, bool reverse)
+        {
+            int result = 0;
+            ProductDTO product = new ProductDTO();
+            ProductSelectionBL blProdSel = new ProductSelectionBL();
+            try
+            {
+                int stock = 0;
+                foreach (ProductSelectionDTO p in cart)
+                {
+                    if (reverse == false)
+                    {
+                        //Product Selection creation
+                        blProdSel.Create(invoiceID, p.GetProduct().GetId(), p.GetQuantity(), p.GetOrigSize(), p.GetOrigPrice());
+
+                        //Stock update
+                        product = PPB.FindBy(p.GetProduct().GetId());
+                        stock = product.GetStock() - p.GetQuantity();
+                        result = PPB.UpdateStock(p.GetProduct().GetId(), stock);
+                        Debug.Write("InvoiceBL / UpdateStock/ stock : "+stock); //DEBUG
+                        if (stock == 1)
+                        {
+                            //suspend the product if the stock is too low
+                            
+                            PPB.UpdateStatus(p.GetProduct().GetId(), 0);
+                            Debug.Write("InvoiceBL / UpdateStock/ status: " + p.GetProduct().GetStatus()); //DEBUG
+                        }
+                    }
+                    else
+                    {
+                        //Stock update
+                        product = PPB.FindBy(p.GetProduct().GetId());
+                        stock = product.GetStock() + p.GetQuantity();
+                        result = PPB.UpdateStock(p.GetProduct().GetId(), stock);
+
+                        if (product.GetStatus() == 0 && product.GetStock() > 1)
+                        {
+                            PPB.UpdateStatus(p.GetProduct().GetId(), 1);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+                Debug.Write(e.ToString());
+            }
+
+            Debug.Write("\nSortie UpdateStock : result(modif stock) =  " + result);
             return result;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using WebsiteLaitBrasseur.DAL;
@@ -30,6 +31,7 @@ namespace WebsiteLaitBrasseur.BL
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return result;
         }
@@ -49,6 +51,7 @@ namespace WebsiteLaitBrasseur.BL
             catch (Exception e)
             {
                 e.GetBaseException();
+                Debug.Write(e.ToString());
             }
             return results;
         }

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="PasswordChanging.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.PasswordChanging" %>
+﻿<%@ Page Title="Password Change" Language="C#" MasterPageFile="~/UL/Customer/Site.Master" AutoEventWireup="true" CodeBehind="PasswordChanging.aspx.cs" Inherits="WebsiteLaitBrasseur.UL.Customer.PasswordChanging" %>
 
 
 

@@ -17,6 +17,20 @@ namespace WebsiteLaitBrasseur.UL.Admin
         protected void Page_Load(object sender, EventArgs e)
         {
             LblErrorMessage.Visible = false;
+
+            if (!Request.IsSecureConnection)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin.aspx";
+                Response.Redirect(url);
+            }
+
+            if ( this.Session["AdminID"] != null )
+            {
+                this.Session.Remove("Email");  
+                this.Session.Remove("AdminID");  
+                this.Session.Remove("DateInit");  
+            }
+
         }
 
         protected void LoginButton_Click(object sender, EventArgs e)

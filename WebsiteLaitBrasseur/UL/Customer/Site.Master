@@ -81,7 +81,7 @@
     </form>
 
     <footer>
-        <p> &copy; <%: DateTime.Now.Year %> - <a runat="server" href="/UL/Customer/Contact.aspx">Contact</a>  - <a runat="server" href="/UL/Customer/AboutUs.aspx">About us</a> - <a runat="server" href="https://www.facebook.com/LaitBrasseurAdmin/">Facebook</a> </p>
+        <p> &copy; <%: DateTime.Now.Year %> - <a runat="server" href="https://localhost:44314/UL/Customer/Contact.aspx">Contact</a>  - <a runat="server" href="https://localhost:44314/UL/Customer/AboutUs.aspx">About us</a> - <a runat="server" href="https://www.facebook.com/LaitBrasseurAdmin/">Facebook</a> </p>
     </footer>
 </body>
 

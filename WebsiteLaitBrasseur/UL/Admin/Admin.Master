@@ -30,7 +30,7 @@
 
                 <!--Logo -->
                 <div class="col-md-4 ">
-                    <a href="/UL/Admin/Default.aspx">
+                    <a href="https://localhost:44314/UL/Admin/Default.aspx">
                         <img id="logoLB" alt="LaitBrasseur_Logo" src="/UL/Images/Logo-LaitBrasseur.png" class="img rounded img-fluid" style="text-align:left;width:181px; height:147px"  />
                     </a>
                  </div>
@@ -42,13 +42,13 @@
 
                 <!--LogIn/LogOut buttons -->
                 <div class="col-md-4 text-right">
-                    <a href="/UL/Admin/LoginAdmin.aspx"  >
+                    <a href="https://localhost:44314/UL/Admin/LoginAdmin.aspx"  >
                         <input id="LogInButton" runat="server" type="button" class="btn btn-outline-light" value="LogIn"/>
                     </a>
 
                     <br />
-                    <a href="/UL/Admin/LogoutAdmin.aspx"  >
-                        <asp:label id="lblLogout" runat="server" text="Logout" Visible="false"></asp:label>
+                    <a href="https://localhost:44314/UL/Admin/LogoutAdmin.aspx"  >
+                        <input id="LogoutButton" runat="server" type="button" class="btn btn-outline-light" value="LogOut"/>
                     </a>
                 </div>
             </div>

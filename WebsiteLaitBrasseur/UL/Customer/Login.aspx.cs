@@ -17,6 +17,20 @@ namespace WebsiteLaitBrasseur.UL.Customer
         {
             LblErrorMessage.Visible = false;
 
+            if (!Request.IsSecureConnection)
+            {
+                string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx";
+                Response.Redirect(url);
+            }
+
+            //If already Login =>Forced Logout to access the page
+            if (this.Session["CustID"] != null)
+            {
+                this.Session.Remove("Email");
+                this.Session.Remove("CustID");
+                this.Session.Remove("DateInit");
+            }
+
             if (IsPostBack)
             {
                 //Atempt incrementation
@@ -48,6 +62,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     //variable session creation
                     //session is a dictionary inside ASP.NET
                     SessionInit();
+                    this.Session["attempt"] = 0;
                     Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Default.aspx");
                     break;
                 case 2:
@@ -74,6 +89,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
 
         protected void RegisterButton_Click(object sender, EventArgs e)
         {
+            this.Session["attempt"] = 0;
             Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Register.aspx");
         }
 

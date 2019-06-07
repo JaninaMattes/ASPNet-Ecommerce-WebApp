@@ -46,6 +46,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 {
                     labelPrice.Text = sb.GetPriceBySize(id, Convert.ToInt32(unitDropDownList.SelectedValue)).ToString();
                     totalAmount.Text = GetTotalAmount(labelPrice.Text, quantityDropDownList.SelectedValue.ToString());
+                    lblResult.Text = "";
                 }
                 if (!IsPostBack)
                 {
@@ -68,7 +69,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
                         for (int i = 0; i < productDetails.Count; i++) { unitDropDownList.Items.Add(productDetails[i].GetSize().ToString()); }
                         labelPrice.Text = sb.GetPriceBySize(id, Convert.ToInt32(unitDropDownList.SelectedValue)).ToString();
                         for (int i = 1; i < product.GetStock(); i++) { quantityDropDownList.Items.Add(i.ToString()); }
-                        if (product.GetStock() <= 5) { lowStock.Text = $"Low stock. Only {product.GetStock()} availble"; }
+                        if (product.GetStock() <= 5) { lowStock.Text = $"Low stock. Only {product.GetStock()} available"; }
+                        if (product.GetProductType() == "Cheese") { lblUnit.Text = "(gr)"; }
+                        else { lblUnit.Text = "(ml)"; }
                     }
                     else
                     {
