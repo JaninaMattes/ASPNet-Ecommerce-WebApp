@@ -20,16 +20,19 @@ namespace WebsiteLaitBrasseur.UL.Admin
             }
         }
 
+        //Redirection to PostagesManagment
         protected void Shippingbutton_Click(object sender, EventArgs e)
         {
             Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/PostagesManagement.aspx");
         }
 
+        //Redirection to AccountManagment
         protected void Customerbutton_Click(object sender, EventArgs e)
         {
             Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/AccountManagment.aspx");
         }
 
+        //Redirection to ItemsManagment
         protected void Productbutton_Click(object sender, EventArgs e)
         {
             Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/ItemsManagement.aspx");

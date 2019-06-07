@@ -16,7 +16,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
     {
         InvoiceBL blInvoice = new InvoiceBL();
         InvoiceDTO dtoInvoice = new InvoiceDTO();
-        
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,7 +30,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
             {
                 if (this.Session["CustID"] != null)             //Test customer is authentified OK ; else => redirection login
                 {
-                    if (this.Session["InvoiceID"]  == null)     //Test : invoice no created => redirection cart
+                    if (this.Session["InvoiceID"] == null)     //Test : invoice no created => redirection cart
                     {
                         Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Cart.aspx");
                     }
@@ -40,9 +40,9 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Login.aspx");
                 }
             }
-            else 
+            else
             {
-                lblWait.Visible=true;
+                lblWait.Visible = true;
 
                 //Atempt incrementation
                 int attempt = Convert.ToInt16(this.Session["attempt"]);
@@ -50,16 +50,33 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 this.Session["attempt"] = attempt;
 
                 //if 3 attempt : redirection
-                if (attempt>=3)
+                if (attempt >= 3)
                 {
                     var urlF = FriendlyUrl.Href("/UL/Customer/checkout", 0);
                     Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + urlF);
                 }
             }
-            
+
         }
 
         protected void SubmitButton_Click(object sender, EventArgs e)
+        {
+            bool realPayment = false;
+            Payment(realPayment);
+        }
+
+        protected void SubmitButtonReal_Click(object sender, EventArgs e)
+        {
+            bool realPayment = true;
+            Payment(realPayment);
+        }
+
+        protected void CancelButton_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Cart.aspx");
+        }
+
+        private void Payment(bool realPayment)
         {
             try
             {
@@ -77,22 +94,28 @@ namespace WebsiteLaitBrasseur.UL.Customer
                 PaymentRequest payment = new PaymentRequest();
 
 
-                //Value to make the payment approved
-                /*payment.CardName = "Arthur Anderson";
-                payment.CardNumber = "4444333322221111";
-                payment.CVC = 123;
-                payment.Expiry = new DateTime(2020, 11, 1);
-                payment.Amount = 200;*/
+                if (realPayment == false)
+                {
+                    //Value to make the payment approved
+                    payment.CardName = "Arthur Anderson";
+                    payment.CardNumber = "4444333322221111";
+                    payment.CVC = 123;
+                    payment.Expiry = new DateTime(2020, 11, 1);
+                    payment.Amount = 200;
+                }
+                else
+                {
+                    payment.CardName = TextName.Text;
+                    payment.CardNumber = TextCardNumber.Text;
+                    payment.CVC = Convert.ToInt16(TextCSC.Text);
+                    payment.Expiry = new DateTime(Convert.ToInt16(YearExpiration.SelectedValue), Convert.ToInt16(MonthExpiration.SelectedValue), 1);
+                    payment.Amount = TotalAmount;
+                }
 
-                payment.CardName = TextName.Text;
-                payment.CardNumber = TextCardNumber.Text;
-                payment.CVC = Convert.ToInt16(TextCSC.Text);
-                payment.Expiry = new DateTime(Convert.ToInt16(YearExpiration.SelectedValue), Convert.ToInt16(MonthExpiration.SelectedValue), 1);
-                payment.Amount = TotalAmount;
                 payment.Description = "OrderID : " + invoiceID + " for customer : " + customerID;
                 var task = paymentSystem.MakePayment(payment);
 
-                while (!task.IsCompleted)  {}      //Let time to executing transaction
+                while (!task.IsCompleted) { }      //Let time to executing transaction
 
                 //Display result
                 if (task.Result.TransactionResult.ToString() == "Approved")
@@ -104,7 +127,7 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + urlF);
 
                 }
-                else if ( task.Status.ToString() == "RanToCompletion")
+                else if (task.Status.ToString() == "RanToCompletion")
                 {
 
                     lblResult.CssClass = "text-danger";
@@ -117,16 +140,13 @@ namespace WebsiteLaitBrasseur.UL.Customer
                     lblWait.Visible = false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ex.GetBaseException();
                 Debug.Write(ex.ToString());
             }
         }
 
-        protected void CancelButton_Click(object sender, EventArgs e)
-        {
-            Response.Redirect(ConfigurationManager.AppSettings["SecurePath"] + "/UL/Customer/Cart.aspx");
-        }
+
     }
 }

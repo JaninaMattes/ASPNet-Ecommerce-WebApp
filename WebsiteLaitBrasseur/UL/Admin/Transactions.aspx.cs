@@ -14,12 +14,10 @@ namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class Transactions : System.Web.UI.Page
     {
+        // BL/DTO variables initialization
         List<InvoiceDTO> LI = new List<InvoiceDTO>();
-        InvoiceBL blInv = new InvoiceBL();
+        InvoiceBL blInvoice = new InvoiceBL();
         AccountBL blCustomer = new AccountBL();
-
-        InvoiceBL BL = new InvoiceBL();
-        AccountBL AL = new AccountBL();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -57,15 +55,39 @@ namespace WebsiteLaitBrasseur.UL.Admin
             }
         }
 
-
-        protected void BindData()
+        /// <summary>
+        /// Take list of invoice of a customer from DB
+        /// Display it in gridview
+        /// </summary>
+        /// <param name="accountID"></param>
+        protected void BindDataInvoices(int accountID)
         {
-            //LI = blInv.FindInvoices(blCustomer.GetCustomer());
+            try
+            {
+                IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
+                invoices = blInvoice.FindInvoices(accountID);
+                AccountDTO customer = new AccountDTO();
+                customer = blCustomer.GetCustomer(accountID);
+                ShoppingTable.DataSource = GetDataTable(invoices);
+                ShoppingTable.DataBind();
 
+                if (invoices.Count() > 0)
+                {
+                    tableShoppingHistoryLabel.Text = $"The transactionlist of {customer.GetFirstName()} " +
+                        $"{customer.GetLastName()} has {invoices.Count()} items.";
+                }
+                else
+                {
+                    tableShoppingHistoryLabel.Text = $"The transactionlist is empty.";
+                }
+            }
+            catch (Exception e)
+            {
+                e.GetBaseException();
+            }
         }
 
         //Shopping history generation (Same in /Account/Profile.aspx)
-
         protected DataTable GetDataTable(IEnumerable<InvoiceDTO> invoices)
         {
             //DataTable initialization
@@ -98,7 +120,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
                     dr["PaymentStatus"] = "Cancelled";
                 }
                 else
-                { 
+                {
                     dr["PaymentStatus"] = "ErrorValue";
                 }
 
@@ -106,33 +128,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
             }
             return dtInvoice;
-        }
-
-        protected void BindDataInvoices(int accountID)
-        {            
-            try
-            {
-                IEnumerable<InvoiceDTO> invoices = new List<InvoiceDTO>();
-                invoices = BL.FindInvoices(accountID);
-                AccountDTO customer = new AccountDTO();
-                customer = AL.GetCustomer(accountID);
-                ShoppingTable.DataSource = GetDataTable(invoices);
-                ShoppingTable.DataBind();
-
-                if (invoices.Count() > 0)
-                {
-                    tableShoppingHistoryLabel.Text = $"The transactionlist of {customer.GetFirstName()} " +
-                        $"{customer.GetLastName()} has {invoices.Count()} items.";
-                }
-                else
-                {
-                    tableShoppingHistoryLabel.Text = $"The transactionlist is empty.";
-                }
-            }
-            catch (Exception e)
-            {
-                e.GetBaseException();
-            }            
         }
     }
 }

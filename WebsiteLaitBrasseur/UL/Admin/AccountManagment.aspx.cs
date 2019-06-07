@@ -17,6 +17,7 @@ namespace WebsiteLaitBrasseur.UL.Admin
         readonly AccountBL BL = new AccountBL();
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Redirection if not login
             if (this.Session["AdminID"] == null)
             {
                 string url = ConfigurationManager.AppSettings["SecurePath"] + "/UL/Admin/LoginAdmin.aspx";
@@ -25,39 +26,44 @@ namespace WebsiteLaitBrasseur.UL.Admin
 
             if (!IsPostBack)
             {
-
+                //BindData
                 BindDataCustomer();
                 BindDataAdmin();
             }
         }
 
         ////Grid methods
+        ///<summary>Update the status of the customer : Active/Suspended
+        ///Format status in byte-Update in DB-BindModifications</summary>
         protected void UserListTable_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             try
             {
                 byte status = 0;
-                if (UserListTable.Rows[e.RowIndex].Cells[6].Text == "Active") { status = 0; }
-                else if (UserListTable.Rows[e.RowIndex].Cells[6].Text == "Suspended") { status = 1; }
+                if (UserListTable.Rows[e.RowIndex].Cells[6].Text == "Active") { status = 1; }
+                else if (UserListTable.Rows[e.RowIndex].Cells[6].Text == "Suspended") { status = 0; }
                 else { lblError.Text = "Status invalid"; }
                 BL.UpdateStatus(UserListTable.Rows[e.RowIndex].Cells[3].Text, status);
                 BindDataCustomer();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ex.GetBaseException();
+                Debug.Write(ex.ToString());
             }
 
         }
 
-        //redirection to transanctions history page
+        ///<summary>redirection to transanctions history page with friendlyURL</summary>
         protected void UserListTable_RowEditing(object sender, GridViewEditEventArgs e)
         {
             var urlF = FriendlyUrl.Href("/UL/Admin/Transactions", UserListTable.Rows[e.NewEditIndex].Cells[0].Text.ToString());
             Response.Redirect(urlF);
         }
 
-
+        /// <summary>
+        /// Take CustomersData from DB-Generate DataTable-Bind
+        /// </summary>
         protected void BindDataCustomer()
         {
             try
@@ -71,9 +77,12 @@ namespace WebsiteLaitBrasseur.UL.Admin
             {
                 e.GetBaseException();
             }
-           
+
         }
 
+        /// <summary>
+        /// Take AdminsData from DB-Generate DataTable-Bind
+        /// </summary>
         protected void BindDataAdmin()
         {
             try
@@ -89,43 +98,53 @@ namespace WebsiteLaitBrasseur.UL.Admin
             }
         }
 
+        /// <summary>
+        /// DataTable Generation
+        /// </summary>
+        /// <param name="ListAccount"></param>
+        /// <returns>DataTable filled</returns>
         protected DataTable GetDataTable(IEnumerable<AccountDTO> ListAccount)
         {
             //DataTable initialization
             DataTable dtUser = new DataTable();
 
-            //Colmuns declaration
-            dtUser.Columns.Add("ID");
-            dtUser.Columns.Add("Firstname");
-            dtUser.Columns.Add("Lastname");
-            dtUser.Columns.Add("Email");
-            dtUser.Columns.Add("PhoneNo");
-            dtUser.Columns.Add("IsConfirmed");
-            dtUser.Columns.Add("Status");
+            try
+            {
+                //Colmuns declaration
+                dtUser.Columns.Add("ID");
+                dtUser.Columns.Add("Firstname");
+                dtUser.Columns.Add("Lastname");
+                dtUser.Columns.Add("Email");
+                dtUser.Columns.Add("PhoneNo");
+                dtUser.Columns.Add("IsConfirmed");
+                dtUser.Columns.Add("Status");
 
-            foreach (AccountDTO customer in ListAccount)
-            { 
-                DataRow dr = dtUser.NewRow();
-                dr["ID"] = customer.GetID();
-                dr["Firstname"] = customer.GetFirstName();
-                dr["Lastname"] = customer.GetLastName();
-                dr["Email"] = customer.GetEmail();
-                dr["PhoneNo"] = customer.GetPhoneNo();
-                dr["IsConfirmed"] = customer.GetIsConfirmed();
-                if (customer.GetStatus() == 1) { dr["Status"] = "Suspended";}
-                else { dr["Status"] = "Active"; }               
+                foreach (AccountDTO customer in ListAccount)
+                {
+                    DataRow dr = dtUser.NewRow();
+                    dr["ID"] = customer.GetID();
+                    dr["Firstname"] = customer.GetFirstName();
+                    dr["Lastname"] = customer.GetLastName();
+                    dr["Email"] = customer.GetEmail();
+                    dr["PhoneNo"] = customer.GetPhoneNo();
+                    dr["IsConfirmed"] = customer.GetIsConfirmed();
+                    if (customer.GetStatus() == 1) { dr["Status"] = "Suspended"; }
+                    else { dr["Status"] = "Active"; }
 
-                dtUser.Rows.Add(dr);
+                    dtUser.Rows.Add(dr);
 
+                }
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Database error";
+                Debug.Write(ex.ToString());
             }
             return dtUser;
         }
 
         protected void UserListTable_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-
         }
-
-
     }
 }

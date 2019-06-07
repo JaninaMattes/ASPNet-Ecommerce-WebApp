@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -23,20 +24,22 @@ namespace WebsiteLaitBrasseur.UL.Admin
                 }
                 else
                 {
+                    //Get user information to display his name
                     int adminID = Convert.ToInt32(this.Session["AdminID"]);
                     AccountDTO account = new AccountDTO();
                     account = BL.GetCustomer(adminID);
                     lblGoodBye.Text = $"Good Bye {account.GetFirstName()} {account.GetLastName()}";
-                    //Session variable removing
+
+                    //Session variable cleaning
                     this.Session.Remove("AdminID");
                     this.Session.Remove("Email");
                     this.Session.Remove("DateInit");
                 }
             }
-            catch
+            catch (Exception ex)
             {
-              
                 lblGoodBye.Text = "Good bye ";
+                Debug.Write(ex.ToString());
             }
         }
     }
