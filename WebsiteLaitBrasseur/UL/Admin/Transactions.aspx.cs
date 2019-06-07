@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using System.Diagnostics;
 using WebsiteLaitBrasseur.BL;
 using Microsoft.AspNet.FriendlyUrls;
@@ -14,10 +11,6 @@ namespace WebsiteLaitBrasseur.UL.Admin
 {
     public partial class Transactions : System.Web.UI.Page
     {
-        List<InvoiceDTO> LI = new List<InvoiceDTO>();
-        InvoiceBL blInv = new InvoiceBL();
-        AccountBL blCustomer = new AccountBL();
-
         InvoiceBL BL = new InvoiceBL();
         AccountBL AL = new AccountBL();
 

@@ -8,187 +8,187 @@ namespace WebsiteLaitBrasseur.BL
     public class InvoiceDTO
     {
         //private properties
-        private int _id;
-        private AccountDTO _customer;
-        private List<ProductSelectionDTO> _products;
-        private ShippmentDTO _shipping;
-        private int _totalQuantity;
-        private decimal _totalShippingCost;
-        private decimal _totalTaxes;
-        private decimal _totalAmount;
-        private DateTime _orderDate;
-        private DateTime _paymentDate;
-        private DateTime _arrivalDate;
-        private DateTime _postageDate;
-        private string _email ="";
-        private int _paymentStatus = 0;
+        private int id;
+        private AccountDTO customer;
+        private List<ProductSelectionDTO> products;
+        private ShippmentDTO shippingCompany;
+        private int totalQuantity;
+        private decimal totalShippingCost;
+        private decimal totalTaxes;
+        private decimal totalAmount;
+        private DateTime orderDate;
+        private DateTime paymentDate;
+        private DateTime arrivalDate;
+        private DateTime postageDate;
+        private string email;
+        private int paymentStatus = 0;
 
         //getter and setter
         public int GetID()
         {
-            return this._id;
+            return this.id;
         }
 
         public void SetID(int id)
         {
-            this._id = id;
+            this.id = id;
         }
 
         public AccountDTO GetCustomer()
         {
-            return this._customer;
+            return this.customer;
         }
 
         public void SetCustomer(AccountDTO customer)
         {
-            this._customer = customer;
+            this.customer = customer;
         }
 
         public List<ProductSelectionDTO> GetProductSelections()
         {
-            return _products;
+            return products;
         }
 
         public void SetProductSelections(List<ProductSelectionDTO> selections)
         {
-            this._products = selections;
+            this.products = selections;
         }
 
         public void AddProductSelection(ProductSelectionDTO selection)
         {
-            _products.Add(selection);
+            products.Add(selection);
         }
 
         public ShippmentDTO GetShippment()
         {
-            return this._shipping;
+            return this.shippingCompany;
         }
 
         public void SetShippment(ShippmentDTO shipping)
         {
-            this._shipping = shipping;
+            this.shippingCompany = shipping;
         }
 
         public int GetQuantity()
         {
-            return this._totalQuantity;
+            return this.totalQuantity;
         }
 
         public void SetQuantity(int quantity)
         {
-            this._totalQuantity = quantity;
+            this.totalQuantity = quantity;
         }
         public decimal GetShippingCost()
         {
-            return this._totalShippingCost;
+            return this.totalShippingCost;
         }
 
         public void SetShippingCost(decimal cost)
         {
-            this._totalShippingCost = cost;
+            this.totalShippingCost = cost;
         }
         public decimal GetTax()
         {
-            return this._totalTaxes;
+            return this.totalTaxes;
         }
 
         public void SetTax(decimal tax)
         {
-            this._totalTaxes = tax;
+            this.totalTaxes = tax;
         }
         public decimal GetTotal()
         {
-            return this._totalAmount;
+            return this.totalAmount;
         }
 
         public void SetTotal(decimal total)
         {
-            this._totalAmount = total;
+            this.totalAmount = total;
         }
         public DateTime GetOrderDate()
         {
-            return this._orderDate;
+            return this.orderDate;
         }
 
         public void SetOrderDate(DateTime date)
         {
-            this._orderDate = date;
+            this.orderDate = date;
         }
 
         public DateTime GetPostDate()
         {
-            return this._postageDate;
+            return this.postageDate;
         }
 
         public void SetPostDate(DateTime date)
         {
-            this._postageDate = date;
+            this.postageDate = date;
         }
 
         public DateTime GetArrivalDate()
         {
-            return this._arrivalDate;
+            return this.arrivalDate;
         }
 
         public void SetArrivalDate(DateTime date)
         {
-            this._arrivalDate = date;
+            this.arrivalDate = date;
         }
 
         public DateTime GetPaymentDate()
         {
-            return this._paymentDate;
+            return this.paymentDate;
         }
 
         public void SetPaymentDate(DateTime date)
         {
-            this._paymentDate = date;
+            this.paymentDate = date;
         }
         public string GetEmail()
         {
-            return this._email;
+            return this.email;
         }
 
         public void SetEmail(string email)
         {
-            this._email = email;
+            this.email = email;
         }
         public int GetStatus()
         {
-            return this._paymentStatus;
+            return this.paymentStatus;
         }
 
         public void SetStatus(int status)
         {
-            this._paymentStatus = status;
+            this.paymentStatus = status;
         }
 
         //constructor
         public InvoiceDTO()
         {
-            _products = new List<ProductSelectionDTO>();
+            products = new List<ProductSelectionDTO>();
         }
 
         public InvoiceDTO(byte id, AccountDTO customer, List<ProductSelectionDTO> products, ShippmentDTO shipping, byte totalQuantity, decimal totalShippingCost, 
             decimal totalTaxes, decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email)
         {
-            _id = id;
-            _customer = customer;
-            _products = products;
-            _shipping = shipping;
-            _totalQuantity = totalQuantity;
-            _totalShippingCost = totalShippingCost;
-            _totalTaxes = totalTaxes;
-            _totalAmount = totalAmount;
-            _orderDate = orderDate;
-            _paymentDate = paymentDate;
-            _email = email;
+            this.id = id;
+            this.customer = customer;
+            this.products = products;
+            shippingCompany = shipping;
+            this.totalQuantity = totalQuantity;
+            this.totalShippingCost = totalShippingCost;
+            this.totalTaxes = totalTaxes;
+            this.totalAmount = totalAmount;
+            this.orderDate = orderDate;
+            this.paymentDate = paymentDate;
+            this.email = email;
         }
 
         public InvoiceDTO(byte id, AccountDTO customer, List<ProductSelectionDTO> products, ShippmentDTO shipping, byte totalQuantity, decimal totalShippingCost, decimal totalTaxes, 
             decimal totalAmount, DateTime orderDate, DateTime paymentDate, string email, int status) : this(id, customer, products, shipping, totalQuantity, totalShippingCost, totalTaxes, totalAmount, orderDate, paymentDate, email)
         {
-            _paymentStatus = status;
+            paymentStatus = status;
         }
 
 
@@ -200,35 +200,35 @@ namespace WebsiteLaitBrasseur.BL
         public override bool Equals(object obj)
         {
             return obj is InvoiceDTO dTO &&
-                   _id == dTO._id &&
-                   EqualityComparer<AccountDTO>.Default.Equals(_customer, dTO._customer) &&
-                   EqualityComparer<List<ProductSelectionDTO>>.Default.Equals(_products, dTO._products) &&
-                   EqualityComparer<ShippmentDTO>.Default.Equals(_shipping, dTO._shipping) &&
-                   _totalQuantity == dTO._totalQuantity &&
-                   _totalShippingCost == dTO._totalShippingCost &&
-                   _totalTaxes == dTO._totalTaxes &&
-                   _totalAmount == dTO._totalAmount &&
-                   _orderDate == dTO._orderDate &&
-                   _paymentDate == dTO._paymentDate &&
-                   _email == dTO._email &&
-                   _paymentStatus == dTO._paymentStatus;
+                   id == dTO.id &&
+                   EqualityComparer<AccountDTO>.Default.Equals(customer, dTO.customer) &&
+                   EqualityComparer<List<ProductSelectionDTO>>.Default.Equals(products, dTO.products) &&
+                   EqualityComparer<ShippmentDTO>.Default.Equals(shippingCompany, dTO.shippingCompany) &&
+                   totalQuantity == dTO.totalQuantity &&
+                   totalShippingCost == dTO.totalShippingCost &&
+                   totalTaxes == dTO.totalTaxes &&
+                   totalAmount == dTO.totalAmount &&
+                   orderDate == dTO.orderDate &&
+                   paymentDate == dTO.paymentDate &&
+                   email == dTO.email &&
+                   paymentStatus == dTO.paymentStatus;
         }
 
         public override int GetHashCode()
         {
             var hashCode = 382889966;
-            hashCode = hashCode * -1521134295 + _id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<AccountDTO>.Default.GetHashCode(_customer);
-            hashCode = hashCode * -1521134295 + EqualityComparer<List<ProductSelectionDTO>>.Default.GetHashCode(_products);
-            hashCode = hashCode * -1521134295 + EqualityComparer<ShippmentDTO>.Default.GetHashCode(_shipping);
-            hashCode = hashCode * -1521134295 + _totalQuantity.GetHashCode();
-            hashCode = hashCode * -1521134295 + _totalShippingCost.GetHashCode();
-            hashCode = hashCode * -1521134295 + _totalTaxes.GetHashCode();
-            hashCode = hashCode * -1521134295 + _totalAmount.GetHashCode();
-            hashCode = hashCode * -1521134295 + _orderDate.GetHashCode();
-            hashCode = hashCode * -1521134295 + _paymentDate.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_email);
-            hashCode = hashCode * -1521134295 + _paymentStatus.GetHashCode();
+            hashCode = hashCode * -1521134295 + id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<AccountDTO>.Default.GetHashCode(customer);
+            hashCode = hashCode * -1521134295 + EqualityComparer<List<ProductSelectionDTO>>.Default.GetHashCode(products);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ShippmentDTO>.Default.GetHashCode(shippingCompany);
+            hashCode = hashCode * -1521134295 + totalQuantity.GetHashCode();
+            hashCode = hashCode * -1521134295 + totalShippingCost.GetHashCode();
+            hashCode = hashCode * -1521134295 + totalTaxes.GetHashCode();
+            hashCode = hashCode * -1521134295 + totalAmount.GetHashCode();
+            hashCode = hashCode * -1521134295 + orderDate.GetHashCode();
+            hashCode = hashCode * -1521134295 + paymentDate.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(email);
+            hashCode = hashCode * -1521134295 + paymentStatus.GetHashCode();
             return hashCode;
         }
     }

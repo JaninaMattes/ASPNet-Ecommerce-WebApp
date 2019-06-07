@@ -7,38 +7,38 @@ namespace WebsiteLaitBrasseur.BL
 {
     public class CityDTO
     {
-        private int _id;
-        private string _zipCode = "";
-        private string _cityName = "";
+        private int id;
+        private string zipCode = "";
+        private string cityName = "";
 
         public int GetId()
         {
-            return this._id;
+            return this.id;
         }
 
         public void SetId(int id)
         {
-            this._id = id;
+            this.id = id;
         }
 
         public string GetZip()
         {
-            return this._zipCode;
+            return this.zipCode;
         }
 
         public void SetZip(string zip)
         {
-            this._zipCode = zip;
+            this.zipCode = zip;
         }
 
         public string GetCity()
         {
-            return this._cityName;
+            return this.cityName;
         }
 
         public void SetCity(string city)
         {
-            this._cityName = city;
+            this.cityName = city;
         }
 
     }

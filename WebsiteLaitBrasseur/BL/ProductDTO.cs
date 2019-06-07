@@ -8,145 +8,145 @@ namespace WebsiteLaitBrasseur.BL
     public class ProductDTO
     {
         //private member
-        private int _id;
-        private string _name = "";
-        private string _type = "";
-        private string _producer = "";
-        private string _info = "";
-        private string _shortInfo = "";
-        private string _imgPath = "";
-        private int _stock = 0;
-        private int _status = 0;
-        private List<SizeDTO> _details; // size + price
+        private int id;
+        private string name = "";
+        private string type = "";
+        private string producer = "";
+        private string longInfo = "";
+        private string shortInfo = "";
+        private string imgPath = "";
+        private int stock = 0;
+        private int status = 0;
+        private List<SizeDTO> details; // size + price
 
         //getter and setter
         public int GetId()
         {
-            return this._id;
+            return this.id;
         }
 
         public void SetId(int id)
         {
-            this._id = id;
+            this.id = id;
         }
 
         public string GetName()
         {
-            return this._name;
+            return this.name;
         }
 
         public void SetName(string name)
         {
-            this._name = name;
+            this.name = name;
         }
 
         public string GetProductType()
         {
-            return _type;
+            return type;
         }
 
         public void SetType(string type)
         {
-            this._type = type;
+            this.type = type;
         }
 
         public string GetProducer()
         {
-            return _producer;
+            return producer;
         }
 
         public void SetProducer(string producer)
         {
-            this._producer = producer;
+            this.producer = producer;
         }
 
 
         public string GetInfo()
         {
-            return _info;
+            return longInfo;
         }
 
         public void SetInfo(string info)
         {
-            this._info = info;
+            this.longInfo = info;
         }
 
         public string GetShortInfo()
         {
-            return _shortInfo;
+            return shortInfo;
         }
 
         public void SetShortInfo(string info)
         {
-            this._shortInfo = info;
+            this.shortInfo = info;
         }
 
         public string GetImgPath()
         {
-            return _imgPath;
+            return imgPath;
         }
 
         public void SetImgPath(string imgPath)
         {
-            this._imgPath = imgPath;
+            this.imgPath = imgPath;
         }
 
         public int GetStock()
         {
-            return _stock;
+            return stock;
         }
 
         public void SetStock(int amount)
         {
-            this._stock = amount;
+            this.stock = amount;
         }
 
         public int GetStatus()
         {
-            return _status;
+            return status;
         }
 
         public void SetStatus(int status)
         {
-            this._status = status;
+            this.status = status;
         }
 
         public List<SizeDTO> GetDetails()
         {
-            return _details;
+            return details;
         }
 
         public void SetDetails(List<SizeDTO> details)
         {
-            this._details = details;
+            this.details = details;
         }
 
         public override bool Equals(object obj)
         {
             return obj is ProductDTO product &&
-                   _id == product._id &&
-                   _name == product._name &&
-                   _type == product._type &&
-                   _producer == product._producer &&
-                   _info == product._info &&
-                   _shortInfo == product._shortInfo &&
-                   _imgPath == product._imgPath &&
-                   _stock == product._stock &&
-                   _status == product._status;
+                   id == product.id &&
+                   name == product.name &&
+                   type == product.type &&
+                   producer == product.producer &&
+                   longInfo == product.longInfo &&
+                   shortInfo == product.shortInfo &&
+                   imgPath == product.imgPath &&
+                   stock == product.stock &&
+                   status == product.status;
         }
 
         public override int GetHashCode()
         {
             var hashCode = -869496770;
-            hashCode = hashCode * -1521134295 + _id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_name);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_type);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_producer);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_info);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_shortInfo);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_imgPath);
-            hashCode = hashCode * -1521134295 + _stock.GetHashCode();
-            hashCode = hashCode * -1521134295 + _status.GetHashCode();
+            hashCode = hashCode * -1521134295 + id.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(name);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(type);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(producer);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(longInfo);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(shortInfo);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(imgPath);
+            hashCode = hashCode * -1521134295 + stock.GetHashCode();
+            hashCode = hashCode * -1521134295 + status.GetHashCode();
             return hashCode;
         }
 
@@ -158,21 +158,21 @@ namespace WebsiteLaitBrasseur.BL
         public ProductDTO(int id, string name, string type, string producer, string info, string shortInfo, 
             string imgPath, int stock, int status)
         {
-            _id = id;
-            _name = name;
-            _type = type;
-            _producer = producer;
-            _info = info;
-            _shortInfo = shortInfo;
-            _imgPath = imgPath;
-            _stock = stock;
-            _status = status;
+            this.id = id;
+            this.name = name;
+            this.type = type;
+            this.producer = producer;
+            this.longInfo = info;
+            this.shortInfo = shortInfo;
+            this.imgPath = imgPath;
+            this.stock = stock;
+            this.status = status;
         }
 
         public ProductDTO(int id, string name, string type, string producer, string info, string shortInfo, string imgPath, 
             int stock, int status, List<SizeDTO> details) : this(id, name, type, producer, info, shortInfo, imgPath, stock, status)
         {
-            this._details = details;
+            this.details = details;
         }
 
         public override string ToString()
