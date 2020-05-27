@@ -1,6 +1,8 @@
 -- ================================================
 -- SQL script defines the table structure of the
 -- database system.
+-- Author: Janina Mattes
+-- Date: 05.06.2019
 -- ================================================
 
 -----------------------------------
@@ -23,7 +25,7 @@ accountID CHAR(8) NULL,
 email VARCHAR(25) NOT NULL DEFAULT '',
 password VARCHAR(10) NOT NULL DEFAULT ''
 )
-GO 
+GO
 
 -- create account table
 CREATE TABLE dbo.Account(
@@ -35,11 +37,11 @@ lastName VARCHAR(25) NOT NULL DEFAULT '',
 birthDate Date NOT NULL,
 FOREIGN KEY(loginID ) REFERENCES Login(loginID)
 )
-GO 
+GO
 
 -- create administrator table
 CREATE TABLE dbo.Administrator(
-accountID CHAR(8) NOT NULL REFERENCES Account(accountId) 
+accountID CHAR(8) NOT NULL REFERENCES Account(accountId)
 ON UPDATE CASCADE ON DELETE NO ACTION,
 PRIMARY KEY(accountID),
 businessName VARCHAR(255) NOT NULL DEFAULT '',
@@ -49,24 +51,24 @@ GO
 
 -- create customer table
 CREATE TABLE dbo.Customer(
-customerID CHAR(8) NOT NULL REFERENCES Account(accountId) 
+customerID CHAR(8) NOT NULL REFERENCES Account(accountId)
 ON UPDATE CASCADE ON DELETE NO ACTION,
 PRIMARY KEY(customerID),
 businessName VARCHAR(255) NOT NULL DEFAULT '',
 isAdmin TINYINT NOT NULL DEFAULT 0
 )
-GO 
+GO
 
 -- create invoice table
 CREATE TABLE dbo.Invoice(
 invoiceID CHAR(8) PRIMARY KEY NOT NULL,
 quantity CHAR(8) NOT NULL,
 shippingCost DECIMAL(10,4) NOT NULL DEFAULT 0.00,
-totalAmount DECIMAL(10,4) NOT NULL DEFAULT 0.00, 
+totalAmount DECIMAL(10,4) NOT NULL DEFAULT 0.00,
 orderDate DATE NOT NULL,
 paymentStatus TINYINT NOT NULL DEFAULT 0
 )
-GO 
+GO
 
 -- create shipping table
 CREATE TABLE dbo.Shipping(
@@ -100,7 +102,7 @@ FOREIGN KEY(accountID ) REFERENCES Account(accountID),
 FOREIGN KEY(invoiceID) REFERENCES Invoice(invoiceID),
 FOREIGN KEY(shippingID) REFERENCES Shipping(shippingID)
 )
-GO 
+GO
 
 -- create administraion table
 CREATE TABLE dbo.ProductAdministration(
@@ -126,7 +128,7 @@ ON UPDATE CASCADE ON DELETE NO ACTION,
 FOREIGN KEY(productID) REFERENCES Product(productID)
 ON UPDATE CASCADE ON DELETE NO ACTION
 )
-GO  
+GO
 
 -- create payment table
 CREATE TABLE dbo.Payment(
@@ -142,7 +144,7 @@ GO
 
 -- create card table
 CREATE TABLE dbo.Card(
-paymentID CHAR(8) NOT NULL REFERENCES Payment(paymentId) 
+paymentID CHAR(8) NOT NULL REFERENCES Payment(paymentId)
 ON UPDATE CASCADE ON DELETE NO ACTION,
 PRIMARY KEY(paymentId),
 owner VARCHAR(25) NOT NULL DEFAULT '',
@@ -154,7 +156,7 @@ GO
 
 -- create paypal table
 CREATE TABLE dbo.PayPal(
-paymentID CHAR(8) NOT NULL REFERENCES Payment(paymentId) 
+paymentID CHAR(8) NOT NULL REFERENCES Payment(paymentId)
 ON UPDATE CASCADE ON DELETE NO ACTION,
 PRIMARY KEY(paymentId),
 userName VARCHAR(25) NOT NULL DEFAULT '',
@@ -175,7 +177,7 @@ GO
 CREATE TABLE dbo.Address(
 addressID CHAR(8) PRIMARY KEY NOT NULL,
 shippingID CHAR(8) NOT NULL,
-cityID CHAR(8) NOT NULL, 
+cityID CHAR(8) NOT NULL,
 streetName VARCHAR(25) NOT NULL DEFAULT '',
 streetNo CHAR(8) NOT NULL DEFAULT '',
 addressType VARCHAR(25) NOT NULL DEFAULT '', -- e.g. home, friend, business
