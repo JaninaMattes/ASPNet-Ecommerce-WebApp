@@ -7,15 +7,15 @@
 
 -----------------------------------
 --drop statement
-DROP DATABASE beerAndCheeseOnlineStore
+DROP DATABASE cupcakeOnlineStore
 GO
 
 -- create new database
-CREATE DATABASE beerAndCheeseOnlineStore
+CREATE DATABASE cupcakeOnlineStore
 GO
 
 -- use database
-USE beerAndCheeseOnlineStore
+USE cupcakeOnlineStore
 GO
 
 -- create login table
@@ -88,12 +88,12 @@ accountID CHAR(8) NOT NULL,
 invoiceID CHAR(8) NOT NULL,
 shippingID CHAR(8) NOT NULL,
 pName VARCHAR(25) NOT NULL DEFAULT '',
-pCategory VARCHAR(25) NOT NULL DEFAULT '',
-producer VARCHAR(25) NOT NULL DEFAULT '',
-brand VARCHAR(25) NOT NULL DEFAULT '',
+pContent VARCHAR(25) NOT NULL DEFAULT '',
+pRecipe VARCHAR(25) NOT NULL DEFAULT '',
+--brand VARCHAR(25) NOT NULL DEFAULT '',
 pType VARCHAR(25) NOT NULL DEFAULT '',
-unitSize DECIMAL(10,4) NOT NULL DEFAULT 0.00,
-unitPrice DECIMAL(10,4) NOT NULL DEFAULT 0.00,
+amount DECIMAL(10,4) NOT NULL DEFAULT 0.00,
+price DECIMAL(10,4) NOT NULL DEFAULT 0.00,
 pInfo VARCHAR(255) NOT NULL DEFAULT '',
 imgPath VARCHAR(25) NOT NULL DEFAULT '',
 inStock TINYINT NOT NULL DEFAULT 0,
