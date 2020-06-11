@@ -1,0 +1,12 @@
+# yml-file defines the work-flow
+name: DotNet Continuous Integration
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  test_pull_request:
+  runs-on: windows-latest
+  steps: 
+  - uses: actions/cheout@v2 # brings source code in currently running directory
